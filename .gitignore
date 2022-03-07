@@ -1,5 +1,4 @@
 Hell's Kitchen/*
 !Hell's Kitchen/Assets
 !Hell's Kitchen/ProjectSettings
-*.meta
-!*.*.meta
+!Hell's Kitchen/Packages
