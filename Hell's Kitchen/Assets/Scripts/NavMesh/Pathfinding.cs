@@ -1,6 +1,5 @@
 ﻿#pragma warning disable 659
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.AI.Navigation;
@@ -11,13 +10,19 @@ using Vector3 = UnityEngine.Vector3;
 
 [RequireComponent(typeof(NavMeshSurface))]
 public class Pathfinding : MonoBehaviour {
-
+    
+    /**
+     * Singleton instance of pathfinding script.
+     */
     public static Pathfinding Instance;
-
-    private class Node {
+    
+    /**
+     * Represents a single triangle of the Nav Mesh, with its 3 vertices and adjacent triangles.
+     */
+    private class PolygonNode {
         public Vector3[] Vertices;
         public Vector3 Center;
-        public Node[] Successors;
+        public PolygonNode[] Successors;
         
         public void SetVertices(Vector3[] vertices) {
             Center = vertices.Aggregate(Vector3.zero, (vertex, acc) => acc + vertex) / vertices.Length;
@@ -28,22 +33,25 @@ public class Pathfinding : MonoBehaviour {
             if (other == null)
                 return false;
 
-            if (other.GetType() != typeof(Node))
+            if (other.GetType() != typeof(PolygonNode))
                 return false;
 
-            Node node = (Node) other;
+            PolygonNode node = (PolygonNode) other;
             return Vertices.SequenceEqual(node.Vertices);
         }
     }
-
+    
+    /**
+     * Used for A* pathfinding from a start polygon to an end polygon.
+     */
     private class PolygonPathNode {
-        public readonly Node Node;
-        public PolygonPathNode Next = null;
-        public PolygonPathNode Prev = null;
+        public readonly PolygonNode Node;
+        public PolygonPathNode Next;
+        public PolygonPathNode Prev;
         
-        public float F = 0.0f, G = 0.0f, H = 0.0f;
+        public float F, G, H;
 
-        public PolygonPathNode(Node node, PolygonPathNode prev = null) {
+        public PolygonPathNode(PolygonNode node, PolygonPathNode prev = null) {
             Node = node;
             Prev = prev;
         }
@@ -60,35 +68,40 @@ public class Pathfinding : MonoBehaviour {
         }
     }
 
+    /**
+     * Used to represent a full line path from start to end.
+     */
     public class PathNode {
         public Vector3 Position;
         public PathNode Prev;
         public PathNode Next;
     }
 
-    [Header("Parameters")] 
-    [SerializeField]
-    private bool showActivePath = false;
-
-    [SerializeField] 
-    private bool showNavMesh = true;
-
+    [Header("Parameters")]
     [SerializeField] 
     private Vector3 startPosition;
 
     [SerializeField] 
     private Vector3 endPosition;
+    
+    [SerializeField]
+    private bool showActivePath = true;
+
+    [SerializeField] 
+    private bool showNavMesh = true;
 
     [Header("References")] 
     [SerializeField]
     private NavMeshSurface navMeshSurface;
 
     private Mesh _mesh;
-    private Node[] _nodes;
+    private PolygonNode[] _nodes;
     
     private PathNode _activePath;
     private PathNode _activePathEnd;
 
+    #region Unity Events
+    
     private void Awake() {
         if (Instance != null && Instance != this) {
             Destroy(this);
@@ -136,13 +149,19 @@ public class Pathfinding : MonoBehaviour {
     }
 
     private void OnValidate() {
-        _activePath = FindPath(startPosition, endPosition);
-        if (_activePath != null) {
-            _activePathEnd = _activePath;
-            while (_activePathEnd.Next != null)
-                _activePathEnd = _activePathEnd.Next;
+        if (_nodes != null) {
+            _activePath = FindPath(startPosition, endPosition);
+            if (_activePath != null) {
+                _activePathEnd = _activePath;
+                while (_activePathEnd.Next != null)
+                    _activePathEnd = _activePathEnd.Next;
+            }
         }
     }
+
+    #endregion
+
+    #region Public Methods
 
     public void RandomPath() {
         // Reset active path
@@ -194,9 +213,9 @@ public class Pathfinding : MonoBehaviour {
             triangles = indices
         };
 
-        _nodes = new Node[indices.Length / 3];
+        _nodes = new PolygonNode[indices.Length / 3];
         for (var i = 0; i < _nodes.Length; i++) {
-            _nodes[i] = new Node();
+            _nodes[i] = new PolygonNode();
             _nodes[i].SetVertices(new [] {
                 vertices[indices[i * 3]], 
                 vertices[indices[i * 3 + 1]], 
@@ -208,16 +227,36 @@ public class Pathfinding : MonoBehaviour {
             node.Successors = GenerateSuccessors(node);
         }
     }
+    
+    public PathNode FindPath(Vector3 start, Vector3 end, float navMeshHitRadius = 5.0f) {
+        // Snap start and end to navmesh
+        if (!NavMesh.SamplePosition(start, out var startPos, navMeshHitRadius, NavMesh.AllAreas) || 
+            !NavMesh.SamplePosition(end, out var endPos, navMeshHitRadius, NavMesh.AllAreas)) 
+            return null;
+        
+        // Set new start and end positions
+        start = startPos.position;
+        end = endPos.position;
+        
+        // Find polygon path to target
+        PolygonPathNode polyPath = FindPolygonPath(start, end);
+        
+        // Apply string pulling to get line path
+        return StringPull(polyPath, startPosition, endPosition);
+    }
 
-    private Node[] GenerateSuccessors(Node node) {
+    #endregion
+    
+    #region Private Methods
+    
+    private PolygonNode[] GenerateSuccessors(PolygonNode node) {
         return _nodes.Where(otherNode => !node.Equals(otherNode))
             .Where(otherNode => otherNode.Vertices
                 .Where(v => !node.Vertices.Contains(v)).ToArray().Length == 1)
             .ToArray();
     }
 
-    private Node FindClosestNode(Vector3 position) {
-        NavMesh.SamplePosition(position, out var hit, 1.0f, NavMesh.AllAreas);
+    private PolygonNode FindClosestNode(Vector3 position) {
         return _nodes.FirstOrDefault(n => Utils.CheckPointInTriangle(n.Vertices, position));
     }
 
@@ -226,8 +265,8 @@ public class Pathfinding : MonoBehaviour {
         List<PolygonPathNode> closedList = new List<PolygonPathNode>();
 
         // Get start and end nodes
-        Node startNode = FindClosestNode(start);
-        Node endNode = FindClosestNode(end);
+        PolygonNode startNode = FindClosestNode(start);
+        PolygonNode endNode = FindClosestNode(end);
         if (startNode == null || endNode == null)
             return null;
 
@@ -416,22 +455,7 @@ public class Pathfinding : MonoBehaviour {
     
         return current;
     }
-
-    public PathNode FindPath(Vector3 start, Vector3 end, float navMeshHitRadius = 5.0f) {
-        // Snap start and end to navmesh
-        if (!NavMesh.SamplePosition(start, out var startPos, navMeshHitRadius, NavMesh.AllAreas) || 
-            !NavMesh.SamplePosition(end, out var endPos, navMeshHitRadius, NavMesh.AllAreas)) 
-            return null;
-        
-        // Set new start and end positions
-        start = startPos.position;
-        end = endPos.position;
-        
-        // Find polygon path to target
-        PolygonPathNode polyPath = FindPolygonPath(start, end);
-        
-        // Apply string pulling to get line path
-        return StringPull(polyPath, startPosition, endPosition);
-    }
-
+    
+    #endregion
+    
 }

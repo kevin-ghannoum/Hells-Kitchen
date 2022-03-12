@@ -12,7 +12,7 @@ public class PathfindingEditor : Editor {
         if (GUILayout.Button("Bake")) {
             script.Bake();
         }
-        if (GUILayout.Button("New Path")) {
+        if (GUILayout.Button("Randomize Path")) {
             script.RandomPath();
         }
         GUILayout.EndHorizontal();
