@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(PathfindingAgent))]
@@ -8,6 +7,9 @@ public class Enemy : MonoBehaviour {
     [Header("References")] 
     [SerializeField]
     private PathfindingAgent agent;
+    
+    [SerializeField] 
+    private Animator animator;
 
     private void Start() {
         NewTarget();
@@ -15,16 +17,11 @@ public class Enemy : MonoBehaviour {
 
     private void Reset() {
         agent = GetComponent<PathfindingAgent>();
-        
-        if (agent.onArrive == null)
-            agent.onArrive = new UnityEvent();
-        
-        agent.onArrive.RemoveListener(OnArrive);
-        agent.onArrive.AddListener(OnArrive);
+        animator = GetComponent<Animator>();
     }
 
-    private void OnArrive() {
-        NewTarget();
+    private void Update() {
+        animator.SetFloat(EnemyAnimator.Speed, agent.Velocity.magnitude);
     }
 
     private void NewTarget() {
@@ -33,6 +30,10 @@ public class Enemy : MonoBehaviour {
             0.0f,
             Random.Range(-20.0f, 20.0f)
         );
+    }
+
+    public void OnArrive() {
+        NewTarget();
     }
 
 }

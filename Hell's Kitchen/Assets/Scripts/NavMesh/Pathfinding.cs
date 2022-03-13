@@ -108,19 +108,14 @@ public class Pathfinding : MonoBehaviour {
         } else {
             Instance = this;
         }
+        Bake(true);
     }
     
     private void Reset() {
         navMeshSurface = GetComponent<NavMeshSurface>();
-        Bake();
-        RandomPath();
+        Bake(true);
     }
 
-    private void Start() {
-        Bake();
-        RandomPath();
-    }
-    
     private void OnDrawGizmosSelected() {
         // Draw nav mesh
         if (_mesh != null && showNavMesh) {
@@ -201,7 +196,10 @@ public class Pathfinding : MonoBehaviour {
         }
     }
 
-    public void Bake() {
+    public void Bake(bool force = false) {
+        if (_nodes != null && !force)
+            return;
+        
         navMeshSurface.BuildNavMesh();
         var triangulation = NavMesh.CalculateTriangulation();
         var vertices = triangulation.vertices;
@@ -240,9 +238,14 @@ public class Pathfinding : MonoBehaviour {
         
         // Find polygon path to target
         PolygonPathNode polyPath = FindPolygonPath(start, end);
-        
+
         // Apply string pulling to get line path
-        return StringPull(polyPath, startPosition, endPosition);
+        _activePath = StringPull(polyPath, start, end);
+        _activePathEnd = _activePath;
+        while (_activePathEnd.Next != null)
+            _activePathEnd = _activePathEnd.Next;
+
+        return _activePath;
     }
 
     #endregion
@@ -370,7 +373,7 @@ public class Pathfinding : MonoBehaviour {
             Position = portalApex
         };
     
-        // Loop over every new point
+        // Loop over every new portal
         for (var i = 0; i < portals.Length; i++) {
             Vector3[] portal = portals[i];
             Vector3 left = portal[0];
@@ -440,13 +443,7 @@ public class Pathfinding : MonoBehaviour {
                 }
             }
         }
-        
-        // Add end node
-        current = new PathNode {
-            Position = end,
-            Prev = current
-        };
-    
+
         // Reconstruct path
         while (current.Prev != null) {
             current.Prev.Next = current;

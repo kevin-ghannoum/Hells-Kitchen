@@ -3,7 +3,10 @@ using UnityEngine.Events;
 
 public class PathfindingAgent : MonoBehaviour {
 
-    [Header("Parameters")]
+    [Header("Parameters")] 
+    [SerializeField]
+    private float arrivalRadius = 0.5f;
+    
     [SerializeField]
     private float maxVelocity = 2.0f;
     
@@ -26,6 +29,8 @@ public class PathfindingAgent : MonoBehaviour {
         }
     }
 
+    public Vector3 Velocity => _velocity;
+
     private void Update() {
         // Arrived
         if (_path == null) {
@@ -33,15 +38,16 @@ public class PathfindingAgent : MonoBehaviour {
                 onArrive?.Invoke();
                 _onArriveInvoked = true;
             }
+            _velocity = Vector3.zero;
             return;
         }
-        
+
         // Get next point along path
         var nextPoint = _path.Position;
         
         // Compute desired velocity
         var desiredVelocity = nextPoint - transform.position;
-        if (_path.Next != null || desiredVelocity.magnitude > maxVelocity)
+        if (_path?.Next != null || desiredVelocity.magnitude > maxVelocity)
             desiredVelocity = desiredVelocity.normalized * maxVelocity;
         
         // Compute acceleration
@@ -50,14 +56,19 @@ public class PathfindingAgent : MonoBehaviour {
             acceleration = acceleration.normalized * maxAcceleration;
         
         // Apply acceleration to current velocity
+        _onArriveInvoked = false;
         _velocity += Time.deltaTime * acceleration;
         transform.position += Time.deltaTime * _velocity;
+        transform.rotation = Quaternion.LookRotation(_velocity);
+        
+        // Reached next point
+        if (Vector3.Distance(transform.position, _path.Position) < arrivalRadius)
+            _path = _path.Next;
     }
     
     private void RecalculatePath() {
         if (Pathfinding.Instance != null) {
             _path = Pathfinding.Instance.FindPath(transform.position, Target);
-            _onArriveInvoked = false;
         }
     }
     
