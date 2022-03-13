@@ -7,17 +7,20 @@ namespace Dungeon_Generation
     public class MazeConstructor : MonoBehaviour
     {
         public bool showDebug;
-    
-        private MazeDataGenerator dataGenerator;
-        private MazeMeshGenerator meshGenerator;
 
+        [Header("Materials")]
         [SerializeField] private Material mazeMat1;
         [SerializeField] private Material mazeMat2;
         [SerializeField] private Material startMat;
         [SerializeField] private Material treasureMat;
         
+        [Header("Generation Settings")]
         [SerializeField] private float hallHeight = 5f;
         [SerializeField] private float hallWidth = 5f;
+        [SerializeField][Range (0f, 1f)] private float chanceOfEmptySpace = 0.1f;
+        
+        private MazeDataGenerator dataGenerator;
+        private MazeMeshGenerator meshGenerator;
         
         public float HallWidth { get=> hallWidth; set => hallWidth = value; }
         public float HallHeight { get => hallHeight; set => hallHeight = value; }
@@ -32,7 +35,7 @@ namespace Dungeon_Generation
         
         void Awake()
         {
-            dataGenerator = new MazeDataGenerator();
+            dataGenerator = new MazeDataGenerator(chanceOfEmptySpace);
             meshGenerator = new MazeMeshGenerator(hallHeight, hallWidth);
 
             // default to walls surrounding a single empty cell

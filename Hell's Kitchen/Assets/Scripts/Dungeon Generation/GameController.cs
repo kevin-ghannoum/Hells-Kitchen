@@ -11,6 +11,7 @@ namespace Dungeon_Generation
     public class GameController : MonoBehaviour
     {
         [SerializeField] private Player player;
+        [SerializeField] private float playerHeightPosition = 0f;
 
         private MazeConstructor generator;
         
@@ -31,7 +32,7 @@ namespace Dungeon_Generation
             generator.GenerateNewMaze(GetRandomOddNumberInRange(9, 15), GetRandomOddNumberInRange(7, 13), OnStartTrigger, OnGoalTrigger);
 
             float x = generator.StartCol * generator.HallWidth;
-            float y = 0;
+            float y = playerHeightPosition;
             float z = generator.StartRow * generator.HallWidth;
             player.transform.position = new Vector3(x, y, z);
 
@@ -53,7 +54,7 @@ namespace Dungeon_Generation
             {
                 // currently just restarts the maze but we can add behavior here for when we enter the dungeon
                 player.enabled = false;
-                Invoke("StartNewMaze", 4);
+                Invoke(nameof(StartNewMaze), 4);
             }
         }
 

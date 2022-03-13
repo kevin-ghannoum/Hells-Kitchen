@@ -8,9 +8,9 @@ namespace Dungeon_Generation
     {
         private float placementThreshold;    // chance of empty space
 
-        public MazeDataGenerator()
+        public MazeDataGenerator(float chanceOfEmptySpace)
         {
-            placementThreshold = .1f;                              
+            placementThreshold = chanceOfEmptySpace;                              
         }
 
         public int[,] FromDimensions(int sizeRows, int sizeCols) 

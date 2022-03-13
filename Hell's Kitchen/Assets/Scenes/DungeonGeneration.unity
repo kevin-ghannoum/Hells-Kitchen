@@ -661,15 +661,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a78d79ad419d444e8388e9143cd8bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  headCam: {fileID: 1623668468}
-  speed: 6
-  gravity: -9.8
-  sensitivityHor: 9
-  sensitivityVert: 9
-  minimumVert: -45
-  maximumVert: 45
-  rotationVert: 0
-  charController: {fileID: 0}
 --- !u!143 &1773131084
 CharacterController:
   m_ObjectHideFlags: 0
@@ -748,6 +739,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1036462800}
+  playerHeightPosition: 0
 --- !u!114 &1894774550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -765,6 +757,9 @@ MonoBehaviour:
   mazeMat2: {fileID: 2100000, guid: a36a45d20a42a4a0695e782d8b69409e, type: 2}
   startMat: {fileID: 2100000, guid: c8296ee06001c4d39b0f615626264b85, type: 2}
   treasureMat: {fileID: 2100000, guid: c5b8154923bae4fedbbb1f1aca66fd98, type: 2}
+  hallHeight: 5
+  hallWidth: 5
+  chanceOfEmptySpace: 0.1
 --- !u!1 &1966176012
 GameObject:
   m_ObjectHideFlags: 0
