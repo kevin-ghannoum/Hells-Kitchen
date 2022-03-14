@@ -45,14 +45,6 @@ namespace Dungeon_Generation
                             new Vector3(width, width, 1)
                         ), ref newVertices, ref newUVs, ref floorTriangles);
 
-                        // ceiling
-                        AddQuad(Matrix4x4.TRS(
-                            new Vector3(j * width, height, i * width),
-                            Quaternion.LookRotation(Vector3.down),
-                            new Vector3(width, width, 1)
-                        ), ref newVertices, ref newUVs, ref floorTriangles);
-
-
                         // walls on sides next to blocked grid cells
                         if (i - 1 < 0 || data[i - 1, j] == 1)
                         {
