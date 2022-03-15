@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 6670996304016892981}
   - component: {fileID: 5308156257409951797}
   m_Layer: 0
-  m_Name: Gordon_Ramsay_Blender
-  m_TagString: Untagged
+  m_Name: Player
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 10
+  walkSpeed: 0.25
   rotationSpeed: 10
   acceleration: 1
 --- !u!95 &4906682503514102737
