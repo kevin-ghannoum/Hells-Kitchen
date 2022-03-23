@@ -26,6 +26,7 @@ namespace Player
         {
             _input.reference.actions["Roll"].performed += Roll;
             _input.reference.actions["Attack"].performed += Attack;
+            _input.reference.actions["PickUp"].performed += PickUp;
         }
 
         private void Update()
@@ -42,6 +43,11 @@ namespace Player
         void Roll(InputAction.CallbackContext callbackContext)
         {
             animator.SetTrigger(PlayerAnimator.Roll); 
+        }
+
+        void PickUp(InputAction.CallbackContext callbackContext)
+        {
+            animator.SetTrigger(PlayerAnimator.PickUp);
         }
 
         private void MovePlayer()
