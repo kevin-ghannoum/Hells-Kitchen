@@ -1,7 +1,12 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 public class ItemModel
 {
-    public Mesh Mesh { get; set; }
-    public Material Material { get; set; }
+    public GameObject itemPrefab;
+
+    public ItemModel(string path)
+    {
+        itemPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+    }
 }
