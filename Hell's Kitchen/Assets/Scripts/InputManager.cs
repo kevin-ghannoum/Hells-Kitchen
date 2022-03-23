@@ -14,7 +14,7 @@ public class InputManager : MonoBehaviour
     public bool attack;
 
     [Header("References")] 
-    public Input reference;
+    public PlayerInput reference;
 
     public static InputManager Instance;
 

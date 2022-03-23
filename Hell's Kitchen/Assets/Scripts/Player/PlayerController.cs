@@ -11,13 +11,11 @@ namespace Player
 
         [SerializeField] private float runSpeed = 8f;
         [SerializeField] private float walkSpeed = 6f;
-        [SerializeField] private float turnSmoothTime = 0.1f;
-        [SerializeField] private float turnSmoothVelocity;
-        [SerializeField] private float acceleration = 2f;
-
+        [SerializeField] private float turnSmoothVelocity = 10f;
+        [SerializeField] private float speedSmoothVelocity = 10f;
         private float speed = 6f;
-    
-        private static InputManager Input => InputManager.Instance;
+        
+        private InputManager _input => InputManager.Instance;
 
         private void Start()
         {
@@ -27,39 +25,48 @@ namespace Player
 
         private void Awake()
         {
-            Input.reference.FindAction("Roll").performed += Roll;
-            Input.reference.FindAction("Attack").performed += Attack;
+            _input.reference.actions["Roll"].performed += Roll;
+            _input.reference.actions["Attack"].performed += Attack;
         }
 
         private void Update()
         {
             MovePlayer();
+            RotatePlayer();
         }
 
         void Attack(InputAction.CallbackContext callbackContext)
         {
-        
+            animator.SetTrigger(PlayerAnimator.SwordAttack);
         }
 
         void Roll(InputAction.CallbackContext callbackContext)
         {
-            animator.SetTrigger("Roll"); 
+            animator.SetTrigger(PlayerAnimator.Roll); 
         }
 
         private void MovePlayer()
         {
-            float  targetSpeed = Input.move.normalized.magnitude * GetMovementSpeed();
-            speed = Mathf.Lerp(speed, targetSpeed, Time.deltaTime);
+            float  targetSpeed = _input.move.normalized.magnitude * GetMovementSpeed();
+            speed = Mathf.Lerp(speed, targetSpeed, speedSmoothVelocity * Time.deltaTime);
             Vector3 movement = Vector3.forward * speed * Time.deltaTime;
             characterController.Move(transform.TransformDirection(movement));
         
-            animator.SetFloat("Speed", speed);
+            animator.SetFloat(PlayerAnimator.Speed, speed);
+        }
+
+        private void RotatePlayer()
+        {
+            Vector3 targetDirection = new Vector3(_input.move.x, 0f, _input.move.y);
+            if (targetDirection == Vector3.zero) 
+                return;
+            
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirection), turnSmoothVelocity * Time.deltaTime);
         }
 
         private float GetMovementSpeed()
         {
-            return Input.run ? runSpeed : walkSpeed;
+            return _input.run ? runSpeed : walkSpeed;
         }
-   
     }
 }
