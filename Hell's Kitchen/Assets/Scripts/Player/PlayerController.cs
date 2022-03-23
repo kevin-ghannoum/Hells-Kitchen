@@ -1,3 +1,4 @@
+using Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
