@@ -45,11 +45,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   move: {x: 0, y: 0}
-  look: {x: 0, y: 0}
   pickUp: 0
   run: 0
   roll: 0
   attack: 0
+  reference: {fileID: 207420216689281371}
 --- !u!114 &207420216689281371
 MonoBehaviour:
   m_ObjectHideFlags: 0

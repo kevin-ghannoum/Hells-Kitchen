@@ -7,7 +7,6 @@ namespace Input
     {
         [Header("Input Values")]
         public Vector2 move;
-        public Vector2 look;
         public bool pickUp;
         public bool run;
         public bool roll;
@@ -40,11 +39,6 @@ namespace Input
         public void OnMove(InputAction.CallbackContext context)
         {
             move = context.ReadValue<Vector2>();
-        }
-
-        public void OnLook(InputAction.CallbackContext context)
-        {
-            look = context.ReadValue<Vector2>();
         }
 
         public void OnPickUp(InputAction.CallbackContext context)
