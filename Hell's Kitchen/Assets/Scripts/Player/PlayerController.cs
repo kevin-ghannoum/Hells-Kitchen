@@ -7,13 +7,12 @@ namespace Player
     {
         private Animator animator;
         private CharacterController characterController;
-        [SerializeField] private Transform camera;
 
-        [SerializeField] private float runSpeed = 8f;
-        [SerializeField] private float walkSpeed = 6f;
+        [SerializeField] private float runSpeed = 15f;
+        [SerializeField] private float walkSpeed = 10f;
         [SerializeField] private float turnSmoothVelocity = 10f;
         [SerializeField] private float speedSmoothVelocity = 10f;
-        private float speed = 6f;
+        private float speed = 0f;
         
         private InputManager _input => InputManager.Instance;
 
@@ -60,7 +59,6 @@ namespace Player
             Vector3 targetDirection = new Vector3(_input.move.x, 0f, _input.move.y);
             if (targetDirection == Vector3.zero) 
                 return;
-            
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirection), turnSmoothVelocity * Time.deltaTime);
         }
 
