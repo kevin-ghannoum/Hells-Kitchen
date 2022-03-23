@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +14,12 @@ public class Player : MonoBehaviour
     private float acceleration = 1;
 
     private float speed = 0;
+    
+    /**
+     * Singleton instance of player script.
+     */
+    public static Player Instance;
+    private Inventory inventory;
 
     private void Start()
     {
@@ -42,8 +47,6 @@ public class Player : MonoBehaviour
         }
         else
         {
-
-
             if (movement.magnitude != 0)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), rotationSpeed * Time.deltaTime);
@@ -89,4 +92,29 @@ public class Player : MonoBehaviour
             cc.Move(movement * Time.deltaTime * speed * maxSpeed);
         }
     }
+    
+    public Dictionary<Item, int> GetPlayerInventory()
+    {
+        return inventory.GetInventory();
+    }
+
+    public void AddItemToInventory(Item item, int quantity)
+    {
+        inventory.AddItemToInventory(item, quantity);
+    }
+
+    public void RemoveItemFromInventory(Item item, int quantity)
+    {
+        inventory.RemoveItemFromInventory(item,quantity);
+    }
+
+    #region Unity Events
+    private void Awake() {
+        if (Instance != null && Instance != this) {
+            Destroy(this);
+        } else {
+            Instance = this;
+        }
+    }
+    #endregion
 }

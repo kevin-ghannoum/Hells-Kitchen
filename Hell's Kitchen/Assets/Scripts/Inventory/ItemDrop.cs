@@ -1,5 +1,3 @@
-using System;
-using Enums;
 using UnityEngine;
 
 public class ItemDrop : MonoBehaviour
@@ -11,7 +9,7 @@ public class ItemDrop : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Character character = other.gameObject.GetComponent<Character>();
+            Player character = other.gameObject.GetComponent<Player>();
             character.AddItemToInventory(item, quantity);
         }
     }

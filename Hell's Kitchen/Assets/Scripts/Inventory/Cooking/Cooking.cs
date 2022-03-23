@@ -5,13 +5,12 @@ public class Cooking : MonoBehaviour
 {
     private bool InventoryContainsAllIngredients(List<(Item item, int quantity)> ingredientList)
     {
-        Character player = Character.Instance;
         Dictionary<Item, bool> ingredientCheckList = new Dictionary<Item, bool>();
         foreach (var (item, quantity) in ingredientList)
         {
-            if (player.GetPlayerInventory().ContainsKey(item)) // if ingredient in inventory
+            if (Player.Instance.GetPlayerInventory().ContainsKey(item)) // if ingredient in inventory
             {
-                if (player.GetPlayerInventory()[item] >= quantity) // if ingredient qt sufficient
+                if (Player.Instance.GetPlayerInventory()[item] >= quantity) // if ingredient qt sufficient
                 {
                     ingredientCheckList[item] = true;
                 }
@@ -42,11 +41,11 @@ public class Cooking : MonoBehaviour
             // remove used items
             foreach (var (item, quantity) in ingredientList)
             {
-                Character.Instance.RemoveItemFromInventory(item, quantity);
+                Player.Instance.RemoveItemFromInventory(item, quantity);
             }
             
             // add recipe result to inventory
-            Character.Instance.AddItemToInventory(recipe.GetRecipeResult(), 1);
+            Player.Instance.AddItemToInventory(recipe.GetRecipeResult(), 1);
 
             return true;
         }
