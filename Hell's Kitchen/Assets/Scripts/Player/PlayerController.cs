@@ -53,7 +53,7 @@ namespace Player
 
         private void MovePlayer()
         {
-            float  targetSpeed = _input.move.normalized.magnitude * GetMovementSpeed();
+            float targetSpeed = _input.move.normalized.magnitude * GetMovementSpeed();
             speed = Mathf.Lerp(speed, targetSpeed, speedSmoothVelocity * Time.deltaTime);
             Vector3 movement = Vector3.forward * speed * Time.deltaTime;
             characterController.Move(transform.TransformDirection(movement));
