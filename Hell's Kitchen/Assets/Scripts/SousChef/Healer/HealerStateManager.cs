@@ -24,7 +24,7 @@ public class HealerStateManager : MonoBehaviour
     private void Update()
     {
         currentState.UpdateState(this);
-        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        // transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 
     }
 

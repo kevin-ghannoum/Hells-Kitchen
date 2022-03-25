@@ -24,10 +24,10 @@ public class HealerAttackState : HealerBaseState
         {
             Debug.Log("@Attack attacking xD");
             //play attack animation
-            Debug.DrawLine(healer.gameObject.transform.position, healer.sc.targetEnemy.position, Color.red, 5);
+            Debug.DrawLine(healer.gameObject.transform.position, healer.sc.targetEnemy.transform.position, Color.red, 5);
             //temp example
             //spells will probs be prefabs and inflict damage if collider hits the enemy
-            healer.spells.HealerSpell_Photon(healer.sc.targetEnemy.position);
+            healer.spells.HealerSpell_Photon(healer.sc.targetEnemy.transform.position);
             healer.sc.targetEnemy.GetComponent<Character>().TakeDamage(photonDamage);
             _photonCastTime = 0f;
             healer.SwitchState(healer.followState);

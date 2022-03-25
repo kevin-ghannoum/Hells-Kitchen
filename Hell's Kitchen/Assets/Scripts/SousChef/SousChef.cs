@@ -12,9 +12,9 @@ public class SousChef : MonoBehaviour
     [SerializeField] public GameObject player;
     [SerializeField] public PathfindingAgent agent;
     public Character character { get; set; }
-    [SerializeField] public Transform targetEnemy;
+    [SerializeField] public GameObject targetEnemy;
     // public Transform currentEnemyTarget { get; set; }
-    [SerializeField] public Transform targetLoot;
+    [SerializeField] public GameObject targetLoot;
     // public Transform currentLootTarget { get; set; }
 
     void Start()
@@ -22,6 +22,8 @@ public class SousChef : MonoBehaviour
         character = gameObject.GetComponent<Character>();
         agent.Target = player.transform.position;
         agent.ArrivalRadius = followDistance;
+        targetEnemy = null;
+        targetLoot = null;
     }
 
     void Update(){
@@ -29,14 +31,14 @@ public class SousChef : MonoBehaviour
 
         // if the souschef does not have an enemy target or if the former target is out of search range
         // find a new enemy target
-        if(targetEnemy == null || (targetEnemy != null && Vector3.Distance(targetEnemy.position, transform.position) > searchRange)){
+        if(targetEnemy == null || (targetEnemy != null && Vector3.Distance(targetEnemy.transform.position, transform.position) > searchRange)){
             enemyFound = FindEnemy();
         }
 
         // if no ememy found around, find a new loot target
         // makes sure to deal with enemies nearby first
         if(!enemyFound){
-            if(targetLoot == null || (targetLoot != null && Vector3.Distance(targetLoot.position, transform.position) > searchRange)){
+            if(targetLoot == null || (targetLoot != null && Vector3.Distance(targetLoot.transform.position, transform.position) > searchRange)){
                 //update loot target
                 FindLoot();
             }          
@@ -68,14 +70,19 @@ public class SousChef : MonoBehaviour
 
         // cast rays around souschef to search for enemies
         float distance = Mathf.Infinity;
-        for(int i = 0; i < 360; i += 5 ){
+        int numOfRays = 20;
+
+        for(float i = 0; i < 360; i += Mathf.PI / numOfRays ){
             RaycastHit hit;
-            if(Physics.Raycast(transform.position, Vector3.zero + new Vector3(i, 0, 0), out hit, searchRange)){
+            Vector3 direction = new Vector3 (Mathf.Cos (i), 0, Mathf.Sin (i)).normalized * searchRange;
+
+            Debug.DrawRay(transform.position + Vector3.up / 2, direction, Color.green);
+            if(Physics.Raycast(transform.position + Vector3.up / 2, direction, out hit, searchRange)){
                 if(hit.transform.tag == "Enemy"){
                     float currentDistance = (hit.transform.position - this.transform.position).magnitude;
                     if(currentDistance < distance){
                         // find the enemy with closest distance
-                        targetEnemy = hit.transform;
+                        targetEnemy = hit.transform.gameObject;
                         distance = currentDistance;
                     }
                 }
@@ -95,14 +102,19 @@ public class SousChef : MonoBehaviour
 
         // cast rays around souschef to search for loots
         float distance = Mathf.Infinity;
-        for(int i = 0; i < 360; i += 5 ){
+        int numOfRays = 10;
+
+        for(float i = 0; i < 360; i += Mathf.PI / numOfRays ){
             RaycastHit hit;
-            if(Physics.Raycast(transform.position, Vector3.zero + new Vector3(i, 0, 0), out hit, searchRange)){
-                if(hit.transform.tag == "Enemy"){
-                    float currentDistance = (targetEnemy.position - this.transform.position).magnitude;
+            Vector3 direction = new Vector3 (Mathf.Cos (i), 0, Mathf.Sin (i)).normalized * searchRange;
+
+            //Debug.DrawRay(transform.position + Vector3.up / 2, direction, Color.yellow);
+            if(Physics.Raycast(transform.position + Vector3.up / 2, direction, out hit, searchRange)){
+                if(hit.transform.tag == "Loot"){
+                    float currentDistance = (hit.transform.position - this.transform.position).magnitude;
                     if(currentDistance < distance){
-                        // find the loot with closest distance
-                        targetEnemy = hit.transform;
+                        // find the enemy with closest distance
+                        targetLoot = hit.transform.gameObject;
                         distance = currentDistance;
                     }
                 }
@@ -115,12 +127,12 @@ public class SousChef : MonoBehaviour
         if (targetEnemy == null)
             return float.NaN;
         else
-            return (targetEnemy.position - transform.position).magnitude;
+            return (targetEnemy.transform.position - transform.position).magnitude;
     }
 
     public void MoveToEnemy()
     {
-        transform.LookAt(targetEnemy);
+        transform.LookAt(targetEnemy.transform);
         transform.position += transform.forward * character.speed * Time.deltaTime;
     }
 
@@ -133,7 +145,7 @@ public class SousChef : MonoBehaviour
         
         we can probably just make it run away from the closest enemy
          */
-        transform.rotation = Quaternion.LookRotation(transform.position - targetEnemy.position);
+        transform.rotation = Quaternion.LookRotation(transform.position - targetEnemy.transform.position);
         transform.position += transform.forward * character.speed * Time.deltaTime;
     }
 
