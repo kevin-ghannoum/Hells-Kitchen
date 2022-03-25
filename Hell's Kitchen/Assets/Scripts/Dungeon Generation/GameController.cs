@@ -1,8 +1,8 @@
 // Developed using : https://www.raywenderlich.com/82-procedural-generation-of-mazes-with-unity
-
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Player;
 
 namespace Dungeon_Generation
 {
@@ -10,7 +10,7 @@ namespace Dungeon_Generation
 
     public class GameController : MonoBehaviour
     {
-        [SerializeField] private Player player;
+        [SerializeField] private PlayerController player;
         [SerializeField] private float playerHeightPosition = 0f;
 
         private MazeConstructor generator;
