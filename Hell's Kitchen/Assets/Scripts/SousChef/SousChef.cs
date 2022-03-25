@@ -72,11 +72,11 @@ public class SousChef : MonoBehaviour
         float distance = Mathf.Infinity;
         int numOfRays = 20;
 
-        for(float i = 0; i < 360; i += Mathf.PI / numOfRays ){
+        for(float i = 0; i < 360; i += 2 * Mathf.PI / numOfRays ){
             RaycastHit hit;
-            Vector3 direction = new Vector3 (Mathf.Cos (i), 0, Mathf.Sin (i)).normalized * searchRange;
+            Vector3 direction = new Vector3 (Mathf.Cos (i), 0, Mathf.Sin (i)).normalized;
 
-            Debug.DrawRay(transform.position + Vector3.up / 2, direction, Color.green);
+            Debug.DrawRay(transform.position + Vector3.up / 2, direction * searchRange, Color.green);
             if(Physics.Raycast(transform.position + Vector3.up / 2, direction, out hit, searchRange)){
                 if(hit.transform.tag == "Enemy"){
                     float currentDistance = (hit.transform.position - this.transform.position).magnitude;
