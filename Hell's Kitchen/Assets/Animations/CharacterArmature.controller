@@ -59,7 +59,11 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_Name: Roll
+=======
+  m_Name: CharacterArmature|Roll
+>>>>>>> 8687c30 (wip)
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -79,6 +83,7 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+<<<<<<< HEAD
 --- !u!1101 &-8586638851710601497
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -126,6 +131,8 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+=======
+>>>>>>> 8687c30 (wip)
 --- !u!1101 &-8069573150484594777
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -174,6 +181,7 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+<<<<<<< HEAD
 --- !u!1101 &-6472282088464026811
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -199,6 +207,8 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+=======
+>>>>>>> 8687c30 (wip)
 --- !u!1102 &-6126915437029484574
 AnimatorState:
   serializedVersion: 6
@@ -206,6 +216,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_Name: SwordAttack
   m_Speed: 1
   m_CycleOffset: 0
@@ -213,6 +224,12 @@ AnimatorState:
   - {fileID: -4418144976285007300}
   - {fileID: 259531608516547451}
   - {fileID: -6472282088464026811}
+=======
+  m_Name: CharacterArmature|SwordSlash
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+>>>>>>> 8687c30 (wip)
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -228,6 +245,7 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+<<<<<<< HEAD
 --- !u!1101 &-4418144976285007300
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -250,6 +268,8 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+=======
+>>>>>>> 8687c30 (wip)
 --- !u!1102 &-4267974095881067548
 AnimatorState:
   serializedVersion: 6
@@ -276,6 +296,7 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+<<<<<<< HEAD
 --- !u!1101 &-3977786986828645138
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -301,6 +322,8 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+=======
+>>>>>>> 8687c30 (wip)
 --- !u!1102 &-2579318198771865155
 AnimatorState:
   serializedVersion: 6
@@ -386,7 +409,11 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_Name: Dead
+=======
+  m_Name: CharacterArmature|Death
+>>>>>>> 8687c30 (wip)
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -412,6 +439,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_Name: PickUp
   m_Speed: 1
   m_CycleOffset: 0
@@ -419,6 +447,12 @@ AnimatorState:
   - {fileID: 7165150149919844170}
   - {fileID: -3977786986828645138}
   - {fileID: 1353744594356641650}
+=======
+  m_Name: CharacterArmature|PickUp
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+>>>>>>> 8687c30 (wip)
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -448,12 +482,17 @@ AnimatorController:
     m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
+<<<<<<< HEAD
     m_Controller: {fileID: 0}
+=======
+    m_Controller: {fileID: 9100000}
+>>>>>>> 8687c30 (wip)
   - m_Name: Roll
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
+<<<<<<< HEAD
     m_Controller: {fileID: 0}
   - m_Name: TakeHit
     m_Type: 9
@@ -479,6 +518,9 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
+=======
+    m_Controller: {fileID: 9100000}
+>>>>>>> 8687c30 (wip)
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -492,6 +534,7 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+<<<<<<< HEAD
 --- !u!1101 &259531608516547451
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -542,6 +585,8 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+=======
+>>>>>>> 8687c30 (wip)
 --- !u!1107 &1581054419115024521
 AnimatorStateMachine:
   serializedVersion: 6
@@ -553,6 +598,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -624453693579777573}
+<<<<<<< HEAD
     m_Position: {x: 60, y: 460, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -992789798541316104}
@@ -593,6 +639,48 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -4267974095881067548}
     m_Position: {x: 670, y: 310, z: 0}
+=======
+    m_Position: {x: 410, y: 70, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -992789798541316104}
+    m_Position: {x: 430, y: 120, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -6761365873036781395}
+    m_Position: {x: 460, y: 170, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -507565573079993551}
+    m_Position: {x: 480, y: 190, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -1704495881158978928}
+    m_Position: {x: 490, y: 190, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 3613985948149506608}
+    m_Position: {x: 500, y: 250, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -9089533027017950408}
+    m_Position: {x: 30, y: 290, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 7564560537630791946}
+    m_Position: {x: 520, y: 260, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -9096621865781203936}
+    m_Position: {x: 530, y: 270, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -2579318198771865155}
+    m_Position: {x: 543.1146, y: 282.79037, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 8335299722601126989}
+    m_Position: {x: 553.1146, y: 292.79037, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -6126915437029484574}
+    m_Position: {x: 560, y: 300, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -9147386267927424278}
+    m_Position: {x: 573.1146, y: 312.79037, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -4267974095881067548}
+    m_Position: {x: 590, y: 330, z: 0}
+>>>>>>> 8687c30 (wip)
   - serializedVersion: 1
     m_State: {fileID: 3409737116444135156}
     m_Position: {x: 30, y: 200, z: 0}
@@ -602,6 +690,7 @@ AnimatorStateMachine:
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
+<<<<<<< HEAD
   m_EntryPosition: {x: 40, y: 110, z: 0}
   m_ExitPosition: {x: 890, y: 110, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
@@ -631,6 +720,12 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+=======
+  m_EntryPosition: {x: 50, y: 120, z: 0}
+  m_ExitPosition: {x: 800, y: 120, z: 0}
+  m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
+  m_DefaultState: {fileID: 3409737116444135156}
+>>>>>>> 8687c30 (wip)
 --- !u!1101 &2085416677070926534
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -656,6 +751,7 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+<<<<<<< HEAD
 --- !u!1101 &2813018176422496854
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -681,6 +777,8 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+=======
+>>>>>>> 8687c30 (wip)
 --- !u!1102 &3409737116444135156
 AnimatorState:
   serializedVersion: 6
@@ -688,15 +786,22 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_Name: Move
+=======
+  m_Name: CharacterArmature|Movement
+>>>>>>> 8687c30 (wip)
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 2085416677070926534}
+<<<<<<< HEAD
   - {fileID: -8432386208849306478}
   - {fileID: 1621769910164485716}
   - {fileID: 6890971655265571046}
   - {fileID: 3719116676597124679}
+=======
+>>>>>>> 8687c30 (wip)
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -719,12 +824,19 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_Name: TakeHit
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -8586638851710601497}
   - {fileID: 2813018176422496854}
+=======
+  m_Name: CharacterArmature|RecieveHit
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+>>>>>>> 8687c30 (wip)
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -740,6 +852,7 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+<<<<<<< HEAD
 --- !u!1101 &3719116676597124679
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -812,6 +925,8 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+=======
+>>>>>>> 8687c30 (wip)
 --- !u!1102 &7564560537630791946
 AnimatorState:
   serializedVersion: 6
