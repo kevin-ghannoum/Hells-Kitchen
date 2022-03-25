@@ -25,4 +25,7 @@ public class Character : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public bool isLowHP() {
+        return ((health/maxHealth)*100) < 60;
+    }
 }

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Character))]
-public abstract class SousChef : MonoBehaviour
+public class SousChef : MonoBehaviour
 {
     [SerializeField] protected float followDistance;
-    [SerializeField] protected float attackRange;
-    [SerializeField] protected GameObject player;
-    protected Character character;
+    [SerializeField] public float attackRange;
+    [SerializeField] public GameObject player;
+    public Character character { get; set; }
     void Start()
     {
         character = gameObject.GetComponent<Character>();
@@ -32,13 +32,18 @@ public abstract class SousChef : MonoBehaviour
     }
 
     [SerializeField] Transform exampleEnemy;
-    protected Transform currentEnemyTarget;
+    public Transform currentEnemyTarget { get; set; }
+
+    [SerializeField] Transform exampleLoot;
+    public Transform currentLootTarget { get; set; }
     public void FindEnemy()
     {
         //code to loop through enemies within vision and find closest 1
         currentEnemyTarget = exampleEnemy;
-
         //if no enemies within vision, set currentEnemyTarget = null;
+    }
+    public void FindLoot() {
+        currentLootTarget = exampleLoot;
     }
     public float getDistanceToEnemy()
     {
@@ -65,6 +70,13 @@ public abstract class SousChef : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(transform.position - currentEnemyTarget.position);
         transform.position += transform.forward * character.speed * Time.deltaTime;
     }
+
+    //these are for healer mostly, to be at a 
+    public float getDistanceToPlayer()
+    {
+        return (player.transform.position - transform.position).magnitude;
+    }
+
     public void BasicAttack()
     {
         /*
