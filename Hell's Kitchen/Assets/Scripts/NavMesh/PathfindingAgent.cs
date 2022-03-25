@@ -25,8 +25,10 @@ public class PathfindingAgent : MonoBehaviour {
     public Vector3 Target {
         get => _target;
         set {
-            _target = value;
-            RecalculatePath();
+            if (_target != value) {
+                _target = value;
+                RecalculatePath();
+            }
         }
     }
 
