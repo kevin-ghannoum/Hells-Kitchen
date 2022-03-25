@@ -285,6 +285,7 @@ GameObject:
   - component: {fileID: 5177241406228084658}
   - component: {fileID: 6670996304016892981}
   - component: {fileID: 5308156257409951797}
+  - component: {fileID: 8088586115401309953}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -321,9 +322,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 119c3ffb3ff5d134aacdc91d0354e8d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 0}
   runSpeed: 8
-  walkSpeed: 0.25
+  walkSpeed: 5
   turnSmoothVelocity: 10
   speedSmoothVelocity: 2
 --- !u!95 &4906682503514102737
@@ -393,6 +393,20 @@ CapsuleCollider:
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!114 &8088586115401309953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852094099853187857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9200a6cdee39c3b4e8567963efaa7576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 4906682503514102737}
+  _hitPoints: 100
 --- !u!1 &2135681688315806248
 GameObject:
   m_ObjectHideFlags: 0
