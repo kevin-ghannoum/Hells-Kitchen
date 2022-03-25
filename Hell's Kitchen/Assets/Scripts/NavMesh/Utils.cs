@@ -68,4 +68,28 @@ public static class Utils {
         return CheckPointInTriangle(triangle2D, point2D);
     }
 
+    public static Vector3 GetClosestPointOnLine(Vector3 start, Vector3 end, Vector3 point) {
+        // Get direction and magnitude
+        Vector3 dir = (end - start);
+        float magnitudeMax = dir.magnitude;
+        dir = dir.normalized;
+        
+        // Project point on line
+        Vector3 pointDir = point - start;
+        float lineProjection = Vector3.Dot(pointDir, dir);
+        lineProjection = Mathf.Clamp(lineProjection, 0f, magnitudeMax);
+        return start + dir * lineProjection;
+    }
+
+    public static Vector3 GetPointOnLineAtDistance(Vector3 start, Vector3 end, float distance) {
+        // Get direction and magnitude
+        Vector3 dir = (end - start);
+        float magnitudeMax = dir.magnitude;
+        dir = dir.normalized;
+        
+        // Take point at distance
+        distance = Mathf.Clamp(distance, 0.0f, magnitudeMax);
+        return start + dir * distance;
+    }
+
 }
