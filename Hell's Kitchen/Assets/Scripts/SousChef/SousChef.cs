@@ -72,7 +72,7 @@ public class SousChef : MonoBehaviour
             RaycastHit hit;
             if(Physics.Raycast(transform.position, Vector3.zero + new Vector3(i, 0, 0), out hit, searchRange)){
                 if(hit.transform.tag == "Enemy"){
-                    float currentDistance = (targetEnemy.position - this.transform.position).magnitude;
+                    float currentDistance = (hit.transform.position - this.transform.position).magnitude;
                     if(currentDistance < distance){
                         // find the enemy with closest distance
                         targetEnemy = hit.transform;
