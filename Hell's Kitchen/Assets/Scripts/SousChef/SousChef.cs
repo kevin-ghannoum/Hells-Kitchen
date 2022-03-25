@@ -3,15 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Character))]
+[RequireComponent(typeof(PathfindingAgent))]
 public class SousChef : MonoBehaviour
 {
-    [SerializeField] protected float followDistance;
+    [SerializeField] public float followDistance;
     [SerializeField] public float attackRange;
+    [SerializeField] public float searchRange; // must be bigger than follow Distance and attackRange
     [SerializeField] public GameObject player;
+    [SerializeField] public PathfindingAgent agent;
     public Character character { get; set; }
+    [SerializeField] public Transform targetEnemy;
+    // public Transform currentEnemyTarget { get; set; }
+    [SerializeField] public Transform targetLoot;
+    // public Transform currentLootTarget { get; set; }
+
     void Start()
     {
         character = gameObject.GetComponent<Character>();
+        agent.Target = player.transform.position;
+        agent.ArrivalRadius = followDistance;
+    }
+
+    void Update(){
+        bool enemyFound = false;
+
+        // if the souschef does not have an enemy target or if the former target is out of search range
+        // find a new enemy target
+        if(targetEnemy == null || (targetEnemy != null && Vector3.Distance(targetEnemy.position, transform.position) > searchRange)){
+            enemyFound = FindEnemy();
+        }
+
+        // if no ememy found around, find a new loot target
+        // makes sure to deal with enemies nearby first
+        if(!enemyFound){
+            if(targetLoot == null || (targetLoot != null && Vector3.Distance(targetLoot.position, transform.position) > searchRange)){
+                //update loot target
+                FindLoot();
+            }          
+        }
     }
 
     public void Follow()
@@ -31,33 +60,70 @@ public class SousChef : MonoBehaviour
     {
     }
 
-    [SerializeField] Transform exampleEnemy;
-    public Transform currentEnemyTarget { get; set; }
-
-    [SerializeField] Transform exampleLoot;
-    public Transform currentLootTarget { get; set; }
-    public void FindEnemy()
+    public bool FindEnemy()
     {
         //code to loop through enemies within vision and find closest 1
-        currentEnemyTarget = exampleEnemy;
+        // currentEnemyTarget = exampleEnemy;
         //if no enemies within vision, set currentEnemyTarget = null;
+
+        // cast rays around souschef to search for enemies
+        float distance = Mathf.Infinity;
+        for(int i = 0; i < 360; i += 5 ){
+            RaycastHit hit;
+            if(Physics.Raycast(transform.position, Vector3.zero + new Vector3(i, 0, 0), out hit, searchRange)){
+                if(hit.transform.tag == "Enemy"){
+                    float currentDistance = (targetEnemy.position - this.transform.position).magnitude;
+                    if(currentDistance < distance){
+                        // find the enemy with closest distance
+                        targetEnemy = hit.transform;
+                        distance = currentDistance;
+                    }
+                }
+            }
+        }
+
+        // enemy found, return true
+        if(targetEnemy != null){
+            return true;
+        }
+
+        return false;
     }
+
     public void FindLoot() {
-        currentLootTarget = exampleLoot;
+        // currentLootTarget = exampleLoot;
+
+        // cast rays around souschef to search for loots
+        float distance = Mathf.Infinity;
+        for(int i = 0; i < 360; i += 5 ){
+            RaycastHit hit;
+            if(Physics.Raycast(transform.position, Vector3.zero + new Vector3(i, 0, 0), out hit, searchRange)){
+                if(hit.transform.tag == "Enemy"){
+                    float currentDistance = (targetEnemy.position - this.transform.position).magnitude;
+                    if(currentDistance < distance){
+                        // find the loot with closest distance
+                        targetEnemy = hit.transform;
+                        distance = currentDistance;
+                    }
+                }
+            }
+        }
     }
-    public float getDistanceToEnemy()
+
+    public float GetDistanceToEnemy()
     {
-        if (currentEnemyTarget == null)
+        if (targetEnemy == null)
             return float.NaN;
         else
-            return (currentEnemyTarget.position - transform.position).magnitude;
+            return (targetEnemy.position - transform.position).magnitude;
     }
 
     public void MoveToEnemy()
     {
-        transform.LookAt(currentEnemyTarget);
+        transform.LookAt(targetEnemy);
         transform.position += transform.forward * character.speed * Time.deltaTime;
     }
+
     public void Flee()
     {
         /*
@@ -67,12 +133,12 @@ public class SousChef : MonoBehaviour
         
         we can probably just make it run away from the closest enemy
          */
-        transform.rotation = Quaternion.LookRotation(transform.position - currentEnemyTarget.position);
+        transform.rotation = Quaternion.LookRotation(transform.position - targetEnemy.position);
         transform.position += transform.forward * character.speed * Time.deltaTime;
     }
 
     //these are for healer mostly, to be at a 
-    public float getDistanceToPlayer()
+    public float GetDistanceToPlayer()
     {
         return (player.transform.position - transform.position).magnitude;
     }

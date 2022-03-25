@@ -13,18 +13,18 @@ public class HealerMoveToTargetState : HealerBaseState
     {
         healer.sc.FindEnemy();
         healer.sc.FindLoot();
-        if (healer.sc.character.isLowHP() && healer.sc.currentEnemyTarget == null)
+        if (healer.sc.character.isLowHP() && healer.sc.targetEnemy == null)
         {
             healer.SwitchState(healer.healState);
             return;
         }
-        else if (healer.sc.currentEnemyTarget != null)
+        else if (healer.sc.targetEnemy != null)
         {
-            if (healer.sc.getDistanceToEnemy() > healer.sc.attackRange + 2)
+            if (healer.sc.GetDistanceToEnemy() > healer.sc.attackRange + 2)
             {
                 healer.sc.MoveToEnemy();
             }
-            else if (healer.sc.getDistanceToEnemy() < healer.sc.attackRange - 2)
+            else if (healer.sc.GetDistanceToEnemy() < healer.sc.attackRange - 2)
             {
                 healer.sc.Flee();
             }
@@ -38,7 +38,7 @@ public class HealerMoveToTargetState : HealerBaseState
                 return;
             }
         }
-        else if (healer.sc.currentLootTarget != null)
+        else if (healer.sc.targetLoot != null)
         {
             healer.SwitchState(healer.lootState);
             return;

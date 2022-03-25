@@ -11,10 +11,9 @@ public class HealerStateManager : MonoBehaviour
     public HealerLootState lootState = new HealerLootState();
     public HealerHealState healState = new HealerHealState();
 
-
-
     public SousChef sc { get; set; }
     public SpellManager spells { get; set; }
+
     private void Start()
     {
         spells = gameObject.GetComponent<SpellManager>();

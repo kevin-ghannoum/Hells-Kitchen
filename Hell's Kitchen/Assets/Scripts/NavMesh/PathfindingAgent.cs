@@ -29,6 +29,14 @@ public class PathfindingAgent : MonoBehaviour {
         }
     }
 
+    public float ArrivalRadius {
+        get => arrivalRadius;
+        set {
+            arrivalRadius = value;
+            RecalculatePath();
+        }
+    }
+
     public Vector3 Velocity => _velocity;
 
     private void Update() {
