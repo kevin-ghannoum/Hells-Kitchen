@@ -1,16 +1,35 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using Player;
 using UnityEngine;
 
 public class ItemDrop : MonoBehaviour
 {
-    [SerializeField] private Item item;
-    [SerializeField] private int quantity;
-    
+    private Item item;
+
+    private Dictionary<string, Item> allItems;
+    private void Start()
+    {
+        allItems = 
+            typeof(Items).GetFields(BindingFlags.Public | BindingFlags.Static).ToDictionary(f => f.Name, f => (Item)f.GetValue(this));
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Player character = other.gameObject.GetComponent<Player>();
-            character.AddItemToInventory(item, quantity);
+            PlayerController player = other.gameObject.GetComponent<PlayerController>();
+
+            if (allItems.TryGetValue(gameObject.name, out item))
+            {
+                player.AddItemToInventory(item,  1);
+                Destroy(gameObject);
+            }
+            else
+            {
+                Debug.LogError("Added item must be part of the defined list of Items");
+            }
         }
     }
 }
