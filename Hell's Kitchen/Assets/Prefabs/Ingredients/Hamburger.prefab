@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 722724576470500466}
+  - component: {fileID: 8900199675821919435}
   m_Layer: 0
   m_Name: Hamburger
   m_TagString: Untagged
@@ -31,6 +32,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &8900199675821919435
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5561624463644519806}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.804601
+  m_Center: {x: 0.021820307, y: 0.15733767, z: -0.021264851}
 --- !u!1001 &6345115261542592542
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44,15 +58,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a6346fbb48c863945b2dc968619e2d4b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.67803764
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a6346fbb48c863945b2dc968619e2d4b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.046110447
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a6346fbb48c863945b2dc968619e2d4b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.998758
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a6346fbb48c863945b2dc968619e2d4b, type: 3}
       propertyPath: m_LocalRotation.w
