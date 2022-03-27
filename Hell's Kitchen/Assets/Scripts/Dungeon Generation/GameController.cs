@@ -1,7 +1,5 @@
 // Developed using : https://www.raywenderlich.com/82-procedural-generation-of-mazes-with-unity
-using System;
 using UnityEngine;
-using UnityEngine.UI;
 using Player;
 
 namespace Dungeon_Generation

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
 
 public class Cooking : MonoBehaviour
@@ -8,9 +9,9 @@ public class Cooking : MonoBehaviour
         Dictionary<Item, bool> ingredientCheckList = new Dictionary<Item, bool>();
         foreach (var (item, quantity) in ingredientList)
         {
-            if (Player.Instance.GetPlayerInventory().ContainsKey(item)) // if ingredient in inventory
+            if (PlayerController.Instance.GetPlayerInventory().ContainsKey(item)) // if ingredient in inventory
             {
-                if (Player.Instance.GetPlayerInventory()[item] >= quantity) // if ingredient qt sufficient
+                if (PlayerController.Instance.GetPlayerInventory()[item] >= quantity) // if ingredient qt sufficient
                 {
                     ingredientCheckList[item] = true;
                 }
@@ -41,11 +42,11 @@ public class Cooking : MonoBehaviour
             // remove used items
             foreach (var (item, quantity) in ingredientList)
             {
-                Player.Instance.RemoveItemFromInventory(item, quantity);
+                PlayerController.Instance.RemoveItemFromInventory(item, quantity);
             }
             
             // add recipe result to inventory
-            Player.Instance.AddItemToInventory(recipe.GetRecipeResult(), 1);
+            PlayerController.Instance.AddItemToInventory(recipe.GetRecipeResult(), 1);
 
             return true;
         }

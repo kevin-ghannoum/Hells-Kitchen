@@ -8,7 +8,7 @@ public static class Recipes
         {
             return new List<(Item item, int quantity)>(){
                 (Items.PorkChop, 1),
-                (Items.Mushrooms, 1)
+                (Items.Mushroom, 1)
             };
         }
 
@@ -23,7 +23,7 @@ public static class Recipes
         public List<(Item item, int quantity)> GetIngredientList()
         {
             return new List<(Item item, int quantity)>(){
-                (Items.Mushrooms, 2),
+                (Items.Mushroom, 2),
                 (Items.Honey, 1)
             };
         }
