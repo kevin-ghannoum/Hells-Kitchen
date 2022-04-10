@@ -1,15 +1,47 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using Common.Interfaces;
+using Input;
+using Player;
 using UnityEngine;
 
-public class Sword : MonoBehaviour
+namespace Weapons
 {
-
-    public float Damage = 10f;
-
-    private void OnCollisionEnter(Collision collision)
+    public class Sword : MonoBehaviour
     {
-        throw new NotImplementedException();
+        public float Damage = 10f;
+
+        [SerializeField] private Vector3 position = Vector3.zero;
+        [SerializeField] private Quaternion rotation = Quaternion.identity;
+
+        private InputManager _input => InputManager.Instance;
+
+        private void Start()
+        {
+            OnEquip();
+            GameObject.FindObjectOfType<PlayerController>();
+        }
+
+
+        public void OnEquip()
+        {
+            gameObject.SetActive(true);
+            //transform.parent.transform.position = position;
+            //transform.parent.transform.rotation = rotation;
+        }
+    
+        public void OnUnequip()
+        {
+            gameObject.SetActive(true);
+        }
+    
+        private void OnCollisionEnter(Collision collision)
+        {
+            var obj = collision.gameObject;
+            if (_input.attack && obj.TryGetComponent(out IKillable killable))
+            {
+                killable.TakeDamage(Damage);
+            }
+        }
     }
 }
+

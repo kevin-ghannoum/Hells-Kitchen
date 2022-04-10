@@ -8,13 +8,15 @@ namespace Player
     {
         private Animator animator;
         private CharacterController characterController;
-
+        
         [SerializeField] private float runSpeed = 15f;
         [SerializeField] private float walkSpeed = 10f;
         [SerializeField] private float turnSmoothVelocity = 10f;
         [SerializeField] private float speedSmoothVelocity = 10f;
         private float speed = 0f;
-        
+
+        [SerializeField] public Transform CharacterHand;
+
         private InputManager _input => InputManager.Instance;
 
         private void Start()
