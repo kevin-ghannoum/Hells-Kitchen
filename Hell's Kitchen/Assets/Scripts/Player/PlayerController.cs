@@ -47,6 +47,7 @@ namespace Player
             RotatePlayer();
         }
 
+        #region PlayerActions
         void Attack(InputAction.CallbackContext callbackContext)
         {
             animator.SetTrigger(PlayerAnimator.SwordAttack);
@@ -61,7 +62,9 @@ namespace Player
         {
             animator.SetTrigger(PlayerAnimator.PickUp);
         }
+        #endregion
 
+        #region PlayerMovement
         private void MovePlayer()
         {
             float  targetSpeed = _input.move.normalized.magnitude * GetMovementSpeed();
@@ -84,7 +87,9 @@ namespace Player
         {
             return _input.run ? runSpeed : walkSpeed;
         }
-        
+        #endregion
+
+        #region PlayerInventory
         public Dictionary<Item, int> GetPlayerInventory()
         {
             return _inventory.GetInventory();
@@ -99,5 +104,6 @@ namespace Player
         {
             _inventory.RemoveItemFromInventory(item,quantity);
         }
+        #endregion
     }
 }

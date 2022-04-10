@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Inventory
 {
@@ -28,12 +29,14 @@ public class Inventory
     {
         if (itemDictionary.ContainsKey(item))
         {
-            if (itemDictionary[item] - 1 < 0)
+            if (itemDictionary[item] - 1 <= 0)
             {
                 itemDictionary.Remove(item);
             }
-
-            itemDictionary[item] -= quantity;
+            else
+            {
+                itemDictionary[item] -= quantity;   
+            }
         }
     }
 }

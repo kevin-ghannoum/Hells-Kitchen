@@ -6,6 +6,9 @@ public class Cooking : MonoBehaviour
 {
     private bool InventoryContainsAllIngredients(List<(Item item, int quantity)> ingredientList)
     {
+        if (PlayerController.Instance.GetPlayerInventory().Count == 0)
+            return false;
+        
         Dictionary<Item, bool> ingredientCheckList = new Dictionary<Item, bool>();
         foreach (var (item, quantity) in ingredientList)
         {
@@ -33,7 +36,7 @@ public class Cooking : MonoBehaviour
         return true;
     }
 
-    private bool CookRecipe(IRecipe recipe)
+    public bool CookRecipe(IRecipe recipe)
     {
         List<(Item item, int quantity)> ingredientList = recipe.GetIngredientList();
         
@@ -47,10 +50,8 @@ public class Cooking : MonoBehaviour
             
             // add recipe result to inventory
             PlayerController.Instance.AddItemToInventory(recipe.GetRecipeResult(), 1);
-
             return true;
         }
-
         return false;
     }
 }
