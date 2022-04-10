@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,6 +9,8 @@ namespace Player
     {
         private Animator animator;
         private CharacterController characterController;
+        private Inventory _inventory;
+        public static PlayerController Instance; // singleton
 
         [SerializeField] private float runSpeed = 15f;
         [SerializeField] private float walkSpeed = 10f;
@@ -21,10 +24,18 @@ namespace Player
         {
             animator = GetComponent<Animator>();
             characterController = GetComponent<CharacterController>();
+            _inventory = new Inventory();
         }
 
         private void Awake()
         {
+            // Singleton instance
+            if (Instance != null && Instance != this) {
+                Destroy(this);
+            } else {
+                Instance = this;
+            }
+            
             _input.reference.actions["Roll"].performed += Roll;
             _input.reference.actions["Attack"].performed += Attack;
             _input.reference.actions["PickUp"].performed += PickUp;
@@ -36,6 +47,7 @@ namespace Player
             RotatePlayer();
         }
 
+        #region PlayerActions
         void Attack(InputAction.CallbackContext callbackContext)
         {
             animator.SetTrigger(PlayerAnimator.SwordAttack);
@@ -50,7 +62,9 @@ namespace Player
         {
             animator.SetTrigger(PlayerAnimator.PickUp);
         }
+        #endregion
 
+        #region PlayerMovement
         private void MovePlayer()
         {
             float targetSpeed = _input.move.normalized.magnitude * GetMovementSpeed();
@@ -73,5 +87,23 @@ namespace Player
         {
             return _input.run ? runSpeed : walkSpeed;
         }
+        #endregion
+
+        #region PlayerInventory
+        public Dictionary<Item, int> GetPlayerInventory()
+        {
+            return _inventory.GetInventory();
+        }
+
+        public void AddItemToInventory(Item item, int quantity)
+        {
+            _inventory.AddItemToInventory(item, quantity);
+        }
+
+        public void RemoveItemFromInventory(Item item, int quantity)
+        {
+            _inventory.RemoveItemFromInventory(item,quantity);
+        }
+        #endregion
     }
 }
