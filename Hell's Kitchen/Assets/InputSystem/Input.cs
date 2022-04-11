@@ -73,6 +73,15 @@ namespace InputSystem
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DropItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""0cf23d2b-bed0-427c-a481-b4f7c0bc0e7a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -145,7 +154,7 @@ namespace InputSystem
                 {
                     ""name"": """",
                     ""id"": ""5d221342-04e2-4cf1-9111-5b40f11ce05d"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
@@ -172,6 +181,17 @@ namespace InputSystem
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
                     ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a9901cf8-9356-4e43-8429-3e656b6eae90"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DropItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -204,6 +224,7 @@ namespace InputSystem
             m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
             m_Player_Roll = m_Player.FindAction("Roll", throwIfNotFound: true);
             m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
+            m_Player_DropItem = m_Player.FindAction("DropItem", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -268,6 +289,7 @@ namespace InputSystem
         private readonly InputAction m_Player_Attack;
         private readonly InputAction m_Player_Roll;
         private readonly InputAction m_Player_Run;
+        private readonly InputAction m_Player_DropItem;
         public struct PlayerActions
         {
             private @PlayerInput m_Wrapper;
@@ -277,6 +299,7 @@ namespace InputSystem
             public InputAction @Attack => m_Wrapper.m_Player_Attack;
             public InputAction @Roll => m_Wrapper.m_Player_Roll;
             public InputAction @Run => m_Wrapper.m_Player_Run;
+            public InputAction @DropItem => m_Wrapper.m_Player_DropItem;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -301,6 +324,9 @@ namespace InputSystem
                     @Run.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
                     @Run.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
                     @Run.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
+                    @DropItem.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropItem;
+                    @DropItem.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropItem;
+                    @DropItem.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropItem;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -320,6 +346,9 @@ namespace InputSystem
                     @Run.started += instance.OnRun;
                     @Run.performed += instance.OnRun;
                     @Run.canceled += instance.OnRun;
+                    @DropItem.started += instance.OnDropItem;
+                    @DropItem.performed += instance.OnDropItem;
+                    @DropItem.canceled += instance.OnDropItem;
                 }
             }
         }
@@ -340,6 +369,7 @@ namespace InputSystem
             void OnAttack(InputAction.CallbackContext context);
             void OnRoll(InputAction.CallbackContext context);
             void OnRun(InputAction.CallbackContext context);
+            void OnDropItem(InputAction.CallbackContext context);
         }
     }
 }
