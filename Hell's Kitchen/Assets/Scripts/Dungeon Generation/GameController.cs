@@ -1,4 +1,5 @@
 // Developed using : https://www.raywenderlich.com/82-procedural-generation-of-mazes-with-unity
+using System;
 using UnityEngine;
 using Player;
 
@@ -19,7 +20,7 @@ namespace Dungeon_Generation
             generator = GetComponent<MazeConstructor>();
             StartNewGame();
         }
-        
+
         private void StartNewGame()
         {
             StartNewMaze();
@@ -27,11 +28,11 @@ namespace Dungeon_Generation
         
         private void StartNewMaze()
         {
-            generator.GenerateNewMaze(GetRandomOddNumberInRange(9, 15), GetRandomOddNumberInRange(7, 13), OnStartTrigger, OnGoalTrigger);
+            generator.GenerateNewMaze(GetRandomOddNumberInRange(20, 30), GetRandomOddNumberInRange(20, 30), OnStartTrigger, OnGoalTrigger);
 
-            float x = generator.StartCol * generator.HallWidth;
+            float x = generator.StartCol;
             float y = playerHeightPosition;
-            float z = generator.StartRow * generator.HallWidth;
+            float z = generator.StartRow;
             player.transform.position = new Vector3(x, y, z);
 
             goalReached = false;
