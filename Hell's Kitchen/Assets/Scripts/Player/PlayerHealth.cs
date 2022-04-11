@@ -6,6 +6,7 @@ namespace Player
 {
     public class PlayerHealth : MonoBehaviour, IKillable
     {
+        public const float MaxHitPoints = 100f;
         [SerializeField] private Animator animator;
         [SerializeField] private float _hitPoints = 100;
         private UnityEvent _killed;
