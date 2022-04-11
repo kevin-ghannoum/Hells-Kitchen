@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace Weapons
 {
-    public class Sword : MonoBehaviour
+    public class Sword : MonoBehaviour, IWeapon
     {
-        public float Damage = 10f;
+        public float Damage { get; } = 10f;
 
         [SerializeField] private Vector3 position = Vector3.zero;
         [SerializeField] private Quaternion rotation = Quaternion.identity;
@@ -19,7 +19,7 @@ namespace Weapons
         {
             OnEquip();
         }
-        
+
         public void OnEquip()
         {
             Transform hand = GameObject.FindObjectOfType<PlayerController>().CharacterHand;
@@ -28,9 +28,9 @@ namespace Weapons
             
             gameObject.SetActive(true);
             this.transform.parent.transform.parent = hand;
-            // this.transform.parent.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-            //this.transform.parent.transform.localPosition = position;
-            //this.transform.rotation = rotation;
+            this.transform.parent.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+            this.transform.parent.transform.localPosition = position;
+            this.transform.rotation = rotation;
         }
     
         public void OnUnequip()
