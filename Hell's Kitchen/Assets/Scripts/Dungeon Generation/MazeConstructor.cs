@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using Common.Enums;
 using UnityEngine;
 
 namespace Dungeon_Generation
