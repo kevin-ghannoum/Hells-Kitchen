@@ -1,20 +1,11 @@
 fileFormatVersion: 2
-guid: d1f135758f6a86044a53ab0fe835ed83
+guid: 31ffeb9647fd5594f87d68d17e7c1e05
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable:
-  - first:
-      74: 1988171045948695719
-    second: PistolArmature|Fire
-  - first:
-      74: -2653128793843731477
-    second: PistolArmature|Reload
-  - first:
-      74: -8629809229752072323
-    second: PistolArmature|Slide
+  internalIDToNameTable: []
   externalObjects: {}
   materials:
-    materialImportMode: 2
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -82,7 +73,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 1
+  importAnimation: 0
   humanDescription:
     serializedVersion: 3
     human: []

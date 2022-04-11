@@ -40,7 +40,7 @@ namespace Player
             }
             
             _input.reference.actions["Roll"].performed += Roll;
-            _input.reference.actions["Attack"].performed += Attack;
+           
             _input.reference.actions["PickUp"].performed += PickUp;
         }
 
@@ -51,10 +51,6 @@ namespace Player
         }
 
         #region PlayerActions
-        void Attack(InputAction.CallbackContext callbackContext)
-        {
-            animator.SetTrigger(PlayerAnimator.SwordAttack);
-        }
 
         void Roll(InputAction.CallbackContext callbackContext)
         {

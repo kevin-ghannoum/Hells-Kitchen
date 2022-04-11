@@ -5,6 +5,5 @@ namespace Weapons
     {
         public void OnEquip();
         public void OnUnequip();
-        public float Damage { get; }
     }
 }

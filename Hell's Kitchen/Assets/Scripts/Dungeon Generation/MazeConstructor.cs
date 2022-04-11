@@ -1,5 +1,6 @@
 // Developed using : https://www.raywenderlich.com/82-procedural-generation-of-mazes-with-unity
 
+using Common.Enums;
 using UnityEngine;
 
 namespace Dungeon_Generation
