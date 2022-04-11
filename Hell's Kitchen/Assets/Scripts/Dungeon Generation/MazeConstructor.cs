@@ -2,26 +2,28 @@
 
 using System;
 using System.Collections.Generic;
+using Common.Enums;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Dungeon_Generation
 {
     public class MazeConstructor : MonoBehaviour
     {
-        public bool showDebug;
+        [SerializeField] private bool showDebug = false;
 
         [Header("Prefabs")]
         [SerializeField] private GameObject floorPrefab;
         [SerializeField] private GameObject wallPrefab;
+        [SerializeField] private GameObject torchPrefab;
         
-        [Header("Materials")]
-        [SerializeField] private Material startMat;
-        [SerializeField] private Material treasureMat;
-
         [Header("Generation Settings")]
-        [SerializeField][Range(0f, 1f)] private float chanceOfEmptySpace = 0.1f;
-        [SerializeField] private float hallwayWidth = 5.0f;
-        [SerializeField] private float hallwayHeight = 3.0f;
+        [SerializeField][Range(0f, 1f)] private float placementThreshold = 0.1f;
+        [SerializeField][Range(0f, 1f)] private float torchAbundance = 0.1f;
+        [SerializeField] private int minMazeSize = 20;
+        [SerializeField] private int maxMazeSize = 30;
+        [SerializeField] public float hallwayWidth = 5.0f;
+        [SerializeField] public float hallwayHeight = 3.0f;
 
         private MazeDataGenerator dataGenerator;
 
@@ -35,7 +37,7 @@ namespace Dungeon_Generation
 
         void Awake()
         {
-            dataGenerator = new MazeDataGenerator(chanceOfEmptySpace);
+            dataGenerator = new MazeDataGenerator(placementThreshold);
 
             // default to walls surrounding a single empty cell
             Data = new int[,] {
@@ -44,22 +46,15 @@ namespace Dungeon_Generation
                 {1, 1, 1}
             };
         }
-
-        private void OnValidate()
+        
+        public void GenerateNewMaze(TriggerEventHandler startCallback = null, TriggerEventHandler goalCallback = null)
         {
-            dataGenerator.placementThreshold = chanceOfEmptySpace;
-        }
-
-        public void GenerateNewMaze(int sizeRows, int sizeCols, TriggerEventHandler startCallback = null, TriggerEventHandler goalCallback = null)
-        {
-            if (sizeRows % 2 == 0 && sizeCols % 2 == 0)
-            {
-                Debug.LogError("Odd numbers work better for dungeon size.");
-            }
-
             DisposeOldMaze();
 
-            Data = dataGenerator.FromDimensions(sizeRows, sizeCols);
+            Data = dataGenerator.FromDimensions(
+                GetRandomOddNumberInRange(minMazeSize, maxMazeSize), 
+                GetRandomOddNumberInRange(minMazeSize, maxMazeSize)
+            );
 
             FindStartPosition();
             FindGoalPosition();
@@ -98,6 +93,14 @@ namespace Dungeon_Generation
                                 wall.transform.localPosition = wallPosition;
                                 wall.transform.localScale = new Vector3(1, hallwayHeight, hallwayWidth);
                                 wall.transform.localRotation = Quaternion.Euler(0, 90 * n, 0);
+
+                                if (Random.value < torchAbundance)
+                                {
+                                    const float torchHeight = 3.0f / 5.0f;
+                                    GameObject torch = Instantiate(torchPrefab, wall.transform);
+                                    torch.transform.localPosition = new Vector3(0, torchHeight, Random.Range(-0.5f, 0.5f));
+                                    torch.transform.localScale = new Vector3(1, 1 / hallwayHeight, 1 / hallwayWidth);
+                                }
                             }
                         }
                     }
@@ -222,7 +225,7 @@ namespace Dungeon_Generation
             obj.tag = Tags.Generated;
 
             obj.GetComponent<BoxCollider>().isTrigger = true;
-            obj.GetComponent<MeshRenderer>().sharedMaterial = startMat;
+            obj.GetComponent<MeshRenderer>().enabled = false;
 
             TriggerEventRouter trigger = obj.AddComponent<TriggerEventRouter>();
             trigger.callback = callback;
@@ -236,11 +239,18 @@ namespace Dungeon_Generation
             obj.tag = Tags.Generated;
 
             obj.GetComponent<BoxCollider>().isTrigger = true;
-            obj.GetComponent<MeshRenderer>().sharedMaterial = treasureMat;
+            obj.GetComponent<MeshRenderer>().enabled = false;
 
             TriggerEventRouter trigger = obj.AddComponent<TriggerEventRouter>();
             trigger.callback = callback;
         }
-
+        
+        private int GetRandomOddNumberInRange(int low, int high)
+        {
+            int num = UnityEngine.Random.Range(low, high);
+            if (num % 2 == 0) num += 1;
+            return num;
+        }
+        
     }
 }
