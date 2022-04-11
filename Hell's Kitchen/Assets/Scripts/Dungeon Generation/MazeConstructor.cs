@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using Common.Enums;
 using UnityEngine;
 
 namespace Dungeon_Generation
@@ -44,12 +45,7 @@ namespace Dungeon_Generation
                 {1, 1, 1}
             };
         }
-
-        private void OnValidate()
-        {
-            dataGenerator.placementThreshold = chanceOfEmptySpace;
-        }
-
+        
         public void GenerateNewMaze(int sizeRows, int sizeCols, TriggerEventHandler startCallback = null, TriggerEventHandler goalCallback = null)
         {
             if (sizeRows % 2 == 0 && sizeCols % 2 == 0)
