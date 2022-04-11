@@ -19,8 +19,7 @@ namespace Weapons
         {
             OnEquip();
         }
-
-
+        
         public void OnEquip()
         {
             Transform hand = GameObject.FindObjectOfType<PlayerController>().CharacterHand;
@@ -29,14 +28,14 @@ namespace Weapons
             
             gameObject.SetActive(true);
             this.transform.parent.transform.parent = hand;
-            this.transform.parent.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+            this.transform.parent.localScale = new Vector3(1f, 1f, 1f);
             //this.transform.parent.transform.localPosition = position;
             //this.transform.rotation = rotation;
         }
     
         public void OnUnequip()
         {
-            gameObject.SetActive(true);
+            gameObject.SetActive(false);
         }
     
         private void OnCollisionEnter(Collision collision)
