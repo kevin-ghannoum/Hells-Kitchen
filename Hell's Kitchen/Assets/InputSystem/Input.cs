@@ -154,7 +154,7 @@ namespace InputSystem
                 {
                     ""name"": """",
                     ""id"": ""5d221342-04e2-4cf1-9111-5b40f11ce05d"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
@@ -187,7 +187,7 @@ namespace InputSystem
                 {
                     ""name"": """",
                     ""id"": ""a9901cf8-9356-4e43-8429-3e656b6eae90"",
-                    ""path"": ""<Keyboard>/shift"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
