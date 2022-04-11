@@ -7,6 +7,7 @@ public class HealerMoveToTargetState : HealerBaseState
     public override void EnterState(HealerStateManager healer)
     {
         Debug.Log("@MoveToTarget state");
+        healer.animator.SetBool("isRunning", true);
     }
 
     public override void UpdateState(HealerStateManager healer)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,22 +11,28 @@ public class HealerStateManager : MonoBehaviour
     public HealerFollowState followState = new HealerFollowState();
     public HealerLootState lootState = new HealerLootState();
     public HealerHealState healState = new HealerHealState();
-
+    public Animator animator;
+    public Transform magicCircle;
     public SousChef sc { get; set; }
     public SpellManager spells { get; set; }
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         spells = gameObject.GetComponent<SpellManager>();
         sc = gameObject.GetComponent<SousChef>();
         currentState = followState;
+        currentState.EnterState(this);
     }
 
+    float attackCooldown = 1f;
+    float _attackCooldown = 0f;
+    public bool canAttack() => _attackCooldown >= attackCooldown;
+    public void resetAttackCD() => _attackCooldown = 0f;
     private void Update()
     {
+        _attackCooldown += Time.deltaTime;
         currentState.UpdateState(this);
-        // transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-
     }
 
     public void SwitchState(HealerBaseState state) {

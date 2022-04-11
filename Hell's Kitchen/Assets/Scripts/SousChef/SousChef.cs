@@ -45,14 +45,7 @@ public class SousChef : MonoBehaviour
         }
     }
 
-    public void Follow()
-    {
-        if ((player.transform.position - transform.position).magnitude > followDistance)
-        {
-            transform.LookAt(player.transform);
-            transform.position += transform.forward * character.speed * Time.deltaTime;
-        }
-    }
+
 
     public void Search()
     {
@@ -149,6 +142,9 @@ public class SousChef : MonoBehaviour
         transform.position += transform.forward * character.speed * Time.deltaTime;
     }
 
+    public void faceTargetEnemy() {
+        transform.LookAt(targetEnemy.transform.position);
+    }
     //these are for healer mostly, to be at a 
     public float GetDistanceToPlayer()
     {

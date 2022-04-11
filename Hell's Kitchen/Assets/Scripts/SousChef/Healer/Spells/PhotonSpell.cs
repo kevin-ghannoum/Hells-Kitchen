@@ -6,10 +6,40 @@ public class PhotonSpell : MonoBehaviour
 {
     float damage;
 
-    float selfDestructTimer = 4f;
-    
+    float selfDestructTimer = 5f;
+
+    public Transform spinners;
+    public Transform explosions;
+    public Transform AoE;
+    public Transform lights;
+    float spinStartDelay = 0.25f;
+    float explosionDelay = 1f;
+
+    float bigExplosionDelay = 1.5f;
+
+    private void Start()
+    {
+        transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
+    }
     private void Update()
     {
+        spinStartDelay -= Time.deltaTime;
+        if (spinStartDelay < 0 && spinners != null) {
+            spinners.gameObject.SetActive(true);
+        }
+
+        explosionDelay -= Time.deltaTime;
+        if (explosionDelay < 0) {
+            explosions.gameObject.SetActive(true);
+            spinners.gameObject.SetActive(false);
+        }
+
+        bigExplosionDelay -= Time.deltaTime;
+        if (bigExplosionDelay < 0) {
+            AoE.gameObject.SetActive(true);
+            lights.gameObject.SetActive(false);
+        }
+
         selfDestructTimer -= Time.deltaTime;
         if (selfDestructTimer <= 0)
             Destroy(gameObject);

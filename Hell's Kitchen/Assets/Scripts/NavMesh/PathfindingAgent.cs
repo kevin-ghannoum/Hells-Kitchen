@@ -22,6 +22,10 @@ public class PathfindingAgent : MonoBehaviour {
     private Vector3 _velocity;
     private bool _onArriveInvoked;
 
+    public bool standStill = false;
+    public bool isMoving() {
+        return Velocity != Vector3.zero;
+    }
     public Vector3 Target {
         get => _target;
         set {
@@ -71,7 +75,8 @@ public class PathfindingAgent : MonoBehaviour {
         // Apply acceleration to current velocity
         _onArriveInvoked = false;
         _velocity += Time.deltaTime * acceleration;
-        transform.position += Time.deltaTime * _velocity;
+        if (!standStill)
+            transform.position += Time.deltaTime * _velocity;
         if (_velocity != Vector3.zero) {
             transform.rotation = Quaternion.LookRotation(_velocity.normalized);
         }

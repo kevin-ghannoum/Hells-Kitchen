@@ -6,7 +6,6 @@ public class AnimationTest : MonoBehaviour
 {
     private float speed = 3f;
     private Animator animator;
-
     // Start is called before the first frame update
     void Start()
     {
