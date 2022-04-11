@@ -17,5 +17,5 @@ public class PathfindingEditor : Editor {
         }
         GUILayout.EndHorizontal();
     }
-    
+
 }
