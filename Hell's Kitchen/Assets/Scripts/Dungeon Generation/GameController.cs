@@ -11,6 +11,8 @@ namespace Dungeon_Generation
     {
         [SerializeField] private PlayerController player;
         [SerializeField] private float playerHeightPosition = 0f;
+        [SerializeField] private int minMazeSize = 20;
+        [SerializeField] private int maxMazeSize = 30;
 
         private MazeConstructor generator;
         
@@ -28,7 +30,7 @@ namespace Dungeon_Generation
         
         private void StartNewMaze()
         {
-            generator.GenerateNewMaze(GetRandomOddNumberInRange(20, 30), GetRandomOddNumberInRange(20, 30), OnStartTrigger, OnGoalTrigger);
+            generator.GenerateNewMaze(GetRandomOddNumberInRange(minMazeSize, maxMazeSize), GetRandomOddNumberInRange(minMazeSize, maxMazeSize), OnStartTrigger, OnGoalTrigger);
 
             float x = generator.StartCol;
             float y = playerHeightPosition;
