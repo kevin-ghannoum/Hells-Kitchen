@@ -226,7 +226,7 @@ public class Pathfinding : MonoBehaviour {
         }
     }
     
-    public PathNode FindPath(Vector3 start, Vector3 end, float navMeshHitRadius = 5.0f) {
+    public PathNode FindPath(Vector3 start, Vector3 end, float navMeshHitRadius = 2.0f) {
         // Snap start and end to navmesh
         if (!NavMesh.SamplePosition(start, out var startPos, navMeshHitRadius, NavMesh.AllAreas) || 
             !NavMesh.SamplePosition(end, out var endPos, navMeshHitRadius, NavMesh.AllAreas)) 
@@ -443,6 +443,12 @@ public class Pathfinding : MonoBehaviour {
                 }
             }
         }
+        
+        // Add last point
+        current = new PathNode {
+            Position = end,
+            Prev = current
+        };
 
         // Reconstruct path
         while (current.Prev != null) {
