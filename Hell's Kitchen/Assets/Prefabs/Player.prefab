@@ -765,6 +765,16 @@ Light:
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1 &8350513565505304460
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9200a6cdee39c3b4e8567963efaa7576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 4906682503514102737}
+  _hitPoints: 100
+  takeDamageSound: {fileID: 8300000, guid: 722bfe1a680d68a49b133308e897de2a, type: 3}
+  lowHealthSound: {fileID: 8300000, guid: 3f551c312493b4647ab1bd4892e8831a, type: 3}
+  deathSound: {fileID: 8300000, guid: 236fe2b344d071242bfdd14fbb3ca818, type: 3}
+--- !u!1 &2135681688315806248
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
