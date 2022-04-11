@@ -9,7 +9,11 @@ public class BeeEnemy : MonoBehaviour
     private GameObject target;
     private GameObject[] targetList;
     private float timeCounter;
+    private float wanderTimeCounter;
     private GameObject Hive;
+    private Vector3 wanderPos;
+    private float wanderRadius = 7f;
+    private bool wanderCheck = true;
     [SerializeField] private Animator anime;
 
     private void Start()
@@ -25,10 +29,11 @@ public class BeeEnemy : MonoBehaviour
     {
         target = findCloset(targetList);
         timeCounter += Time.deltaTime;
+        wanderTimeCounter += Time.deltaTime;
         Vector3 hiveDirection = Hive.transform.position - transform.position;
-        hiveDirection = new Vector3(hiveDirection.x, 0, hiveDirection.z);
+        hiveDirection.y = 0;
         Vector3 targetDirection = target.transform.position - transform.position;
-        targetDirection = new Vector3(targetDirection.x, 0, targetDirection.z);
+        targetDirection.y = 0;
 
         if (targetDirection.magnitude < 8)
         {
@@ -38,10 +43,41 @@ public class BeeEnemy : MonoBehaviour
         }
         else
         {
-            if (hiveDirection.magnitude > 5)
+            if (hiveDirection.magnitude > 8)
             {
                 transform.LookAt(Hive.transform);
                 transform.position += hiveDirection.normalized * Speed * Time.deltaTime;
+            }
+            else
+            {
+                //wander
+                if (wanderCheck)
+                {
+                    wanderPos = new Vector3(Random.Range(Hive.transform.position.x - wanderRadius, Hive.transform.position.x + wanderRadius),
+                                            0,
+                                            Random.Range(Hive.transform.position.z - wanderRadius, Hive.transform.position.z + wanderRadius));
+
+                    wanderCheck = false;
+                }
+
+                Vector3 wanderDirection = wanderPos - transform.position;
+                wanderDirection = new Vector3(wanderDirection.x, 0, wanderDirection.z);
+                Debug.Log(Vector3.Distance(wanderPos, transform.position));
+
+                if (Vector3.Distance(wanderPos, new Vector3(transform.position.x, 0, transform.position.z)) < 2f && wanderTimeCounter > Random.Range(2, 4))
+                {
+                    wanderCheck = true;
+                    wanderTimeCounter = 0;
+                }
+                else if(Vector3.Distance(wanderPos, new Vector3(transform.position.x, 0, transform.position.z)) < 2f)
+                {
+
+                }
+                else
+                {
+                    transform.rotation = Quaternion.LookRotation(wanderDirection);
+                    transform.position += wanderDirection.normalized * Speed * Time.deltaTime;
+                }
             }
         }
     }
