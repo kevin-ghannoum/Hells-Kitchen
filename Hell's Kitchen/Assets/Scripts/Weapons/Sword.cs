@@ -29,7 +29,7 @@ namespace Weapons
             
             gameObject.SetActive(true);
             this.transform.parent.transform.parent = hand;
-            this.transform.parent.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+            // this.transform.parent.localScale = new Vector3(0.3f, 0.3f, 0.3f);
             //this.transform.parent.transform.localPosition = position;
             //this.transform.rotation = rotation;
         }

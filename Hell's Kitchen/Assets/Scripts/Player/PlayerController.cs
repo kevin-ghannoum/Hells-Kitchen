@@ -21,7 +21,7 @@ namespace Player
 
         private void Start()
         {
-            animator = GetComponent<Animator>();
+            animator = GetComponentInChildren<Animator>();
             characterController = GetComponent<CharacterController>();
         }
 
