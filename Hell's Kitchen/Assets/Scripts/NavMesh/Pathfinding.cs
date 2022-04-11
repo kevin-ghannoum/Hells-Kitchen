@@ -9,27 +9,31 @@ using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
 [RequireComponent(typeof(NavMeshSurface))]
-public class Pathfinding : MonoBehaviour {
-    
+public class Pathfinding : MonoBehaviour
+{
+
     /**
      * Singleton instance of pathfinding script.
      */
     public static Pathfinding Instance;
-    
+
     /**
      * Represents a single triangle of the Nav Mesh, with its 3 vertices and adjacent triangles.
      */
-    private class PolygonNode {
+    private class PolygonNode
+    {
         public Vector3[] Vertices;
         public Vector3 Center;
         public PolygonNode[] Successors;
-        
-        public void SetVertices(Vector3[] vertices) {
+
+        public void SetVertices(Vector3[] vertices)
+        {
             Center = vertices.Aggregate(Vector3.zero, (vertex, acc) => acc + vertex) / vertices.Length;
             Vertices = vertices;
         }
 
-        public override bool Equals(object other) {
+        public override bool Equals(object other)
+        {
             if (other == null)
                 return false;
 
@@ -40,26 +44,29 @@ public class Pathfinding : MonoBehaviour {
             return Vertices.SequenceEqual(node.Vertices);
         }
     }
-    
+
     /**
      * Used for A* pathfinding from a start polygon to an end polygon.
      */
-    private class PolygonPathNode {
+    private class PolygonPathNode
+    {
         public readonly PolygonNode Node;
         public PolygonPathNode Next;
         public PolygonPathNode Prev;
-        
+
         public float F, G, H;
 
-        public PolygonPathNode(PolygonNode node, PolygonPathNode prev = null) {
+        public PolygonPathNode(PolygonNode node, PolygonPathNode prev = null)
+        {
             Node = node;
             Prev = prev;
         }
 
-        public override bool Equals(object other) {
+        public override bool Equals(object other)
+        {
             if (other == null)
                 return false;
-            
+
             if (other.GetType() != typeof(PolygonPathNode))
                 return false;
 
@@ -71,82 +78,95 @@ public class Pathfinding : MonoBehaviour {
     /**
      * Used to represent a full line path from start to end.
      */
-    public class PathNode {
+    public class PathNode
+    {
         public Vector3 Position;
         public PathNode Prev;
         public PathNode Next;
     }
 
     [Header("Parameters")]
-    [SerializeField] 
+    [SerializeField]
     private Vector3 startPosition;
 
-    [SerializeField] 
+    [SerializeField]
     private Vector3 endPosition;
-    
+
     [SerializeField]
     private bool showActivePath = true;
 
-    [SerializeField] 
+    [SerializeField]
     private bool showNavMesh = true;
 
-    [Header("References")] 
+    [Header("References")]
     [SerializeField]
     private NavMeshSurface navMeshSurface;
 
     private Mesh _mesh;
     private PolygonNode[] _nodes;
-    
+
     private PathNode _activePath;
     private PathNode _activePathEnd;
 
     #region Unity Events
-    
-    private void Awake() {
-        if (Instance != null && Instance != this) {
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
             Destroy(this);
-        } else {
+        }
+        else
+        {
             Instance = this;
         }
         Bake(true);
     }
-    
-    private void Reset() {
+
+    private void Reset()
+    {
         navMeshSurface = GetComponent<NavMeshSurface>();
         Bake(true);
     }
 
-    private void OnDrawGizmosSelected() {
+    private void OnDrawGizmosSelected()
+    {
         // Draw nav mesh
-        if (_mesh != null && showNavMesh) {
+        if (_mesh != null && showNavMesh)
+        {
             Gizmos.color = Color.white;
             Gizmos.DrawWireMesh(_mesh);
         }
 
         // Draw current active path
-        if (_activePath != null &&  _activePathEnd != null && showActivePath) {
+        if (_activePath != null && _activePathEnd != null && showActivePath)
+        {
             // Path
             PathNode currentNode = _activePath;
             Gizmos.color = Color.blue;
-            while (currentNode.Next != null) {
+            while (currentNode.Next != null)
+            {
                 Gizmos.DrawLine(currentNode.Position, currentNode.Next.Position);
                 currentNode = currentNode.Next;
             }
-            
+
             // Start
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(_activePath.Position, 1.0f);
-            
+
             // End
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(_activePathEnd.Position, 1.0f);
         }
     }
 
-    private void OnValidate() {
-        if (_nodes != null) {
+    private void OnValidate()
+    {
+        if (_nodes != null)
+        {
             _activePath = FindPath(startPosition, endPosition);
-            if (_activePath != null) {
+            if (_activePath != null)
+            {
                 _activePathEnd = _activePath;
                 while (_activePathEnd.Next != null)
                     _activePathEnd = _activePathEnd.Next;
@@ -158,15 +178,18 @@ public class Pathfinding : MonoBehaviour {
 
     #region Public Methods
 
-    public void RandomPath() {
+    public void RandomPath()
+    {
         // Reset active path
         _activePath = null;
         _activePathEnd = null;
-        
+
         var position = transform.position;
-        while (_activePath == null) {
+        while (_activePath == null)
+        {
             // Random start and end
-            do {
+            do
+            {
                 startPosition = new Vector3(
                     Random.Range(-_mesh.bounds.size.x / 2.0f, _mesh.bounds.size.x / 2.0f),
                     0,
@@ -178,17 +201,17 @@ public class Pathfinding : MonoBehaviour {
                     Random.Range(-_mesh.bounds.size.z / 2.0f, _mesh.bounds.size.z / 2.0f)
                 ) + position;
             } while (Vector3.Distance(startPosition, endPosition) < 10.0f);
-            
+
             // Compute path
             PolygonPathNode polyPath = FindPolygonPath(startPosition, endPosition);
             if (polyPath == null)
                 continue;
-            
+
             // Compute string pull
             _activePath = StringPull(polyPath, startPosition, endPosition);
             if (_activePath == null)
                 continue;
-            
+
             // Set end node to path
             _activePathEnd = _activePath;
             while (_activePathEnd.Next != null)
@@ -196,48 +219,54 @@ public class Pathfinding : MonoBehaviour {
         }
     }
 
-    public void Bake(bool force = false) {
+    public void Bake(bool force = false)
+    {
         if (_nodes != null && !force)
             return;
-        
+
         navMeshSurface.BuildNavMesh();
         var triangulation = NavMesh.CalculateTriangulation();
         var vertices = triangulation.vertices;
         var normals = vertices.Select(v => Vector3.up).ToArray();
         var indices = triangulation.indices;
         _mesh = new Mesh {
-            vertices = vertices, 
-            normals = normals, 
+            vertices = vertices,
+            normals = normals,
             triangles = indices
         };
 
         _nodes = new PolygonNode[indices.Length / 3];
-        for (var i = 0; i < _nodes.Length; i++) {
+        for (var i = 0; i < _nodes.Length; i++)
+        {
             _nodes[i] = new PolygonNode();
-            _nodes[i].SetVertices(new [] {
-                vertices[indices[i * 3]], 
-                vertices[indices[i * 3 + 1]], 
+            _nodes[i].SetVertices(new[] {
+                vertices[indices[i * 3]],
+                vertices[indices[i * 3 + 1]],
                 vertices[indices[i * 3 + 2]]
             });
         }
 
-        foreach (var node in _nodes) {
+        foreach (var node in _nodes)
+        {
             node.Successors = GenerateSuccessors(node);
         }
     }
-    
-    public PathNode FindPath(Vector3 start, Vector3 end, float navMeshHitRadius = 2.0f) {
+
+    public PathNode FindPath(Vector3 start, Vector3 end, float navMeshHitRadius = 3.0f)
+    {
         // Snap start and end to navmesh
-        if (!NavMesh.SamplePosition(start, out var startPos, navMeshHitRadius, NavMesh.AllAreas) || 
-            !NavMesh.SamplePosition(end, out var endPos, navMeshHitRadius, NavMesh.AllAreas)) 
+        if (!NavMesh.SamplePosition(start, out var startPos, navMeshHitRadius, NavMesh.AllAreas) ||
+            !NavMesh.SamplePosition(end, out var endPos, navMeshHitRadius, NavMesh.AllAreas))
             return null;
-        
+
         // Set new start and end positions
         start = startPos.position;
         end = endPos.position;
-        
+
         // Find polygon path to target
         PolygonPathNode polyPath = FindPolygonPath(start, end);
+        if (polyPath == null)
+            return null;
 
         // Apply string pulling to get line path
         _activePath = StringPull(polyPath, start, end);
@@ -249,21 +278,24 @@ public class Pathfinding : MonoBehaviour {
     }
 
     #endregion
-    
+
     #region Private Methods
-    
-    private PolygonNode[] GenerateSuccessors(PolygonNode node) {
+
+    private PolygonNode[] GenerateSuccessors(PolygonNode node)
+    {
         return _nodes.Where(otherNode => !node.Equals(otherNode))
             .Where(otherNode => otherNode.Vertices
                 .Where(v => !node.Vertices.Contains(v)).ToArray().Length == 1)
             .ToArray();
     }
 
-    private PolygonNode FindClosestNode(Vector3 position) {
+    private PolygonNode FindClosestNode(Vector3 position)
+    {
         return _nodes.FirstOrDefault(n => Utils.CheckPointInTriangle(n.Vertices, position));
     }
 
-    private PolygonPathNode FindPolygonPath(Vector3 start, Vector3 end) {
+    private PolygonPathNode FindPolygonPath(Vector3 start, Vector3 end)
+    {
         List<PolygonPathNode> openList = new List<PolygonPathNode>();
         List<PolygonPathNode> closedList = new List<PolygonPathNode>();
 
@@ -273,12 +305,19 @@ public class Pathfinding : MonoBehaviour {
         if (startNode == null || endNode == null)
             return null;
 
+        // No need to path find, we're on the same polygon
+        if (startNode.Equals(endNode))
+        {
+            return new PolygonPathNode(startNode);
+        }
+
         // Add start node to open list
         openList.Add(new PolygonPathNode(startNode));
 
         PolygonPathNode path = null;
 
-        while (openList.Count > 0) {
+        while (openList.Count > 0)
+        {
 
             // Pop lowest f node
             PolygonPathNode q = openList[0];
@@ -286,7 +325,8 @@ public class Pathfinding : MonoBehaviour {
 
             // Generate successors
             IEnumerable<PolygonPathNode> successors = q.Node.Successors.Select(s => new PolygonPathNode(s, q));
-            foreach (var s in successors) {
+            foreach (var s in successors)
+            {
 
                 // Compute g, h, f
                 s.G = q.G + Vector3.Distance(q.Node.Center, s.Node.Center);
@@ -294,7 +334,8 @@ public class Pathfinding : MonoBehaviour {
                 s.F = s.G + s.H;
 
                 // If s is the goal node, we've found the shortest path
-                if (s.Node.Equals(endNode)) {
+                if (s.Node.Equals(endNode))
+                {
                     path = s;
                     goto end;
                 }
@@ -321,9 +362,11 @@ public class Pathfinding : MonoBehaviour {
 
         end:
         // Reconstruct path forwards
-        if (path != null) {
+        if (path != null)
+        {
             float g = path.G;
-            while (path.Prev != null) {
+            while (path.Prev != null)
+            {
                 path.Prev.Next = path;
                 path = path.Prev;
             }
@@ -334,20 +377,24 @@ public class Pathfinding : MonoBehaviour {
         return path;
     }
 
-    private Vector3[] GetNextCommonEdge(PolygonPathNode node) {
+    private Vector3[] GetNextCommonEdge(PolygonPathNode node)
+    {
         if (node?.Next == null)
             return null;
 
         return node.Node.Vertices.Where(v => node.Next.Node.Vertices.Contains(v)).ToArray();
     }
 
-    private Vector3[][] BuildPortalList(PolygonPathNode node, Vector3 end) {
+    private Vector3[][] BuildPortalList(PolygonPathNode node, Vector3 end)
+    {
         List<Vector3[]> portals = new List<Vector3[]>();
 
-        while (node.Next != null) {
+        while (node.Next != null)
+        {
             Vector3[] nextPortals = GetNextCommonEdge(node);
             Vector3 dir = node.Next.Node.Center - node.Node.Center;
-            if (Utils.SignedAngle(dir, nextPortals[0] - node.Node.Center) < 0) {
+            if (Utils.SignedAngle(dir, nextPortals[0] - node.Node.Center) < 0)
+            {
                 var temp = nextPortals[0];
                 nextPortals[0] = nextPortals[1];
                 nextPortals[1] = temp;
@@ -361,89 +408,113 @@ public class Pathfinding : MonoBehaviour {
         return portals.ToArray();
     }
 
-    private PathNode StringPull(PolygonPathNode path, Vector3 start, Vector3 end) {
+    private PathNode StringPull(PolygonPathNode path, Vector3 start, Vector3 end)
+    {
         Vector3[][] portals = BuildPortalList(path, end);
-    
+
         Vector3 portalApex = start;
         Vector3 portalLeft = portals[0][0];
         Vector3 portalRight = portals[0][1];
         int apexIndex = 0, leftIndex = 0, rightIndex = 0;
         
+        // Simple paths, just construct one line from start to end
+        if (path.Next?.Next == null)
+        {
+            PathNode startNode = new PathNode() {
+                Position = start
+            };
+            PathNode endNode = new PathNode() {
+                Position = end
+            };
+            startNode.Next = endNode;
+            endNode.Prev = startNode;
+            return startNode;
+        }
+
         PathNode current = new PathNode() {
             Position = portalApex
         };
-    
+
         // Loop over every new portal
-        for (var i = 0; i < portals.Length; i++) {
+        for (var i = 0; i < portals.Length; i++)
+        {
             Vector3[] portal = portals[i];
             Vector3 left = portal[0];
             Vector3 right = portal[1];
 
             // Update right vertex
             // Check if point is inside funnel
-            if (portalApex == portalRight || Utils.SignedAngle(right - portalApex, portalRight - portalApex) <= 0) {
-                
+            if (portalApex == portalRight || Utils.SignedAngle(right - portalApex, portalRight - portalApex) <= 0)
+            {
+
                 // Attempt to tighten the funnel
-                if (Utils.SignedAngle(portalLeft - portalApex, right - portalApex) <= 0) {
+                if (Utils.SignedAngle(portalLeft - portalApex, right - portalApex) <= 0)
+                {
                     portalRight = right;
                     rightIndex = i;
-                } else {
+                }
+                else
+                {
                     // Cant tighten funnel, recalculate new apex and funnel
                     // Right over left, insert left to path and restart scan from portal left point
                     current = new PathNode {
                         Position = portalLeft,
                         Prev = current
                     };
-                    
+
                     // Make current left the new apex
                     portalApex = portalLeft;
                     apexIndex = leftIndex;
-                    
+
                     // Reset portal
                     portalLeft = portalApex;
                     portalRight = portalApex;
                     leftIndex = apexIndex;
                     rightIndex = apexIndex;
-                    
+
                     // Restart scan
                     i = apexIndex;
                     continue;
                 }
             }
-            
+
             // Update left vertex
             // Check if point is inside funnel
-            if (portalApex == portalLeft || Utils.SignedAngle(portalLeft - portalApex, left - portalApex) <= 0) {
-                
+            if (portalApex == portalLeft || Utils.SignedAngle(portalLeft - portalApex, left - portalApex) <= 0)
+            {
+
                 // Attempt to tighten the funnel
-                if (Utils.SignedAngle(left - portalApex, portalRight - portalApex) <= 0) {
+                if (Utils.SignedAngle(left - portalApex, portalRight - portalApex) <= 0)
+                {
                     portalLeft = left;
                     leftIndex = i;
-                } else {
+                }
+                else
+                {
                     // Cant tighten funnel, recalculate new apex and funnel
                     // Left over right, insert right to path and restart scan from portal right point
                     current = new PathNode {
                         Position = portalRight,
                         Prev = current
                     };
-                    
+
                     // Make current right the new apex
                     portalApex = portalRight;
                     apexIndex = rightIndex;
-                    
+
                     // Reset portal
                     portalLeft = portalApex;
                     portalRight = portalApex;
                     leftIndex = apexIndex;
                     rightIndex = apexIndex;
-                    
+
                     // Restart scan
                     i = apexIndex;
                     continue;
                 }
             }
         }
-        
+
         // Add last point
         current = new PathNode {
             Position = end,
@@ -451,14 +522,15 @@ public class Pathfinding : MonoBehaviour {
         };
 
         // Reconstruct path
-        while (current.Prev != null) {
+        while (current.Prev != null)
+        {
             current.Prev.Next = current;
             current = current.Prev;
         }
-    
+
         return current;
     }
-    
+
     #endregion
-    
+
 }

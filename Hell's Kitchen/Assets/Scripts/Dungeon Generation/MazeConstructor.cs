@@ -12,14 +12,18 @@ namespace Dungeon_Generation
     {
         [SerializeField] private bool showDebug = false;
 
-        [Header("Prefabs")]
+        [Header("Structure Prefabs")]
         [SerializeField] private GameObject floorPrefab;
         [SerializeField] private GameObject wallPrefab;
         [SerializeField] private GameObject torchPrefab;
+
+        [Header("Enemy Prefabs")]
+        [SerializeField] private GameObject[] enemies;
         
         [Header("Generation Settings")]
         [SerializeField][Range(0f, 1f)] private float placementThreshold = 0.1f;
         [SerializeField][Range(0f, 1f)] private float torchAbundance = 0.1f;
+        [SerializeField][Range(0f, 1f)] private float enemySpawnRate = 0.02f;
         [SerializeField] private int minMazeSize = 20;
         [SerializeField] private int maxMazeSize = 30;
         [SerializeField] public float hallwayWidth = 5.0f;
@@ -82,6 +86,11 @@ namespace Dungeon_Generation
                         GameObject floor = Instantiate(floorPrefab, parent.transform);
                         floor.transform.localPosition = floorPosition;
                         floor.transform.localScale = new Vector3(hallwayWidth, 1, hallwayWidth);
+
+                        if (Random.value < enemySpawnRate)
+                        {
+                            Instantiate(enemies[Random.Range(0, enemies.Length)], floorPosition, Quaternion.identity);
+                        }
 
                         Vector3?[] neighbours = GetEmptyNeighbours(i, j);
                         for (int n = 0; n < neighbours.Length; n++)

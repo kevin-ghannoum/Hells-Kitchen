@@ -62,9 +62,12 @@ MonoBehaviour:
   floorPrefab: {fileID: 3476309401252311896, guid: 5adcff05e0197484599e7744fa4b4af2, type: 3}
   wallPrefab: {fileID: 6892711901412886340, guid: a82c98f31df89164fb9221d8cbd3ff4d, type: 3}
   torchPrefab: {fileID: 2879379167002276502, guid: 69475d2cfa9c3e24795256ea6f177709, type: 3}
+  enemies:
+  - {fileID: 7839222235967640288, guid: 4ac12db71e65fbd4ca9d0a92c4b5e5b1, type: 3}
   placementThreshold: 0.1
   torchAbundance: 0.1
-  minMazeSize: 20
-  maxMazeSize: 30
+  enemySpawnRate: 0.05
+  minMazeSize: 10
+  maxMazeSize: 15
   hallwayWidth: 7
   hallwayHeight: 3
