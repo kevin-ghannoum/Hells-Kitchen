@@ -104,5 +104,10 @@ namespace Player
             _inventory.RemoveItemFromInventory(item,quantity);
         }
         #endregion
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            
+        }
     }
 }

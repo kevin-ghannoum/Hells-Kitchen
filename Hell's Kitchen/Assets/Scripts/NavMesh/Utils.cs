@@ -16,7 +16,7 @@ public static class Utils {
         double w1 = (e.x * (triangle[0].y - point.y) + e.y * (point.x - triangle[0].x)) / (d.x * e.y - d.y * e.x);
         double w2 = (point.y - triangle[0].y - w1 * d.y) / e.y;
         
-        return (w1 >= -0.05f) && (w2 >= -0.05f) && ((w1 + w2) <= 1.05f);
+        return (w1 >= 0.0f) && (w2 >= 0.0f) && ((w1 + w2) <= 1.0f);
     }
 
     public static float SignedAngle(Vector3 first, Vector3 second) {

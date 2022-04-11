@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
 
 public class HealerHealState : HealerBaseState
@@ -25,7 +26,7 @@ public class HealerHealState : HealerBaseState
         _healCastTime += Time.deltaTime;
         if (_healCastTime >= healCastTime) {
             //play heal animation
-            healer.sc.player.GetComponent<Player>().health += 20;
+            healer.sc.player.GetComponent<PlayerHealth>().HitPoints += 20;
             _healCastTime = 0f;
         }
         if (!healer.sc.character.isLowHP()) {

@@ -1,8 +1,17 @@
 fileFormatVersion: 2
-guid: bc87205eb1b18004a98ef29d089b55dd
+guid: d1f135758f6a86044a53ab0fe835ed83
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: 1988171045948695719
+    second: PistolArmature|Fire
+  - first:
+      74: -2653128793843731477
+    second: PistolArmature|Reload
+  - first:
+      74: -8629809229752072323
+    second: PistolArmature|Slide
   externalObjects: {}
   materials:
     materialImportMode: 2

@@ -5,16 +5,17 @@ TagManager:
   serializedVersion: 2
   tags:
   - Generated
+  - Pathfinding
   - Weapon
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
+  - Decorations
+  - Enemies
   - 
   - 
   - 
