@@ -1,10 +1,11 @@
 
+using UnityEngine.InputSystem;
+
 namespace Weapons
 {
     public interface IWeapon
     {
-        public void OnEquip();
-        public void OnUnequip();
-        public float Damage { get; }
+        public void PickUpItem();
+        public void Unequip(InputAction.CallbackContext callbackContext);
     }
 }

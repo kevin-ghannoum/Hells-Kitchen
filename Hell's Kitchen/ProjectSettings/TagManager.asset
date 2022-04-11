@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Generated
   - Pathfinding
+  - Weapon
   layers:
   - Default
   - TransparentFX

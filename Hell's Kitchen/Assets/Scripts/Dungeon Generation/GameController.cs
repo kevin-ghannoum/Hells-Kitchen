@@ -12,6 +12,8 @@ namespace Dungeon_Generation
     {
         [SerializeField] private PlayerController player;
         [SerializeField] private float playerHeightPosition = 0f;
+        [SerializeField] private int minMazeSize = 20;
+        [SerializeField] private int maxMazeSize = 30;
 
         private MazeConstructor generator;
         

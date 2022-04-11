@@ -54,7 +54,27 @@ ModelImporter:
   - first:
       74: -2469224417514991532
     second: CharacterArmature|Walk_Carry
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Clothes
+    second: {fileID: 2100000, guid: 933e44f8e3973a14d808b76a7b8347bd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Face
+    second: {fileID: 2100000, guid: 672c1b2c46f21e346b9e8ded453522b0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hat
+    second: {fileID: 2100000, guid: 933e44f8e3973a14d808b76a7b8347bd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Skin
+    second: {fileID: 2100000, guid: bd3318a35bcd3ce4b991e66aea8c58c1, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

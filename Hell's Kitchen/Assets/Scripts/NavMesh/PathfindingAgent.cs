@@ -23,6 +23,10 @@ public class PathfindingAgent : MonoBehaviour
     private Pathfinding.PathNode _path;
     private Vector3 _target;
 
+    public bool standStill = false;
+    public bool isMoving() {
+        return Velocity != Vector3.zero;
+    }
     public Vector3 Target {
         get => _target;
         set {
