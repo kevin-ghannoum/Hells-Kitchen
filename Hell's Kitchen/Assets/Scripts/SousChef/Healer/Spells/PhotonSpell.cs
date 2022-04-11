@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,16 +17,21 @@ public class PhotonSpell : MonoBehaviour
     float explosionDelay = 1f;
 
     float bigExplosionDelay = 1.5f;
-
+    float centerSpeed = 12f;
+    float arriveRadius = 0.75f;
     private void Start()
     {
         transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
+
     }
     private void Update()
     {
         spinStartDelay -= Time.deltaTime;
         if (spinStartDelay < 0 && spinners != null) {
             spinners.gameObject.SetActive(true);
+            foreach (Transform chile in spinners)
+                if ((transform.position - chile.position).magnitude > arriveRadius)
+                    chile.position = Vector3.MoveTowards(chile.position, transform.position, centerSpeed * Time.deltaTime);
         }
 
         explosionDelay -= Time.deltaTime;
