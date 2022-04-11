@@ -30,7 +30,7 @@ Transform:
   - {fileID: 5039314304759161803}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -140.15201, y: 114.316, z: 4.552002}
+  m_LocalEulerAnglesHint: {x: -148.754, y: 171.587, z: -22.289978}
 --- !u!1001 &4784376226696102944
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44,15 +44,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f89d566459dad2a47a16737cc7a67ed1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f89d566459dad2a47a16737cc7a67ed1, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f89d566459dad2a47a16737cc7a67ed1, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f89d566459dad2a47a16737cc7a67ed1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -137,5 +137,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 10
-  position: {x: 0, y: 0, z: 0}
-  rotation: {x: 0, y: 0, z: 0, w: 1}
+  position: {x: -0.0011, y: -0.0003, z: 0.0013}
+  rotation: {x: 0.12122425, y: -0.24986261, z: -0.9385286, w: -0.2050305}

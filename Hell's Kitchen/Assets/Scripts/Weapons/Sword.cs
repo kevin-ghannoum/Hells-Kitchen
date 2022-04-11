@@ -18,15 +18,20 @@ namespace Weapons
         private void Start()
         {
             OnEquip();
-            GameObject.FindObjectOfType<PlayerController>();
         }
 
 
         public void OnEquip()
         {
+            Transform hand = GameObject.FindObjectOfType<PlayerController>().CharacterHand;
+            if (!hand)
+                return;
+            
             gameObject.SetActive(true);
-            //transform.parent.transform.position = position;
-            //transform.parent.transform.rotation = rotation;
+            this.transform.parent.transform.parent = hand;
+            this.transform.parent.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+            //this.transform.parent.transform.localPosition = position;
+            //this.transform.rotation = rotation;
         }
     
         public void OnUnequip()
