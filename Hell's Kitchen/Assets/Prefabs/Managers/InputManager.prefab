@@ -49,6 +49,7 @@ MonoBehaviour:
   run: 0
   roll: 0
   attack: 0
+  dropItem: 0
   reference: {fileID: 207420216689281371}
 --- !u!114 &207420216689281371
 MonoBehaviour:
@@ -155,6 +156,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 1b503966-d30e-4d87-952a-7a57563f1444
     m_ActionName: Player/Run[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 207420216689281370}
+        m_TargetAssemblyTypeName: Input.InputManager, Core
+        m_MethodName: OnDropItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0cf23d2b-bed0-427c-a481-b4f7c0bc0e7a
+    m_ActionName: Player/DropItem[/Keyboard/shift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard & Mouse
   m_DefaultActionMap: Player

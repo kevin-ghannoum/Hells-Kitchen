@@ -433,7 +433,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.411315
+      - time: 0.55417216
         functionName: FireGun
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: aaee84ca9c7ae4c42bced68397b444e7, type: 3}

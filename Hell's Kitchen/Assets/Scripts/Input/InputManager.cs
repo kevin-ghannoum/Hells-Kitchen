@@ -11,6 +11,7 @@ namespace Input
         public bool run;
         public bool roll;
         public bool attack;
+        public bool dropItem;
 
         [Header("References")] 
         public PlayerInput reference;
@@ -59,6 +60,11 @@ namespace Input
         public void OnAttack(InputAction.CallbackContext context)
         {
             attack = context.ReadValueAsButton();
+        }
+        
+        public void OnDropItem(InputAction.CallbackContext context)
+        {
+            dropItem = context.ReadValueAsButton();
         }
     
     }

@@ -10,63 +10,91 @@ namespace Weapons
 {
     public class Sword : MonoBehaviour, IWeapon
     {
-        [SerializeField] private float damage = 10f;
 
         [SerializeField] private Vector3 position = Vector3.zero;
         [SerializeField] private Quaternion rotation = Quaternion.identity;
 
         private InputManager _input => InputManager.Instance;
         private Animator _playerAnimator;
+        private GameObject _player;
+        private bool _canBePickedUp = false;
+        private bool _isPickedUp = false;
 
         private void Awake()
         {
-            _playerAnimator = GameObject.FindWithTag(Tags.Player).GetComponentInChildren<Animator>();
-
+            _player = GameObject.FindWithTag(Tags.Player);
+            if (!_player)
+                return;
+            
+            _playerAnimator = _player.GetComponentInChildren<Animator>();
             if (!_playerAnimator)
                 throw new MissingReferenceException("Player Animator Not Found");
-            
-            _input.reference.actions["Attack"].performed += Attack;
-            if(!_input)
-                throw new MissingReferenceException("Input Not Found");
         }
 
-        private void Start()
+        public void PickUpItem()
         {
-            
-            // TODO Remove after testing
-            OnEquip();
+            ReparentObject();
+            AddListeners();
+            _isPickedUp = true;
+        }
+    
+        public void Unequip(InputAction.CallbackContext callbackContext)
+        {
+            _canBePickedUp = true;
+            _isPickedUp = false;
+            transform.parent = null;
+            RemoveListeners();
         }
 
-        public void OnEquip()
+        void Attack(InputAction.CallbackContext callbackContext)
+        {
+            _playerAnimator.SetTrigger(PlayerAnimator.SwordAttack);
+        }
+
+        private void ReparentObject()
         {
             Transform hand = GameObject.FindObjectOfType<PlayerController>().CharacterHand;
             if (!hand)
                 return;
             
-            gameObject.SetActive(true);
-            this.transform.parent.transform.parent = hand;
-            this.transform.parent.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-            this.transform.parent.transform.localPosition = position;
-            this.transform.localRotation = rotation;
+            gameObject.transform.SetParent(hand, false);
+            gameObject.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+            gameObject.transform.localPosition = position;
+            gameObject.transform.localRotation = rotation;
         }
-    
-        public void OnUnequip()
+
+        private void AddListeners()
         {
-            gameObject.SetActive(false);
+            if(!_input)
+                throw new MissingReferenceException("Input Not Found");
+            
+            _input.reference.actions["Attack"].performed += Attack;
+            _input.reference.actions["DropItem"].performed += Unequip;
         }
-    
-        private void OnCollisionEnter(Collision collision)
+
+        private void RemoveListeners()
         {
-            var obj = collision.gameObject;
-            if (_input.attack && obj.TryGetComponent(out IKillable killable))
-            {
-                killable.TakeDamage(damage);
-            }
+            _input.reference.actions["Attack"].performed -= Attack;
+            _input.reference.actions["DropItem"].performed -= Unequip;
         }
         
-        void Attack(InputAction.CallbackContext callbackContext)
+        private void OnTriggerEnter(Collider other)
         {
-            _playerAnimator.SetTrigger(PlayerAnimator.SwordAttack);
+            _canBePickedUp = true;
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            _canBePickedUp = false;
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (_canBePickedUp &&!_isPickedUp && _input.pickUp)
+            {
+                PickUpItem();
+                _canBePickedUp = false;
+            }
         }
     }
 }
