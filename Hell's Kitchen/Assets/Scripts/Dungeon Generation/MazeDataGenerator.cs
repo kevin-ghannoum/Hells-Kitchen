@@ -6,7 +6,7 @@ namespace Dungeon_Generation
 {
     public class MazeDataGenerator
     {
-        private float placementThreshold;    // chance of empty space
+        public float placementThreshold { get; set; } // chance of empty space
 
         public MazeDataGenerator(float chanceOfEmptySpace)
         {
