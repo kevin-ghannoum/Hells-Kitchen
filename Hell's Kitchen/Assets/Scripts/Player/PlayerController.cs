@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 using Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,12 +18,14 @@ namespace Player
         [SerializeField] private float turnSmoothVelocity = 10f;
         [SerializeField] private float speedSmoothVelocity = 10f;
         private float speed = 0f;
-        
+
+        [SerializeField] public Transform CharacterHand;
+
         private InputManager _input => InputManager.Instance;
 
         private void Start()
         {
-            animator = GetComponent<Animator>();
+            animator = GetComponentInChildren<Animator>();
             characterController = GetComponent<CharacterController>();
             _inventory = new Inventory();
         }
@@ -105,5 +108,10 @@ namespace Player
             _inventory.RemoveItemFromInventory(item,quantity);
         }
         #endregion
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            
+        }
     }
 }
