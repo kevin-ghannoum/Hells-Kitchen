@@ -6,13 +6,13 @@ public class PathfindingAgent : MonoBehaviour
 
     [Header("Parameters")]
     [SerializeField]
-    private float arrivalRadius = 0.5f;
-
-    [SerializeField]
-    private float maxVelocity = 2.0f;
+    public float ArrivalRadius = 0.5f;
 
     [SerializeField]
     private float time2target = 0.5f;
+    
+    [SerializeField]
+    private float maxVelocity = 2.0f;
     
     [Header("References")]
     [SerializeField]
@@ -24,9 +24,7 @@ public class PathfindingAgent : MonoBehaviour
     private Vector3 _target;
 
     public bool standStill = false;
-    public bool isMoving() {
-        return Velocity != Vector3.zero;
-    }
+    
     public Vector3 Target {
         get => _target;
         set {
@@ -74,7 +72,7 @@ public class PathfindingAgent : MonoBehaviour
         }
 
         // Reached next point
-        if (Vector3.Distance(transform.position, _path.Position) < arrivalRadius)
+        if (Vector3.Distance(transform.position, _path.Position) < ArrivalRadius)
         {
             _path = _path.Next;
         }
@@ -82,10 +80,14 @@ public class PathfindingAgent : MonoBehaviour
 
     private void RecalculatePath()
     {
-        if (Pathfinding.Instance != null && Vector3.Distance(transform.position, Target) > arrivalRadius)
+        if (Pathfinding.Instance != null && Vector3.Distance(transform.position, Target) > ArrivalRadius)
         {
             _path = Pathfinding.Instance.FindPath(transform.position, Target)?.Next;
         }
     }
-
+    
+    public bool IsMoving() {
+        return Velocity != Vector3.zero;
+    }
+    
 }
