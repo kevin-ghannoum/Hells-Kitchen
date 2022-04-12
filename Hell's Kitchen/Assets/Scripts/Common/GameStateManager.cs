@@ -9,6 +9,8 @@ namespace Common
         // Player
         public float playerMaxHitPoints;
         public float playerCurrentHitPoints;
+        public GameObject carriedWeapon;
+        public bool IsCarryingWeapon => carriedWeapon != null;
         public float cashMoney;
         private void Awake()
         {
@@ -24,6 +26,7 @@ namespace Common
             playerMaxHitPoints = 100f;
             playerCurrentHitPoints = playerMaxHitPoints;
             cashMoney = 0f;
+            carriedWeapon = null;
         }
     }
 }

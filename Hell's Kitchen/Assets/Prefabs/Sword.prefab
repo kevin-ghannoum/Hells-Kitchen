@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5985732422459369634}
-  - component: {fileID: 4731858823899656995}
+  - component: {fileID: 46528541125583763}
+  - component: {fileID: 7163819316760448942}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -32,7 +33,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -148.754, y: 171.587, z: -22.289978}
---- !u!114 &4731858823899656995
+--- !u!114 &46528541125583763
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,9 +42,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 6954271530833537913}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3047fd0677ab902469c2c8c6787b4458, type: 3}
+  m_Script: {fileID: 11500000, guid: d6f600ae25e683a419ec39f67211020e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  position: {x: 0.00137, y: 0.0017, z: 0.00109}
+  rotation: {x: -0.57522124, y: 0.14958824, z: 0.73620784, w: -0.32363856}
+--- !u!135 &7163819316760448942
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6954271530833537913}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.03415432
+  m_Center: {x: 0, y: 0.02, z: 0}
 --- !u!1001 &4784376226696102944
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -137,7 +153,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4346287528133924561, guid: f89d566459dad2a47a16737cc7a67ed1, type: 3}
---- !u!114 &4111945779673223085
+--- !u!114 &1609041081689772930
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,8 +162,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5666914840024103281}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6f600ae25e683a419ec39f67211020e, type: 3}
+  m_Script: {fileID: 11500000, guid: 3bfc101b9aa5abc409689122e055c8ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0.00074, y: 0.00182, z: 0.00064}
-  rotation: {x: -0.7250032, y: -0.26713783, z: -0.62996733, w: 0.07841489}
+  damage: 10
