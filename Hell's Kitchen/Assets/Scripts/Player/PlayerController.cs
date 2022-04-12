@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using System;
 using Input;
-using PlayerInventory;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using PlayerInventory;
 
 namespace Player
 {
