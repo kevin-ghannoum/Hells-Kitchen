@@ -58,25 +58,25 @@ public class HealerFollowState : HealerBaseState
             return;
         }
 
-        //     if (healer.sc.targetEnemy != null)
-        //     {
-        //         healer.SwitchState(healer.moveToTarget);
-        //         return;
-        //     }
-        //     else
-        //     {
-        //         healer.SwitchState(healer.moveToTarget);
-        //         return;
-        //     }
+        // if (healer.sc.targetEnemy != null)
+        // {
+        //     healer.SwitchState(healer.moveToTarget);
+        //     return;
+        // }
+        // else
+        // {
+        //     healer.SwitchState(healer.moveToTarget);
+        //     return;
+        // }
 
-        //     if (healer.sc.targetLoot == null)
-        //     {
-        //         healer.sc.FindLoot();
-        //     }
-        //     else
-        //     {
-        //         healer.SwitchState(healer.moveToTarget);
-        //         return;
-        //     }
+        // if (healer.sc.targetLoot == null)
+        // {
+        //     healer.sc.FindLoot();
+        // }
+        // else
+        // {
+        //     healer.SwitchState(healer.moveToTarget);
+        //     return;
+        // }
     }
 }

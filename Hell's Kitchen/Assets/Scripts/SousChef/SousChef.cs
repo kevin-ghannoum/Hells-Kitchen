@@ -71,7 +71,7 @@ public class SousChef : MonoBehaviour
 
             Debug.DrawRay(transform.position + Vector3.up / 2, direction * searchRange, Color.green);
             if(Physics.Raycast(transform.position + Vector3.up / 2, direction, out hit, searchRange)){
-                if(hit.transform.tag == "Enemy"){
+                if(hit.transform.gameObject.layer == LayerMask.NameToLayer("Enemies")){
                     float currentDistance = (hit.transform.position - this.transform.position).magnitude;
                     if(currentDistance < distance){
                         // find the enemy with closest distance
@@ -103,7 +103,7 @@ public class SousChef : MonoBehaviour
 
             //Debug.DrawRay(transform.position + Vector3.up / 2, direction, Color.yellow);
             if(Physics.Raycast(transform.position + Vector3.up / 2, direction, out hit, searchRange)){
-                if(hit.transform.tag == "Loot"){
+                if(hit.transform.gameObject.layer == LayerMask.NameToLayer("Loot")){
                     float currentDistance = (hit.transform.position - this.transform.position).magnitude;
                     if(currentDistance < distance){
                         // find the enemy with closest distance

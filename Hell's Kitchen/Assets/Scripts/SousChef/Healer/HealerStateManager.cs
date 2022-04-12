@@ -25,7 +25,7 @@ public class HealerStateManager : MonoBehaviour
         currentState.EnterState(this);
     }
 
-    float attackCooldown = 1f;
+    float attackCooldown = 5f;
     float _attackCooldown = 0f;
     public bool canAttack() => _attackCooldown >= attackCooldown;
     public void resetAttackCD() => _attackCooldown = 0f;
