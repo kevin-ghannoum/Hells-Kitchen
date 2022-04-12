@@ -82,6 +82,7 @@ MonoBehaviour:
   - {fileID: 4960195001528040362, guid: 3c67dae0937f97f4aa36f8cb0fb1e2dc, type: 3}
   enemies:
   - {fileID: 7839222235967640288, guid: 4ac12db71e65fbd4ca9d0a92c4b5e5b1, type: 3}
+  - {fileID: 4794755069063066433, guid: 1d60d1758c970fb4cabcb56b300aa68a, type: 3}
   torchSpawnRate: 0.1
   windowSpawnRate: 0.4
   enemySpawnRate: 0.05

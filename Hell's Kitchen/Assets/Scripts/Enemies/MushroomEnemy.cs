@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Common.Enums;
 using UnityEngine;
 
 public class MushroomEnemy : MonoBehaviour
@@ -16,7 +17,7 @@ public class MushroomEnemy : MonoBehaviour
 
     private void Start()
     {
-        targetList = GameObject.FindGameObjectsWithTag("Player");
+        targetList = GameObject.FindGameObjectsWithTag(Tags.Player);
         anime = gameObject.GetComponent<Animator>();
         attackRange = 10;
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Common.Enums;
 using UnityEngine;
 
 public class BeeEnemy : MonoBehaviour
@@ -18,7 +19,7 @@ public class BeeEnemy : MonoBehaviour
 
     private void Start()
     {
-        targetList = GameObject.FindGameObjectsWithTag("Player");
+        targetList = GameObject.FindGameObjectsWithTag(Tags.Player);
         Hive = GameObject.Find("Hive");
         anime = gameObject.GetComponent<Animator>();
         anime.SetBool("walking", true);
@@ -71,7 +72,7 @@ public class BeeEnemy : MonoBehaviour
                 }
                 else if(Vector3.Distance(wanderPos, new Vector3(transform.position.x, 0, transform.position.z)) < 2f)
                 {
-
+                    // TODO is something supposed to go here?
                 }
                 else
                 {
