@@ -1,3 +1,4 @@
+using System;
 using Common;
 using Common.Interfaces;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace Player
             get => GameStateManager.Instance.playerCurrentHitPoints;
             set => GameStateManager.Instance.playerCurrentHitPoints = value;
         }
-    
+        
         public void TakeDamage(float damage)
         {
             animator.SetTrigger(PlayerAnimator.TakeHit);
