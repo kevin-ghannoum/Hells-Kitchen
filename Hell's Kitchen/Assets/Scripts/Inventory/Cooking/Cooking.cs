@@ -54,4 +54,19 @@ public class Cooking : MonoBehaviour
         }
         return false;
     }
+
+    public void CookBurger()
+    {
+        CookRecipe(new Recipes.Hamburger());
+    }
+
+    public void CookSalad()
+    {
+        CookRecipe(new Recipes.Salad());
+    }
+
+    public void CookSushi()
+    {
+        CookRecipe(new Recipes.Sushi());
+    }
 }
