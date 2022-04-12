@@ -1,4 +1,4 @@
-namespace Enums
+namespace Enums.Items
 {
     public enum ItemType
     {
