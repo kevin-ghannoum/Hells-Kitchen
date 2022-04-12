@@ -24,13 +24,6 @@ namespace Player
 
         private InputManager _input => InputManager.Instance;
 
-        private void Start()
-        {
-            animator = GetComponentInChildren<Animator>();
-            characterController = GetComponent<CharacterController>();
-            _inventory = new Inventory();
-        }
-
         private void Awake()
         {
             // Singleton instance
@@ -44,8 +37,11 @@ namespace Player
             }
 
             _input.reference.actions["Roll"].performed += Roll;
-
             _input.reference.actions["PickUp"].performed += PickUp;
+            
+            animator = GetComponentInChildren<Animator>();
+            characterController = GetComponent<CharacterController>();
+            _inventory = new Inventory();
         }
 
         private void Update()

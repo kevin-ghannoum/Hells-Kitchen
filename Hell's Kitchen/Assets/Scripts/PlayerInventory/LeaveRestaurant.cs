@@ -11,10 +11,10 @@ using SceneManager = Common.SceneManager;
 public class LeaveRestaurant : MonoBehaviour
 {
     [SerializeField] private int numberOfOrders = 5;
+    [SerializeField] private float missedOrderPenalty = 10f;
     private InputManager _input => InputManager.Instance;
 
     private static IRecipe[] _availableRecipes;
-    
     private Dictionary<IRecipe, int> OrderList => GameStateManager.Instance.OrderList;
 
     private void Awake()
@@ -29,9 +29,9 @@ public class LeaveRestaurant : MonoBehaviour
             // TODO display UI
             if (_input.dropItem)
             {
+                ImposeFine();
                 ClearOrderList();
                 GetRestaurantOrders(numberOfOrders);
-                DebugPrintList();
                 SceneManager.Instance.LoadDungeonScene();
             }
         }
@@ -54,10 +54,18 @@ public class LeaveRestaurant : MonoBehaviour
         OrderList.Clear();
     }
 
-    private static IRecipe GetRandomOrder()
+    private IRecipe GetRandomOrder()
     {
         int index = Random.Range(0, _availableRecipes.Length);
         return _availableRecipes[index];
+    }
+
+    private void ImposeFine()
+    {
+        foreach (var order in OrderList)
+        {
+            GameStateManager.Instance.cashMoney -= order.Value * missedOrderPenalty;
+        }
     }
 
     public void DebugPrintList()

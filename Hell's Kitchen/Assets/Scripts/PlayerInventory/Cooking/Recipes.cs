@@ -18,6 +18,11 @@ namespace PlayerInventory.Cooking
             {
                 return Items.Hamburger;
             }
+
+            public float GetCost()
+            {
+                return 10f;
+            }
         }
 
         public class Salad : IRecipe
@@ -34,6 +39,11 @@ namespace PlayerInventory.Cooking
             {
                 return Items.Salad;
             }
+
+            public float GetCost()
+            {
+                return 10f;
+            }
         }
 
         public class Sushi : IRecipe
@@ -48,6 +58,11 @@ namespace PlayerInventory.Cooking
             public Item GetRecipeResult()
             {
                 return Items.Sushi;
+            }
+
+            public float GetCost()
+            {
+                return 10f;
             }
         }
     }
