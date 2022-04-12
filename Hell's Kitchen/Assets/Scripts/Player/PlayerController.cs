@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using Input;
+using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,24 +7,25 @@ namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
-        private Animator animator;
-        private CharacterController characterController;
-        private Inventory _inventory;
-        public static PlayerController Instance; // singleton
-
         [SerializeField] private float runSpeed = 15f;
         [SerializeField] private float walkSpeed = 10f;
         [SerializeField] private float turnSmoothVelocity = 10f;
         [SerializeField] private float speedSmoothVelocity = 10f;
+
+        [SerializeField] private InventoryUI _inventoryUI;
+
         private float speed = 0f;
-        
+        private Animator animator;
+        private CharacterController characterController;
+        private Inventory _inventory = new Inventory();
+
         private InputManager _input => InputManager.Instance;
+        public static PlayerController Instance; // singleton
 
         private void Start()
         {
             animator = GetComponent<Animator>();
             characterController = GetComponent<CharacterController>();
-            _inventory = new Inventory();
         }
 
         private void Awake()
@@ -90,19 +91,21 @@ namespace Player
         #endregion
 
         #region PlayerInventory
-        public Dictionary<Item, int> GetPlayerInventory()
+        public Inventory GetPlayerInventory()
         {
-            return _inventory.GetInventory();
+            return _inventory;
         }
 
         public void AddItemToInventory(Item item, int quantity)
         {
             _inventory.AddItemToInventory(item, quantity);
+            _inventoryUI.UpdateInventory();
         }
 
         public void RemoveItemFromInventory(Item item, int quantity)
         {
             _inventory.RemoveItemFromInventory(item,quantity);
+            _inventoryUI.UpdateInventory();
         }
         #endregion
     }

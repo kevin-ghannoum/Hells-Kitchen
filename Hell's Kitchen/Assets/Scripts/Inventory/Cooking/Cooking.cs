@@ -6,15 +6,15 @@ public class Cooking : MonoBehaviour
 {
     private bool InventoryContainsAllIngredients(List<(Item item, int quantity)> ingredientList)
     {
-        if (PlayerController.Instance.GetPlayerInventory().Count == 0)
+        if (PlayerController.Instance.GetPlayerInventory().GetInventoryItems().Count == 0)
             return false;
         
         Dictionary<Item, bool> ingredientCheckList = new Dictionary<Item, bool>();
         foreach (var (item, quantity) in ingredientList)
         {
-            if (PlayerController.Instance.GetPlayerInventory().ContainsKey(item)) // if ingredient in inventory
+            if (PlayerController.Instance.GetPlayerInventory().GetInventoryItems().ContainsKey(item)) // if ingredient in inventory
             {
-                if (PlayerController.Instance.GetPlayerInventory()[item] >= quantity) // if ingredient qt sufficient
+                if (PlayerController.Instance.GetPlayerInventory().GetInventoryItems()[item] >= quantity) // if ingredient qt sufficient
                 {
                     ingredientCheckList[item] = true;
                 }

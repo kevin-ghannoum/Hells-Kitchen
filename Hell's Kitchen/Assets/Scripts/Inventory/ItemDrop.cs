@@ -20,8 +20,10 @@ public class ItemDrop : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
-
-            if (allItems.TryGetValue(gameObject.name, out item))
+            string itemName = gameObject.name.Split(' ')[0]; // allows cloned/duplicate objects
+            
+            print(gameObject.name);
+            if (allItems.TryGetValue(itemName, out item))
             {
                 player.AddItemToInventory(item,  1);
                 Destroy(gameObject);
