@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 50
-  bulletSpeed: 10
+  bulletSpeed: 40
   bullet: {fileID: 1449870570657687128, guid: d346a79e3bfb22a4b9e62452a046d611, type: 3}
   shootPosition: {fileID: 3309744534898375491}
   bulletLifetime: 2
