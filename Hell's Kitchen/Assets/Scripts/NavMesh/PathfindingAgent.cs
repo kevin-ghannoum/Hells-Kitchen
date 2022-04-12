@@ -28,9 +28,10 @@ public class PathfindingAgent : MonoBehaviour
     public Vector3 Target {
         get => _target;
         set {
-            if (_target != value)
+            Vector3 xd = new Vector3(value.x, 0, value.z);
+            if (_target != xd)
             {
-                _target = value;
+                _target = xd;
                 RecalculatePath();
             }
         }
@@ -45,9 +46,11 @@ public class PathfindingAgent : MonoBehaviour
 
     private void Update()
     {
+        RecalculatePath();
         // Arrived
-        if (_path == null)
+        if (_path == null || standStill)
         {
+            Debug.Log("HERE@@@ + standstill=" + standStill);
             rigidbody.velocity = Vector3.zero;
             return;
         }
@@ -76,6 +79,8 @@ public class PathfindingAgent : MonoBehaviour
         {
             _path = _path.Next;
         }
+
+
     }
 
     private void RecalculatePath()
@@ -87,7 +92,7 @@ public class PathfindingAgent : MonoBehaviour
     }
     
     public bool IsMoving() {
-        return Velocity != Vector3.zero;
+        return rigidbody.velocity != Vector3.zero;
     }
     
 }

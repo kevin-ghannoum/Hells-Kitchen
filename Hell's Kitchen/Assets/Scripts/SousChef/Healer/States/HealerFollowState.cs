@@ -13,7 +13,7 @@ public class HealerFollowState : HealerBaseState
 
     public override void UpdateState(HealerStateManager healer)
     {
-        Debug.Log("@followState_UpdateState");
+        //Debug.Log("@followState_UpdateState");
         if (healer.sc.targetEnemy == null && healer.sc.targetLoot == null)
         {
             // follow
@@ -28,21 +28,21 @@ public class HealerFollowState : HealerBaseState
             //if ((healer.transform.position - healer.sc.agent.Target).magnitude < healer.sc.followDistance) {
             if (!healer.sc.agent.IsMoving())
             {
-                Debug.Log("arrived");
+                //Debug.Log("arrived");
                 //implement healer idle state
-                healer.animator.SetBool("isWalking", false);
-                healer.animator.SetBool("isRunning", false);
+              //  healer.animator.SetBool("isWalking", false);
+              //  healer.animator.SetBool("isRunning", false);
             }
             else
             {
-                healer.animator.SetBool("isWalking", true);
-                healer.animator.SetBool("isRunning", true);
+             //   healer.animator.SetBool("isWalking", true);
+             //   healer.animator.SetBool("isRunning", true);
             }
         }
         else if (healer.sc.targetEnemy != null)
         {
-            // enter attack state
-            healer.SwitchState(healer.attackState);
+            // enter move to target
+            healer.SwitchState(healer.moveToTarget);
             return;
         }
         else if (healer.sc.character.isLowHP() || healer.sc.player.GetComponent<Character>().isLowHP())

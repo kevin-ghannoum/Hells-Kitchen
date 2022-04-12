@@ -1,3 +1,4 @@
+using Common.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +8,8 @@ public class HealerAttackState : HealerBaseState
     float photonCastTime = 5f;
     float _photonCastTime = 0f;
 
-    float photonDamage = 40f;
+    [SerializeField] float photonDamage = 50f;
 
-    float _cooldownBetweenAttacks = 1f;
-    float cooldownBetweenAttacks = 1f;
     public override void EnterState(HealerStateManager healer)
     {
         Debug.Log("@Attack state");
@@ -24,7 +23,15 @@ public class HealerAttackState : HealerBaseState
     {
         healer.sc.faceTargetEnemy();
         healer.sc.agent.standStill = true;
-        _cooldownBetweenAttacks += Time.deltaTime;
+
+        if (healer.sc.targetEnemy == null) {
+            healer.resetAttackCD();
+            _photonCastTime = 0f;
+            healer.magicCircle.gameObject.SetActive(false);
+            healer.SwitchState(healer.moveToTarget);
+            healer.sc.agent.standStill = false;
+            return;
+        }
         //do a reposition check while waaiting for cd (ie if enemy gets too close, run away instead of sittin there xd
         if (healer.canAttack()) {
             //spell casting animation
@@ -37,8 +44,8 @@ public class HealerAttackState : HealerBaseState
                 healer.sc.agent.standStill = false;
                 //play attack animation
                 healer.spells.HealerSpell_Photon(healer.sc.targetEnemy.transform.position);
-                healer.sc.targetEnemy.GetComponent<Character>().TakeDamage(photonDamage);
                 healer.magicCircle.gameObject.SetActive(false);
+                healer.sc.targetEnemy.GetComponent<IKillable>().TakeDamage(photonDamage);
                 _photonCastTime = 0f;
                 healer.sc.targetEnemy = null;
                 healer.resetAttackCD();

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5341381588608397720}
   - component: {fileID: 5846106093173850358}
   - component: {fileID: 8513932910647922711}
+  - component: {fileID: 6870962557332015385}
   m_Layer: 7
   m_Name: Bat
   m_TagString: Untagged
@@ -76,10 +77,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afd420c264afa84ba3237d0d7e6c837, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrivalRadius: 2
-  maxVelocity: 5
+  ArrivalRadius: 0.5
   time2target: 0.1
+  maxVelocity: 5
   rigidbody: {fileID: 8717202010100707280}
+  standStill: 0
 --- !u!114 &8513932910647922711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,14 +95,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 5846106093173850358}
-  animator: {fileID: 328959178835746843}
-  hitPoints: 0
+  animator: {fileID: 6870962557332015385}
+  hitPoints: 100
   deathDelay: 0
   onKilled:
     m_PersistentCalls:
       m_Calls: []
   attackRate: 0.5
   aggroRadius: 20
+--- !u!95 &6870962557332015385
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7839222235967640288}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 8272fb3e71864d3479736d13b43eac8b, type: 3}
+  m_Controller: {fileID: 9100000, guid: 5440f98cff9286b46a97406a593b2a3d, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &6195307155463822730
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -248,15 +269,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: 8272fb3e71864d3479736d13b43eac8b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8272fb3e71864d3479736d13b43eac8b, type: 3}
 --- !u!4 &5940422137564510817 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8272fb3e71864d3479736d13b43eac8b, type: 3}
-  m_PrefabInstance: {fileID: 6195307155463822730}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &328959178835746843 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 8272fb3e71864d3479736d13b43eac8b, type: 3}
   m_PrefabInstance: {fileID: 6195307155463822730}
   m_PrefabAsset: {fileID: 0}

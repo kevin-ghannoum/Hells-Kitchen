@@ -53,8 +53,9 @@ namespace Enemies
 
         public virtual void TakeDamage(float damage)
         {
+            animator.SetTrigger(EnemyAnimator.OnTakeDamage);
             hitPoints -= damage;
-            if (hitPoints < 0)
+            if (hitPoints <= 0)
             {
                 hitPoints = 0;
                 Die();

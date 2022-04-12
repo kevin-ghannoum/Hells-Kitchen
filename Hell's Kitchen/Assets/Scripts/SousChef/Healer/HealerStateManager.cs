@@ -23,15 +23,20 @@ public class HealerStateManager : MonoBehaviour
         sc = gameObject.GetComponent<SousChef>();
         currentState = followState;
         currentState.EnterState(this);
+        transform.position = sc.player.transform.position;
+
     }
 
-    float attackCooldown = 5f;
+
+    float attackCooldown = 1.5f;
     float _attackCooldown = 0f;
     public bool canAttack() => _attackCooldown >= attackCooldown;
     public void resetAttackCD() => _attackCooldown = 0f;
     private void Update()
     {
         _attackCooldown += Time.deltaTime;
+        gameObject.GetComponent<Animator>().SetBool("isWalking", sc.agent.IsMoving());
+        gameObject.GetComponent<Animator>().SetBool("isRunning", sc.agent.IsMoving());
         currentState.UpdateState(this);
     }
 

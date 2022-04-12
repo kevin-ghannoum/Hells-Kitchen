@@ -1,3 +1,4 @@
+using Common.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,8 +6,6 @@ using UnityEngine;
 
 public class PhotonSpell : MonoBehaviour
 {
-    float damage;
-
     float selfDestructTimer = 5f;
 
     public Transform spinners;
@@ -19,11 +18,15 @@ public class PhotonSpell : MonoBehaviour
     float bigExplosionDelay = 1.5f;
     float centerSpeed = 12f;
     float arriveRadius = 0.75f;
+
+    public float aoeDamage;
     private void Start()
     {
         transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
 
     }
+
+    float aoeDmgDelayAfterExplosion = 0.25f;
     private void Update()
     {
         spinStartDelay -= Time.deltaTime;
@@ -44,6 +47,9 @@ public class PhotonSpell : MonoBehaviour
         if (bigExplosionDelay < 0) {
             AoE.gameObject.SetActive(true);
             lights.gameObject.SetActive(false);
+            aoeDmgDelayAfterExplosion -= Time.deltaTime;
+            if (aoeDmgDelayAfterExplosion < 0)
+                gameObject.GetComponent<SphereCollider>().enabled = true;
         }
 
         selfDestructTimer -= Time.deltaTime;
@@ -51,11 +57,14 @@ public class PhotonSpell : MonoBehaviour
             Destroy(gameObject);
         transform.Rotate(new Vector3(0, 5, 0));
     }
-    private void OnCollisionEnter(Collision collision)
+
+    List<GameObject> hitList = new List<GameObject> ();
+    private void OnTriggerEnter(Collider other)
     {
-
-        /*if (collision.gameObject.tag == "Player") {
-
-        }*/
+        Debug.Log("collided with" + other.name);
+        if (other.gameObject.TryGetComponent(out IKillable killable) && other.tag != "Player" && !hitList.Contains(other.gameObject)) {
+            hitList.Add(other.gameObject);
+            killable.TakeDamage(aoeDamage);
+        }
     }
 }

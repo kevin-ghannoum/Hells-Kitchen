@@ -69,7 +69,7 @@ public class SousChef : MonoBehaviour
             RaycastHit hit;
             Vector3 direction = new Vector3 (Mathf.Cos (i), 0, Mathf.Sin (i)).normalized;
 
-            Debug.DrawRay(transform.position + Vector3.up / 2, direction * searchRange, Color.green);
+            //Debug.DrawRay(transform.position + Vector3.up / 2, direction * searchRange, Color.green);
             if(Physics.Raycast(transform.position + Vector3.up / 2, direction, out hit, searchRange)){
                 if(hit.transform.gameObject.layer == LayerMask.NameToLayer("Enemies")){
                     float currentDistance = (hit.transform.position - this.transform.position).magnitude;
@@ -143,7 +143,9 @@ public class SousChef : MonoBehaviour
     }
 
     public void faceTargetEnemy() {
-        transform.LookAt(targetEnemy.transform.position);
+        if (targetEnemy != null)
+            gameObject.GetComponent<Rigidbody>().MoveRotation(Quaternion.LookRotation((targetEnemy.transform.position - transform.position).normalized));
+        //transform.LookAt(targetEnemy.transform.position);
     }
     //these are for healer mostly, to be at a 
     public float GetDistanceToPlayer()
