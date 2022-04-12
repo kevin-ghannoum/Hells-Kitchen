@@ -11,6 +11,7 @@ public class HealerAttackState : HealerBaseState
 
     float _cooldownBetweenAttacks = 1f;
     float cooldownBetweenAttacks = 1f;
+    bool castSpell = true;
     public override void EnterState(HealerStateManager healer)
     {
         Debug.Log("@Attack state");
@@ -25,6 +26,10 @@ public class HealerAttackState : HealerBaseState
         healer.sc.faceTargetEnemy();
         healer.sc.agent.standStill = true;
         _cooldownBetweenAttacks += Time.deltaTime;
+        if(castSpell){
+            healer.animator.SetTrigger("CastSpell");
+            castSpell = false;
+        }
         //do a reposition check while waaiting for cd (ie if enemy gets too close, run away instead of sittin there xd
         if (healer.canAttack()) {
             //spell casting animation
@@ -41,6 +46,7 @@ public class HealerAttackState : HealerBaseState
                 healer.magicCircle.gameObject.SetActive(false);
                 _photonCastTime = 0f;
                 healer.sc.targetEnemy = null;
+                castSpell = true;
                 healer.resetAttackCD();
                 healer.SwitchState(healer.moveToTarget);
             }
