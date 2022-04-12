@@ -17,20 +17,20 @@ namespace UI
         [SerializeField] private Transform inventoryContainer;
         [SerializeField] private Transform inventoryItemSlot;
         
-        private Dictionary<Item, int> playerInventory;
+        private Dictionary<Item, int> _playerInventory;
         private float spacing = 30.0f;
 
         private void Start()
         {
             inventoryItemSlot = inventoryContainer.transform.GetChild(0);
-            playerInventory = PlayerController.Instance.GetPlayerInventory().GetInventoryItems();
+            _playerInventory = PlayerController.Instance.GetPlayerInventory().GetInventoryItems();
         }
 
         public void UpdateInventory()
         {
             int x = 0, y = 0;
 
-            int smallestLength = Math.Min(maxItemsPerPage, playerInventory.Count);
+            int smallestLength = Math.Min(maxItemsPerPage, _playerInventory.Count);
 
             for (int i = 0; i < smallestLength; i++)
             {
@@ -41,12 +41,12 @@ namespace UI
                 itemSlotRectTrans.anchoredPosition = new Vector2(x * itemSlotCellSize + (x+1)*1.5f*spacing, -y * itemSlotCellSize - (y+1)*1.5f*spacing);
 
                 // textual information
-                itemSlotRectTrans.GetComponentsInChildren<Text>()[0].text = playerInventory.ElementAt(i).Key.Name; // name
-                itemSlotRectTrans.GetComponentsInChildren<Text>()[1].text = playerInventory.ElementAt(i).Value.ToString(); // quantity
+                itemSlotRectTrans.GetComponentsInChildren<Text>()[0].text = _playerInventory.ElementAt(i).Key.Name; // name
+                itemSlotRectTrans.GetComponentsInChildren<Text>()[1].text = _playerInventory.ElementAt(i).Value.ToString(); // quantity
 
                 // 3d prefab
                 Transform itemPrefabModel =
-                    Instantiate(playerInventory.ElementAt(i).Key.ItemModel.getItemPrefab(), itemSlotRectTrans)
+                    Instantiate(_playerInventory.ElementAt(i).Key.ItemModel.Prefab, itemSlotRectTrans)
                         .GetComponent<Transform>();
                 itemPrefabModel.parent = itemSlotRectTrans;
                 ChangePrefabLayer(itemPrefabModel, Layer.UI);
@@ -62,12 +62,12 @@ namespace UI
             }
         }
 
-        private void ChangePrefabLayer(Transform modelTransform, Layer UIlayer)
-        {
-            modelTransform.gameObject.layer = (int)UIlayer;
+        private void ChangePrefabLayer(Transform modelTransform, Layer uiLayer)
+        {   
+            modelTransform.gameObject.layer = (int)uiLayer;
             foreach (var child in modelTransform.GetComponentsInChildren<Transform>())
             {
-                child.gameObject.layer = (int)UIlayer;
+                child.gameObject.layer = (int)uiLayer;
             }
         }
 

@@ -3,16 +3,11 @@ using UnityEngine;
 
 public class ItemModel
 {
-    public GameObject itemPrefab;
+    public readonly GameObject Prefab;
 
-    public ItemModel(string path)
+    private ItemModel(string path)
     {
-        itemPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-    }
-
-    public GameObject getItemPrefab()
-    {
-        return itemPrefab;
+        Prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
     }
 
     // Ingredients

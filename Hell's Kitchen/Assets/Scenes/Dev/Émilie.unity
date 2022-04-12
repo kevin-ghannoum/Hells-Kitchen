@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -537,10 +537,6 @@ PrefabInstance:
     - target: {fileID: 5561624463644519806, guid: d6ebfe640306d0c419f8a9fcb27d644d, type: 3}
       propertyPath: m_Name
       value: Hamburger
-      objectReference: {fileID: 0}
-    - target: {fileID: 8900199675821919435, guid: d6ebfe640306d0c419f8a9fcb27d644d, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6ebfe640306d0c419f8a9fcb27d644d, type: 3}
@@ -1275,23 +1271,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &867862927 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5561624463644519806, guid: d6ebfe640306d0c419f8a9fcb27d644d, type: 3}
-  m_PrefabInstance: {fileID: 129677207}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &867862928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 867862927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3047fd0677ab902469c2c8c6787b4458, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &933656709
 GameObject:
   m_ObjectHideFlags: 0
@@ -2440,23 +2419,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 604817f80ea14ff3b392a6a9a0912625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1854760698 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4800540121578129195, guid: 3a6c5fbeeb78dbc478b5cbc5189734bc, type: 3}
-  m_PrefabInstance: {fileID: 1636574863}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1854760699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1854760698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3047fd0677ab902469c2c8c6787b4458, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1967671264
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3156,7 +3118,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6732461187895217060, guid: 35575e5c83980de4faa00e7cb7a48ce8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -174.99998
+      value: -175
       objectReference: {fileID: 0}
     - target: {fileID: 6732461187895217060, guid: 35575e5c83980de4faa00e7cb7a48ce8, type: 3}
       propertyPath: m_AnchoredPosition.y

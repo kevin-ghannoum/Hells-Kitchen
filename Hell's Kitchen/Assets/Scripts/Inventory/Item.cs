@@ -1,5 +1,7 @@
-﻿using Enums.Items;
+﻿using System;
+using Enums.Items;
 
+[Serializable]
 public class Item
 {
     public readonly ItemType ItemType;
