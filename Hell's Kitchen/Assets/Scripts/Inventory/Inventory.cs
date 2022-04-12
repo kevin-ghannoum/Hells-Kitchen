@@ -6,7 +6,7 @@ public class Inventory
     // hold a dictionary of items and quantities
     Dictionary<Item, int> itemDictionary = new Dictionary<Item, int>();
 
-    public Dictionary<Item, int> GetInventory()
+    public Dictionary<Item, int> GetInventoryItems()
     {
         return itemDictionary;
     }
