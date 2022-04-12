@@ -1,0 +1,72 @@
+using System.Collections.Generic;
+using Common;
+using Common.Enums;
+using Input;
+using PlayerInventory;
+using PlayerInventory.Cooking;
+using UnityEngine;
+using Random = UnityEngine.Random;
+using SceneManager = Common.SceneManager;
+
+public class LeaveRestaurant : MonoBehaviour
+{
+    [SerializeField] private int numberOfOrders = 5;
+    private InputManager _input => InputManager.Instance;
+
+    private static IRecipe[] _availableRecipes;
+    
+    private Dictionary<IRecipe, int> OrderList => GameStateManager.Instance.OrderList;
+
+    private void Awake()
+    {
+        _availableRecipes = new IRecipe[] {new Recipes.Hamburger(), new Recipes.Salad(), new Recipes.Sushi()};
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag(Tags.Player))
+        {
+            // TODO display UI
+            if (_input.dropItem)
+            {
+                ClearOrderList();
+                GetRestaurantOrders(numberOfOrders);
+                DebugPrintList();
+                SceneManager.Instance.LoadDungeonScene();
+            }
+        }
+    }
+    
+    public void GetRestaurantOrders(int numOfOrders)
+    {
+        for (int i = 0; i < numOfOrders; i++)
+        {
+            IRecipe order = GetRandomOrder();
+            if (OrderList.ContainsKey(order))
+                OrderList[order]++;
+            else
+                OrderList.Add(order, 1);
+        }
+    }
+    
+    public void ClearOrderList()
+    {
+        OrderList.Clear();
+    }
+
+    private static IRecipe GetRandomOrder()
+    {
+        int index = Random.Range(0, _availableRecipes.Length);
+        return _availableRecipes[index];
+    }
+
+    public void DebugPrintList()
+    {
+        foreach (var item in OrderList)
+        {
+            Debug.Log("New item");
+            Debug.Log(item.Key.GetType());
+            Debug.Log(item.Value);
+        }
+    }
+}

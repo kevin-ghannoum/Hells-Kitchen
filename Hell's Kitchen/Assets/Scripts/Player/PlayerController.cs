@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System;
 using Input;
+using PlayerInventory;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -123,10 +124,5 @@ namespace Player
             _inventory.RemoveItemFromInventory(item, quantity);
         }
         #endregion
-
-        private void OnCollisionEnter(Collision collision)
-        {
-
-        }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using PlayerInventory;
 
 public interface IRecipe
 {

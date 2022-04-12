@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using PlayerInventory;
 using UnityEngine;
 
 namespace Common
@@ -12,21 +14,24 @@ namespace Common
         public GameObject carriedWeapon;
         public bool IsCarryingWeapon => carriedWeapon != null;
         public float cashMoney;
+
+        public Dictionary<IRecipe, int> OrderList;
         private void Awake()
         {
             if (Instance == null)
                 Instance = this;
 
             DontDestroyOnLoad(Instance.gameObject);
-            Initalize();
+            Initialize();
         }
 
-        private void Initalize()
+        private void Initialize()
         {
             playerMaxHitPoints = 100f;
             playerCurrentHitPoints = playerMaxHitPoints;
             cashMoney = 0f;
             carriedWeapon = null;
+            OrderList = new Dictionary<IRecipe, int>();
         }
     }
 }
