@@ -1,4 +1,5 @@
 using System;
+using Common;
 using Common.Enums;
 using Common.Interfaces;
 using Input;
@@ -18,7 +19,6 @@ namespace Weapons
         private Animator _playerAnimator;
         private GameObject _player;
         private bool _canBePickedUp = false;
-        private bool _isPickedUp = false;
 
         private void Awake()
         {
@@ -35,15 +35,15 @@ namespace Weapons
         {
             ReparentObject();
             AddListeners();
-            _isPickedUp = true;
+            GameStateManager.Instance.carriedWeapon = gameObject;
         }
     
         public void Unequip(InputAction.CallbackContext callbackContext)
         {
             _canBePickedUp = true;
-            _isPickedUp = false;
             transform.parent = null;
             RemoveListeners();
+            GameStateManager.Instance.carriedWeapon = null;
         }
 
         void Attack(InputAction.CallbackContext callbackContext)
@@ -90,7 +90,7 @@ namespace Weapons
 
         private void OnTriggerStay(Collider other)
         {
-            if (_canBePickedUp &&!_isPickedUp && _input.pickUp)
+            if (_canBePickedUp && !GameStateManager.Instance.IsCarryingWeapon && _input.pickUp)
             {
                 PickUpItem();
                 _canBePickedUp = false;

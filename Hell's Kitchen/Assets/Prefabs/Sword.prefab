@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6f600ae25e683a419ec39f67211020e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: -0.00036, y: 0.00107, z: 0.00157}
-  rotation: {x: -0.14637455, y: -0.73394597, z: -0.27394444, w: -0.60403}
+  position: {x: 0.00137, y: 0.0017, z: 0.00109}
+  rotation: {x: -0.57522124, y: 0.14958824, z: 0.73620784, w: -0.32363856}
 --- !u!135 &7163819316760448942
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -544,6 +544,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 46528541125583763, guid: 67b694d532ce5c6429b9bf5289353bc0, type: 3}
+      propertyPath: rotation.w
+      value: -0.5752211
+      objectReference: {fileID: 0}
+    - target: {fileID: 46528541125583763, guid: 67b694d532ce5c6429b9bf5289353bc0, type: 3}
+      propertyPath: rotation.x
+      value: -0.3236387
+      objectReference: {fileID: 0}
+    - target: {fileID: 46528541125583763, guid: 67b694d532ce5c6429b9bf5289353bc0, type: 3}
+      propertyPath: rotation.y
+      value: -0.7362079
+      objectReference: {fileID: 0}
+    - target: {fileID: 46528541125583763, guid: 67b694d532ce5c6429b9bf5289353bc0, type: 3}
+      propertyPath: rotation.z
+      value: -0.14958827
+      objectReference: {fileID: 0}
     - target: {fileID: 5985732422459369634, guid: 67b694d532ce5c6429b9bf5289353bc0, type: 3}
       propertyPath: m_RootOrder
       value: 2
