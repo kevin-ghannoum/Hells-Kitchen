@@ -46,7 +46,7 @@ namespace Enemies
                     animator.SetBool("Charge", false);
                     rb.velocity = Vector3.zero;
                     RaycastHit hit;
-                    if (Physics.Raycast(transform.position, (_player.transform.position - transform.position).normalized, out hit))
+                    if (Physics.Raycast(transform.position + Vector3.up * 0.5f, (_player.transform.position - transform.position).normalized, out hit))
                     {
                         if (hit.collider.gameObject.tag == "Player")
                         {

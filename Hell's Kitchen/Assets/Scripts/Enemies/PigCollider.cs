@@ -21,7 +21,7 @@ public class PigCollider : MonoBehaviour
     {
         if (col.tag == "Player")
         {
-            col.GetComponent<Player.PlayerHealth>().TakeDamage(10);
+            col.GetComponent<Player.PlayerHealth>().TakeDamage(25);
         }
     }
 }

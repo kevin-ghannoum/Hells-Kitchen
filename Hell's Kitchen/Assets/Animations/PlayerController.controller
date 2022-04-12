@@ -783,11 +783,7 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0
   m_TransitionOffset: 0
-<<<<<<< HEAD
-  m_ExitTime: 0.8807947
-=======
   m_ExitTime: 0
->>>>>>> d80bcad (Added the pig and added to the dungeon. Fixed animation and added audio)
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
