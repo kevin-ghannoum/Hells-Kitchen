@@ -1,91 +1,162 @@
 // Developed using : https://www.raywenderlich.com/82-procedural-generation-of-mazes-with-unity
 
+using System;
+using System.Collections.Generic;
+using Common.Enums;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Dungeon_Generation
 {
     public class MazeConstructor : MonoBehaviour
     {
-        public bool showDebug;
+        [SerializeField] private bool showDebug = false;
 
-        [Header("Materials")]
-        [SerializeField] private Material mazeMat1;
-        [SerializeField] private Material mazeMat2;
-        [SerializeField] private Material startMat;
-        [SerializeField] private Material treasureMat;
+        [Header("Structure Prefabs")]
+        [SerializeField] private GameObject floorPrefab;
+        [SerializeField] private GameObject wallPrefab;
+        [SerializeField] private GameObject torchPrefab;
+
+        [Header("Enemy Prefabs")]
+        [SerializeField] private GameObject[] enemies;
         
         [Header("Generation Settings")]
-        [SerializeField] private float hallHeight = 5f;
-        [SerializeField] private float hallWidth = 5f;
-        [SerializeField][Range (0f, 1f)] private float chanceOfEmptySpace = 0.1f;
-        
+        [SerializeField][Range(0f, 1f)] private float placementThreshold = 0.1f;
+        [SerializeField][Range(0f, 1f)] private float torchAbundance = 0.1f;
+        [SerializeField][Range(0f, 1f)] private float enemySpawnRate = 0.02f;
+        [SerializeField] private int minMazeSize = 20;
+        [SerializeField] private int maxMazeSize = 30;
+        [SerializeField] public float hallwayWidth = 5.0f;
+        [SerializeField] public float hallwayHeight = 3.0f;
+
         private MazeDataGenerator dataGenerator;
-        private MazeMeshGenerator meshGenerator;
-        
-        public float HallWidth { get=> hallWidth; set => hallWidth = value; }
-        public float HallHeight { get => hallHeight; set => hallHeight = value; }
 
         public int StartRow { get; private set; }
         public int StartCol { get; private set; }
 
         public int GoalRow { get; private set; }
         public int GoalCol { get; private set; }
-        
+
         public int[,] Data { get; private set; }
-        
+
         void Awake()
         {
-            dataGenerator = new MazeDataGenerator(chanceOfEmptySpace);
-            meshGenerator = new MazeMeshGenerator(hallHeight, hallWidth);
+            dataGenerator = new MazeDataGenerator(placementThreshold);
 
             // default to walls surrounding a single empty cell
-            Data = new int[,]
-            {
+            Data = new int[,] {
                 {1, 1, 1},
                 {1, 0, 1},
                 {1, 1, 1}
             };
         }
-    
-        public void GenerateNewMaze(int sizeRows, int sizeCols,
-            TriggerEventHandler startCallback=null, TriggerEventHandler goalCallback=null)
+        
+        public void GenerateNewMaze(TriggerEventHandler startCallback = null, TriggerEventHandler goalCallback = null)
         {
-            if (sizeRows % 2 == 0 && sizeCols % 2 == 0)
-            {
-                Debug.LogError("Odd numbers work better for dungeon size.");
-            }
-
             DisposeOldMaze();
 
-            Data = dataGenerator.FromDimensions(sizeRows, sizeCols);
+            Data = dataGenerator.FromDimensions(
+                GetRandomOddNumberInRange(minMazeSize, maxMazeSize), 
+                GetRandomOddNumberInRange(minMazeSize, maxMazeSize)
+            );
 
             FindStartPosition();
             FindGoalPosition();
 
-            // store values used to generate this mesh
-            HallWidth = meshGenerator.width;
-            HallHeight = meshGenerator.height;
-
-            DisplayMaze();
+            GenerateMazeFromData(Data);
 
             PlaceStartTrigger(startCallback);
             PlaceGoalTrigger(goalCallback);
         }
 
-    
+        private void GenerateMazeFromData(int[,] data)
+        {
+            GameObject parent = new GameObject();
+            parent.transform.position = Vector3.zero;
+            parent.name = "Procedural Maze";
+            parent.tag = Tags.Generated;
+            
+            for (int i = 0; i < data.GetLength(0); i++)
+            {
+                for (int j = 0; j < data.GetLength(1); j++)
+                {
+                    if (data[i, j] == 0)
+                    {
+                        Vector3 floorPosition = new Vector3(i * hallwayWidth - (hallwayWidth / 2), 0, j * hallwayWidth - (hallwayWidth / 2));
+                        GameObject floor = Instantiate(floorPrefab, parent.transform);
+                        floor.transform.localPosition = floorPosition;
+                        floor.transform.localScale = new Vector3(hallwayWidth, 1, hallwayWidth);
+
+                        if (Random.value < enemySpawnRate)
+                        {
+                            Instantiate(enemies[Random.Range(0, enemies.Length)], floorPosition, Quaternion.identity);
+                        }
+
+                        Vector3?[] neighbours = GetEmptyNeighbours(i, j);
+                        for (int n = 0; n < neighbours.Length; n++)
+                        {
+                            if (neighbours[n] != null)
+                            {
+                                Vector3 wallPosition = ((Vector3)neighbours[n] + floorPosition) / 2;
+                                GameObject wall = Instantiate(wallPrefab, parent.transform);
+                                wall.transform.localPosition = wallPosition;
+                                wall.transform.localScale = new Vector3(1, hallwayHeight, hallwayWidth);
+                                wall.transform.localRotation = Quaternion.Euler(0, 90 * n, 0);
+
+                                if (Random.value < torchAbundance)
+                                {
+                                    const float torchHeight = 3.0f / 5.0f;
+                                    GameObject torch = Instantiate(torchPrefab, wall.transform);
+                                    torch.transform.localPosition = new Vector3(0, torchHeight, Random.Range(-0.5f, 0.5f));
+                                    torch.transform.localScale = new Vector3(1, 1 / hallwayHeight, 1 / hallwayWidth);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private Vector3?[] GetEmptyNeighbours(int x, int y)
+        {
+            int[,] offsets = {
+                {1, 0},
+                {0, -1},
+                {-1, 0},
+                {0, 1}
+            };
+
+            Vector3?[] result = new Vector3?[4];
+            for (int i = 0; i < offsets.GetLength(0); i++)
+            {
+                int nx = x + offsets[i, 0];
+                int ny = y + offsets[i, 1];
+                if (nx >= 0 && nx < Data.GetLength(0) && ny >= 0 && ny < Data.GetLength(1) && Data[nx, ny] == 1)
+                {
+                    result[i] = new Vector3(nx * hallwayWidth - (hallwayWidth / 2), 0, ny * hallwayWidth - (hallwayWidth / 2));
+                }
+                else
+                {
+                    result[i] = null;
+                }
+            }
+
+            return result;
+        }
+
         void OnGUI()
         {
             if (!showDebug)
             {
                 return;
             }
-            
+
             int[,] maze = Data;
             int rowMax = maze.GetUpperBound(0);
             int colMax = maze.GetUpperBound(1);
 
             string drawMaze = "";
-            
+
             for (int i = rowMax; i >= 0; i--)
             {
                 for (int j = 0; j <= colMax; j++)
@@ -101,27 +172,10 @@ namespace Dungeon_Generation
                 }
                 drawMaze += "\n";
             }
-            
+
             GUI.Label(new Rect(20, 20, 500, 500), drawMaze);
         }
-    
-        private void DisplayMaze()
-        {
-            GameObject obj = new GameObject();
-            obj.transform.position = Vector3.zero;
-            obj.name = "Procedural Maze";
-            obj.tag = Tags.Generated;
 
-            MeshFilter meshFilter = obj.AddComponent<MeshFilter>();
-            meshFilter.mesh = meshGenerator.FromData(Data);
-    
-            MeshCollider meshCollider = obj.AddComponent<MeshCollider>();
-            meshCollider.sharedMesh = meshFilter.mesh;
-
-            MeshRenderer meshRenderer = obj.AddComponent<MeshRenderer>();
-            meshRenderer.materials = new Material[2] {mazeMat1, mazeMat2};
-        }
-        
         private void FindStartPosition()
         {
             int[,] maze = Data;
@@ -141,7 +195,7 @@ namespace Dungeon_Generation
                 }
             }
         }
-    
+
         private void FindGoalPosition()
         {
             int[,] maze = Data;
@@ -166,20 +220,21 @@ namespace Dungeon_Generation
         public void DisposeOldMaze()
         {
             GameObject[] objects = GameObject.FindGameObjectsWithTag(Tags.Generated);
-            foreach (GameObject obj in objects) {
+            foreach (GameObject obj in objects)
+            {
                 Destroy(obj);
             }
         }
-        
+
         private void PlaceStartTrigger(TriggerEventHandler callback)
         {
             GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            obj.transform.position = new Vector3(StartCol * HallWidth, .5f, StartRow * HallWidth);
+            obj.transform.position = new Vector3(StartCol, .5f, StartRow);
             obj.name = "Start Trigger";
             obj.tag = Tags.Generated;
 
             obj.GetComponent<BoxCollider>().isTrigger = true;
-            obj.GetComponent<MeshRenderer>().sharedMaterial = startMat;
+            obj.GetComponent<MeshRenderer>().enabled = false;
 
             TriggerEventRouter trigger = obj.AddComponent<TriggerEventRouter>();
             trigger.callback = callback;
@@ -188,17 +243,23 @@ namespace Dungeon_Generation
         private void PlaceGoalTrigger(TriggerEventHandler callback)
         {
             GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            obj.transform.position = new Vector3(GoalCol * HallWidth, .5f, GoalRow * HallWidth);
+            obj.transform.position = new Vector3(GoalCol, .5f, GoalRow);
             obj.name = "Exit";
             obj.tag = Tags.Generated;
 
             obj.GetComponent<BoxCollider>().isTrigger = true;
-            obj.GetComponent<MeshRenderer>().sharedMaterial = treasureMat;
+            obj.GetComponent<MeshRenderer>().enabled = false;
 
             TriggerEventRouter trigger = obj.AddComponent<TriggerEventRouter>();
             trigger.callback = callback;
         }
-
-
+        
+        private int GetRandomOddNumberInRange(int low, int high)
+        {
+            int num = UnityEngine.Random.Range(low, high);
+            if (num % 2 == 0) num += 1;
+            return num;
+        }
+        
     }
 }

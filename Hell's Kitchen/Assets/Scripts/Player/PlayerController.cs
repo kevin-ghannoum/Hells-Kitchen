@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System;
 using Input;
 using UI;
 using UnityEngine;
@@ -11,10 +13,11 @@ namespace Player
         [SerializeField] private float walkSpeed = 10f;
         [SerializeField] private float turnSmoothVelocity = 10f;
         [SerializeField] private float speedSmoothVelocity = 10f;
-
+        [SerializeField] public Transform CharacterHand;
         [SerializeField] private InventoryUI _inventoryUI;
 
         private float speed = 0f;
+
         private Animator animator;
         private CharacterController characterController;
         private Inventory _inventory = new Inventory();
@@ -24,7 +27,7 @@ namespace Player
 
         private void Start()
         {
-            animator = GetComponent<Animator>();
+            animator = GetComponentInChildren<Animator>();
             characterController = GetComponent<CharacterController>();
         }
 
@@ -38,7 +41,7 @@ namespace Player
             }
             
             _input.reference.actions["Roll"].performed += Roll;
-            _input.reference.actions["Attack"].performed += Attack;
+           
             _input.reference.actions["PickUp"].performed += PickUp;
         }
 
@@ -49,10 +52,6 @@ namespace Player
         }
 
         #region PlayerActions
-        void Attack(InputAction.CallbackContext callbackContext)
-        {
-            animator.SetTrigger(PlayerAnimator.SwordAttack);
-        }
 
         void Roll(InputAction.CallbackContext callbackContext)
         {

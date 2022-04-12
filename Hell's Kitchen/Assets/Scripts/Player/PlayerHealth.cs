@@ -1,3 +1,5 @@
+using System;
+using Common;
 using Common.Interfaces;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,16 +9,15 @@ namespace Player
     public class PlayerHealth : MonoBehaviour, IKillable
     {
         [SerializeField] private Animator animator;
-        [SerializeField] private float _hitPoints = 100;
         private UnityEvent _killed;
         public UnityEvent Killed => _killed ??= new UnityEvent();
 
         public float HitPoints
         {
-            get => _hitPoints;
-            set => _hitPoints = value;
+            get => GameStateManager.Instance.playerCurrentHitPoints;
+            set => GameStateManager.Instance.playerCurrentHitPoints = value;
         }
-    
+        
         public void TakeDamage(float damage)
         {
             animator.SetTrigger(PlayerAnimator.TakeHit);
