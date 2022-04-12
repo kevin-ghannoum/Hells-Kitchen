@@ -31,5 +31,18 @@ public class ItemDrop : MonoBehaviour
                 Debug.LogError("Added item must be part of the defined list of Items");
             }
         }
+        else if(other.CompareTag("SousChef")){
+            PlayerController player = other.gameObject.GetComponent<SousChef>().player.GetComponent<PlayerController>();
+
+            if (allItems.TryGetValue(gameObject.name, out item))
+            {
+                player.AddItemToInventory(item,  1);
+                Destroy(gameObject);
+            }
+            else
+            {
+                Debug.LogError("Added item must be part of the defined list of Items");
+            }
+        }
     }
 }
