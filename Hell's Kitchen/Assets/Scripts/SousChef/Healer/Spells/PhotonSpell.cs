@@ -20,6 +20,8 @@ public class PhotonSpell : MonoBehaviour
     float arriveRadius = 0.75f;
 
     public float aoeDamage;
+
+    public Transform target;
     private void Start()
     {
         transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
@@ -29,6 +31,8 @@ public class PhotonSpell : MonoBehaviour
     float aoeDmgDelayAfterExplosion = 0.25f;
     private void Update()
     {
+        if (target != null)
+            transform.position = target.position;
         spinStartDelay -= Time.deltaTime;
         if (spinStartDelay < 0 && spinners != null) {
             spinners.gameObject.SetActive(true);

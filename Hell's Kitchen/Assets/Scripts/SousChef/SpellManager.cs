@@ -6,7 +6,9 @@ public class SpellManager : MonoBehaviour
 {
     [SerializeField] GameObject photonSpellPrefab;
 
-    public void HealerSpell_Photon(Vector3 targetPosition) {
-        Instantiate(photonSpellPrefab, targetPosition, Quaternion.identity);
+    public void HealerSpell_Photon(Transform target) {
+        var obj = Instantiate(photonSpellPrefab, target.position, Quaternion.identity);
+        obj.GetComponent<PhotonSpell>().target = target;
+
     }
 }

@@ -14,17 +14,19 @@ public class HealerAttackState : HealerBaseState
     {
         Debug.Log("@Attack state");
         Debug.Log("@Attack charging spell... (" + photonCastTime + " seconds)");
-        healer.animator.SetBool("isWalking", false);
-        healer.animator.SetBool("isRunning", false);
+        isAttackAnimationPlaying = false;
+        _attackAnimationTime = 0f;
     }
 
-
+    bool isAttackAnimationPlaying = false;
+    float _attackAnimationTime = 0f;
+    float attackAnimationTime = 3.75f;
     public override void UpdateState(HealerStateManager healer)
     {
         healer.sc.faceTargetEnemy();
         healer.sc.agent.standStill = true;
 
-        if (healer.sc.targetEnemy == null) {
+        if (healer.sc.targetEnemy == null && !isAttackAnimationPlaying) {
             healer.resetAttackCD();
             _photonCastTime = 0f;
             healer.magicCircle.gameObject.SetActive(false);
@@ -32,26 +34,39 @@ public class HealerAttackState : HealerBaseState
             healer.sc.agent.standStill = false;
             return;
         }
-        //do a reposition check while waaiting for cd (ie if enemy gets too close, run away instead of sittin there xd
-        if (healer.canAttack()) {
+
+        //implement interrupt casting when souschef takes dmg
+        Debug.Log(healer.animator.GetCurrentAnimatorStateInfo(0).IsName("CastSpell"));
+        if (isAttackAnimationPlaying) {
+            _attackAnimationTime += Time.deltaTime;
+            if (_attackAnimationTime > attackAnimationTime) {
+                healer.sc.agent.standStill = false;
+                healer.SwitchState(healer.moveToTarget);
+            }
+        }
+
+        if (healer.canAttack() && !isAttackAnimationPlaying) {
             //spell casting animation
+            healer.animator.SetTrigger("CastSpell");
             healer.magicCircle.gameObject.SetActive(true);
             _photonCastTime += Time.deltaTime;
             if (_photonCastTime >= photonCastTime)
             {
+                isAttackAnimationPlaying = true;
                 healer.animator.SetTrigger("Attack");
                 Debug.Log("@Attack attacking xD");
-                healer.sc.agent.standStill = false;
+                //healer.sc.agent.standStill = false;
                 //play attack animation
-                healer.spells.HealerSpell_Photon(healer.sc.targetEnemy.transform.position);
+                healer.spells.HealerSpell_Photon(healer.sc.targetEnemy.transform);
                 healer.magicCircle.gameObject.SetActive(false);
                 healer.sc.targetEnemy.GetComponent<IKillable>().TakeDamage(photonDamage);
                 _photonCastTime = 0f;
                 healer.sc.targetEnemy = null;
                 healer.resetAttackCD();
-                healer.SwitchState(healer.moveToTarget);
+                //healer.SwitchState(healer.moveToTarget);
             }
         }
+
 
     }
 }

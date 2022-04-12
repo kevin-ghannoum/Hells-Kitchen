@@ -46,7 +46,7 @@ public class PathfindingAgent : MonoBehaviour
 
     private void Update()
     {
-        RecalculatePath();
+        //RecalculatePath();
         // Arrived
         if (_path == null || standStill)
         {
