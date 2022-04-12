@@ -921,6 +921,11 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 31b4f57063003054fbc5d3dbbef6ec24, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1fbfc1c93eee29d45b37f09ea62dee0f, type: 3}
+--- !u!1 &6269876953597624291 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1fbfc1c93eee29d45b37f09ea62dee0f, type: 3}
+  m_PrefabInstance: {fileID: 6611981409262568114}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6649779744846407001 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1fbfc1c93eee29d45b37f09ea62dee0f, type: 3}
@@ -936,3 +941,18 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -7718791123680963917, guid: 1fbfc1c93eee29d45b37f09ea62dee0f, type: 3}
   m_PrefabInstance: {fileID: 6611981409262568114}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8649689556945723328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6269876953597624291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaee84ca9c7ae4c42bced68397b444e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootGun:
+    m_PersistentCalls:
+      m_Calls: []
