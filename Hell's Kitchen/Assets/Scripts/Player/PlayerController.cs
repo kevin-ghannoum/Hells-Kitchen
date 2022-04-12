@@ -33,28 +33,48 @@ namespace Player
         private void Awake()
         {
             // Singleton instance
-            if (Instance != null && Instance != this) {
+            if (Instance != null && Instance != this)
+            {
                 Destroy(this);
-            } else {
+            }
+            else
+            {
                 Instance = this;
             }
-            
+
             _input.reference.actions["Roll"].performed += Roll;
-           
+
             _input.reference.actions["PickUp"].performed += PickUp;
         }
 
         private void Update()
         {
-            MovePlayer();
-            RotatePlayer();
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimator.Move))
+            {
+                MovePlayer();
+                RotatePlayer();
+            }
+            else if (animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimator.Roll))
+            {
+                Vector3 movement = Vector3.forward * runSpeed * Time.deltaTime;
+                characterController.Move(transform.TransformDirection(movement));
+                animator.SetFloat(PlayerAnimator.Speed, speed / runSpeed);
+            }
+            else
+            {
+                characterController.Move(Vector3.zero);
+                speed = 0;
+                animator.SetFloat(PlayerAnimator.Speed, speed / runSpeed);
+            }
         }
 
         #region PlayerActions
 
         void Roll(InputAction.CallbackContext callbackContext)
         {
-            animator.SetTrigger(PlayerAnimator.Roll); 
+            animator.SetTrigger(PlayerAnimator.Roll);
+            speed = runSpeed;
+            animator.SetFloat(PlayerAnimator.Speed, speed / runSpeed);
         }
 
         void PickUp(InputAction.CallbackContext callbackContext)
@@ -70,14 +90,13 @@ namespace Player
             speed = Mathf.Lerp(speed, targetSpeed, speedSmoothVelocity * Time.deltaTime);
             Vector3 movement = Vector3.forward * speed * Time.deltaTime;
             characterController.Move(transform.TransformDirection(movement));
-        
-            animator.SetFloat(PlayerAnimator.Speed, speed);
+            animator.SetFloat(PlayerAnimator.Speed, speed / runSpeed);
         }
 
         private void RotatePlayer()
         {
             Vector3 targetDirection = new Vector3(_input.move.x, 0f, _input.move.y);
-            if (targetDirection == Vector3.zero) 
+            if (targetDirection == Vector3.zero)
                 return;
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirection), turnSmoothVelocity * Time.deltaTime);
         }
@@ -101,13 +120,13 @@ namespace Player
 
         public void RemoveItemFromInventory(Item item, int quantity)
         {
-            _inventory.RemoveItemFromInventory(item,quantity);
+            _inventory.RemoveItemFromInventory(item, quantity);
         }
         #endregion
 
         private void OnCollisionEnter(Collision collision)
         {
-            
+
         }
     }
 }

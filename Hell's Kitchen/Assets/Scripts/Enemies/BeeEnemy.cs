@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Common.Enums;
 using UnityEngine;
 
 public class BeeEnemy : MonoBehaviour
@@ -7,7 +6,6 @@ public class BeeEnemy : MonoBehaviour
     private float Speed = 5;
     [SerializeField] private float attackRange;
     private GameObject target;
-    private GameObject[] targetList;
     private float timeCounter;
     private float wanderTimeCounter;
     private GameObject Hive;
@@ -18,7 +16,7 @@ public class BeeEnemy : MonoBehaviour
 
     private void Start()
     {
-        targetList = GameObject.FindGameObjectsWithTag("Player");
+        target = GameObject.FindWithTag(Tags.Player);
         Hive = GameObject.Find("Hive");
         anime = gameObject.GetComponent<Animator>();
         anime.SetBool("walking", true);
@@ -27,7 +25,6 @@ public class BeeEnemy : MonoBehaviour
 
     private void Update()
     {
-        target = findCloset(targetList);
         timeCounter += Time.deltaTime;
         wanderTimeCounter += Time.deltaTime;
         Vector3 hiveDirection = Hive.transform.position - transform.position;
@@ -69,32 +66,12 @@ public class BeeEnemy : MonoBehaviour
                     wanderCheck = true;
                     wanderTimeCounter = 0;
                 }
-                else if(Vector3.Distance(wanderPos, new Vector3(transform.position.x, 0, transform.position.z)) < 2f)
-                {
-
-                }
-                else
+                else if(Vector3.Distance(wanderPos, new Vector3(transform.position.x, 0, transform.position.z)) >= 2f)
                 {
                     transform.rotation = Quaternion.LookRotation(wanderDirection);
                     transform.position += wanderDirection.normalized * Speed * Time.deltaTime;
                 }
             }
         }
-    }
-
-    private GameObject findCloset(GameObject[] targetList)
-    {
-        GameObject currentTarget = targetList[0];
-        float distance = (targetList[0].transform.position - transform.position).magnitude;
-
-        for (int i = 1; i < targetList.Length; i++)
-        {
-            if (distance > (targetList[i].transform.position - transform.position).magnitude)
-            {
-                currentTarget = targetList[i];
-            }
-        }
-
-        return currentTarget;
     }
 }
