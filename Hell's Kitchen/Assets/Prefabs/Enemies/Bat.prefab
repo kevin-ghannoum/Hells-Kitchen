@@ -76,10 +76,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afd420c264afa84ba3237d0d7e6c837, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrivalRadius: 2
+  ArrivalRadius: 2
+  time2target: 0.5
   maxVelocity: 5
-  time2target: 0.1
   rigidbody: {fileID: 8717202010100707280}
+  standStill: 0
 --- !u!114 &8513932910647922711
 MonoBehaviour:
   m_ObjectHideFlags: 0
