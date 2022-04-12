@@ -33,7 +33,6 @@ namespace Enemies
             anime.SetBool("walking", true);
             anime.SetBool("attacking", false);
             timeCounter += Time.deltaTime;
-            wanderTimeCounter += Time.deltaTime;
 
             if (Vector3.Distance(target.transform.position, transform.position) < attackRange)
             {
@@ -47,52 +46,6 @@ namespace Enemies
                     timeCounter = 0;
                 }
             }
-
-            // Vector3 hiveDirection = Hive.transform.position - transform.position;
-            // hiveDirection.y = 0;
-            // Vector3 targetDirection = target.transform.position - transform.position;
-            // targetDirection.y = 0;
-
-            // if (targetDirection.magnitude < 8)
-            // {
-            //     transform.LookAt(target.transform);
-            //     transform.position += targetDirection.normalized * Speed * Time.deltaTime;
-            // }
-            // else
-            // {
-            //     if (hiveDirection.magnitude > 8)
-            //     {
-            //         transform.LookAt(Hive.transform);
-            //         transform.position += hiveDirection.normalized * Speed * Time.deltaTime;
-            //     }
-            //     else
-            //     {
-            //         //wander
-            //         if (wanderCheck)
-            //         {
-            //             wanderPos = new Vector3(Random.Range(Hive.transform.position.x - wanderRadius, Hive.transform.position.x + wanderRadius),
-            //                                     0,
-            //                                     Random.Range(Hive.transform.position.z - wanderRadius, Hive.transform.position.z + wanderRadius));
-
-            //             wanderCheck = false;
-            //         }
-
-            //         Vector3 wanderDirection = wanderPos - transform.position;
-            //         wanderDirection = new Vector3(wanderDirection.x, 0, wanderDirection.z);
-            //         Debug.Log(Vector3.Distance(wanderPos, transform.position));
-
-            //         if (Vector3.Distance(wanderPos, new Vector3(transform.position.x, 0, transform.position.z)) < 2f && wanderTimeCounter > Random.Range(2, 4))
-            //         {
-            //             wanderCheck = true;
-            //             wanderTimeCounter = 0;
-            //         }
-            //         else if(Vector3.Distance(wanderPos, new Vector3(transform.position.x, 0, transform.position.z)) >= 2f)
-            //         {
-            //             transform.rotation = Quaternion.LookRotation(wanderDirection);
-            //             transform.position += wanderDirection.normalized * Speed * Time.deltaTime;
-            //         }
-            //     }
-            // }
         }
 
         private void Attack()
