@@ -36,7 +36,7 @@ namespace Enemies
             if (Vector3.Distance(_player.transform.position, transform.position) < aggroRadius)
             {
                 agent.Target = _player.transform.position;
-            
+
                 if (agent.Arrived && Time.time - _lastAttack > (1.0f / attackRate))
                 {
                     PerformAttack();
