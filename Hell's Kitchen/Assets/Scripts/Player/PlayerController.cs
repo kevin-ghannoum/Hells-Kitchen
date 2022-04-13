@@ -34,6 +34,7 @@ namespace Player
         private CharacterController _characterController;
         private Inventory _inventory;
         private float _speed = 0f;
+        private IPickup _currentPickup;
 
         private InputManager _input => InputManager.Instance;
 
@@ -59,8 +60,8 @@ namespace Player
             _input.reference.actions["Roll"].performed += Roll;
             _input.reference.actions["PickUp"].performed += PickUp;
 
-            animator = GetComponentInChildren<Animator>();
-            characterController = GetComponent<CharacterController>();
+            _animator = GetComponentInChildren<Animator>();
+            _characterController = GetComponent<CharacterController>();
             _inventory = new Inventory();
         }
 
@@ -87,17 +88,29 @@ namespace Player
             }
             
             UpdateSprint();
-            
+        }
+
+        public void OnPickupTriggerEnter(IPickup pickup)
+        {
+            _currentPickup = pickup;
+        }
+
+        public void OnPickupTriggerExit(IPickup pickup)
+        {
+            if (_currentPickup == pickup)
+            {
+                _currentPickup = null;
+            }
         }
 
         #region PlayerActions
 
-        void Roll(InputAction.CallbackContext callbackContext)
+        public void Roll(InputAction.CallbackContext callbackContext)
         {
             _animator.SetTrigger(PlayerAnimator.Roll);
         }
 
-        void PickUp(InputAction.CallbackContext callbackContext)
+        public void PickUp(InputAction.CallbackContext callbackContext)
         {
             _animator.SetTrigger(PlayerAnimator.PickUp);
         }
@@ -173,13 +186,17 @@ namespace Player
             _inventory.RemoveItemFromInventory(item, quantity);
         }
 
-        public void FaceDirection(Vector3 direction)
+        #endregion
+        
+        #region Player Actions
+        
+        public void FaceTarget(Vector3 target)
         {
             var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             if (!animatorStateInfo.IsName(PlayerAnimator.Roll) &&
                 (animatorStateInfo.IsName(PlayerAnimator.Move) || animatorStateInfo.normalizedTime > 0.5f))
             {
-                transform.rotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.LookRotation(target - transform.position);
             }
         }
 
@@ -191,6 +208,11 @@ namespace Player
             {
                 col.gameObject.GetComponent<IKillable>()?.TakeDamage(damage);
             }
+        }
+
+        public void PickUp()
+        {
+            _currentPickup?.PickUp();
         }
 
         #endregion

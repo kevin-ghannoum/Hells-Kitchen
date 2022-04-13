@@ -1,5 +1,6 @@
 using Common;
 using Common.Interfaces;
+using UI;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,6 +12,7 @@ namespace Player
         [SerializeField] private AudioClip takeDamageSound;
         [SerializeField] private AudioClip lowHealthSound;
         [SerializeField] private AudioClip deathSound;
+        [SerializeField] private GameObject damagePrefab;
         
         private float _invulnerabilityTime = 1;
         private float _invulnerabilityTimer = 1;
@@ -43,9 +45,16 @@ namespace Player
             if (_invulnerabilityTimer < _invulnerabilityTime)
                 return;
             
+            // HP calculation and animation
             animator.SetTrigger(PlayerAnimator.TakeHit);
             HitPoints -= damage;
             _invulnerabilityTimer = 0;
+            
+            // Damage numbers
+            var dmgObj = Instantiate(damagePrefab, transform.position + 2.0f * Vector3.up, Quaternion.identity);
+            var damageNumbers = dmgObj.GetComponent<DamageNumbers>();
+            if (damageNumbers)
+                damageNumbers.damage = damage;
 
             // If the player's hp is at 0 or lower, they die
             if (HitPoints <= 0)

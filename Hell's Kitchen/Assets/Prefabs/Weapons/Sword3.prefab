@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -8043898493064958135}
   - component: {fileID: 3979347413307542531}
   - component: {fileID: 7934694821301852611}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sword3
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -78,7 +78,9 @@ MonoBehaviour:
   position: {x: 0, y: 0.00149, z: 0.0004}
   rotation: {x: 0.42711297, y: -0.5597266, z: -0.41173846, w: 0.5785778}
   scale: 0.00666666
-  damage: 10
+  damage: 50
+  throwSpeed: 35
+  throwAngularSpeed: 180
   rigidbody: {fileID: -8043898493064958135}
 --- !u!1001 &6724366980024074978
 PrefabInstance:

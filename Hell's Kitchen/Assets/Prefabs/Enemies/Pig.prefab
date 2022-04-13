@@ -120,7 +120,7 @@ Transform:
   m_GameObject: {fileID: 3785744767609843777}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 5314728014635969019}
   m_RootOrder: 1
@@ -194,7 +194,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.8
-  m_Center: {x: 0, y: 0.85, z: 0}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!114 &4817720626837344412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,8 +263,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4169962733543232369}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalPosition: {x: -0, y: 0.1, z: 0}
+  m_LocalScale: {x: 200, y: 200, z: 200}
   m_Children:
   - {fileID: 9108066273516827713}
   - {fileID: 4859932429895291896}
@@ -334,10 +334,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.8
-  m_Height: 3
+  m_Radius: 1.6
+  m_Height: 4
   m_Direction: 1
-  m_Center: {x: 0, y: 1.5, z: 0}
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!114 &-741644595512488671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,6 +369,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: -741644595512488671}
   animator: {fileID: 3995912497361030879}
+  damagePrefab: {fileID: 298881605022184068, guid: 3dd0aff8443794b4fa082e6645839d8f, type: 3}
   hitPoints: 150
   deathDelay: 1
   onKilled:

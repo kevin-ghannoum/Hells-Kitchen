@@ -109,11 +109,11 @@ namespace Dungeon_Generation
                             SpawnDebris(parent.transform, floorPosition);
                         SpawnRocks(parent.transform, floorPosition);
                         SpawnWalls(parent.transform, floorPosition, i, j);
-                        
                     }
                 }
             }
             
+            // End portal
             PlaceGoal(parent.transform, lastfloorPosition);
             
             // Spawn pillars
@@ -190,6 +190,7 @@ namespace Dungeon_Generation
         {
             GameObject obj = Instantiate(exitPrefab , parent);
             obj.transform.localPosition = position;
+            obj.transform.rotation = RandomRotation();
             obj.name = "Exit";
             obj.tag = Tags.Generated;
 

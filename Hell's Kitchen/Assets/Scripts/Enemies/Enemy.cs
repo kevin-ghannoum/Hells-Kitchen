@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using Common.Interfaces;
 using Enemies.Enums;
+using UI;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,6 +17,9 @@ namespace Enemies
 
         [SerializeField]
         protected Animator animator;
+
+        [SerializeField]
+        private GameObject damagePrefab;
 
         [Header("Parameters")]
         [SerializeField]
@@ -55,8 +59,17 @@ namespace Enemies
 
         public virtual void TakeDamage(float damage)
         {
+            // HP calculation and animation
             hitPoints -= damage;
             animator.SetTrigger(EnemyAnimator.TakeHit);
+            
+            // Damage numbers
+            var dmgObj = Instantiate(damagePrefab, transform.position + 2.0f * Vector3.up, Quaternion.identity);
+            var damageNumbers = dmgObj.GetComponent<DamageNumbers>();
+            if (damageNumbers)
+                damageNumbers.damage = damage;
+            
+            // Death
             if (hitPoints <= 0)
             {
                 hitPoints = 0;

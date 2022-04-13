@@ -1,5 +1,7 @@
-﻿using Common;
+﻿using System;
+using Common;
 using Common.Enums;
+using Common.Interfaces;
 using Player;
 using UnityEngine;
 using Input;
@@ -9,7 +11,7 @@ using Random = UnityEngine.Random;
 namespace Weapons
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class WeaponPickup : MonoBehaviour
+    public class WeaponPickup : MonoBehaviour, IWeapon
     {
         [Header("Weapon Offset")]
         [SerializeField] private Vector3 position = Vector3.zero;
@@ -20,7 +22,7 @@ namespace Weapons
         public float damage = 10.0f;
 
         [Header("Throwing")]
-        [SerializeField] private float throwSpeed = 25.0f;
+        [SerializeField] private float throwSpeed = 35.0f;
         [SerializeField] private float throwAngularSpeed = 180.0f;
         
         [Header("References")]
@@ -31,6 +33,8 @@ namespace Weapons
         protected PlayerController player;
         protected Animator playerAnimator;
         private bool _canBePickedUp = true;
+
+        public bool CanPickUp => _canBePickedUp;
 
         public void Reset()
         {
@@ -44,8 +48,9 @@ namespace Weapons
             playerAnimator = playerObject.GetComponentInChildren<Animator>();
         }
 
-        public void PickUpItem()
+        public virtual void PickUp()
         {
+            _canBePickedUp = false;
             ReparentObject();
             AddListeners();
             GameStateManager.Instance.carriedWeapon = gameObject;
@@ -92,13 +97,12 @@ namespace Weapons
             gameObject.transform.localRotation = rotation;
         }
 
-        protected virtual void Use(InputAction.CallbackContext callbackContext)
+        public virtual void Use(InputAction.CallbackContext callbackContext)
         {
             Ray mouseRay = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             Plane floor = new Plane(Vector3.up, 0);
             floor.Raycast(mouseRay, out float dist);
-            Vector3 mousePos = mouseRay.GetPoint(dist);
-            player.FaceDirection(mousePos - player.transform.position);
+            player.FaceTarget(mouseRay.GetPoint(dist));
         }
 
         protected virtual void AddListeners()
@@ -117,13 +121,20 @@ namespace Weapons
             input.reference.actions["DropItem"].performed -= Drop;
             input.reference.actions["ThrowItem"].performed -= Throw;
         }
-        
-        private void OnTriggerStay(Collider other)
+
+        private void OnTriggerEnter(Collider other)
         {
-            if (_canBePickedUp && other.CompareTag(Tags.Player) && !GameStateManager.Instance.IsCarryingWeapon && input.pickUp)
+            if (other.CompareTag(Tags.Player) && _canBePickedUp && !GameStateManager.Instance.IsCarryingWeapon)
             {
-                PickUpItem();
-                _canBePickedUp = false;
+                other.GetComponent<PlayerController>().OnPickupTriggerEnter(this);
+            }
+        }
+        
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag(Tags.Player))
+            {
+                other.GetComponent<PlayerController>().OnPickupTriggerExit(this);
             }
         }
 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4141016623778023213}
   - component: {fileID: 2503172613302315969}
   - component: {fileID: 4776774115654917213}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Gun1
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -79,9 +79,10 @@ MonoBehaviour:
   position: {x: 0.00049, y: 0.00466, z: 0.00078}
   rotation: {x: -0.045933098, y: 0.71820647, z: 0.6942452, w: 0.009657443}
   scale: 0.006666667
-  damage: 10
+  damage: 20
+  throwSpeed: 35
+  throwAngularSpeed: 180
   rigidbody: {fileID: 4141016623778023213}
-  bulletDamage: 50
   bulletSpeed: 40
   bulletLifetime: 3
   bulletSpread: 5

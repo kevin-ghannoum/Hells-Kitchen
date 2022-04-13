@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 238747068}
   - component: {fileID: 238747067}
   - component: {fileID: 2536583312237978602}
+  - component: {fileID: 4672266657061108603}
+  - component: {fileID: 2621730353807203385}
   m_Layer: 3
   m_Name: PlayerCamera
   m_TagString: MainCamera
@@ -118,6 +120,83 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 238747065}
   m_Enabled: 1
+--- !u!114 &4672266657061108603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238747065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeTrigger: {fileID: 238747066}
+  volumeLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  stopNaNPropagation: 1
+  finalBlitToCameraTarget: 0
+  antialiasingMode: 1
+  temporalAntialiasing:
+    jitterSpread: 0.75
+    sharpness: 0.25
+    stationaryBlending: 0.95
+    motionBlending: 0.85
+  subpixelMorphologicalAntialiasing:
+    quality: 2
+  fastApproximateAntialiasing:
+    fastMode: 0
+    keepAlpha: 0
+  fog:
+    enabled: 1
+    excludeSkybox: 1
+  debugLayer:
+    lightMeter:
+      width: 512
+      height: 256
+      showCurves: 1
+    histogram:
+      width: 512
+      height: 256
+      channel: 3
+    waveform:
+      exposure: 0.12
+      height: 256
+    vectorscope:
+      size: 256
+      exposure: 0.12
+    overlaySettings:
+      linearDepth: 0
+      motionColorIntensity: 4
+      motionGridSize: 64
+      colorBlindnessType: 0
+      colorBlindnessStrength: 1
+  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
+  m_ShowToolkit: 0
+  m_ShowCustomSorter: 0
+  breakBeforeColorGrading: 0
+  m_BeforeTransparentBundles: []
+  m_BeforeStackBundles: []
+  m_AfterStackBundles: []
+--- !u!114 &2621730353807203385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238747065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: f5686cbd6b3e511468d12b8363bbd14c, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 0
 --- !u!1 &807330855
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,11 +206,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 807330856}
+  - component: {fileID: 343464037668083283}
   - component: {fileID: 807330857}
   - component: {fileID: 807330858}
   m_Layer: 3
   m_Name: VirtualCamera
-  m_TagString: Untagged
+  m_TagString: UICamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -151,6 +231,49 @@ Transform:
   m_Father: {fileID: 1366883624018297259}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &343464037668083283
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807330855}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 3
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
 --- !u!114 &807330857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,6 +550,7 @@ MonoBehaviour:
   takeDamageSound: {fileID: 8300000, guid: 722bfe1a680d68a49b133308e897de2a, type: 3}
   lowHealthSound: {fileID: 8300000, guid: 3f551c312493b4647ab1bd4892e8831a, type: 3}
   deathSound: {fileID: 8300000, guid: 236fe2b344d071242bfdd14fbb3ca818, type: 3}
+  damagePrefab: {fileID: 298881605022184068, guid: 3dd0aff8443794b4fa082e6645839d8f, type: 3}
 --- !u!1 &2112373015343845705
 GameObject:
   m_ObjectHideFlags: 0
@@ -1446,16 +1570,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1fbfc1c93eee29d45b37f09ea62dee0f, type: 3}
---- !u!1 &6269876953597624291 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1fbfc1c93eee29d45b37f09ea62dee0f, type: 3}
-  m_PrefabInstance: {fileID: 6611981409262568114}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &6649779744846407001 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1fbfc1c93eee29d45b37f09ea62dee0f, type: 3}
-  m_PrefabInstance: {fileID: 6611981409262568114}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5702439285158563841 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7718791123680963917, guid: 1fbfc1c93eee29d45b37f09ea62dee0f, type: 3}
@@ -1464,6 +1578,16 @@ Transform:
 --- !u!95 &768127235450584867 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 1fbfc1c93eee29d45b37f09ea62dee0f, type: 3}
+  m_PrefabInstance: {fileID: 6611981409262568114}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6649779744846407001 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1fbfc1c93eee29d45b37f09ea62dee0f, type: 3}
+  m_PrefabInstance: {fileID: 6611981409262568114}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6269876953597624291 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1fbfc1c93eee29d45b37f09ea62dee0f, type: 3}
   m_PrefabInstance: {fileID: 6611981409262568114}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &9167867730613228193
@@ -1487,6 +1611,21 @@ MonoBehaviour:
       - m_Target: {fileID: 201836285290825875}
         m_TargetAssemblyTypeName: Player.PlayerController, Core
         m_MethodName: InflictMeleeDamage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  pickUp:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 201836285290825875}
+        m_TargetAssemblyTypeName: Player.PlayerController, Core
+        m_MethodName: PickUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

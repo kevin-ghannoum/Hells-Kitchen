@@ -1,11 +1,10 @@
+﻿using UnityEngine.InputSystem;
 
-using UnityEngine.InputSystem;
-
-namespace Weapons
+namespace Common.Interfaces
 {
-    public interface IWeapon
+    public interface IPickup
     {
-        public void PickUpItem();
+        public void PickUp();
         public void Drop(InputAction.CallbackContext callbackContext);
         public void Throw(InputAction.CallbackContext callbackContext);
     }

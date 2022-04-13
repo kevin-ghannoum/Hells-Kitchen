@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -1384577510483308978}
   - component: {fileID: 8239290004809972347}
   - component: {fileID: 6201461690025302889}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Gun2
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -79,9 +79,10 @@ MonoBehaviour:
   position: {x: -0.00001, y: 0.00545, z: 0.00118}
   rotation: {x: -0.04593256, y: 0.718206, z: 0.69424564, w: 0.009658277}
   scale: 0.006666667
-  damage: 10
+  damage: 50
+  throwSpeed: 35
+  throwAngularSpeed: 180
   rigidbody: {fileID: -1384577510483308978}
-  bulletDamage: 70
   bulletSpeed: 50
   bulletLifetime: 3
   bulletSpread: 5
@@ -203,18 +204,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -6134722251807990068, guid: a53a911b2f57c254c8bd0196b1abd569, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -5529167609138257252, guid: a53a911b2f57c254c8bd0196b1abd569, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -5529167609138257252, guid: a53a911b2f57c254c8bd0196b1abd569, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -5529167609138257252, guid: a53a911b2f57c254c8bd0196b1abd569, type: 3}
       propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
