@@ -63,20 +63,9 @@ namespace Player
                 speed = 0;
                 animator.SetFloat(PlayerAnimator.Speed, speed / runSpeed);
             }
-
-            var maxSprintDuration = GameStateManager.Instance.maxSprintTime;
-            if (_input.run)
-            {
-                GameStateManager.Instance.elapsedSprintTime += Time.deltaTime;
-                if ( GameStateManager.Instance.elapsedSprintTime > maxSprintDuration)
-                    GameStateManager.Instance.elapsedSprintTime = maxSprintDuration;
-            }
-            else
-            {
-                GameStateManager.Instance.elapsedSprintTime -= Time.deltaTime;
-                if (GameStateManager.Instance.elapsedSprintTime < 0f)
-                    GameStateManager.Instance.elapsedSprintTime = 0f;
-            }
+            
+            UpdateSprint();
+            
         }
 
         #region PlayerActions
@@ -121,6 +110,26 @@ namespace Player
         private bool CanSprint()
         {
             return GameStateManager.Instance.elapsedSprintTime <  GameStateManager.Instance.maxSprintTime;
+        }
+
+        private void UpdateSprint()
+        {
+            var maxSprintDuration = GameStateManager.Instance.maxSprintTime;
+            var elapsedTime = GameStateManager.Instance.elapsedSprintTime;
+            if (_input.run)
+            {
+                elapsedTime += Time.deltaTime;
+                if ( elapsedTime> maxSprintDuration)
+                    elapsedTime = maxSprintDuration;
+            }
+            else
+            {
+                elapsedTime -= Time.deltaTime;
+                if ( elapsedTime < 0f)
+                    elapsedTime = 0f;
+            }
+
+            GameStateManager.Instance.elapsedSprintTime = elapsedTime;
         }
         
         #endregion
