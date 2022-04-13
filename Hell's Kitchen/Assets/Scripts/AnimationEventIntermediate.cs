@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Player
+public class AnimationEventIntermediate : MonoBehaviour
 {
     public UnityEvent fireGun = new UnityEvent();
     public UnityEvent meleeDamage = new UnityEvent();
@@ -21,5 +21,4 @@ namespace Player
     {
         pickUp.Invoke();
     }
-
 }
