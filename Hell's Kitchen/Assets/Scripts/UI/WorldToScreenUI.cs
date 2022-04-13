@@ -31,7 +31,6 @@ namespace UI
             // Set
             textTransform.localPosition = canvasPos;
             textTransform.forward = transform.forward;
-
         }
     }
 }

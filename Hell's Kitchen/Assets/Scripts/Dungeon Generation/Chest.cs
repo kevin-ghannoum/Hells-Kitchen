@@ -59,32 +59,5 @@ namespace Dungeon_Generation
                 canvas.SetActive(false);
             }
         }
-        
-        // private void LateUpdate()
-        // {
-        //     if (!Camera.main)
-        //         return;
-        //
-        //     var canvasRect = canvas.GetComponent<RectTransform>();
-        //     
-        //     // Offset position above object bbox (in world space)
-        //     float offsetPosY = transform.position.y + 2.5f;
-        //     
-        //     // Final position of marker above GO in world space
-        //     Vector3 offsetPos = new Vector3(transform.position.x, offsetPosY, transform.position.z);
-        //
-        //     
-        //     // Calculate *screen* position (note, not a canvas/recttransform position)
-        //     Vector2 canvasPos;
-        //     Vector2 screenPoint = Camera.main.WorldToScreenPoint(offsetPos);
-        //
-        //     // Convert screen position to Canvas / RectTransform space <- leave camera null if Screen Space Overlay
-        //     RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPoint, null, out canvasPos);
-        //
-        //     // Set
-        //     textTransform.localPosition = canvasPos;
-        //     textTransform.forward = canvas.transform.forward;
-        //
-        // }
     }
 }

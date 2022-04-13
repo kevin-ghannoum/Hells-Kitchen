@@ -8,8 +8,10 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using SceneManager = Common.SceneManager;
 
-public class LeaveRestaurant : MonoBehaviour
+public class RestaurantDoor : MonoBehaviour
 {
+    [SerializeField] private GameObject canvas;
+    
     [SerializeField] private int numberOfOrders = 5;
     [SerializeField] private float missedOrderPenalty = 10f;
     private InputManager _input => InputManager.Instance;
@@ -20,6 +22,7 @@ public class LeaveRestaurant : MonoBehaviour
     private void Awake()
     {
         _availableRecipes = new IRecipe[] {new Recipes.Hamburger(), new Recipes.Salad(), new Recipes.Sushi()};
+        canvas.SetActive(false);
     }
 
     private void OnTriggerStay(Collider other)
@@ -66,14 +69,20 @@ public class LeaveRestaurant : MonoBehaviour
             GameStateManager.Instance.cashMoney -= order.Value * missedOrderPenalty;
         }
     }
-
-    public void DebugPrintList()
+    
+    private void OnTriggerEnter(Collider other)
     {
-        foreach (var item in OrderList)
+        if (other.gameObject.CompareTag(Tags.Player))
         {
-            Debug.Log("New item");
-            Debug.Log(item.Key.GetType());
-            Debug.Log(item.Value);
+            canvas.SetActive(true);
+        }
+    }
+        
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag(Tags.Player))
+        {
+            canvas.SetActive(false);
         }
     }
 }
