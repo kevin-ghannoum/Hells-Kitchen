@@ -329,7 +329,7 @@ namespace Dungeon_Generation
                         {1, 0},
                         {1, 1}
                     };
-                    int numFloors = Enumerable.Range(0, offsets.GetLength(0))
+                    int[] floors = Enumerable.Range(0, offsets.GetLength(0))
                         .Select(o => {
                             int dx = offsets[o, 0];
                             int dy = offsets[o, 1];
@@ -337,8 +337,9 @@ namespace Dungeon_Generation
                                 j + dy >= 0 && j + dy < Data.GetLength(1))
                                 return Data[i + dx, j + dy];
                             return 1;
-                        }).Aggregate(0, (acc, v) => acc + (v == 0 ? 1 : 0));
-                    if (numFloors % 2 == 1)
+                        }).ToArray();
+                    int numFloors = floors.Aggregate(0, (acc, v) => acc + (v == 0 ? 1 : 0));
+                    if (numFloors % 2 == 1 || (numFloors == 2 && floors[0] == floors[3]))
                     {
                         GameObject pillar = Instantiate(pillarPrefab, parent.transform);
                         pillar.transform.localPosition = new Vector3(i * hallwayWidth, 0, j * hallwayWidth);

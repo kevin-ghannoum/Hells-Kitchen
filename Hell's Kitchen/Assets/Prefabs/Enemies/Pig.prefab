@@ -194,7 +194,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.8
-  m_Center: {x: 0, y: 0.8, z: 0}
+  m_Center: {x: 0, y: 0.85, z: 0}
 --- !u!114 &4817720626837344412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,6 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0123a99cd3932fa4f90f25652e3039c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pig: {fileID: 6554618451462168338}
 --- !u!1 &3880093822972261561
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,7 +281,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5314728014635969019}
   - component: {fileID: 6380386011114181317}
-  - component: {fileID: -4860902027420555589}
+  - component: {fileID: 2343862887033583434}
   - component: {fileID: -741644595512488671}
   - component: {fileID: 6554618451462168338}
   - component: {fileID: 3995912497361030879}
@@ -315,16 +316,16 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4794755069063066433}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
+  m_Mass: 10000
+  m_Drag: 1
+  m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
---- !u!135 &-4860902027420555589
-SphereCollider:
+--- !u!136 &2343862887033583434
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -333,9 +334,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
   m_Radius: 0.8
-  m_Center: {x: 0, y: 0.8, z: 0}
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!114 &-741644595512488671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,15 +369,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: -741644595512488671}
   animator: {fileID: 3995912497361030879}
-  hitPoints: 200
-  deathDelay: 0
+  hitPoints: 150
+  deathDelay: 1
   onKilled:
     m_PersistentCalls:
       m_Calls: []
-  attackRate: 0.5
-  aggroRadius: 20
-  chargeSpeed: 20
+  attackRate: 0.25
+  attackDamage: 15
+  aggroRadius: 25
+  chargeSpeed: 15
   chargeTime: 1
+  chargeRange: 15
 --- !u!95 &3995912497361030879
 Animator:
   serializedVersion: 3

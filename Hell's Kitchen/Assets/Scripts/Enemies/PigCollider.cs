@@ -1,27 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using Enemies;
 using UnityEngine;
 
 public class PigCollider : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private EnemyPig pig;
+
+    private void Reset()
     {
-
+        pig = GetComponentInParent<EnemyPig>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.tag == "Player")
-        {
-            col.GetComponent<Player.PlayerHealth>().TakeDamage(25);
-        }
+        pig.OnPigTrigger(col);
     }
 }

@@ -44,6 +44,8 @@ namespace Enemies
 
         public virtual void Update()
         {
+            var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            agent.enabled = !animatorStateInfo.IsName(EnemyAnimator.TakeHit);
             animator.SetFloat(EnemyAnimator.Speed, agent.Velocity.magnitude);
         }
 
@@ -54,7 +56,8 @@ namespace Enemies
         public virtual void TakeDamage(float damage)
         {
             hitPoints -= damage;
-            if (hitPoints < 0)
+            animator.SetTrigger(EnemyAnimator.TakeHit);
+            if (hitPoints <= 0)
             {
                 hitPoints = 0;
                 Die();
@@ -65,11 +68,12 @@ namespace Enemies
 
         #region Private Methods
 
-        private void Die()
+        protected virtual void Die()
         {
             Killed?.Invoke();
             animator.SetTrigger(EnemyAnimator.Die);
             Invoke(nameof(Destroy), deathDelay);
+            agent.enabled = false;
         }
 
         private void Destroy()

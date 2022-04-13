@@ -9,13 +9,14 @@ namespace Player
     public class PlayerHealth : MonoBehaviour, IKillable
     {
         [SerializeField] private Animator animator;
-        [SerializeField] private float _hitPoints = 100;
         [SerializeField] private AudioClip takeDamageSound;
         [SerializeField] private AudioClip lowHealthSound;
         [SerializeField] private AudioClip deathSound;
-        private float invulnerabilityTime = 1;
-        private float invulnerabilityTimer = 1;
+        
+        private float _invulnerabilityTime = 1;
+        private float _invulnerabilityTimer = 1;
         private UnityEvent _killed;
+        
         public UnityEvent Killed => _killed ??= new UnityEvent();
 
         public float HitPoints
@@ -26,32 +27,41 @@ namespace Player
 
         void Update()
         {
-            if (invulnerabilityTimer < invulnerabilityTime) invulnerabilityTimer += Time.deltaTime;
+            if (_invulnerabilityTimer < _invulnerabilityTime)
+            {
+                _invulnerabilityTimer += Time.deltaTime;
+            }
         }
 
         public void TakeDamage(float damage)
         {
-            if (invulnerabilityTimer >= invulnerabilityTime)
+            // Invulnerability while rolling
+            var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            if (animatorStateInfo.IsName(PlayerAnimator.Roll))
+                return;
+            
+            // Invulnerability after getting hit
+            if (_invulnerabilityTimer < _invulnerabilityTime)
+                return;
+            
+            animator.SetTrigger(PlayerAnimator.TakeHit);
+            HitPoints -= damage;
+            _invulnerabilityTimer = 0;
+
+            // If the player's hp is at 0 or lower, they die
+            if (HitPoints <= 0)
             {
-                animator.SetTrigger(PlayerAnimator.TakeHit);
-                HitPoints -= damage;
-                invulnerabilityTimer = 0;
+                Die();
+                return;
+            }
 
-                // If the player's hp is at 0 or lower, they die
-                if (HitPoints <= 0)
-                {
-                    Die();
-                    return;
-                }
-
-                if (HitPoints > 25)
-                {
-                    AudioSource.PlayClipAtPoint(takeDamageSound, transform.position);
-                }
-                else
-                {
-                    AudioSource.PlayClipAtPoint(lowHealthSound, transform.position);
-                }
+            if (HitPoints > 25)
+            {
+                AudioSource.PlayClipAtPoint(takeDamageSound, transform.position);
+            }
+            else
+            {
+                AudioSource.PlayClipAtPoint(lowHealthSound, transform.position);
             }
         }
 

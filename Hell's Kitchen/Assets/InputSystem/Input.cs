@@ -82,6 +82,15 @@ namespace InputSystem
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ThrowItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""25cafb69-30d3-4f0d-9a38-7f6f7e561399"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -194,6 +203,17 @@ namespace InputSystem
                     ""action"": ""DropItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee2da1dc-4044-43b7-a9fe-0775c665a190"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ThrowItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -225,6 +245,7 @@ namespace InputSystem
             m_Player_Roll = m_Player.FindAction("Roll", throwIfNotFound: true);
             m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
             m_Player_DropItem = m_Player.FindAction("DropItem", throwIfNotFound: true);
+            m_Player_ThrowItem = m_Player.FindAction("ThrowItem", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -290,6 +311,7 @@ namespace InputSystem
         private readonly InputAction m_Player_Roll;
         private readonly InputAction m_Player_Run;
         private readonly InputAction m_Player_DropItem;
+        private readonly InputAction m_Player_ThrowItem;
         public struct PlayerActions
         {
             private @PlayerInput m_Wrapper;
@@ -300,6 +322,7 @@ namespace InputSystem
             public InputAction @Roll => m_Wrapper.m_Player_Roll;
             public InputAction @Run => m_Wrapper.m_Player_Run;
             public InputAction @DropItem => m_Wrapper.m_Player_DropItem;
+            public InputAction @ThrowItem => m_Wrapper.m_Player_ThrowItem;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -327,6 +350,9 @@ namespace InputSystem
                     @DropItem.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropItem;
                     @DropItem.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropItem;
                     @DropItem.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropItem;
+                    @ThrowItem.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrowItem;
+                    @ThrowItem.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrowItem;
+                    @ThrowItem.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrowItem;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -349,6 +375,9 @@ namespace InputSystem
                     @DropItem.started += instance.OnDropItem;
                     @DropItem.performed += instance.OnDropItem;
                     @DropItem.canceled += instance.OnDropItem;
+                    @ThrowItem.started += instance.OnThrowItem;
+                    @ThrowItem.performed += instance.OnThrowItem;
+                    @ThrowItem.canceled += instance.OnThrowItem;
                 }
             }
         }
@@ -370,6 +399,7 @@ namespace InputSystem
             void OnRoll(InputAction.CallbackContext context);
             void OnRun(InputAction.CallbackContext context);
             void OnDropItem(InputAction.CallbackContext context);
+            void OnThrowItem(InputAction.CallbackContext context);
         }
     }
 }
