@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Common;
 using Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -37,7 +38,7 @@ namespace Player
 
             _input.reference.actions["Roll"].performed += Roll;
             _input.reference.actions["PickUp"].performed += PickUp;
-            
+
             animator = GetComponentInChildren<Animator>();
             characterController = GetComponent<CharacterController>();
             _inventory = new Inventory();
@@ -61,6 +62,20 @@ namespace Player
                 characterController.Move(Vector3.zero);
                 speed = 0;
                 animator.SetFloat(PlayerAnimator.Speed, speed / runSpeed);
+            }
+
+            var maxSprintDuration = GameStateManager.Instance.maxSprintTime;
+            if (_input.run)
+            {
+                GameStateManager.Instance.elapsedSprintTime += Time.deltaTime;
+                if ( GameStateManager.Instance.elapsedSprintTime > maxSprintDuration)
+                    GameStateManager.Instance.elapsedSprintTime = maxSprintDuration;
+            }
+            else
+            {
+                GameStateManager.Instance.elapsedSprintTime -= Time.deltaTime;
+                if (GameStateManager.Instance.elapsedSprintTime < 0f)
+                    GameStateManager.Instance.elapsedSprintTime = 0f;
             }
         }
 
@@ -99,8 +114,15 @@ namespace Player
 
         private float GetMovementSpeed()
         {
-            return _input.run ? runSpeed : walkSpeed;
+            bool canSprint = CanSprint();
+            return _input.run && canSprint ? runSpeed : walkSpeed;
         }
+
+        private bool CanSprint()
+        {
+            return GameStateManager.Instance.elapsedSprintTime <  GameStateManager.Instance.maxSprintTime;
+        }
+        
         #endregion
 
         #region PlayerInventory

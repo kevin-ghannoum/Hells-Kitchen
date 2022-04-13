@@ -26,8 +26,7 @@ public class LeaveRestaurant : MonoBehaviour
     {
         if (other.gameObject.CompareTag(Tags.Player))
         {
-            // TODO display UI
-            if (_input.dropItem)
+            if (_input.interact)
             {
                 ImposeFine();
                 ClearOrderList();

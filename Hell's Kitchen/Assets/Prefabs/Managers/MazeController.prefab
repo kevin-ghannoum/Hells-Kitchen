@@ -46,8 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   playerHeightPosition: 0
-  minMazeSize: 20
-  maxMazeSize: 30
 --- !u!114 &2752677855204124922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,6 +64,7 @@ MonoBehaviour:
   pillarPrefab: {fileID: 1527353769313806423, guid: 4e54b4645a91c2743896ed605901d457, type: 3}
   torchPrefab: {fileID: 2879379167002276502, guid: 69475d2cfa9c3e24795256ea6f177709, type: 3}
   chestPrefab: {fileID: 6110008494567538338, guid: 5d9932c88c047054a87567731c74bfcd, type: 3}
+  exitPrefab: {fileID: 8306249193114989230, guid: 20827befb4db16e41b698a6141afcde1, type: 3}
   rockPrefabs:
   - {fileID: 5245695228432281532, guid: e91e1ee9144f9ef44abe4be5026741da, type: 3}
   - {fileID: 1138445974860051459, guid: 2a2b2020699881148816b7719a1f581a, type: 3}

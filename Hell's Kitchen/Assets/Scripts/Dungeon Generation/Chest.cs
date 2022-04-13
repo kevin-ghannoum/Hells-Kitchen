@@ -2,6 +2,7 @@
 using Common;
 using Common.Enums;
 using Input;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,6 +12,7 @@ namespace Dungeon_Generation
     {
         [SerializeField] private int amountMinInclusive = 20;
         [SerializeField] private int amountMaxExclusive = 40;
+        [SerializeField] private  GameObject interactText;
 
         private bool _isLooted = false;
         
@@ -29,17 +31,41 @@ namespace Dungeon_Generation
 
         private void OnTriggerStay(Collider other)
         {
-            var obj = other.gameObject;
-            if (obj.CompareTag(Tags.Player))
+            if (other.gameObject.CompareTag(Tags.Player))
             {
-                // TODO ADD UI
-                if (_input.dropItem && !_isLooted)
+                if (_input.interact && !_isLooted)
                 {
                     _isLooted = true;
                     _animator.SetTrigger(ObjectAnimator.OpenChest);
                     GameStateManager.Instance.cashMoney += GetRandomAmountInRange();
                 }
             }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag(Tags.Player))
+            {
+                interactText.SetActive(true);
+            }
+        }
+        
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject.CompareTag(Tags.Player))
+            {
+                interactText.SetActive(false);
+            }
+        }
+        
+        private void LateUpdate()
+        {
+            if (!Camera.main)
+                return;
+            
+            interactText.transform.rotation = Camera.main.transform.rotation;
+            interactText.transform.forward = -interactText.transform.forward;
+            
         }
     }
 }

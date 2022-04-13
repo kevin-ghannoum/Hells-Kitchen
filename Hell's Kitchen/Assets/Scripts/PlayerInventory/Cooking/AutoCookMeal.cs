@@ -20,8 +20,7 @@ namespace PlayerInventory.Cooking
         {
             if (other.gameObject.CompareTag(Tags.Player) && _input.dropItem)
             {
-                // TODO ADD UI
-                if (_input.dropItem)
+                if (_input.interact)
                 {
                     AutoCraftOrderedRecipes();
                 }

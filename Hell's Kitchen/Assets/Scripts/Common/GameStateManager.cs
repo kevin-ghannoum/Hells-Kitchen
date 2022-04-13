@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using PlayerInventory;
 using UnityEngine;
 
 namespace Common
@@ -7,11 +6,15 @@ namespace Common
     public class GameStateManager : MonoBehaviour
     {
         public static GameStateManager Instance;
-    
+
         // Player
         public float playerMaxHitPoints;
         public float playerCurrentHitPoints;
         public GameObject carriedWeapon;
+
+        public float maxSprintTime = 5f;
+        public float elapsedSprintTime = 0f;
+        
         public bool IsCarryingWeapon => carriedWeapon != null;
         public float cashMoney;
 

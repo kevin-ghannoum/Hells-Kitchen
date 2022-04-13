@@ -16,8 +16,10 @@ namespace Dungeon_Generation
         [SerializeField] private GameObject pillarPrefab;
         [SerializeField] private GameObject torchPrefab;
         [SerializeField] private GameObject chestPrefab;
+        [SerializeField] private GameObject exitPrefab;
         [SerializeField] private GameObject[] rockPrefabs;
         [SerializeField] private GameObject[] debrisPrefabs;
+        [SerializeField] private Vector3 offset;
 
         [Header("Enemy Prefabs")]
         [SerializeField] private GameObject[] enemies;
@@ -76,12 +78,10 @@ namespace Dungeon_Generation
             );
 
             FindStartPosition();
-            FindGoalPosition();
 
             GenerateMazeFromData(Data);
 
             PlaceStartTrigger(startCallback);
-            PlaceGoalTrigger(goalCallback);
         }
 
         private void GenerateMazeFromData(int[,] data)
@@ -90,6 +90,7 @@ namespace Dungeon_Generation
             parent.transform.position = Vector3.zero;
             parent.name = "Procedural Maze";
             parent.tag = Tags.Generated;
+            Vector3 lastfloorPosition =  Vector3.zero;
             
             for (int i = 0; i < data.GetLength(0); i++)
             {
@@ -99,7 +100,8 @@ namespace Dungeon_Generation
                     {
                         // Floor position
                         Vector3 floorPosition = new Vector3(i * hallwayWidth - (hallwayWidth / 2), 0, j * hallwayWidth - (hallwayWidth / 2));
-                        
+                        lastfloorPosition = floorPosition;
+
                         // Spawn everything
                         SpawnFloor(parent.transform, floorPosition);
                         SpawnEnemy(floorPosition);
@@ -107,9 +109,12 @@ namespace Dungeon_Generation
                             SpawnDebris(parent.transform, floorPosition);
                         SpawnRocks(parent.transform, floorPosition);
                         SpawnWalls(parent.transform, floorPosition, i, j);
+                        
                     }
                 }
             }
+            
+            PlaceGoal(parent.transform, lastfloorPosition);
             
             // Spawn pillars
             SpawnPillars(parent.transform, data);
@@ -158,27 +163,6 @@ namespace Dungeon_Generation
             }
         }
 
-        private void FindGoalPosition()
-        {
-            int[,] maze = Data;
-            int rowMax = maze.GetUpperBound(0);
-            int colMax = maze.GetUpperBound(1);
-
-            // loop top to bottom, right to left
-            for (int i = rowMax; i >= 0; i--)
-            {
-                for (int j = colMax; j >= 0; j--)
-                {
-                    if (maze[i, j] == 0)
-                    {
-                        GoalRow = i;
-                        GoalCol = j;
-                        return;
-                    }
-                }
-            }
-        }
-
         public void DisposeOldMaze()
         {
             GameObject[] objects = GameObject.FindGameObjectsWithTag(Tags.Generated);
@@ -202,18 +186,14 @@ namespace Dungeon_Generation
             trigger.callback = callback;
         }
 
-        private void PlaceGoalTrigger(TriggerEventHandler callback)
+        private void PlaceGoal(Transform parent, Vector3 position)
         {
-            GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            obj.transform.position = new Vector3(GoalCol, .5f, GoalRow);
+            GameObject obj = Instantiate(exitPrefab , parent);
+            obj.transform.localPosition = position;
             obj.name = "Exit";
             obj.tag = Tags.Generated;
 
             obj.GetComponent<BoxCollider>().isTrigger = true;
-            obj.GetComponent<MeshRenderer>().enabled = false;
-
-            TriggerEventRouter trigger = obj.AddComponent<TriggerEventRouter>();
-            trigger.callback = callback;
         }
 
         private void SpawnFloor(Transform parent, Vector3 position)

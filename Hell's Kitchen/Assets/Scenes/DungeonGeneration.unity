@@ -369,6 +369,14 @@ PrefabInstance:
       propertyPath: near clip plane
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 234883762666243043, guid: e12c3b3264d0e524186504da5369e263, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 234883762666243043, guid: e12c3b3264d0e524186504da5369e263, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1579420189541450961, guid: e12c3b3264d0e524186504da5369e263, type: 3}
       propertyPath: coinValue
       value: 
@@ -578,18 +586,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1715388640}
-    - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
-      propertyPath: pillarPrefabs.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
-      propertyPath: pillarPrefabs.Array.data[1]
-      value: 
-      objectReference: {fileID: 1527353769313806423, guid: 4e54b4645a91c2743896ed605901d457, type: 3}
-    - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
-      propertyPath: pillarPrefabs.Array.data[2]
-      value: 
-      objectReference: {fileID: 1527353769313806423, guid: 4e54b4645a91c2743896ed605901d457, type: 3}
     - target: {fileID: 2752677855204124927, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
       propertyPath: m_Name
       value: MazeController
