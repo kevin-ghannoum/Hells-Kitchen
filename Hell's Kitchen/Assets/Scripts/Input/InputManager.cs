@@ -13,6 +13,7 @@ namespace Input
         public bool attack;
         public bool dropItem;
         public bool throwItem;
+        public bool interact;
 
         [Header("References")] 
         public PlayerInput reference;
@@ -73,5 +74,11 @@ namespace Input
             throwItem = context.ReadValueAsButton();
         }
 
+        
+        public void OnInteract(InputAction.CallbackContext context)
+        {
+            interact = context.ReadValueAsButton();
+        }
+    
     }
 }
