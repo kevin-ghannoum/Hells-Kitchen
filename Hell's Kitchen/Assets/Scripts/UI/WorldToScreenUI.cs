@@ -6,7 +6,7 @@ namespace UI
     {
         [SerializeField] private Transform target;
         [SerializeField] private RectTransform textTransform;
-        [SerializeField] private float offsetY = 2.5f;
+        [SerializeField] private Vector3 offset;
         private void LateUpdate()
         {
             if (!Camera.main)
@@ -16,10 +16,13 @@ namespace UI
             
             // Offset position above object (in world space)
             var position = target.position;
-            float offsetPosY = position.y + offsetY;
+            
+            float offsetPosX = position.x + offset.x;
+            float offsetPosY = position.y + offset.y;
+            float offsetPosZ = position.z + offset.z;
             
             // Final position of marker above GO in world space
-            Vector3 offsetPos = new Vector3(position.x, offsetPosY, position.z);
+            Vector3 offsetPos = new Vector3(offsetPosX, offsetPosY, offsetPosZ);
 
             
             // Calculate *screen* position (note, not a canvas/recttransform position)
