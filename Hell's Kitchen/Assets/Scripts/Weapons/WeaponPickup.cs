@@ -74,7 +74,7 @@ namespace Weapons
                 Random.Range(-throwAngularSpeed, throwAngularSpeed), 
                 Random.Range(-throwAngularSpeed, throwAngularSpeed), 
                 Random.Range(-throwAngularSpeed, throwAngularSpeed)
-                );
+            );
             RemoveListeners();
             GameStateManager.Instance.carriedWeapon = null;
             EnableRigidBody();
@@ -131,6 +131,7 @@ namespace Weapons
         {
             rigidbody.detectCollisions = false;
             rigidbody.useGravity = false;
+            rigidbody.isKinematic = true;
             rigidbody.velocity = Vector3.zero;
             rigidbody.angularVelocity = Vector3.zero;
         }
@@ -139,6 +140,7 @@ namespace Weapons
         {
             rigidbody.detectCollisions = true;
             rigidbody.useGravity = true;
+            rigidbody.isKinematic = false;
         }
 
     }
