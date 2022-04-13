@@ -12,7 +12,8 @@ namespace Dungeon_Generation
     {
         [SerializeField] private int amountMinInclusive = 20;
         [SerializeField] private int amountMaxExclusive = 40;
-        [SerializeField] private  GameObject interactText;
+        [SerializeField] private  GameObject canvas;
+        [SerializeField] private  RectTransform textTransform;
 
         private bool _isLooted = false;
         
@@ -22,6 +23,7 @@ namespace Dungeon_Generation
         private void Awake()
         {
             _animator = GetComponentInChildren<Animator>();
+            canvas.SetActive(false);
         }
 
         private int GetRandomAmountInRange()
@@ -46,7 +48,7 @@ namespace Dungeon_Generation
         {
             if (other.gameObject.CompareTag(Tags.Player))
             {
-                interactText.SetActive(true);
+                canvas.SetActive(true);
             }
         }
         
@@ -54,7 +56,7 @@ namespace Dungeon_Generation
         {
             if (other.gameObject.CompareTag(Tags.Player))
             {
-                interactText.SetActive(false);
+                canvas.SetActive(false);
             }
         }
         
@@ -62,10 +64,27 @@ namespace Dungeon_Generation
         {
             if (!Camera.main)
                 return;
+
+            var canvasRect = canvas.GetComponent<RectTransform>();
             
-            interactText.transform.rotation = Camera.main.transform.rotation;
-            interactText.transform.forward = -interactText.transform.forward;
+            // Offset position above object bbox (in world space)
+            float offsetPosY = transform.position.y + 2.5f;
             
+            // Final position of marker above GO in world space
+            Vector3 offsetPos = new Vector3(transform.position.x, offsetPosY, transform.position.z);
+
+            
+            // Calculate *screen* position (note, not a canvas/recttransform position)
+            Vector2 canvasPos;
+            Vector2 screenPoint = Camera.main.WorldToScreenPoint(offsetPos);
+ 
+            // Convert screen position to Canvas / RectTransform space <- leave camera null if Screen Space Overlay
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPoint, null, out canvasPos);
+ 
+            // Set
+            textTransform.localPosition = canvasPos;
+            textTransform.forward = canvas.transform.forward;
+
         }
     }
 }

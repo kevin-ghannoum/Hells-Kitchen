@@ -328,6 +328,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: InputManager
       objectReference: {fileID: 0}
+    - target: {fileID: 207420216689281371, guid: 09c075be33d318d489a3eca56afbe6fa, type: 3}
+      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 207420216689281371, guid: 09c075be33d318d489a3eca56afbe6fa, type: 3}
+      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnInteract
+      objectReference: {fileID: 0}
+    - target: {fileID: 207420216689281371, guid: 09c075be33d318d489a3eca56afbe6fa, type: 3}
+      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Input.InputManager, Core
+      objectReference: {fileID: 0}
+    - target: {fileID: 207420216689281371, guid: 09c075be33d318d489a3eca56afbe6fa, type: 3}
+      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09c075be33d318d489a3eca56afbe6fa, type: 3}
 --- !u!1001 &1468963087
