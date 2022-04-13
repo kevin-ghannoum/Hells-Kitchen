@@ -55,6 +55,7 @@ namespace Weapons
             AddListeners();
             GameStateManager.Instance.carriedWeapon = gameObject;
             DisableRigidbody();
+            SetOutline(false);
         }
 
         public void Drop(InputAction.CallbackContext callbackContext)
@@ -65,6 +66,7 @@ namespace Weapons
             RemoveListeners();
             GameStateManager.Instance.carriedWeapon = null;
             EnableRigidBody();
+            SetOutline(true);
         }
 
         public void Throw(InputAction.CallbackContext callbackContext)
@@ -83,6 +85,7 @@ namespace Weapons
             RemoveListeners();
             GameStateManager.Instance.carriedWeapon = null;
             EnableRigidBody();
+            SetOutline(true);
         }
 
         private void ReparentObject()
@@ -154,5 +157,13 @@ namespace Weapons
             rigidbody.isKinematic = false;
         }
 
+        private void SetOutline(bool isEnabled)
+        {
+            var outline = GetComponent<Outline>();
+            if (!outline)
+                return;
+            
+            outline.enabled = isEnabled;
+        }
     }
 }
