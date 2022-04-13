@@ -1,8 +1,9 @@
 using System.Collections.Generic;
-using System;
+using Common;
 using Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using PlayerInventory;
 
 namespace Player
 {
@@ -23,13 +24,6 @@ namespace Player
 
         private InputManager _input => InputManager.Instance;
 
-        private void Start()
-        {
-            animator = GetComponentInChildren<Animator>();
-            characterController = GetComponent<CharacterController>();
-            _inventory = new Inventory();
-        }
-
         private void Awake()
         {
             // Singleton instance
@@ -43,8 +37,11 @@ namespace Player
             }
 
             _input.reference.actions["Roll"].performed += Roll;
-
             _input.reference.actions["PickUp"].performed += PickUp;
+
+            animator = GetComponentInChildren<Animator>();
+            characterController = GetComponent<CharacterController>();
+            _inventory = new Inventory();
         }
 
         private void Update()
@@ -66,6 +63,9 @@ namespace Player
                 speed = 0;
                 animator.SetFloat(PlayerAnimator.Speed, speed / runSpeed);
             }
+            
+            UpdateSprint();
+            
         }
 
         #region PlayerActions
@@ -103,8 +103,35 @@ namespace Player
 
         private float GetMovementSpeed()
         {
-            return _input.run ? runSpeed : walkSpeed;
+            bool canSprint = CanSprint();
+            return _input.run && canSprint ? runSpeed : walkSpeed;
         }
+
+        private bool CanSprint()
+        {
+            return GameStateManager.Instance.elapsedSprintTime <  GameStateManager.Instance.maxSprintTime;
+        }
+
+        private void UpdateSprint()
+        {
+            var maxSprintDuration = GameStateManager.Instance.maxSprintTime;
+            var elapsedTime = GameStateManager.Instance.elapsedSprintTime;
+            if (_input.run)
+            {
+                elapsedTime += Time.deltaTime;
+                if ( elapsedTime> maxSprintDuration)
+                    elapsedTime = maxSprintDuration;
+            }
+            else
+            {
+                elapsedTime -= Time.deltaTime;
+                if ( elapsedTime < 0f)
+                    elapsedTime = 0f;
+            }
+
+            GameStateManager.Instance.elapsedSprintTime = elapsedTime;
+        }
+        
         #endregion
 
         #region PlayerInventory
@@ -123,10 +150,5 @@ namespace Player
             _inventory.RemoveItemFromInventory(item, quantity);
         }
         #endregion
-
-        private void OnCollisionEnter(Collision collision)
-        {
-
-        }
     }
 }
