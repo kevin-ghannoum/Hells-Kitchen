@@ -64,11 +64,11 @@ public class PathfindingAgent : MonoBehaviour
             desiredVelocity = desiredVelocity.normalized * maxVelocity;
         }
 
-        // Apply acceleration to current velocity
+        // Apply velocity and rotation
         rigidbody.velocity = desiredVelocity;
         if (rigidbody.velocity != Vector3.zero)
         {
-            rigidbody.MoveRotation(Quaternion.LookRotation(rigidbody.velocity.normalized));
+            transform.rotation = Quaternion.LookRotation(rigidbody.velocity.normalized);
         }
 
         // Reached next point
