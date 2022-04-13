@@ -1,4 +1,3 @@
-using System;
 using Common;
 using Common.Interfaces;
 using UnityEngine;
@@ -9,12 +8,11 @@ namespace Player
     public class PlayerHealth : MonoBehaviour, IKillable
     {
         [SerializeField] private Animator animator;
-        [SerializeField] private float _hitPoints = 100;
         [SerializeField] private AudioClip takeDamageSound;
         [SerializeField] private AudioClip lowHealthSound;
         [SerializeField] private AudioClip deathSound;
         private float invulnerabilityTime = 1;
-        private float invulnerabilityTimer = 1;
+        private float _invulnerabilityTimer = 1;
         private UnityEvent _killed;
         public UnityEvent Killed => _killed ??= new UnityEvent();
 
@@ -26,16 +24,18 @@ namespace Player
 
         void Update()
         {
-            if (invulnerabilityTimer < invulnerabilityTime) invulnerabilityTimer += Time.deltaTime;
+            if (_invulnerabilityTimer < invulnerabilityTime) 
+                _invulnerabilityTimer += Time.deltaTime;
         }
 
         public void TakeDamage(float damage)
         {
-            if (invulnerabilityTimer >= invulnerabilityTime)
+            bool isRolling = animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimator.Roll);
+            if (_invulnerabilityTimer >= invulnerabilityTime && !isRolling)
             {
                 animator.SetTrigger(PlayerAnimator.TakeHit);
                 HitPoints -= damage;
-                invulnerabilityTimer = 0;
+                _invulnerabilityTimer = 0;
 
                 // If the player's hp is at 0 or lower, they die
                 if (HitPoints <= 0)

@@ -90,7 +90,7 @@ namespace Weapons
 
         private void OnTriggerStay(Collider other)
         {
-            if (_canBePickedUp && !GameStateManager.Instance.IsCarryingWeapon && _input.pickUp)
+            if (_canBePickedUp &&  !GameStateManager.Instance.IsCarryingWeapon && _input.pickUp)
             {
                 PickUpItem();
                 _canBePickedUp = false;
