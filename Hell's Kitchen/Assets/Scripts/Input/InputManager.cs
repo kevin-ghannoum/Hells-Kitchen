@@ -12,6 +12,7 @@ namespace Input
         public bool roll;
         public bool attack;
         public bool dropItem;
+        public bool throwItem;
         public bool interact;
 
         [Header("References")] 
@@ -67,6 +68,12 @@ namespace Input
         {
             dropItem = context.ReadValueAsButton();
         }
+
+        public void OnThrowItem(InputAction.CallbackContext context)
+        {
+            throwItem = context.ReadValueAsButton();
+        }
+
         
         public void OnInteract(InputAction.CallbackContext context)
         {

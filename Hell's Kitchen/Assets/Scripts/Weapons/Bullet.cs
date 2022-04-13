@@ -13,10 +13,12 @@ namespace Weapons
         private void OnCollisionEnter(Collision collision)
         {
             var obj = collision.gameObject; // TODO Disable friendly fire with sous-chef
-            if (!obj.CompareTag(Tags.Player) && obj.TryGetComponent(out IKillable killable))
+            if (!obj.CompareTag(Tags.Player))
             {
-                killable.TakeDamage(Damage);
+                obj.GetComponent<IKillable>()?.TakeDamage(Damage);
                 Destroy(gameObject);
+                var hitFx = Instantiate(bulletHit, collision.contacts[0].point, Quaternion.identity);
+                Destroy(hitFx, 3.0f);
             }
         }
     }

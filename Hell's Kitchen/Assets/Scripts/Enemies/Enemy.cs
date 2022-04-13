@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using Common.Interfaces;
 using Enemies.Enums;
+using UI;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,6 +17,9 @@ namespace Enemies
 
         [SerializeField]
         protected Animator animator;
+
+        [SerializeField]
+        private GameObject damagePrefab;
 
         [Header("Parameters")]
         [SerializeField]
@@ -44,6 +48,8 @@ namespace Enemies
 
         public virtual void Update()
         {
+            var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            agent.enabled = !animatorStateInfo.IsName(EnemyAnimator.TakeHit);
             animator.SetFloat(EnemyAnimator.Speed, agent.Velocity.magnitude);
         }
 
@@ -53,8 +59,18 @@ namespace Enemies
 
         public virtual void TakeDamage(float damage)
         {
+            // HP calculation and animation
             hitPoints -= damage;
-            if (hitPoints < 0)
+            animator.SetTrigger(EnemyAnimator.TakeHit);
+            
+            // Damage numbers
+            var dmgObj = Instantiate(damagePrefab, transform.position + 2.0f * Vector3.up, Quaternion.identity);
+            var damageNumbers = dmgObj.GetComponent<DamageNumbers>();
+            if (damageNumbers)
+                damageNumbers.damage = damage;
+            
+            // Death
+            if (hitPoints <= 0)
             {
                 hitPoints = 0;
                 Die();
@@ -65,11 +81,12 @@ namespace Enemies
 
         #region Private Methods
 
-        private void Die()
+        protected virtual void Die()
         {
             Killed?.Invoke();
             animator.SetTrigger(EnemyAnimator.Die);
             Invoke(nameof(Destroy), deathDelay);
+            agent.enabled = false;
         }
 
         private void Destroy()

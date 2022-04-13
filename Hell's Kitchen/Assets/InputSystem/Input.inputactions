@@ -60,6 +60,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "ThrowItem",
+                    "type": "Button",
+                    "id": "25cafb69-30d3-4f0d-9a38-7f6f7e561399",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "f4e55406-7dba-4539-a31a-1ffc02464442",
@@ -177,6 +186,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "DropItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ee2da1dc-4044-43b7-a9fe-0775c665a190",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ThrowItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
