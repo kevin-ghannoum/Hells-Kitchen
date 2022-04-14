@@ -8,7 +8,7 @@ namespace Enums.Items
     {
         // Ingredients
         Honey,
-        PorkChop,
+        Meat,
         Fish,
         Mushroom,
 

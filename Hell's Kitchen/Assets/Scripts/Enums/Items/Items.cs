@@ -7,7 +7,7 @@ namespace Enums.Items
     {
         // Ingredients
         public static readonly Item Honey = new Item(ItemType.Ingredient, "Honey", 1.0f, ItemModel.Honey);
-        public static readonly Item PorkChop = new Item(ItemType.Ingredient, "Pork Chop", 1.0f, ItemModel.PorkChop);
+        public static readonly Item Meat = new Item(ItemType.Ingredient, "Pork Chop", 1.0f, ItemModel.Meat);
         public static readonly Item Fish = new Item(ItemType.Ingredient, "Fish", 1.0f, ItemModel.Fish);
         public static readonly Item Mushroom = new Item(ItemType.Ingredient, "Mushroom", 1.0f, ItemModel.Mushroom);
 
