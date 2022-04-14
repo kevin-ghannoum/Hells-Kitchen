@@ -1,5 +1,6 @@
 using Common;
 using Common.Interfaces;
+using UI;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,9 +12,12 @@ namespace Player
         [SerializeField] private AudioClip takeDamageSound;
         [SerializeField] private AudioClip lowHealthSound;
         [SerializeField] private AudioClip deathSound;
-        private float invulnerabilityTime = 1;
+        [SerializeField] private GameObject damagePrefab;
+        
+        private float _invulnerabilityTime = 1;
         private float _invulnerabilityTimer = 1;
         private UnityEvent _killed;
+        
         public UnityEvent Killed => _killed ??= new UnityEvent();
 
         public float HitPoints
@@ -24,34 +28,48 @@ namespace Player
 
         void Update()
         {
-            if (_invulnerabilityTimer < invulnerabilityTime) 
+            if (_invulnerabilityTimer < _invulnerabilityTime)
+            {
                 _invulnerabilityTimer += Time.deltaTime;
+            }
         }
 
         public void TakeDamage(float damage)
         {
-            bool isRolling = animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimator.Roll);
-            if (_invulnerabilityTimer >= invulnerabilityTime && !isRolling)
+            // Invulnerability while rolling
+            var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            if (animatorStateInfo.IsName(PlayerAnimator.Roll))
+                return;
+            
+            // Invulnerability after getting hit
+            if (_invulnerabilityTimer < _invulnerabilityTime)
+                return;
+            
+            // HP calculation and animation
+            animator.SetTrigger(PlayerAnimator.TakeHit);
+            HitPoints -= damage;
+            _invulnerabilityTimer = 0;
+            
+            // Damage numbers
+            var dmgObj = Instantiate(damagePrefab, transform.position + 2.0f * Vector3.up, Quaternion.identity);
+            var damageNumbers = dmgObj.GetComponent<DamageNumbers>();
+            if (damageNumbers)
+                damageNumbers.damage = damage;
+
+            // If the player's hp is at 0 or lower, they die
+            if (HitPoints <= 0)
             {
-                animator.SetTrigger(PlayerAnimator.TakeHit);
-                HitPoints -= damage;
-                _invulnerabilityTimer = 0;
+                Die();
+                return;
+            }
 
-                // If the player's hp is at 0 or lower, they die
-                if (HitPoints <= 0)
-                {
-                    Die();
-                    return;
-                }
-
-                if (HitPoints > 25)
-                {
-                    AudioSource.PlayClipAtPoint(takeDamageSound, transform.position);
-                }
-                else
-                {
-                    AudioSource.PlayClipAtPoint(lowHealthSound, transform.position);
-                }
+            if (HitPoints > 25)
+            {
+                AudioSource.PlayClipAtPoint(takeDamageSound, transform.position);
+            }
+            else
+            {
+                AudioSource.PlayClipAtPoint(lowHealthSound, transform.position);
             }
         }
 

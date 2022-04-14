@@ -84,6 +84,15 @@ namespace InputSystem
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""ThrowItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""25cafb69-30d3-4f0d-9a38-7f6f7e561399"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""f4e55406-7dba-4539-a31a-1ffc02464442"",
@@ -206,6 +215,17 @@ namespace InputSystem
                 },
                 {
                     ""name"": """",
+                    ""id"": ""ee2da1dc-4044-43b7-a9fe-0775c665a190"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ThrowItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""d9d44189-fda1-4bab-ab0c-43554aed7d6d"",
                     ""path"": ""<Keyboard>/ctrl"",
                     ""interactions"": """",
@@ -245,6 +265,7 @@ namespace InputSystem
             m_Player_Roll = m_Player.FindAction("Roll", throwIfNotFound: true);
             m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
             m_Player_DropItem = m_Player.FindAction("DropItem", throwIfNotFound: true);
+            m_Player_ThrowItem = m_Player.FindAction("ThrowItem", throwIfNotFound: true);
             m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         }
 
@@ -311,6 +332,7 @@ namespace InputSystem
         private readonly InputAction m_Player_Roll;
         private readonly InputAction m_Player_Run;
         private readonly InputAction m_Player_DropItem;
+        private readonly InputAction m_Player_ThrowItem;
         private readonly InputAction m_Player_Interact;
         public struct PlayerActions
         {
@@ -322,6 +344,7 @@ namespace InputSystem
             public InputAction @Roll => m_Wrapper.m_Player_Roll;
             public InputAction @Run => m_Wrapper.m_Player_Run;
             public InputAction @DropItem => m_Wrapper.m_Player_DropItem;
+            public InputAction @ThrowItem => m_Wrapper.m_Player_ThrowItem;
             public InputAction @Interact => m_Wrapper.m_Player_Interact;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
@@ -350,6 +373,9 @@ namespace InputSystem
                     @DropItem.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropItem;
                     @DropItem.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropItem;
                     @DropItem.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropItem;
+                    @ThrowItem.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrowItem;
+                    @ThrowItem.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrowItem;
+                    @ThrowItem.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrowItem;
                     @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                     @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                     @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
@@ -375,6 +401,9 @@ namespace InputSystem
                     @DropItem.started += instance.OnDropItem;
                     @DropItem.performed += instance.OnDropItem;
                     @DropItem.canceled += instance.OnDropItem;
+                    @ThrowItem.started += instance.OnThrowItem;
+                    @ThrowItem.performed += instance.OnThrowItem;
+                    @ThrowItem.canceled += instance.OnThrowItem;
                     @Interact.started += instance.OnInteract;
                     @Interact.performed += instance.OnInteract;
                     @Interact.canceled += instance.OnInteract;
@@ -399,6 +428,7 @@ namespace InputSystem
             void OnRoll(InputAction.CallbackContext context);
             void OnRun(InputAction.CallbackContext context);
             void OnDropItem(InputAction.CallbackContext context);
+            void OnThrowItem(InputAction.CallbackContext context);
             void OnInteract(InputAction.CallbackContext context);
         }
     }

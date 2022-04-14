@@ -79,12 +79,13 @@ MonoBehaviour:
   - {fileID: 4770508354603840657, guid: 3c6dbca2d82cdab4abb7a48a23623b51, type: 3}
   - {fileID: 5502087388369685447, guid: 4a800b939cf10474fb1c43b364810f20, type: 3}
   - {fileID: 4960195001528040362, guid: 3c67dae0937f97f4aa36f8cb0fb1e2dc, type: 3}
+  offset: {x: 0, y: 0, z: 0}
   enemies:
   - {fileID: 7839222235967640288, guid: 4ac12db71e65fbd4ca9d0a92c4b5e5b1, type: 3}
   - {fileID: 4794755069063066433, guid: 1d60d1758c970fb4cabcb56b300aa68a, type: 3}
   torchSpawnRate: 0.1
   windowSpawnRate: 0.4
-  enemySpawnRate: 0.05
+  enemySpawnRate: 0.1
   chestSpawnRate: 0.02
   rockSpawnRate: 0.7
   debrisSpawnRate: 0.1
