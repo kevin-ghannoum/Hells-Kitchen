@@ -26,7 +26,7 @@ public class MushroomEnemy : MonoBehaviour
         timeCounter += Time.deltaTime;
         direction = target.transform.position - transform.position;
 
-        if ((direction).magnitude < attackRange)
+        if (direction.magnitude < attackRange)
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 200f);
 
