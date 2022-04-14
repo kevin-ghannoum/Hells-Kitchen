@@ -31,6 +31,9 @@ namespace UI
             int x = 0, y = 0;
 
             int smallestLength = Math.Min(maxItemsPerPage, _playerInventory.Count);
+            
+            // avoid duplicate gameObjects
+            ResetInventory();
 
             for (int i = 0; i < smallestLength; i++)
             {
@@ -46,11 +49,9 @@ namespace UI
 
                 // 3d prefab
                 Transform itemPrefabModel =
-                    Instantiate(_playerInventory.ElementAt(i).Key.ItemModel.Prefab, itemSlotRectTrans)
+                    Instantiate(_playerInventory.ElementAt(i).Key.ItemModel.UIVariant, itemSlotRectTrans)
                         .GetComponent<Transform>();
                 itemPrefabModel.parent = itemSlotRectTrans;
-                ChangePrefabLayer(itemPrefabModel, Layer.UI);
-                itemPrefabModel.localScale = new Vector3(20, 20, 20);
                 
                 // move to the next item
                 x++;
@@ -75,7 +76,7 @@ namespace UI
         {
             Transform[] inventoryItems = inventoryContainer.GetComponentsInChildren<Transform>();
 
-            for (int i = 0; i < inventoryItems.Length; i++)
+            for (int i = 1; i < inventoryItems.Length-1; i++)
             {
                 Destroy(inventoryItems[i].gameObject);
             }
