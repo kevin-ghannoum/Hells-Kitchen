@@ -36,6 +36,8 @@ namespace Weapons
 
         public bool CanPickUp => _canBePickedUp;
 
+        public virtual float Price { get; } = 10f;
+
         public void Reset()
         {
             rigidbody = GetComponent<Rigidbody>();

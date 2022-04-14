@@ -18,12 +18,15 @@ namespace Weapons
         [SerializeField] private GameObject muzzlePrefab;
         [SerializeField] private Transform shootPosition;
         
+        [SerializeField] private float price =  10f;
+        public override float Price { get => price; }
+        
         public override void Use(InputAction.CallbackContext callbackContext)
         {
             base.Use(callbackContext);
             playerAnimator.SetTrigger(PlayerAnimator.Shoot);
         }
-
+        
         private void Fire()
         {
             var position = shootPosition.position;

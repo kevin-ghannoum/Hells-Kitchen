@@ -9,18 +9,19 @@ using UnityEngine;
 public class WeaponShop : MonoBehaviour
 {
     private InputManager _input => InputManager.Instance;
-    [SerializeField] private GameObject canvas;
+    [SerializeField] private GameObject interactText;
+    [SerializeField] private GameObject shopUI;
 
     private void Awake()
     {
-        canvas.SetActive(false);
+        interactText.SetActive(false);
     }
 
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag(Tags.Player) && _input.interact)
         {
-            // Open Weapon Shop UI
+            shopUI.SetActive(true);
         }
     }
 
@@ -28,7 +29,7 @@ public class WeaponShop : MonoBehaviour
     {
         if (other.gameObject.CompareTag(Tags.Player))
         {
-            canvas.SetActive(true);
+            interactText.SetActive(true);
         }
     }
 
@@ -36,7 +37,7 @@ public class WeaponShop : MonoBehaviour
     {
         if (other.gameObject.CompareTag(Tags.Player))
         {
-            canvas.SetActive(false);
+            interactText.SetActive(false);
         }
     }
 }
