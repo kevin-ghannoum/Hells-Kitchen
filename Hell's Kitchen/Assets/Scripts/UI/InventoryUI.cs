@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Enums;
-using Enums.Items;
 using Input;
-using Player;
+using PlayerInventory;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;

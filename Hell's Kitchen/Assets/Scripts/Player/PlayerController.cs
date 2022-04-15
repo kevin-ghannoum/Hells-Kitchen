@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System;
-using System.Security.Cryptography;
 using Common;
 using Common.Enums;
 using Common.Interfaces;
@@ -16,6 +13,7 @@ namespace Player
     public class PlayerController : MonoBehaviour
     {
         public static PlayerController Instance; // singleton
+        private InputManager _input => InputManager.Instance;
 
         [Header("Parameters")]
         [SerializeField] private float runSpeed = 15f;
@@ -37,10 +35,7 @@ namespace Player
         private Inventory _inventory = new Inventory();
         private float _speed = 0f;
         private IPickup _currentPickup;
-
-        private InputManager _input => InputManager.Instance;
-        public static PlayerController Instance; // singleton
-
+        
         private void Start()
         {
             _animator = GetComponentInChildren<Animator>();
@@ -117,7 +112,7 @@ namespace Player
             _animator.SetTrigger(PlayerAnimator.PickUp);
         }
 
-                public void FaceTarget(Vector3 target)
+        public void FaceTarget(Vector3 target)
         {
             var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             if (!animatorStateInfo.IsName(PlayerAnimator.Roll) &&
