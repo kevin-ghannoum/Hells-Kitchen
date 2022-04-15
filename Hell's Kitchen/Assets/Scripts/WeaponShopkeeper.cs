@@ -23,6 +23,7 @@ public class WeaponShopkeeper : MonoBehaviour
         if (other.gameObject.CompareTag(Tags.Player) && _input.interact)
         {
             shopUI.Initialize();
+            interactText.SetActive(false);
         }
     }
 

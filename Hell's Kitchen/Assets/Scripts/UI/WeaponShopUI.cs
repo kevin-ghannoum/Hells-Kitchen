@@ -4,6 +4,7 @@ using System.Linq;
 using Common;
 using Common.Enums;
 using Common.Interfaces;
+using Input;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,8 @@ namespace UI
         [SerializeField] private TextMeshProUGUI errorText;
 
         private List<GameObject> _weapons;
+        private InputManager _input => InputManager.Instance;
+        
         private void Awake()
         {
             _weapons = GameObject.FindGameObjectsWithTag(Tags.Weapon).ToList();
@@ -34,11 +37,13 @@ namespace UI
         {
             gameObject.SetActive(true);
             errorText.text = string.Empty;
+            _input.Deactivate();
         }
 
         public void Close()
         {
             gameObject.SetActive(false);
+            _input.Activate();
         }
 
         private void BuyWeapon(GameObject weapon, Button button)

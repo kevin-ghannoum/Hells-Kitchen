@@ -79,6 +79,16 @@ namespace Input
         {
             interact = context.ReadValueAsButton();
         }
+
+        public void Deactivate()
+        {
+            reference.DeactivateInput();
+        }
+
+        public void Activate()
+        {
+            reference.ActivateInput();
+        }
     
     }
 }
