@@ -1,8 +1,7 @@
-﻿using System;
-using Common;
+﻿using Common;
 using Common.Enums;
 using Input;
-using TMPro;
+using UI;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,8 +11,7 @@ namespace Dungeon_Generation
     {
         [SerializeField] private int amountMinInclusive = 20;
         [SerializeField] private int amountMaxExclusive = 40;
-        [SerializeField] private  GameObject canvas;
-        [SerializeField] private  RectTransform textTransform;
+        [SerializeField] private GameObject canvas;
 
         private bool _isLooted = false;
         
@@ -39,14 +37,17 @@ namespace Dungeon_Generation
                 {
                     _isLooted = true;
                     _animator.SetTrigger(ObjectAnimator.OpenChest);
-                    GameStateManager.Instance.cashMoney += GetRandomAmountInRange();
+                    canvas.SetActive(false);
+                    var amount = GetRandomAmountInRange();
+                    GameStateManager.Instance.cashMoney += amount;
+                    AdrenalinePointsUI.SpawnGoldNumbers(transform.position + 2.0f * Vector3.up, amount);
                 }
             }
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.CompareTag(Tags.Player))
+            if (other.gameObject.CompareTag(Tags.Player) && !_isLooted)
             {
                 canvas.SetActive(true);
             }

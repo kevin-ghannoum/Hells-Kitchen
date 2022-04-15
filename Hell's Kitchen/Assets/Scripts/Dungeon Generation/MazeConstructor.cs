@@ -19,7 +19,6 @@ namespace Dungeon_Generation
         [SerializeField] private GameObject exitPrefab;
         [SerializeField] private GameObject[] rockPrefabs;
         [SerializeField] private GameObject[] debrisPrefabs;
-        [SerializeField] private Vector3 offset;
 
         [Header("Enemy Prefabs")]
         [SerializeField] private GameObject[] enemies;
@@ -50,9 +49,6 @@ namespace Dungeon_Generation
 
         public int StartRow { get; private set; }
         public int StartCol { get; private set; }
-
-        public int GoalRow { get; private set; }
-        public int GoalCol { get; private set; }
 
         public int[,] Data { get; private set; }
 
@@ -174,16 +170,16 @@ namespace Dungeon_Generation
 
         private void PlaceStartTrigger(TriggerEventHandler callback)
         {
-            GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            obj.transform.position = new Vector3(StartCol, .5f, StartRow);
-            obj.name = "Start Trigger";
-            obj.tag = Tags.Generated;
-
-            obj.GetComponent<BoxCollider>().isTrigger = true;
-            obj.GetComponent<MeshRenderer>().enabled = false;
-
-            TriggerEventRouter trigger = obj.AddComponent<TriggerEventRouter>();
-            trigger.callback = callback;
+            // GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            // obj.transform.position = new Vector3(StartCol, .5f, StartRow);
+            // obj.name = "Start Trigger";
+            // obj.tag = Tags.Generated;
+            //
+            // obj.GetComponent<BoxCollider>().isTrigger = true;
+            // obj.GetComponent<MeshRenderer>().enabled = false;
+            //
+            // TriggerEventRouter trigger = obj.AddComponent<TriggerEventRouter>();
+            // trigger.callback = callback;
         }
 
         private void PlaceGoal(Transform parent, Vector3 position)

@@ -206,12 +206,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 807330856}
-  - component: {fileID: 343464037668083283}
   - component: {fileID: 807330857}
   - component: {fileID: 807330858}
   m_Layer: 3
   m_Name: VirtualCamera
-  m_TagString: UICamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -231,49 +230,6 @@ Transform:
   m_Father: {fileID: 1366883624018297259}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!20 &343464037668083283
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 807330855}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 3
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: 1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
 --- !u!114 &807330857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -503,7 +459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 119c3ffb3ff5d134aacdc91d0354e8d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: 12
+  runSpeed: 14
   walkSpeed: 8
   turnSmoothVelocity: 10
   speedSmoothVelocity: 5
@@ -531,6 +487,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  staminaCostRun: 1
+  staminaCostRoll: 1
+  staminaRegenRate: 1
   CharacterHand: {fileID: 5702439285158563841}
   DamagePosition: {fileID: 4458461509696778761}
   DamageRadius: 1.5
@@ -1570,6 +1529,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1fbfc1c93eee29d45b37f09ea62dee0f, type: 3}
+--- !u!1 &6269876953597624291 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1fbfc1c93eee29d45b37f09ea62dee0f, type: 3}
+  m_PrefabInstance: {fileID: 6611981409262568114}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5702439285158563841 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7718791123680963917, guid: 1fbfc1c93eee29d45b37f09ea62dee0f, type: 3}
@@ -1583,11 +1547,6 @@ Animator:
 --- !u!4 &6649779744846407001 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1fbfc1c93eee29d45b37f09ea62dee0f, type: 3}
-  m_PrefabInstance: {fileID: 6611981409262568114}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6269876953597624291 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1fbfc1c93eee29d45b37f09ea62dee0f, type: 3}
   m_PrefabInstance: {fileID: 6611981409262568114}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &9167867730613228193

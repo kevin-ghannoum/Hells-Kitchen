@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System;
-using System.Security.Cryptography;
 using Common;
 using Common.Enums;
 using Common.Interfaces;
@@ -22,6 +20,11 @@ namespace Player
         [SerializeField] private float turnSmoothVelocity = 10f;
         [SerializeField] private float speedSmoothVelocity = 10f;
         [SerializeField] private AnimationCurve rollSpeedCurve;
+
+        [Header("Stamina")]
+        [SerializeField] private float staminaCostRun = 1.0f;
+        [SerializeField] private float staminaCostRoll = 1.0f;
+        [SerializeField] private float staminaRegenRate = 1.0f;
 
         [Header("Hand")]
         [SerializeField] public Transform CharacterHand;
@@ -86,8 +89,8 @@ namespace Player
                 _speed = 0;
                 _animator.SetFloat(PlayerAnimator.Speed, _speed / runSpeed);
             }
-            
-            UpdateSprint();
+
+            UpdateStamina();
         }
 
         public void OnPickupTriggerEnter(IPickup pickup)
@@ -107,7 +110,11 @@ namespace Player
 
         public void Roll(InputAction.CallbackContext callbackContext)
         {
-            _animator.SetTrigger(PlayerAnimator.Roll);
+            if (GameStateManager.Instance.playerCurrentStamina > staminaCostRoll)
+            {
+                GameStateManager.Instance.playerCurrentStamina -= staminaCostRoll;
+                _animator.SetTrigger(PlayerAnimator.Roll);
+            }
         }
 
         public void PickUp(InputAction.CallbackContext callbackContext)
@@ -144,29 +151,27 @@ namespace Player
 
         private bool CanSprint()
         {
-            return GameStateManager.Instance.elapsedSprintTime <  GameStateManager.Instance.maxSprintTime;
+            return GameStateManager.Instance.playerCurrentStamina > 0;
         }
 
-        private void UpdateSprint()
+        private void UpdateStamina()
         {
-            var maxSprintDuration = GameStateManager.Instance.maxSprintTime;
-            var elapsedTime = GameStateManager.Instance.elapsedSprintTime;
+            var stamina = GameStateManager.Instance.playerCurrentStamina;
             if (_input.run)
             {
-                elapsedTime += Time.deltaTime;
-                if ( elapsedTime> maxSprintDuration)
-                    elapsedTime = maxSprintDuration;
+                stamina -= Time.deltaTime * staminaCostRun;
+                if (stamina < 0)
+                    stamina = 0;
             }
-            else
+            else if (!_animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimator.Roll))
             {
-                elapsedTime -= Time.deltaTime;
-                if ( elapsedTime < 0f)
-                    elapsedTime = 0f;
+                stamina += Time.deltaTime * staminaRegenRate;
+                if (stamina > GameStateManager.Instance.playerMaxStamina)
+                    stamina = GameStateManager.Instance.playerMaxStamina;
             }
-
-            GameStateManager.Instance.elapsedSprintTime = elapsedTime;
+            GameStateManager.Instance.playerCurrentStamina = stamina;
         }
-        
+
         #endregion
 
         #region PlayerInventory
@@ -187,9 +192,9 @@ namespace Player
         }
 
         #endregion
-        
+
         #region Player Actions
-        
+
         public void FaceTarget(Vector3 target)
         {
             var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
