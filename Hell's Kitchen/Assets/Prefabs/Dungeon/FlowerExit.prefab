@@ -10465,6 +10465,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8678223202679623979}
   - component: {fileID: 7885167716947913743}
+  - component: {fileID: 5805860229341316405}
   m_Layer: 6
   m_Name: FlowerExit
   m_TagString: Untagged
@@ -10503,6 +10504,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 7, y: 7, z: 7}
   m_Center: {x: 0, y: 2, z: 0}
+--- !u!114 &5805860229341316405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8306249193114989230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 984c4ec5e2b142a296f7bc5db68995d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggleGameObject: {fileID: 699362931658250572}
 --- !u!1 &8365983728283968412
 GameObject:
   m_ObjectHideFlags: 0
@@ -11980,7 +11994,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8141816036893834965, guid: 4af99d61a2d88504d8a0c8fdc40be93b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8141816036893834965, guid: 4af99d61a2d88504d8a0c8fdc40be93b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -12016,6 +12030,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4af99d61a2d88504d8a0c8fdc40be93b, type: 3}
+--- !u!1 &699362931658250572 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1459010154219631023, guid: 4af99d61a2d88504d8a0c8fdc40be93b, type: 3}
+  m_PrefabInstance: {fileID: 2129024912766150883}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7887591220153718326 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8141816036893834965, guid: 4af99d61a2d88504d8a0c8fdc40be93b, type: 3}

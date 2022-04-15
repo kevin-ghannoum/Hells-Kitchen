@@ -10,13 +10,7 @@ namespace PlayerInventory.Cooking
 {
     public class Oven : MonoBehaviour
     {
-        [SerializeField] private GameObject canvas;
         private InputManager _input => InputManager.Instance;
-
-        private void Awake()
-        {
-            canvas.SetActive(false);
-        }
 
         private void Start()
         {
@@ -60,22 +54,6 @@ namespace PlayerInventory.Cooking
             }
             
             GameStateManager.Instance.cashMoney += totalIncome;
-        }
-        
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag(Tags.Player))
-            {
-                canvas.SetActive(true);
-            }
-        }
-        
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.gameObject.CompareTag(Tags.Player))
-            {
-                canvas.SetActive(false);
-            }
         }
 
         private void DebugAddInventoryAndOrders()

@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 3710394149972107162}
   - component: {fileID: 1033471912268207230}
   - component: {fileID: 3688115462359256417}
+  - component: {fileID: 3408538134176666921}
   - component: {fileID: 3688115462359256418}
   m_Layer: 0
   m_Name: RestaurantDoor
@@ -194,6 +195,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.900674, y: 3.2444732, z: 1.2160558}
   m_Center: {x: 0.950337, y: 1.6222366, z: -0.5825586}
+--- !u!114 &3408538134176666921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3686882462182886404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 984c4ec5e2b142a296f7bc5db68995d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggleGameObject: {fileID: 1984267907864883718}
 --- !u!114 &3688115462359256418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +220,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c66aba0752295f04cb5f9915099ffa9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 1984267907864883718}
   numberOfOrders: 5
   missedOrderPenalty: 10
 --- !u!1 &3687248604989923098

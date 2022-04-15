@@ -12,7 +12,6 @@ namespace Player
         [SerializeField] private AudioClip takeDamageSound;
         [SerializeField] private AudioClip lowHealthSound;
         [SerializeField] private AudioClip deathSound;
-        [SerializeField] private GameObject damagePrefab;
         
         private float _invulnerabilityTime = 1;
         private float _invulnerabilityTimer = 1;

@@ -18,9 +18,6 @@ namespace Enemies
         [SerializeField]
         protected Animator animator;
 
-        [SerializeField]
-        private GameObject damagePrefab;
-
         [Header("Parameters")]
         [SerializeField]
         protected float hitPoints;
