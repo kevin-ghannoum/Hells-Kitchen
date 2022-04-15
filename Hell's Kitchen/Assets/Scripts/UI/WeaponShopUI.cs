@@ -36,6 +36,11 @@ namespace UI
             errorText.text = string.Empty;
         }
 
+        public void Close()
+        {
+            gameObject.SetActive(false);
+        }
+
         private void BuyWeapon(GameObject weapon, Button button)
         {
             var weaponComponent = weapon.GetComponent<IWeapon>();
