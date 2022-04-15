@@ -51,8 +51,8 @@ namespace Player
             _invulnerabilityTimer = 0;
             
             // Damage numbers
-            var dmgObj = Instantiate(damagePrefab, transform.position + 2.0f * Vector3.up, Quaternion.identity);
-            var damageNumbers = dmgObj.GetComponent<DamageNumbers>();
+            var dmgObj = Instantiate(damagePrefab, transform.position + new Vector3(Random.Range(-.5f, .5f), 2.0f, Random.Range(-.5f, .5f)), Quaternion.identity);
+            var damageNumbers = dmgObj.GetComponentInChildren<DamageNumbersUI>();
             if (damageNumbers)
                 damageNumbers.damage = damage;
 

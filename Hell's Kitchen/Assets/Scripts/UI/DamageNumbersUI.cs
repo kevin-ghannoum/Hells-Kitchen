@@ -1,12 +1,9 @@
-using System;
-using Common.Enums;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UI
 {
-    public class DamageNumbers : MonoBehaviour
+    public class DamageNumbersUI : WorldSpaceUI
     {
         [SerializeField]
         public float damage = 200;
@@ -20,33 +17,34 @@ namespace UI
         [SerializeField]
         private AnimationCurve animationCurve;
 
-        [SerializeField]
-        private Canvas canvas;
-
         private float _time;
         private TextMeshProUGUI _text;
-        private Camera _camera;
 
-        private void Start()
+        public override void Start()
         {
+            base.Start();
             _text = canvas.GetComponentInChildren<TextMeshProUGUI>();
-            _camera = GameObject.FindWithTag(Tags.UICamera).GetComponent<Camera>();
-            canvas.worldCamera = _camera;
+            _text.text = $"{-damage}";
         }
 
-        private void Update()
+        public override void Update()
         {
+            base.Update();
+            
+            // Animation time
             _time += Time.deltaTime;
             var normalizedTime = _time / animationTime;
             
-            _text.text = $"-{damage}";
+            // Set text and color
+            _text.text = $"{-damage}";
             var color = _text.color;
             color.a = 1.0f - normalizedTime;
             _text.color = color;
             
-            var pos = transform.position;
-            transform.position = pos + yOffset * animationCurve.Evaluate(normalizedTime) * Vector3.up;
-            transform.rotation = Camera.main.transform.rotation;
+            // Update position
+            screenSpaceObject.position += yOffset * animationCurve.Evaluate(normalizedTime) * Vector3.up;
+            
+            // Destroy after animation
             if (_time > animationTime)
             {
                 Destroy(gameObject);

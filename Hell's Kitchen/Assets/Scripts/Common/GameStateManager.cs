@@ -8,13 +8,12 @@ namespace Common
         public static GameStateManager Instance;
 
         // Player
-        public float playerMaxHitPoints;
-        public float playerCurrentHitPoints;
+        public float playerMaxHitPoints = 100f;
+        public float playerCurrentHitPoints = 100f;
+        public float playerMaxStamina = 5f;
+        public float playerCurrentStamina = 5f;
         public GameObject carriedWeapon;
 
-        public float maxSprintTime = 5f;
-        public float elapsedSprintTime = 0f;
-        
         public bool IsCarryingWeapon => carriedWeapon != null;
         public float cashMoney;
 

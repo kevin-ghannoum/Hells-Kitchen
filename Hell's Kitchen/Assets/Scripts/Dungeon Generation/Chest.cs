@@ -1,8 +1,6 @@
-﻿using System;
-using Common;
+﻿using Common;
 using Common.Enums;
 using Input;
-using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,8 +10,7 @@ namespace Dungeon_Generation
     {
         [SerializeField] private int amountMinInclusive = 20;
         [SerializeField] private int amountMaxExclusive = 40;
-        [SerializeField] private  GameObject canvas;
-        [SerializeField] private  RectTransform textTransform;
+        [SerializeField] private GameObject canvas;
 
         private bool _isLooted = false;
         
@@ -39,6 +36,7 @@ namespace Dungeon_Generation
                 {
                     _isLooted = true;
                     _animator.SetTrigger(ObjectAnimator.OpenChest);
+                    canvas.SetActive(false);
                     GameStateManager.Instance.cashMoney += GetRandomAmountInRange();
                 }
             }
@@ -46,7 +44,7 @@ namespace Dungeon_Generation
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.CompareTag(Tags.Player))
+            if (other.gameObject.CompareTag(Tags.Player) && !_isLooted)
             {
                 canvas.SetActive(true);
             }
