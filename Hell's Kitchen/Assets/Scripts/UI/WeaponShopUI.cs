@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using Common;
-using Common.Enums;
 using Common.Interfaces;
 using Input;
 using TMPro;
@@ -18,30 +16,20 @@ namespace UI
 
         private List<GameObject> _weapons;
         private InputManager _input => InputManager.Instance;
-        
-        private void Awake()
-        {
-            _weapons = GameObject.FindGameObjectsWithTag(Tags.Weapon).ToList();
-            foreach (var weapon in _weapons)
-            {
-                if(!GameStateManager.Instance.PurchasedWeapons.Contains(weapon.name))
-                    weapon.SetActive(false);
-            }
-            
-            errorText.text = string.Empty;
-            CreateButtons();
-        }
 
-        public void Initialize()
+        public void Initialize(List<GameObject> weapons)
         {
+            _weapons = weapons;
             gameObject.SetActive(true);
             errorText.text = string.Empty;
             _input.Deactivate();
+            CreateButtons();
         }
 
         public void Close()
         {
             gameObject.SetActive(false);
+            ClearGrid();
             _input.Activate();
         }
 
@@ -51,15 +39,15 @@ namespace UI
             if (weaponComponent == null)
                 return;
 
-            if (GameStateManager.Instance.cashMoney < weaponComponent.Price)
+            var weaponCost = weaponComponent.Price;
+            if (GameStateManager.Instance.cashMoney < weaponCost)
             {
                 errorText.text = $"Insufficient funds to purchase {weapon.name}.";
                 return;
             }
 
+            PerformTransaction(weapon.name,weaponCost);
             weapon.SetActive(true);
-            GameStateManager.Instance.cashMoney -= weaponComponent.Price;
-            GameStateManager.Instance.PurchasedWeapons.Add(weapon.name);
             errorText.text = string.Empty;
             button.interactable = false;
         }
@@ -79,6 +67,18 @@ namespace UI
                 var weaponComponent = weapon.GetComponent<IWeapon>();
                 text.text = $"Buy {weapon.name} - {weaponComponent.Price}$";
             }
+        }
+
+        private void ClearGrid()
+        {
+            for (int i = 0; i < gridLayout.transform.childCount; i++)
+                Destroy(gridLayout.transform.GetChild(i).gameObject);
+        }
+
+        private void PerformTransaction(string weaponName, float cost)
+        {
+            GameStateManager.Instance.cashMoney -= cost;
+            GameStateManager.Instance.PurchasedWeapons.Add(weaponName);
         }
     }
 }
