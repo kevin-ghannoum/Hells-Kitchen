@@ -8,10 +8,7 @@ namespace UI
     {
         [SerializeField]
         public Canvas canvas;
-
-        [SerializeField]
-        public Transform worldSpaceObject;
-
+        
         [SerializeField]
         public RectTransform screenSpaceObject;
 
@@ -26,12 +23,12 @@ namespace UI
         {
             camera = Camera.main;
             canvas.worldCamera = camera;
-            screenSpaceObject.position = camera.WorldToScreenPoint(worldSpaceObject.position);
+            screenSpaceObject.position = camera.WorldToScreenPoint(transform.position);
         }
         
         public virtual void Update()
         {
-            screenSpaceObject.position = camera.WorldToScreenPoint(worldSpaceObject.position);
+            screenSpaceObject.position = camera.WorldToScreenPoint(transform.position);
         }
     }
 }

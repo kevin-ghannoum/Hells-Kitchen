@@ -64,10 +64,7 @@ namespace Enemies
             animator.SetTrigger(EnemyAnimator.TakeHit);
             
             // Damage numbers
-            var dmgObj = Instantiate(damagePrefab, transform.position + new Vector3(Random.Range(-.5f, .5f), 2.0f, Random.Range(-.5f, .5f)), Quaternion.identity);
-            var damageNumbers = dmgObj.GetComponentInChildren<DamageNumbersUI>();
-            if (damageNumbers)
-                damageNumbers.damage = damage;
+            AdrenalinePointsUI.SpawnDamageNumbers(transform.position + 2.0f * Vector3.up, -damage);
             
             // Death
             if (hitPoints <= 0)

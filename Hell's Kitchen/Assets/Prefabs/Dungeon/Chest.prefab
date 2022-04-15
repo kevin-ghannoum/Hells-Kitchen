@@ -157,7 +157,6 @@ MonoBehaviour:
   amountMinInclusive: 20
   amountMaxExclusive: 40
   canvas: {fileID: 5343967253643455269}
-  light: {fileID: 314822236497934404}
 --- !u!65 &2595005528241391676
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -226,7 +225,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1527130373913222663, guid: 4af99d61a2d88504d8a0c8fdc40be93b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4af99d61a2d88504d8a0c8fdc40be93b, type: 3}
 --- !u!1 &5343967253643455269 stripped
 GameObject:

@@ -140,6 +140,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8141816036893834965}
+  - component: {fileID: 4789351476132509986}
   m_Layer: 5
   m_Name: InteractUI
   m_TagString: Untagged
@@ -162,6 +163,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4789351476132509986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459010154219631023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eb799ab769b4066971ca5695249cfe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 8840210559772232687}
+  screenSpaceObject: {fileID: 8066696899494232481}
 --- !u!1 &4469822349925031863
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,7 +291,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 8840210559772232687}
-  worldSpaceObject: {fileID: 8141816036893834965}
   screenSpaceObject: {fileID: 8066696899494232481}
 --- !u!1 &5233045330565951229
 GameObject:

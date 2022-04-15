@@ -1,6 +1,7 @@
 ﻿using Common;
 using Common.Enums;
 using Input;
+using UI;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -37,7 +38,9 @@ namespace Dungeon_Generation
                     _isLooted = true;
                     _animator.SetTrigger(ObjectAnimator.OpenChest);
                     canvas.SetActive(false);
-                    GameStateManager.Instance.cashMoney += GetRandomAmountInRange();
+                    var amount = GetRandomAmountInRange();
+                    GameStateManager.Instance.cashMoney += amount;
+                    AdrenalinePointsUI.SpawnGoldNumbers(transform.position + 2.0f * Vector3.up, amount);
                 }
             }
         }
