@@ -488,7 +488,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   staminaCostRun: 1
-  staminaCostRoll: 0.7
+  staminaCostRoll: 1
   staminaRegenRate: 1
   CharacterHand: {fileID: 5702439285158563841}
   DamagePosition: {fileID: 4458461509696778761}
