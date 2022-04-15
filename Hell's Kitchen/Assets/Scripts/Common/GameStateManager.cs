@@ -15,7 +15,7 @@ namespace Common
         public float maxSprintTime = 5f;
         public float elapsedSprintTime = 0f;
         
-        public bool dungeonTimeElapsed = true;
+        public bool dungeonTimeHasElapsed = true;
         
         public bool IsCarryingWeapon => carriedWeapon != null;
         public float cashMoney;

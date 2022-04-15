@@ -14,7 +14,7 @@ namespace UI
         public void ResetClock()
         {
             _day = 0f;
-            GameStateManager.Instance.dungeonTimeElapsed = false;
+            GameStateManager.Instance.dungeonTimeHasElapsed = false;
         }
 
         private void Update()
@@ -24,7 +24,7 @@ namespace UI
             if (_day >= 1f)
             {
                 // Time elapsed, stop clock and let player find exit
-                GameStateManager.Instance.dungeonTimeElapsed = true;
+                GameStateManager.Instance.dungeonTimeHasElapsed = true;
                 return;
             }
 
