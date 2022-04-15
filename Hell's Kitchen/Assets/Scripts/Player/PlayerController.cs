@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Common;
 using Common.Enums;
@@ -66,6 +67,12 @@ namespace Player
             _animator = GetComponentInChildren<Animator>();
             _characterController = GetComponent<CharacterController>();
             _inventory = new Inventory();
+        }
+
+        private void OnDestroy()
+        {
+            _input.reference.actions["Roll"].performed -= Roll;
+            _input.reference.actions["PickUp"].performed -= PickUp;
         }
 
         private void Update()
