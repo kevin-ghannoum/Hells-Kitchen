@@ -19,13 +19,18 @@ namespace Common
         public float cashMoney;
 
         public Dictionary<IRecipe, int> OrderList;
+
+        public List<string> PurchasedWeapons;
+        
         private void Awake()
         {
             if (Instance == null)
+            {
                 Instance = this;
+                Initialize();
+            }
 
             DontDestroyOnLoad(Instance.gameObject);
-            Initialize();
         }
 
         private void Initialize()
@@ -35,6 +40,7 @@ namespace Common
             cashMoney = 0f;
             carriedWeapon = null;
             OrderList = new Dictionary<IRecipe, int>();
+            PurchasedWeapons = new List<string>();
         }
     }
 }
