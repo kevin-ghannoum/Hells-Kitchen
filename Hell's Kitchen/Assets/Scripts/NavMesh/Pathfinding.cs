@@ -108,6 +108,9 @@ public class Pathfinding : MonoBehaviour
     private PathNode _activePath;
     private PathNode _activePathEnd;
 
+    private PolygonPathNode _activePolyPath;
+    private PolygonPathNode _activePolyPathEnd;
+    
     #region Unity Events
 
     private void Awake()
@@ -139,7 +142,7 @@ public class Pathfinding : MonoBehaviour
         }
 
         // Draw current active path
-        if (_activePath != null && _activePathEnd != null && showActivePath)
+        if (_activePath != null && _activePathEnd != null && _activePolyPath != null && _activePolyPathEnd != null && showActivePath)
         {
             // Path
             PathNode currentNode = _activePath;
@@ -157,6 +160,28 @@ public class Pathfinding : MonoBehaviour
             // End
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(_activePathEnd.Position, 1.0f);
+            
+            // Start poly
+            Gizmos.color = Color.green;
+            for (int i = 0; i < _activePolyPath.Node.Vertices.Length; i++)
+            {
+                Gizmos.DrawLine(_activePolyPath.Node.Vertices[i], _activePolyPath.Node.Vertices[(i + 1) % _activePolyPath.Node.Vertices.Length]);
+            }
+
+            // End poly
+            Gizmos.color = Color.red;
+            for (int i = 0; i < _activePolyPathEnd.Node.Vertices.Length; i++)
+            {
+                Gizmos.DrawLine(_activePolyPathEnd.Node.Vertices[i], _activePolyPathEnd.Node.Vertices[(i + 1) % _activePolyPathEnd.Node.Vertices.Length]);
+            }
+            
+            // Portals
+            Gizmos.color = Color.yellow;
+            var portals = BuildPortalList(_activePolyPath, _activePathEnd.Position);
+            for (int i = 0; i < portals.Length; i++)
+            {
+                Gizmos.DrawLine(portals[i][0], portals[i][1]);
+            }
         }
     }
 
@@ -264,12 +289,19 @@ public class Pathfinding : MonoBehaviour
         end = endPos.position;
 
         // Find polygon path to target
-        PolygonPathNode polyPath = FindPolygonPath(start, end);
-        if (polyPath == null)
+        _activePolyPath = FindPolygonPath(start, end);
+        if (_activePolyPath == null)
             return null;
 
+        _activePolyPathEnd = _activePolyPath;
+        while (_activePolyPathEnd.Next != null)
+            _activePolyPathEnd = _activePolyPathEnd.Next;
+
         // Apply string pulling to get line path
-        _activePath = StringPull(polyPath, start, end);
+        _activePath = StringPull(_activePolyPath, start, end);
+        if (_activePath == null)
+            return null;
+        
         _activePathEnd = _activePath;
         while (_activePathEnd.Next != null)
             _activePathEnd = _activePathEnd.Next;
@@ -291,7 +323,30 @@ public class Pathfinding : MonoBehaviour
 
     private PolygonNode FindClosestNode(Vector3 position)
     {
-        return _nodes.FirstOrDefault(n => Utils.CheckPointInTriangle(n.Vertices, position));
+        // Find which node the position is inside
+        var polyNode = _nodes.FirstOrDefault(n => Utils.CheckPointInTriangle(n.Vertices, position));
+        if (polyNode != null)
+            return polyNode;
+        
+        // Find the closest edge and return its node
+        PolygonNode closestNode = null;
+        float closestDist = float.MaxValue;
+        foreach (var node in _nodes)
+        {
+            for (int i = 0; i < node.Vertices.Length; i++)
+            {
+                var pointOnLine = Utils.GetClosestPointOnLine(node.Vertices[i], node.Vertices[(i + 1) % node.Vertices.Length], position);
+                float dist = Vector3.Distance(pointOnLine, position);
+                if (dist < closestDist)
+                {
+                    closestDist = dist;
+                    closestNode = node;
+                    break;
+                }
+            }
+        }
+
+        return closestNode;
     }
 
     private PolygonPathNode FindPolygonPath(Vector3 start, Vector3 end)
@@ -414,7 +469,7 @@ public class Pathfinding : MonoBehaviour
 
         Vector3 portalApex = start;
         Vector3 portalLeft = portals[0][0];
-        Vector3 portalRight = portals[0][1];
+        Vector3 portalRight = start;
         int apexIndex = 0, leftIndex = 0, rightIndex = 0;
         
         // Simple paths, just construct one line from start to end
