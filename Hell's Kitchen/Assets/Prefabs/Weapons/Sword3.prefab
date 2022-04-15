@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -8043898493064958135}
   - component: {fileID: 3979347413307542531}
   - component: {fileID: 7934694821301852611}
+  - component: {fileID: 6184519785293596476}
   m_Layer: 6
   m_Name: Sword3
   m_TagString: Weapon
@@ -82,6 +83,24 @@ MonoBehaviour:
   throwSpeed: 35
   throwAngularSpeed: 180
   rigidbody: {fileID: -8043898493064958135}
+--- !u!114 &6184519785293596476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2070293264501885573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &6724366980024074978
 PrefabInstance:
   m_ObjectHideFlags: 0
