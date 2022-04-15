@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System;
 using Input;
 using UI;
 using UnityEngine;
@@ -34,9 +32,12 @@ namespace Player
         private void Awake()
         {
             // Singleton instance
-            if (Instance != null && Instance != this) {
+            if (Instance != null && Instance != this)
+            {
                 Destroy(this);
-            } else {
+            }
+            else
+            {
                 Instance = this;
             }
             
@@ -52,7 +53,6 @@ namespace Player
         }
 
         #region PlayerActions
-
         void Roll(InputAction.CallbackContext callbackContext)
         {
             animator.SetTrigger(PlayerAnimator.Roll); 
@@ -98,13 +98,13 @@ namespace Player
         public void AddItemToInventory(Item item, int quantity)
         {
             _inventory.AddItemToInventory(item, quantity);
-            _inventoryUI.UpdateInventory();
+            _inventoryUI.UpdateInventory(_inventory.GetInventoryItems());
         }
 
         public void RemoveItemFromInventory(Item item, int quantity)
         {
             _inventory.RemoveItemFromInventory(item,quantity);
-            _inventoryUI.UpdateInventory();
+            _inventoryUI.UpdateInventory(_inventory.GetInventoryItems());
         }
         #endregion
     }

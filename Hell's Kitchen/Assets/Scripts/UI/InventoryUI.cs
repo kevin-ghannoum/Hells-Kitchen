@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Enums;
+using Enums.Items;
 using Input;
 using Player;
 using UnityEngine;
@@ -20,7 +21,6 @@ namespace UI
         [SerializeField] private Transform inventoryContainer;
         [SerializeField] private Transform inventoryItemSlot;
         
-        private Dictionary<Item, int> _playerInventory;
         private InputManager _input => InputManager.Instance;
         private float spacing = 30.0f;
         private bool isUIActive = false;
@@ -33,10 +33,8 @@ namespace UI
         private void Start()
         {
             inventoryItemSlot = inventoryContainer.transform.GetChild(0);
-            _playerInventory = PlayerController.Instance.GetPlayerInventory().GetInventoryItems();
         }
 
-        public void UpdateInventory()
         // TODO: MOVE THIS LATER
         void OpenInventory(InputAction.CallbackContext callbackContext)
         {
@@ -44,12 +42,13 @@ namespace UI
             inventory.SetActive(isUIActive);
         }
 
+        public void UpdateInventory(Dictionary<Item, int> inventoryList)
         {
             int x = 0, y = 0;
 
-            int smallestLength = Math.Min(maxItemsPerPage, _playerInventory.Count);
+            int smallestLength = Math.Min(maxItemsPerPage, inventoryList.Count);
             
-            // avoid duplicate gameObjects
+            // clear previous data
             ResetInventory();
 
             for (int i = 0; i < smallestLength; i++)
@@ -61,12 +60,12 @@ namespace UI
                 itemSlotRectTrans.anchoredPosition = new Vector2(x * itemSlotCellSize + (x+1)*1.5f*spacing, -y * itemSlotCellSize - (y+1)*1.5f*spacing);
 
                 // textual information
-                itemSlotRectTrans.GetComponentsInChildren<Text>()[0].text = _playerInventory.ElementAt(i).Key.Name; // name
-                itemSlotRectTrans.GetComponentsInChildren<Text>()[1].text = _playerInventory.ElementAt(i).Value.ToString(); // quantity
+                itemSlotRectTrans.GetComponentsInChildren<Text>()[0].text = inventoryList.ElementAt(i).Key.Name; // name
+                itemSlotRectTrans.GetComponentsInChildren<Text>()[1].text = inventoryList.ElementAt(i).Value.ToString(); // quantity
 
                 // 3d prefab
                 Transform itemPrefabModel =
-                    Instantiate(_playerInventory.ElementAt(i).Key.ItemModel.UIVariant, itemSlotRectTrans)
+                    Instantiate(inventoryList.ElementAt(i).Key.ItemModel.UIVariant, itemSlotRectTrans)
                         .GetComponent<Transform>();
                 itemPrefabModel.parent = itemSlotRectTrans;
                 
@@ -80,15 +79,37 @@ namespace UI
             }
         }
 
-        private void ChangePrefabLayer(Transform modelTransform, Layer uiLayer)
-        {   
-            modelTransform.gameObject.layer = (int)uiLayer;
-            foreach (var child in modelTransform.GetComponentsInChildren<Transform>())
-            {
-                child.gameObject.layer = (int)uiLayer;
-            }
-        }
+        #region InventoryTabs
+        // public void DisplayFullInventory()
+        // {
+        //     UpdateInventory(_playerInventory);
+        // }
+        //
+        // public void DisplayInventoryIngredients()
+        // {
+        //     DisplayInventoryByType(ItemType.Ingredient);
+        // }
+        //
+        // public void DisplayInventoryRecipeResults()
+        // {
+        //     DisplayInventoryByType(ItemType.RecipeResult);
+        // }
 
+        // private void DisplayInventoryByType(ItemType itemType)
+        // {
+        //     Dictionary<Item, int> inventoryItems = new Dictionary<Item, int>();
+        //
+        //     foreach (var matchingItem in _playerInventory.Where(pair => pair.Key.ItemType.Equals(itemType)))
+        //     {
+        //         inventoryItems.Add(matchingItem.Key, matchingItem.Value);
+        //     }
+        //     
+        //     print(inventoryItems.Count);
+        //     
+        //     UpdateInventory(inventoryItems);
+        // }
+        #endregion InventoryTabs
+        
         private void ResetInventory()
         {
             Transform[] inventoryItems = inventoryContainer.GetComponentsInChildren<Transform>();
