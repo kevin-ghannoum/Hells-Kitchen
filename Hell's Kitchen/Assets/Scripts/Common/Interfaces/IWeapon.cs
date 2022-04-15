@@ -1,4 +1,3 @@
-
 using UnityEngine.InputSystem;
 
 namespace Common.Interfaces
