@@ -10,13 +10,13 @@ namespace UI
 
         private void Start()
         {
-            sprintSlider.maxValue = GameStateManager.Instance.maxSprintTime;
+            sprintSlider.maxValue = GameStateManager.Instance.playerMaxStamina;
             sprintSlider.minValue = 0f;
         }
 
         private void Update()
         {
-            sprintSlider.value = GameStateManager.Instance.maxSprintTime - GameStateManager.Instance.elapsedSprintTime;
+            sprintSlider.value = GameStateManager.Instance.playerCurrentStamina;
         }
     }
 }

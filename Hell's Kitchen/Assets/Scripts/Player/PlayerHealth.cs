@@ -51,10 +51,7 @@ namespace Player
             _invulnerabilityTimer = 0;
             
             // Damage numbers
-            var dmgObj = Instantiate(damagePrefab, transform.position + 2.0f * Vector3.up, Quaternion.identity);
-            var damageNumbers = dmgObj.GetComponent<DamageNumbers>();
-            if (damageNumbers)
-                damageNumbers.damage = damage;
+            AdrenalinePointsUI.SpawnDamageNumbers(transform.position + 2.0f * Vector3.up, -damage);
 
             // If the player's hp is at 0 or lower, they die
             if (HitPoints <= 0)

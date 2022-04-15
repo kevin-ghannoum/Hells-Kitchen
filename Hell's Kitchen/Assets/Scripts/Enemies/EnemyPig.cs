@@ -81,9 +81,9 @@ namespace Enemies
 
         public void OnPigTrigger(Collider col)
         {
-            if (_currentChargeTime < chargeTime && col.CompareTag(Tags.Player))
+            if (_currentChargeTime < chargeTime)
             {
-                col.GetComponent<IKillable>().TakeDamage(attackDamage);
+                col.GetComponent<IKillable>()?.TakeDamage(attackDamage);
             }
         }
     }
