@@ -15,6 +15,7 @@ namespace Common
         public GameObject carriedWeapon;
         public bool IsCarryingWeapon => carriedWeapon != null;
         public float cashMoney;
+        public bool dungeonTimeHasElapsed;
 
         public Dictionary<IRecipe, int> OrderList;
 

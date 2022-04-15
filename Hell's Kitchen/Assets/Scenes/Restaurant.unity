@@ -333,6 +333,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6746822233724547428, guid: e12c3b3264d0e524186504da5369e263, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7002569464322092807, guid: e12c3b3264d0e524186504da5369e263, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -3944,11 +3948,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8694589822603344006, guid: 40af2a71f0ec56f4ea8345b58695d213, type: 3}
   m_PrefabInstance: {fileID: 570380054}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &575225226 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7196868504689358225, guid: 86e244032d1429b419aaeececac03980, type: 3}
-  m_PrefabInstance: {fileID: 7988105395366380294}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &597615207
 PrefabInstance:
@@ -12487,7 +12486,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: CookingOven
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4794934134354926048, guid: a0ba49e858a8faf429041434758543ae, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a0ba49e858a8faf429041434758543ae, type: 3}
 --- !u!4 &2760597056753236504 stripped
 Transform:
@@ -12671,9 +12671,5 @@ PrefabInstance:
       propertyPath: shopUI
       value: 
       objectReference: {fileID: 18018301}
-    - target: {fileID: 7988105395521181638, guid: 86e244032d1429b419aaeececac03980, type: 3}
-      propertyPath: interactText
-      value: 
-      objectReference: {fileID: 575225226}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86e244032d1429b419aaeececac03980, type: 3}
