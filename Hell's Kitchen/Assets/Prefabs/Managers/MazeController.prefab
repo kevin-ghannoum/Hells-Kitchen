@@ -58,16 +58,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b37bc3927cf28f4c8b0978e4bc67ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showDebug: 0
   floorPrefab: {fileID: 3476309401252311896, guid: 5adcff05e0197484599e7744fa4b4af2, type: 3}
   wallPrefab: {fileID: 6892711901412886340, guid: a82c98f31df89164fb9221d8cbd3ff4d, type: 3}
+  windowPrefab: {fileID: 8867767562132640956, guid: bc72b3f961fb4ad4dbf41b04b603daea, type: 3}
+  pillarPrefab: {fileID: 1527353769313806423, guid: 4e54b4645a91c2743896ed605901d457, type: 3}
   torchPrefab: {fileID: 2879379167002276502, guid: 69475d2cfa9c3e24795256ea6f177709, type: 3}
+  chestPrefab: {fileID: 6110008494567538338, guid: 5d9932c88c047054a87567731c74bfcd, type: 3}
+  exitPrefab: {fileID: 8306249193114989230, guid: 20827befb4db16e41b698a6141afcde1, type: 3}
+  rockPrefabs:
+  - {fileID: 5245695228432281532, guid: e91e1ee9144f9ef44abe4be5026741da, type: 3}
+  - {fileID: 1138445974860051459, guid: 2a2b2020699881148816b7719a1f581a, type: 3}
+  - {fileID: 7787665576989624792, guid: d392ea8e441027b4097c9016e4640dd7, type: 3}
+  - {fileID: 1561286623649010579, guid: a337fb962486a5f428f5ec5437a09ad5, type: 3}
+  - {fileID: 4187685261043210359, guid: f71457a14441e2c43b697c52b6ad7370, type: 3}
+  debrisPrefabs:
+  - {fileID: 4458075712593389246, guid: f9c16dbd8c7738f49b4a52fe091cdf1f, type: 3}
+  - {fileID: 1841573002205890127, guid: 10f9bd67f4e64dc40b8e3a01d591264d, type: 3}
+  - {fileID: 1969234641936119234, guid: 805b93b8f13b8fc46a3a9563161002fc, type: 3}
+  - {fileID: 9174228052289174583, guid: 62f4e6da0ffcc4740891218c768be4aa, type: 3}
+  - {fileID: 4770508354603840657, guid: 3c6dbca2d82cdab4abb7a48a23623b51, type: 3}
+  - {fileID: 5502087388369685447, guid: 4a800b939cf10474fb1c43b364810f20, type: 3}
+  - {fileID: 4960195001528040362, guid: 3c67dae0937f97f4aa36f8cb0fb1e2dc, type: 3}
+  offset: {x: 0, y: 0, z: 0}
   enemies:
   - {fileID: 7839222235967640288, guid: 4ac12db71e65fbd4ca9d0a92c4b5e5b1, type: 3}
+  - {fileID: 4794755069063066433, guid: 1d60d1758c970fb4cabcb56b300aa68a, type: 3}
+  torchSpawnRate: 0.1
+  windowSpawnRate: 0.4
+  enemySpawnRate: 0.1
+  chestSpawnRate: 0.02
+  rockSpawnRate: 0.7
+  debrisSpawnRate: 0.1
   placementThreshold: 0.1
-  torchAbundance: 0.1
-  enemySpawnRate: 0.05
+  rockMinNum: 3
+  rockMaxNum: 7
+  debrisMinNum: 1
+  debrisMaxNum: 2
   minMazeSize: 10
   maxMazeSize: 15
-  hallwayWidth: 7
-  hallwayHeight: 3
+  hallwayWidth: 10
+  hallwayHeight: 4

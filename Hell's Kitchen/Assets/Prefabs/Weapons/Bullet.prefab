@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1475c27694fb3f748a72113074de7d5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletHit: {fileID: 5865868290920950645, guid: c5836ca08bd92cb4a9c7bc836cfd1c0e, type: 3}
+  bulletHit: {fileID: 5865868290920950645, guid: 7db9188bbb1c6d24a840cbad90a00c8a, type: 3}
 --- !u!1 &1495649446871663853
 GameObject:
   m_ObjectHideFlags: 0
