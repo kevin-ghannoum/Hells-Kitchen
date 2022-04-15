@@ -1,6 +1,8 @@
 // Developed using : https://www.raywenderlich.com/82-procedural-generation-of-mazes-with-unity
 using System;
+using Common;
 using Common.Enums;
+using Common.Interfaces;
 using UnityEngine;
 using Player;
 
@@ -25,6 +27,11 @@ namespace Dungeon_Generation
         private void StartNewGame()
         {
             StartNewMaze();
+            var weapon = GameStateManager.Instance.carriedWeapon;
+            //if(!weapon)
+                //return;
+
+            //weapon.GetComponent<IPickup>().PickUp();
         }
         
         private void StartNewMaze()
