@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using Common.Enums;
 using Input;
 using TMPro;
+using UI;
 using UnityEngine;
 
-public class WeaponShop : MonoBehaviour
+public class WeaponShopkeeper : MonoBehaviour
 {
     private InputManager _input => InputManager.Instance;
     [SerializeField] private GameObject interactText;
-    [SerializeField] private GameObject shopUI;
+    [SerializeField] private WeaponShopUI shopUI;
 
     private void Awake()
     {
@@ -21,7 +22,7 @@ public class WeaponShop : MonoBehaviour
     {
         if (other.gameObject.CompareTag(Tags.Player) && _input.interact)
         {
-            shopUI.SetActive(true);
+            shopUI.Initialize();
         }
     }
 

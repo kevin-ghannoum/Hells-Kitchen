@@ -21,7 +21,7 @@ namespace Common
 
         public Dictionary<IRecipe, int> OrderList;
 
-        public List<GameObject> PurchasedWeapons;
+        public List<string> PurchasedWeapons;
         
         private void Awake()
         {
@@ -38,10 +38,10 @@ namespace Common
         {
             playerMaxHitPoints = 100f;
             playerCurrentHitPoints = playerMaxHitPoints;
-            cashMoney = 10000f;
+            cashMoney = 0f;
             carriedWeapon = null;
             OrderList = new Dictionary<IRecipe, int>();
-            PurchasedWeapons = new List<GameObject>();
+            PurchasedWeapons = new List<string>();
         }
     }
 }
