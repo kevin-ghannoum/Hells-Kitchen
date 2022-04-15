@@ -100,6 +100,15 @@ namespace InputSystem
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenInventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""b48f71ea-8962-4591-8416-4531aa899be7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -234,6 +243,17 @@ namespace InputSystem
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fb9d539f-6e8e-4389-b839-8e126aa25bb4"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -267,6 +287,7 @@ namespace InputSystem
             m_Player_DropItem = m_Player.FindAction("DropItem", throwIfNotFound: true);
             m_Player_ThrowItem = m_Player.FindAction("ThrowItem", throwIfNotFound: true);
             m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+            m_Player_OpenInventory = m_Player.FindAction("OpenInventory", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -334,6 +355,7 @@ namespace InputSystem
         private readonly InputAction m_Player_DropItem;
         private readonly InputAction m_Player_ThrowItem;
         private readonly InputAction m_Player_Interact;
+        private readonly InputAction m_Player_OpenInventory;
         public struct PlayerActions
         {
             private @PlayerInput m_Wrapper;
@@ -346,6 +368,7 @@ namespace InputSystem
             public InputAction @DropItem => m_Wrapper.m_Player_DropItem;
             public InputAction @ThrowItem => m_Wrapper.m_Player_ThrowItem;
             public InputAction @Interact => m_Wrapper.m_Player_Interact;
+            public InputAction @OpenInventory => m_Wrapper.m_Player_OpenInventory;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -379,6 +402,9 @@ namespace InputSystem
                     @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                     @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                     @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                    @OpenInventory.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenInventory;
+                    @OpenInventory.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenInventory;
+                    @OpenInventory.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenInventory;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -407,6 +433,9 @@ namespace InputSystem
                     @Interact.started += instance.OnInteract;
                     @Interact.performed += instance.OnInteract;
                     @Interact.canceled += instance.OnInteract;
+                    @OpenInventory.started += instance.OnOpenInventory;
+                    @OpenInventory.performed += instance.OnOpenInventory;
+                    @OpenInventory.canceled += instance.OnOpenInventory;
                 }
             }
         }
@@ -430,6 +459,7 @@ namespace InputSystem
             void OnDropItem(InputAction.CallbackContext context);
             void OnThrowItem(InputAction.CallbackContext context);
             void OnInteract(InputAction.CallbackContext context);
+            void OnOpenInventory(InputAction.CallbackContext context);
         }
     }
 }

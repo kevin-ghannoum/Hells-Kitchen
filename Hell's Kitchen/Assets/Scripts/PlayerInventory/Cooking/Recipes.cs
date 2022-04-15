@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Enums.Items;
 
 namespace PlayerInventory.Cooking
 {
@@ -9,7 +10,7 @@ namespace PlayerInventory.Cooking
             public List<(Item item, int quantity)> GetIngredientList()
             {
                 return new List<(Item item, int quantity)>(){
-                    (Items.PorkChop, 1),
+                    (Items.Meat, 1),
                     (Items.Mushroom, 1)
                 };
             }

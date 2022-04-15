@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Common;
 using Common.Enums;
+using Enums.Items;
 using Input;
 using Player;
 using UnityEngine;
@@ -62,7 +62,7 @@ namespace PlayerInventory.Cooking
             GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>().AddItemToInventory(Items.Fish, 20);
             GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>().AddItemToInventory(Items.Honey, 20);
             GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>().AddItemToInventory(Items.Mushroom, 20);
-            GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>().AddItemToInventory(Items.PorkChop, 20);
+            GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>().AddItemToInventory(Items.Meat, 20);
             
             GameStateManager.Instance.OrderList.Add(new Recipes.Hamburger(), 1);
             GameStateManager.Instance.OrderList.Add(new Recipes.Salad(), 2);
