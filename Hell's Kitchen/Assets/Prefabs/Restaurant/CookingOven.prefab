@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 2415163962771095575}
   - component: {fileID: 360901337170892762}
   - component: {fileID: 543019816075129815}
+  - component: {fileID: 8251617937220051307}
   - component: {fileID: 543019816075129812}
   m_Layer: 0
   m_Name: CookingOven
@@ -113,8 +114,8 @@ Transform:
   m_LocalPosition: {x: -13.502331, y: -2.2164202, z: -13.32053}
   m_LocalScale: {x: 2.5, y: 2, z: 2}
   m_Children:
-  - {fileID: 2830504975253305650}
   - {fileID: 2433854727136996241}
+  - {fileID: 2830504975253305650}
   - {fileID: 2398756024331628515}
   - {fileID: 4205801593437602490}
   - {fileID: 7329635606078383990}
@@ -199,6 +200,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.8010916, y: 1.279494, z: 1.5940418}
   m_Center: {x: 0.0040392876, y: 0.639747, z: -0.1198802}
+--- !u!114 &8251617937220051307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2437096894043422585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 984c4ec5e2b142a296f7bc5db68995d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggleGameObject: {fileID: 4865296941361313352}
 --- !u!114 &543019816075129812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,7 +225,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 604817f80ea14ff3b392a6a9a0912625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 4865296941361313352}
 --- !u!1 &2437654441025294793
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,7 +256,7 @@ Transform:
   m_Children:
   - {fileID: 2433937820938519055}
   m_Father: {fileID: 2433823691958905913}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2427302807927443117
 MeshFilter:
@@ -428,6 +441,10 @@ PrefabInstance:
     - target: {fileID: 1459010154219631023, guid: 4af99d61a2d88504d8a0c8fdc40be93b, type: 3}
       propertyPath: m_Name
       value: InteractUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 8141816036893834965, guid: 4af99d61a2d88504d8a0c8fdc40be93b, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8141816036893834965, guid: 4af99d61a2d88504d8a0c8fdc40be93b, type: 3}
       propertyPath: m_LocalPosition.x
