@@ -91,5 +91,13 @@ namespace Enemies
                 col.GetComponent<IKillable>()?.TakeDamage(attackDamage);
             }
         }
+
+        public void OnPigChargeTrigger(Collider col)
+        {
+            if (col.tag == Tags.Player && _currentChargeTime < 0)
+            {
+                col.GetComponent<IKillable>()?.TakeDamage(chargeDamage);
+            }
+        }
     }
 }
