@@ -16,11 +16,10 @@ namespace Common
         public WeaponInstance carriedWeapon = WeaponInstance.None;
         public bool IsCarryingWeapon => (carriedWeapon != WeaponInstance.None);
         public float cashMoney = 0f;
-        public bool dungeonTimeHasElapsed = false;
+        public bool dungeonTimeHasElapsed = true;
 
         public Dictionary<IRecipe, int> OrderList =  new Dictionary<IRecipe, int>();
-
-        public List<string> PurchasedWeapons =  new List<string>();
+        public List<string> purchasedWeapons =  new List<string>();
         
         private void Awake()
         {
@@ -40,7 +39,8 @@ namespace Common
             playerCurrentStamina = playerMaxStamina;
             cashMoney = 0f;
             OrderList = new Dictionary<IRecipe, int>();
-            PurchasedWeapons = new List<string>();
+            purchasedWeapons = new List<string>();
+            dungeonTimeHasElapsed = true;
         }
     }
 }

@@ -47,6 +47,9 @@ namespace Dungeon_Generation
 
         private MazeDataGenerator _dataGenerator;
 
+        private Transform mazeStart;
+        private bool startPlaced;
+
         public int StartRow { get; private set; }
         public int StartCol { get; private set; }
 
@@ -64,20 +67,17 @@ namespace Dungeon_Generation
             };
         }
         
-        public void GenerateNewMaze(TriggerEventHandler startCallback = null, TriggerEventHandler goalCallback = null)
+        public void GenerateNewMaze(Transform mazeStart)
         {
             DisposeOldMaze();
-
+            
             Data = _dataGenerator.FromDimensions(
                 GetRandomOddNumberInRange(minMazeSize, maxMazeSize), 
                 GetRandomOddNumberInRange(minMazeSize, maxMazeSize)
             );
-
-            FindStartPosition();
-
+            
+            this.mazeStart = mazeStart;
             GenerateMazeFromData(Data);
-
-            PlaceStartTrigger(startCallback);
         }
 
         private void GenerateMazeFromData(int[,] data)
@@ -87,7 +87,8 @@ namespace Dungeon_Generation
             parent.name = "Procedural Maze";
             parent.tag = Tags.Generated;
             Vector3 lastfloorPosition =  Vector3.zero;
-            
+            startPlaced = false;
+
             for (int i = 0; i < data.GetLength(0); i++)
             {
                 for (int j = 0; j < data.GetLength(1); j++)
@@ -97,12 +98,17 @@ namespace Dungeon_Generation
                         // Floor position
                         Vector3 floorPosition = new Vector3(i * hallwayWidth - (hallwayWidth / 2), 0, j * hallwayWidth - (hallwayWidth / 2));
                         lastfloorPosition = floorPosition;
-
+            
+                        // Place Start Point
+                        if(!startPlaced)
+                            PlaceStartPosition(parent.transform, floorPosition);
+                        
                         // Spawn everything
                         SpawnFloor(parent.transform, floorPosition);
                         SpawnEnemy(floorPosition);
                         if (!SpawnChest(parent.transform, floorPosition))
                             SpawnDebris(parent.transform, floorPosition);
+                        
                         SpawnRocks(parent.transform, floorPosition);
                         SpawnWalls(parent.transform, floorPosition, i, j);
                     }
@@ -139,24 +145,11 @@ namespace Dungeon_Generation
             return result;
         }
 
-        private void FindStartPosition()
+        private void PlaceStartPosition(Transform parent, Vector3 position)
         {
-            int[,] maze = Data;
-            int rowMax = maze.GetUpperBound(0);
-            int colMax = maze.GetUpperBound(1);
-
-            for (int i = 0; i <= rowMax; i++)
-            {
-                for (int j = 0; j <= colMax; j++)
-                {
-                    if (maze[i, j] == 0)
-                    {
-                        StartRow = i;
-                        StartCol = j;
-                        return;
-                    }
-                }
-            }
+            startPlaced = true;
+            mazeStart.parent = parent;
+            mazeStart.localPosition = position;
         }
 
         public void DisposeOldMaze()
@@ -166,20 +159,6 @@ namespace Dungeon_Generation
             {
                 Destroy(obj);
             }
-        }
-
-        private void PlaceStartTrigger(TriggerEventHandler callback)
-        {
-            // GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            // obj.transform.position = new Vector3(StartCol, .5f, StartRow);
-            // obj.name = "Start Trigger";
-            // obj.tag = Tags.Generated;
-            //
-            // obj.GetComponent<BoxCollider>().isTrigger = true;
-            // obj.GetComponent<MeshRenderer>().enabled = false;
-            //
-            // TriggerEventRouter trigger = obj.AddComponent<TriggerEventRouter>();
-            // trigger.callback = callback;
         }
 
         private void PlaceGoal(Transform parent, Vector3 position)

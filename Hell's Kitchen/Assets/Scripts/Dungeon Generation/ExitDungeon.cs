@@ -29,7 +29,6 @@ namespace Dungeon_Generation
                             heldWeapon.RemoveFromPlayer();
                         }
                     }
-                    
                     SceneManager.Instance.LoadRestaurantScene();
                 }
                    
