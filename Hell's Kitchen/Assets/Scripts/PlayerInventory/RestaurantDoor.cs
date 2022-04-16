@@ -10,8 +10,6 @@ using SceneManager = Common.SceneManager;
 
 public class RestaurantDoor : MonoBehaviour
 {
-    [SerializeField] private GameObject canvas;
-    
     [SerializeField] private int numberOfOrders = 5;
     [SerializeField] private float missedOrderPenalty = 10f;
     private InputManager _input => InputManager.Instance;
@@ -22,7 +20,6 @@ public class RestaurantDoor : MonoBehaviour
     private void Awake()
     {
         _availableRecipes = new IRecipe[] {new Recipes.Hamburger(), new Recipes.Salad(), new Recipes.Sushi()};
-        canvas.SetActive(false);
     }
 
     private void OnTriggerStay(Collider other)
@@ -70,19 +67,4 @@ public class RestaurantDoor : MonoBehaviour
         }
     }
     
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag(Tags.Player))
-        {
-            canvas.SetActive(true);
-        }
-    }
-        
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag(Tags.Player))
-        {
-            canvas.SetActive(false);
-        }
-    }
 }

@@ -18,9 +18,6 @@ namespace Enemies
         [SerializeField]
         protected Animator animator;
 
-        [SerializeField]
-        private GameObject damagePrefab;
-
         [Header("Parameters")]
         [SerializeField]
         protected float hitPoints;
@@ -64,10 +61,7 @@ namespace Enemies
             animator.SetTrigger(EnemyAnimator.TakeHit);
             
             // Damage numbers
-            var dmgObj = Instantiate(damagePrefab, transform.position + 2.0f * Vector3.up, Quaternion.identity);
-            var damageNumbers = dmgObj.GetComponent<DamageNumbers>();
-            if (damageNumbers)
-                damageNumbers.damage = damage;
+            AdrenalinePointsUI.SpawnDamageNumbers(transform.position + 2.0f * Vector3.up, -damage);
             
             // Death
             if (hitPoints <= 0)
@@ -87,6 +81,7 @@ namespace Enemies
             animator.SetTrigger(EnemyAnimator.Die);
             Invoke(nameof(Destroy), deathDelay);
             agent.enabled = false;
+            enabled = false;
         }
 
         private void Destroy()

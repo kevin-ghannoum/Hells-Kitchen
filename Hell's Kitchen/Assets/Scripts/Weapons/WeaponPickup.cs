@@ -1,5 +1,4 @@
-﻿using System;
-using Common;
+﻿using Common;
 using Common.Enums;
 using Common.Interfaces;
 using Player;
@@ -36,6 +35,8 @@ namespace Weapons
 
         public bool CanPickUp => _canBePickedUp;
 
+        public virtual float Price { get; } = 10f;
+
         public void Reset()
         {
             rigidbody = GetComponent<Rigidbody>();
@@ -55,6 +56,7 @@ namespace Weapons
             AddListeners();
             GameStateManager.Instance.carriedWeapon = gameObject;
             DisableRigidbody();
+            SetOutline(false);
         }
 
         public void Drop(InputAction.CallbackContext callbackContext)
@@ -65,6 +67,7 @@ namespace Weapons
             RemoveListeners();
             GameStateManager.Instance.carriedWeapon = null;
             EnableRigidBody();
+            SetOutline(true);
         }
 
         public void Throw(InputAction.CallbackContext callbackContext)
@@ -83,6 +86,7 @@ namespace Weapons
             RemoveListeners();
             GameStateManager.Instance.carriedWeapon = null;
             EnableRigidBody();
+            SetOutline(true);
         }
 
         private void ReparentObject()
@@ -154,5 +158,13 @@ namespace Weapons
             rigidbody.isKinematic = false;
         }
 
+        private void SetOutline(bool isEnabled)
+        {
+            var outline = GetComponent<Outline>();
+            if (!outline)
+                return;
+            
+            outline.enabled = isEnabled;
+        }
     }
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4141016623778023213}
   - component: {fileID: 2503172613302315969}
   - component: {fileID: 4776774115654917213}
+  - component: {fileID: 5816670607310056526}
   m_Layer: 6
   m_Name: Gun1
   m_TagString: Weapon
@@ -90,6 +91,24 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1449870570657687128, guid: d346a79e3bfb22a4b9e62452a046d611, type: 3}
   muzzlePrefab: {fileID: 5865868290920950645, guid: e4fc13f0b91963d40a44f5fca68df255, type: 3}
   shootPosition: {fileID: 3309744534898375491}
+--- !u!114 &5816670607310056526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5484793218159470021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &5570317771018452538
 GameObject:
   m_ObjectHideFlags: 0
