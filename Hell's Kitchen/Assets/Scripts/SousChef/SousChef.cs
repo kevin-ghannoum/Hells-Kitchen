@@ -16,7 +16,7 @@ public class SousChef : MonoBehaviour, IKillable
     [SerializeField] public GameObject player;
     [SerializeField] public PathfindingAgent agent;
     public float hitPoints;
-    public float HitPoints => HitPoints;
+    public float HitPoints => hitPoints;
     public UnityEvent Killed => throw new System.NotImplementedException();
 
     [SerializeField] public GameObject targetEnemy;
@@ -176,10 +176,15 @@ public class SousChef : MonoBehaviour, IKillable
     public void faceTargetEnemy() {
         if (targetEnemy != null)
             transform.rotation = Quaternion.LookRotation((targetEnemy.transform.position - transform.position).normalized);
-            //gameObject.GetComponent<Rigidbody>().MoveRotation(Quaternion.LookRotation((targetEnemy.transform.position - transform.position).normalized));
+    }
+
+    public void facePlayer()
+    {
+        if (player != null)
+            transform.rotation = Quaternion.LookRotation((player.transform.position - transform.position).normalized);
+        //gameObject.GetComponent<Rigidbody>().MoveRotation(Quaternion.LookRotation((targetEnemy.transform.position - transform.position).normalized));
         //transform.LookAt(targetEnemy.transform.position);
     }
-    //these are for healer mostly, to be at a 
     public float GetDistanceToPlayer()
     {
         return (player.transform.position - transform.position).magnitude;

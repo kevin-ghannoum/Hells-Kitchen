@@ -15,22 +15,24 @@ public class HealerAttackState : HealerBaseState
         Debug.Log("@Attack charging spell... (" + photonCastTime + " seconds)");
         isAttackAnimationPlaying = false;
         _attackAnimationTime = 0f;
+        _photonCastTime = 0f;
+        isCasting = false;
     }
 
     bool isAttackAnimationPlaying = false;
     float _attackAnimationTime = 0f;
     float attackAnimationTime = 3.75f;
+    bool isCasting = false;
     public override void UpdateState(HealerStateManager healer)
     {
         healer.sc.faceTargetEnemy();
         healer.sc.agent.standStill = true;
 
 
-        if ((healer.sc.targetEnemy == null || (healer.sc.isLowHP() || GameStateManager.Instance.IsLowHP())) && !isAttackAnimationPlaying) {
+        if ((!isAttackAnimationPlaying && !isCasting) && (healer.sc.targetEnemy == null || (healer.sc.isLowHP() || Common.GameStateManager.Instance.IsLowHP()))) {
             healer.resetAttackCD();
-            _photonCastTime = 0f;
-            healer.magicCircle.gameObject.SetActive(false);
             healer.sc.agent.standStill = false;
+            healer.magicCircle.gameObject.SetActive(false);
             healer.SwitchState(healer.moveToTarget);
             return;
         }
@@ -38,8 +40,11 @@ public class HealerAttackState : HealerBaseState
         if (isAttackAnimationPlaying) {
             _attackAnimationTime += Time.deltaTime;
             if (_attackAnimationTime > attackAnimationTime) {
+                healer.resetAttackCD();
                 healer.sc.agent.standStill = false;
+                healer.magicCircle.gameObject.SetActive(false);
                 healer.SwitchState(healer.moveToTarget);
+                return;
             }
         }
 
@@ -48,10 +53,11 @@ public class HealerAttackState : HealerBaseState
             healer.animator.SetTrigger("CastSpell");
             healer.magicCircle.gameObject.SetActive(true);
             _photonCastTime += Time.deltaTime;
+            isCasting = true;
             if (_photonCastTime >= photonCastTime)
             {
                 isAttackAnimationPlaying = true;
-                healer.animator.SetTrigger("Attack");
+                //healer.animator.SetTrigger("Attack");
                 Debug.Log("@Attack attacking xD");
                 //healer.sc.agent.standStill = false;
                 //play attack animation
@@ -60,6 +66,7 @@ public class HealerAttackState : HealerBaseState
                 _photonCastTime = 0f;
                 healer.sc.targetEnemy = null;
                 healer.resetAttackCD();
+                isCasting = false;
                 //healer.SwitchState(healer.moveToTarget);
             }
         }

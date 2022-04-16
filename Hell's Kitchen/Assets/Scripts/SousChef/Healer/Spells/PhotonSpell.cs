@@ -60,11 +60,10 @@ public class PhotonSpell : MonoBehaviour
             aoeDmgDelayAfterExplosion -= Time.deltaTime;
             if (aoeDmgDelayAfterExplosion < 0)
             {
-                if (!hitList.Contains(target) && target.TryGetComponent(out IKillable killable) && target.tag != "Player")
+                if (!hitList.Contains(target) && target.TryGetComponent(out IKillable killable) && target.tag != "Player" && target.tag != "SousChef")
                 {
                     hitList.Add(target);
                     killable.TakeDamage(singleTargetDamage);
-                    killable.TakeDamage(aoeDamage);
                     StartCoroutine(ExecuteAfterTime(AoE_delayBetweenTicks, target));
                 }
                 stopFollowing = true;
@@ -84,9 +83,16 @@ public class PhotonSpell : MonoBehaviour
     IEnumerator ExecuteAfterTime(float time, GameObject objToRemove)
     {
         yield return new WaitForSeconds(time);
-        hitList.Remove(objToRemove);
-        // Code to execute after the delay
-        Debug.Log("remove'd");
+        try
+        {
+            hitList.Remove(objToRemove);
+            Debug.Log("remove'd");
+        }
+        catch (Exception ex) {
+            Debug.Log("xD");
+        }
+        
+        
     }
 
     List<GameObject> hitList = new List<GameObject> ();

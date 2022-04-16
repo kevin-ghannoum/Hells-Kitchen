@@ -12,7 +12,11 @@ public class HealerHealState : HealerBaseState
     {
         _healCastTime = 0f;
         Debug.Log("@Heal [spell] state");
-        _delayBetweenCast = 2f;
+        _delayBetweenCast = 0f;
+        _attackAnimationTime = 0f;
+        healer.sc.agent.standStill = false;
+        isAttackAnimationPlaying = false;
+        isCasting = false;
 
     }
 
@@ -25,32 +29,47 @@ public class HealerHealState : HealerBaseState
 
     float delayBetweenCast = 2f;
     float _delayBetweenCast = 0f;
+    bool isAttackAnimationPlaying = false;
+    float _attackAnimationTime = 0f;
+    float attackAnimationTime = 3.75f;
+    bool isCasting = false;
     public override void UpdateState(HealerStateManager healer)
     {
+
+        if (isAttackAnimationPlaying)
+        {
+            _attackAnimationTime += Time.deltaTime;
+            if (_attackAnimationTime > attackAnimationTime)
+            {
+                healer.sc.agent.standStill = false;
+                healer.SwitchState(healer.moveToTarget);
+                return;
+            }
+        }
+
         _delayBetweenCast += Time.deltaTime;
 
-        if (_delayBetweenCast >= delayBetweenCast)
+        if (_delayBetweenCast >= delayBetweenCast && !isAttackAnimationPlaying)
         {
+            isCasting = true;
+            healer.sc.facePlayer();
+            healer.animator.SetTrigger("CastSpell");
             healer.sc.agent.standStill = true;
             healer.healCircle.gameObject.SetActive(true);
             _healCastTime += Time.deltaTime;
             if (_healCastTime >= healCastTime)
             {
+                healer.animator.SetTrigger("CastSpell");
                 healer.healCircle.gameObject.SetActive(false);
-                //play heal animation
-                //healer.sc.player.GetComponent<PlayerHealth>().HitPoints += 20;
                 healer.spells.HealerSpell_Heal(healer.sc.hitPoints > GameStateManager.Instance.playerCurrentHitPoints ? healer.sc.player.transform.position : healer.transform.position);
-                //GameStateManager.Instance.playerCurrentHitPoints += 20;
-                //healer.sc.hitPoints += 20;
                 _healCastTime = 0f;
                 _delayBetweenCast = 0f;
+                isAttackAnimationPlaying = true;
+                isCasting = false;
             }
         }
-        else {
-            healer.sc.agent.standStill = false;
-        }
 
-        if (!healer.sc.isLowHP() && !GameStateManager.Instance.IsLowHP()) {
+        if (!healer.sc.isLowHP() && !GameStateManager.Instance.IsLowHP() && !isAttackAnimationPlaying && !isCasting) {
             healer.healCircle.gameObject.SetActive(false);
             healer.sc.agent.standStill = false;
             healer.SwitchState(healer.followState);

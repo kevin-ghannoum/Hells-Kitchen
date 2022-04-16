@@ -15,7 +15,7 @@ public class HealSpell : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Destroy(Instantiate(onHealAnimationPrefab, other.transform.position, Quaternion.identity), 2);
-            other.GetComponent<SousChef>().hitPoints += healthIncrement;
+            Common.GameStateManager.Instance.playerCurrentHitPoints += healthIncrement;
         }
         else if (other.gameObject.tag == "SousChef")
         {

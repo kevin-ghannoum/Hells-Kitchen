@@ -10212,7 +10212,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.21226418, g: 1, b: 0.8949686, a: 1}
+      maxColor: {r: 0.3537736, g: 1, b: 0.91319346, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -15166,7 +15166,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.21226418, g: 1, b: 0.8949686, a: 1}
+      maxColor: {r: 0.3537736, g: 1, b: 0.91319346, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -19972,7 +19972,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
@@ -20040,6 +20040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   photonSpellPrefab: {fileID: 5270656981695236906, guid: 85fa0efa2fbbe6142a2560c2efff9347, type: 3}
+  healSpellPrefab: {fileID: 1948045767030177048, guid: 6576206d6ec678c4694e9e890961dfc7, type: 3}
 --- !u!114 &8080431647944246266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20054,8 +20055,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   followDistance: 2
-  attackRange: 8
-  searchRange: 10
+  attackRange: 15
+  searchRange: 17
   player: {fileID: 0}
   agent: {fileID: 8080431647944246264}
   hitPoints: 0
@@ -20300,7 +20301,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.21226418, g: 1, b: 0.8949686, a: 1}
+      maxColor: {r: 0.3537736, g: 1, b: 0.91319346, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -64514,7 +64515,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.21226418, g: 1, b: 0.8949686, a: 1}
+      maxColor: {r: 0.3537736, g: 1, b: 0.91319346, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
