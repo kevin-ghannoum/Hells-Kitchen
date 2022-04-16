@@ -15,25 +15,24 @@ namespace Common
         public float playerCurrentStamina = 5f;
         public WeaponInstance carriedWeapon = WeaponInstance.None;
         public bool IsCarryingWeapon => (carriedWeapon != WeaponInstance.None);
-        public float cashMoney;
-        public bool dungeonTimeHasElapsed;
+        public float cashMoney = 0f;
+        public bool dungeonTimeHasElapsed = false;
 
-        public Dictionary<IRecipe, int> OrderList;
+        public Dictionary<IRecipe, int> OrderList =  new Dictionary<IRecipe, int>();
 
-        public List<string> PurchasedWeapons;
+        public List<string> PurchasedWeapons =  new List<string>();
         
         private void Awake()
         {
             if (Instance == null)
             {
                 Instance = this;
-                Initialize();
             }
 
             DontDestroyOnLoad(Instance.gameObject);
         }
 
-        private void Initialize()
+        private void ResetDefaults()
         {
             playerMaxHitPoints = 100f;
             playerCurrentHitPoints = playerMaxHitPoints;

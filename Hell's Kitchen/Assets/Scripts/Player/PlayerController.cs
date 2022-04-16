@@ -201,6 +201,9 @@ namespace Player
 
         public void FaceTarget(Vector3 target)
         {
+            if (!_animator)
+                return;
+            
             var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             if (!animatorStateInfo.IsName(PlayerAnimator.Roll) &&
                 (animatorStateInfo.IsName(PlayerAnimator.Move) || animatorStateInfo.normalizedTime > 0.5f))

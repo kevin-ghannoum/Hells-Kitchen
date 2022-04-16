@@ -58,8 +58,8 @@ namespace Weapons
         public virtual void PickUp()
         {
             _canBePickedUp = false;
-            ReparentObject();
             GameStateManager.Instance.carriedWeapon = WeaponInstance;
+            ReparentObjectToPlayerHand();
             DisableRigidbody();
             SetOutline(false);
             AddListeners();
@@ -100,15 +100,12 @@ namespace Weapons
             SetOutline(true);
         }
 
-        public void ReparentObject()
+        private void ReparentObjectToPlayerHand()
         {
             Transform hand = playerController?.CharacterHand;
             if (!hand)
-            {
-                Debug.Log(gameObject.name);
                 throw new MissingReferenceException();
-            }
-                
+
 
             gameObject.transform.SetParent(hand, false);
             gameObject.transform.localScale = new Vector3(scale, scale, scale);
