@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class HealerFollowState : HealerBaseState
 {
     public override void EnterState(HealerStateManager healer)
     {
         Debug.Log("@Follow state");
-        healer.animator.SetBool("isWalking", true);
-        healer.animator.SetBool("isRunning", true);
     }
 
     public override void UpdateState(HealerStateManager healer)
@@ -24,19 +23,6 @@ public class HealerFollowState : HealerBaseState
             if (healer.sc.agent.ArrivalRadius != healer.sc.followDistance)
             {
                 healer.sc.agent.ArrivalRadius = healer.sc.followDistance;
-            }
-            //if ((healer.transform.position - healer.sc.agent.Target).magnitude < healer.sc.followDistance) {
-            if (!healer.sc.agent.IsMoving())
-            {
-                //Debug.Log("arrived");
-                //implement healer idle state
-              //  healer.animator.SetBool("isWalking", false);
-              //  healer.animator.SetBool("isRunning", false);
-            }
-            else
-            {
-             //   healer.animator.SetBool("isWalking", true);
-             //   healer.animator.SetBool("isRunning", true);
             }
         }
         else if (healer.sc.targetEnemy != null)

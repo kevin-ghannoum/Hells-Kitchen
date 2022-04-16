@@ -144,7 +144,8 @@ public class SousChef : MonoBehaviour
 
     public void faceTargetEnemy() {
         if (targetEnemy != null)
-            gameObject.GetComponent<Rigidbody>().MoveRotation(Quaternion.LookRotation((targetEnemy.transform.position - transform.position).normalized));
+            transform.rotation = Quaternion.LookRotation((targetEnemy.transform.position - transform.position).normalized);
+            //gameObject.GetComponent<Rigidbody>().MoveRotation(Quaternion.LookRotation((targetEnemy.transform.position - transform.position).normalized));
         //transform.LookAt(targetEnemy.transform.position);
     }
     //these are for healer mostly, to be at a 

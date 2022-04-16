@@ -204,7 +204,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.8085625, g: 1, b: 0, a: 0.6509804}
+      maxColor: {r: 1, g: 0.15076354, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -266,7 +266,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -5080,8 +5080,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.2
-      minScalar: 0.05000001
+      scalar: 0.3
+      minScalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9542,7 +9542,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6473092245172419372}
   serializedVersion: 7
-  lengthInSec: 2
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 1
@@ -9557,7 +9557,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0.3
+    scalar: 0
     minScalar: 3.2
     maxCurve:
       serializedVersion: 2
@@ -9706,7 +9706,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.91836345, g: 1, b: 0.15686274, a: 1}
+      maxColor: {r: 0.456182, g: 0, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -9768,8 +9768,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 1
+      scalar: 4
+      minScalar: 4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10423,7 +10423,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 2
+        scalar: 4
         minScalar: 2
         maxCurve:
           serializedVersion: 2
@@ -10810,7 +10810,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   ColorModule:
-    enabled: 1
+    enabled: 0
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -14338,7 +14338,7 @@ GameObject:
   - component: {fileID: 6473092245157862382}
   - component: {fileID: 7412310835663232266}
   m_Layer: 3
-  m_Name: BulletExplosion 1
+  m_Name: OnHit_AoE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

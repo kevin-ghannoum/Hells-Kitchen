@@ -10,28 +10,29 @@ public class PathfindingAgent : MonoBehaviour
 
     [SerializeField]
     private float time2target = 0.5f;
-    
+
     [SerializeField]
     private float maxVelocity = 2.0f;
-    
+
     [Header("References")]
     [SerializeField]
     private new Rigidbody rigidbody;
-    
+
     public bool Arrived => _path == null;
 
     private Pathfinding.PathNode _path;
     private Vector3 _target;
 
     public bool standStill = false;
-    
-    public Vector3 Target {
+
+    public Vector3 Target
+    {
         get => _target;
-        set {
-            Vector3 xd = new Vector3(value.x, 0, value.z);
-            if (_target != xd)
+        set
+        {
+            if (_target != value)
             {
-                _target = xd;
+                _target = value;
                 RecalculatePath();
             }
         }
@@ -46,11 +47,9 @@ public class PathfindingAgent : MonoBehaviour
 
     private void Update()
     {
-        //RecalculatePath();
         // Arrived
         if (_path == null || standStill)
         {
-            Debug.Log("HERE@@@ + standstill=" + standStill);
             rigidbody.velocity = Vector3.zero;
             return;
         }
@@ -67,20 +66,18 @@ public class PathfindingAgent : MonoBehaviour
             desiredVelocity = desiredVelocity.normalized * maxVelocity;
         }
 
-        // Apply acceleration to current velocity
+        // Apply velocity and rotation
         rigidbody.velocity = desiredVelocity;
         if (rigidbody.velocity != Vector3.zero)
         {
-            rigidbody.MoveRotation(Quaternion.LookRotation(rigidbody.velocity.normalized));
+            transform.rotation = Quaternion.LookRotation(rigidbody.velocity.normalized);
         }
 
         // Reached next point
-        if (Vector3.Distance(transform.position, _path.Position) < ArrivalRadius)
+        if (Vector3.Distance(transform.position, _path.Position) < (_path.Next == null ? ArrivalRadius : 0.5f))
         {
             _path = _path.Next;
         }
-
-
     }
 
     private void RecalculatePath()
@@ -90,9 +87,9 @@ public class PathfindingAgent : MonoBehaviour
             _path = Pathfinding.Instance.FindPath(transform.position, Target)?.Next;
         }
     }
-    
-    public bool IsMoving() {
-        return rigidbody.velocity != Vector3.zero;
-    }
-    
+
+    public bool IsMoving() => rigidbody.velocity != Vector3.zero;
+
+    public bool PathIsNull() => _path == null;
+
 }

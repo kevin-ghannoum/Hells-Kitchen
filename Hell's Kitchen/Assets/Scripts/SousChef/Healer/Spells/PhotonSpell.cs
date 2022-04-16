@@ -6,12 +6,13 @@ using UnityEngine;
 
 public class PhotonSpell : MonoBehaviour
 {
-    float selfDestructTimer = 5f;
+    float selfDestructTimer = 4f;
 
     public Transform spinners;
     public Transform explosions;
     public Transform AoE;
     public Transform lights;
+    public Transform magicCircle;
     float spinStartDelay = 0.25f;
     float explosionDelay = 1f;
 
@@ -19,20 +20,23 @@ public class PhotonSpell : MonoBehaviour
     float centerSpeed = 12f;
     float arriveRadius = 0.75f;
 
-    public float aoeDamage;
+    [SerializeField] GameObject bulletExplosion;
+    [SerializeField] public float aoeDamage;
+    [SerializeField] public float singleTargetDamage;
 
-    public Transform target;
+    public GameObject target;
     private void Start()
     {
         transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
 
     }
 
+    bool stopFollowing = false;
     float aoeDmgDelayAfterExplosion = 0.25f;
     private void Update()
     {
-        if (target != null)
-            transform.position = target.position;
+        if (target != null && !stopFollowing)
+            transform.position = target.transform.position;
         spinStartDelay -= Time.deltaTime;
         if (spinStartDelay < 0 && spinners != null) {
             spinners.gameObject.SetActive(true);
@@ -53,20 +57,33 @@ public class PhotonSpell : MonoBehaviour
             lights.gameObject.SetActive(false);
             aoeDmgDelayAfterExplosion -= Time.deltaTime;
             if (aoeDmgDelayAfterExplosion < 0)
+            {
+                if (!hitList.Contains(target) && target.TryGetComponent(out IKillable killable) && target.tag != "Player")
+                {
+                    hitList.Add(target);
+                    killable.TakeDamage(singleTargetDamage);
+                    killable.TakeDamage(aoeDamage);
+                }
+                stopFollowing = true;
                 gameObject.GetComponent<SphereCollider>().enabled = true;
+                magicCircle.gameObject.SetActive(true);
+            }
         }
 
         selfDestructTimer -= Time.deltaTime;
         if (selfDestructTimer <= 0)
             Destroy(gameObject);
-        transform.Rotate(new Vector3(0, 5, 0));
+
+      //  if (!stopFollowing)
+            transform.Rotate(new Vector3(0, 5, 0));
     }
 
     List<GameObject> hitList = new List<GameObject> ();
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("collided with" + other.name);
-        if (other.gameObject.TryGetComponent(out IKillable killable) && other.tag != "Player" && !hitList.Contains(other.gameObject)) {
+        if (!hitList.Contains(other.gameObject) && other.gameObject.TryGetComponent(out IKillable killable) && other.tag != "Player") {
+            Instantiate(bulletExplosion, other.transform.position, Quaternion.identity);
             hitList.Add(other.gameObject);
             killable.TakeDamage(aoeDamage);
         }

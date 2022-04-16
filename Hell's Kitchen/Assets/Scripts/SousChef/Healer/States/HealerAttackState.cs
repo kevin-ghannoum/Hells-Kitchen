@@ -8,8 +8,6 @@ public class HealerAttackState : HealerBaseState
     float photonCastTime = 5f;
     float _photonCastTime = 0f;
 
-    [SerializeField] float photonDamage = 50f;
-
     public override void EnterState(HealerStateManager healer)
     {
         Debug.Log("@Attack state");
@@ -35,8 +33,6 @@ public class HealerAttackState : HealerBaseState
             return;
         }
 
-        //implement interrupt casting when souschef takes dmg
-        Debug.Log(healer.animator.GetCurrentAnimatorStateInfo(0).IsName("CastSpell"));
         if (isAttackAnimationPlaying) {
             _attackAnimationTime += Time.deltaTime;
             if (_attackAnimationTime > attackAnimationTime) {
@@ -57,9 +53,8 @@ public class HealerAttackState : HealerBaseState
                 Debug.Log("@Attack attacking xD");
                 //healer.sc.agent.standStill = false;
                 //play attack animation
-                healer.spells.HealerSpell_Photon(healer.sc.targetEnemy.transform);
+                healer.spells.HealerSpell_Photon(healer.sc.targetEnemy);
                 healer.magicCircle.gameObject.SetActive(false);
-                healer.sc.targetEnemy.GetComponent<IKillable>().TakeDamage(photonDamage);
                 _photonCastTime = 0f;
                 healer.sc.targetEnemy = null;
                 healer.resetAttackCD();

@@ -1043,7 +1043,7 @@ PrefabInstance:
       objectReference: {fileID: 1512410851}
     - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
       propertyPath: enemySpawnRate
-      value: 0.17
+      value: 0.44
       objectReference: {fileID: 0}
     - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
       propertyPath: enemies.Array.size
