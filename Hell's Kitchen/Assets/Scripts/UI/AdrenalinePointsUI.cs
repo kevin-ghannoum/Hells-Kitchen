@@ -32,7 +32,7 @@ namespace UI
         {
             base.Start();
             _text = canvas.GetComponentInChildren<TextMeshProUGUI>();
-            _text.text = (stringText.Length > 0) ? stringText : $"{(value > 0 ? "+" : "")}{value}";
+            _text.text = string.IsNullOrEmpty(stringText) ? $"{(value > 0 ? "+" : "")}{value}" : stringText;
             _text.color = color;
         }
 
@@ -45,7 +45,7 @@ namespace UI
             var normalizedTime = _time / animationTime;
             
             // Set text and color
-            _text.text = (stringText.Length > 0) ? stringText : $"{(value > 0 ? "+" : "")}{value}";
+            _text.text = string.IsNullOrEmpty(stringText) ? $"{(value > 0 ? "+" : "")}{value}" : stringText;
             var textColor = new Color(color.r, color.g, color.b, 1.0f - normalizedTime);
             _text.color = textColor;
             
@@ -82,6 +82,7 @@ namespace UI
             if (adrenalinePointsUI)
             {
                 adrenalinePointsUI.value = value;
+                adrenalinePointsUI.stringText = "";
                 adrenalinePointsUI.color = color;
                 adrenalinePointsUI.offsetY = offsetY;
             }
