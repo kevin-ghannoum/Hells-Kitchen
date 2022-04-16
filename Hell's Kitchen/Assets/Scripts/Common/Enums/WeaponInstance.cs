@@ -1,6 +1,6 @@
 ﻿namespace Common.Enums
 {
-    public enum WeaponType
+    public enum WeaponInstance
     {
         Pistol = 0,
         Revolver = 1,

@@ -13,7 +13,7 @@ namespace Common
         public float playerCurrentHitPoints = 100f;
         public float playerMaxStamina = 5f;
         public float playerCurrentStamina = 5f;
-        public GameObject carriedWeapon;
+        public WeaponInstance carriedWeapon = WeaponInstance.Scimitar;
         public bool IsCarryingWeapon => carriedWeapon != null;
         public float cashMoney;
         public bool dungeonTimeHasElapsed;
@@ -40,7 +40,6 @@ namespace Common
             playerMaxStamina = 5f;
             playerCurrentStamina = playerMaxStamina;
             cashMoney = 0f;
-            carriedWeapon = null;
             OrderList = new Dictionary<IRecipe, int>();
             PurchasedWeapons = new List<string>();
         }

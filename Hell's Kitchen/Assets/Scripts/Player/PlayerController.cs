@@ -42,6 +42,8 @@ namespace Player
         private Inventory _inventory = new Inventory();
         private float _speed = 0f;
         private IPickup _currentPickup;
+
+        private GameObject carriedWeapon;
         
         private void Start()
         {
