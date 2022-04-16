@@ -9,7 +9,7 @@ public class AlienEnemy : MonoBehaviour
     private float timeCounter;
     private float damageTimeCounter;
     private float damageRate = 0.1f;
-    private Vector3 direction;
+    private float distance;
     [SerializeField] private Animator anime;
     private LineRenderer lr;
     [SerializeField] private float attackDamage = 1;
@@ -26,9 +26,9 @@ public class AlienEnemy : MonoBehaviour
     {
         timeCounter += Time.deltaTime;
         damageTimeCounter += Time.deltaTime;
-        direction = target.transform.position - transform.position;
+        distance = Vector3.Distance(transform.position, target.transform.position);
 
-        if (direction.magnitude < attackRange)
+        if (distance < attackRange)
         {
             transform.LookAt(target.transform.position);
             RaycastHit hit;
