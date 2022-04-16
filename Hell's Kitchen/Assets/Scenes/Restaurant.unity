@@ -601,10 +601,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7471086848112553623, guid: bbe082510bb608b4b8f54f16575010f9, type: 3}
-      propertyPath: cashMoney
-      value: 1000
-      objectReference: {fileID: 0}
     - target: {fileID: 7576151037634946458, guid: bbe082510bb608b4b8f54f16575010f9, type: 3}
       propertyPath: m_Name
       value: GameStateManager

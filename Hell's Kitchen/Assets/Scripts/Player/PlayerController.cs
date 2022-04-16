@@ -66,7 +66,6 @@ namespace Player
         {
             if (!_input)
                 return;
-            
             _input.reference.actions["Roll"].performed -= Roll;
             _input.reference.actions["PickUp"].performed -= PickUp;
         }

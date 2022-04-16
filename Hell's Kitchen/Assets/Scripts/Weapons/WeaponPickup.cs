@@ -26,7 +26,7 @@ namespace Weapons
         private new Rigidbody rigidbody;
         
         private InputManager input => InputManager.Instance;
-        protected PlayerController player;
+        protected PlayerController playerController;
         protected Animator playerAnimator;
         private bool _canBePickedUp = true;
 
@@ -51,7 +51,7 @@ namespace Weapons
         public virtual void Awake()
         {
             GameObject playerObject = GameObject.FindWithTag(Tags.Player);
-            player = playerObject.GetComponent<PlayerController>();
+            playerController = playerObject.GetComponent<PlayerController>();
             playerAnimator = playerObject.GetComponentInChildren<Animator>();
         }
 
@@ -67,6 +67,11 @@ namespace Weapons
 
         public void Drop(InputAction.CallbackContext callbackContext)
         {
+            RemoveFromPlayer();
+        }
+
+        public void RemoveFromPlayer()
+        {
             _canBePickedUp = true;
             transform.SetParent(null);
             transform.localScale = new Vector3(1, 1, 1);
@@ -81,9 +86,9 @@ namespace Weapons
             _canBePickedUp = true;
             transform.SetParent(null);
             transform.localScale = new Vector3(1, 1, 1);
-            transform.position = player.DamagePosition.position;
-            transform.rotation = player.transform.rotation;
-            rigidbody.velocity = player.transform.forward * throwSpeed;
+            transform.position = playerController.DamagePosition.position;
+            transform.rotation = playerController.transform.rotation;
+            rigidbody.velocity = playerController.transform.forward * throwSpeed;
             rigidbody.angularVelocity = new Vector3(
                 Random.Range(-throwAngularSpeed, throwAngularSpeed), 
                 Random.Range(-throwAngularSpeed, throwAngularSpeed), 
@@ -95,11 +100,15 @@ namespace Weapons
             SetOutline(true);
         }
 
-        private void ReparentObject()
+        public void ReparentObject()
         {
-            Transform hand = player.GetComponent<PlayerController>().CharacterHand;
+            Transform hand = playerController?.CharacterHand;
             if (!hand)
-                return;
+            {
+                Debug.Log(gameObject.name);
+                throw new MissingReferenceException();
+            }
+                
 
             gameObject.transform.SetParent(hand, false);
             gameObject.transform.localScale = new Vector3(scale, scale, scale);
@@ -112,7 +121,7 @@ namespace Weapons
             Ray mouseRay = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             Plane floor = new Plane(Vector3.up, 0);
             floor.Raycast(mouseRay, out float dist);
-            player.FaceTarget(mouseRay.GetPoint(dist));
+            playerController.FaceTarget(mouseRay.GetPoint(dist));
         }
 
         protected virtual void AddListeners()

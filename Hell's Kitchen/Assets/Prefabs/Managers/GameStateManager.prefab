@@ -48,6 +48,6 @@ MonoBehaviour:
   playerMaxStamina: 5
   playerCurrentStamina: 5
   carriedWeapon: 0
-  cashMoney: 0
+  cashMoney: 1000
   dungeonTimeHasElapsed: 0
   PurchasedWeapons: []

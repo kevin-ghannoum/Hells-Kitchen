@@ -1,4 +1,4 @@
-// Adapted from : https://www.raywenderlich.com/82-procedural-generation-of-mazes-with-unity
+// Adapted from: https://www.raywenderlich.com/82-procedural-generation-of-mazes-with-unity
 using Common;
 using Common.Enums;
 using Common.Interfaces;
@@ -13,6 +13,7 @@ namespace Dungeon_Generation
     {
         [SerializeField] private PlayerController player;
         [SerializeField] private float playerHeightPosition = 0f;
+        [SerializeField] private WeaponInstance defaultWeapon = WeaponInstance.Scimitar;
 
         private MazeConstructor generator;
         
@@ -46,9 +47,15 @@ namespace Dungeon_Generation
 
         private void SetUpPlayerWeapon()
         {
+            var heldWeapon = player.gameObject.GetComponentInChildren<IPickup>();
+            if (heldWeapon != null)
+            {
+                heldWeapon.RemoveFromPlayer();
+            }
+                
             // Set default weapon in case none is equipped when entering the dungeon
             if (GameStateManager.Instance.carriedWeapon == WeaponInstance.None)
-                GameStateManager.Instance.carriedWeapon = WeaponInstance.Scimitar;
+                GameStateManager.Instance.carriedWeapon = defaultWeapon;
             
             // set weapon in players hand
             var weapon = Weapons.Models.Weapons.GetItem(GameStateManager.Instance.carriedWeapon);
@@ -58,7 +65,6 @@ namespace Dungeon_Generation
  
         private void OnGoalTrigger(GameObject trigger, GameObject other)
         {
-            Debug.Log("Reached maze goal");
             goalReached = true;
 
             Destroy(trigger);
