@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Restaurant.unity
+    guid: 4202e45608a16424aaa8fb0f95d5ce3a
+  - enabled: 1
+    path: Assets/Scenes/DungeonGeneration.unity
+    guid: 5d929add4786241cda93f6ec823d21d4
   m_configObjects: {}

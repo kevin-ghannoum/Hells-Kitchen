@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using Common.Interfaces;
 using Enemies.Enums;
+using UI;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -44,6 +45,8 @@ namespace Enemies
 
         public virtual void Update()
         {
+            var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            agent.enabled = !animatorStateInfo.IsName(EnemyAnimator.TakeHit);
             animator.SetFloat(EnemyAnimator.Speed, agent.Velocity.magnitude);
         }
 
@@ -53,8 +56,14 @@ namespace Enemies
 
         public virtual void TakeDamage(float damage)
         {
-            animator.SetTrigger(EnemyAnimator.OnTakeDamage);
+            // HP calculation and animation
             hitPoints -= damage;
+            animator.SetTrigger(EnemyAnimator.TakeHit);
+            
+            // Damage numbers
+            AdrenalinePointsUI.SpawnDamageNumbers(transform.position + 2.0f * Vector3.up, -damage);
+            
+            // Death
             if (hitPoints <= 0)
             {
                 hitPoints = 0;
@@ -66,11 +75,13 @@ namespace Enemies
 
         #region Private Methods
 
-        private void Die()
+        protected virtual void Die()
         {
             Killed?.Invoke();
             animator.SetTrigger(EnemyAnimator.Die);
             Invoke(nameof(Destroy), deathDelay);
+            agent.enabled = false;
+            enabled = false;
         }
 
         private void Destroy()

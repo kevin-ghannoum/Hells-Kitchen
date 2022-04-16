@@ -43,6 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 638c7fd8a89869045b7666e67c40d012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCurrentHitPoints: 100
   playerMaxHitPoints: 100
+  playerCurrentHitPoints: 100
+  playerMaxStamina: 5
+  playerCurrentStamina: 5
+  carriedWeapon: {fileID: 0}
   cashMoney: 0

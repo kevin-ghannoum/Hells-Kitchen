@@ -1,5 +1,6 @@
 ﻿using System;
 using Common.Enums;
+using Common.Interfaces;
 using Enemies.Enums;
 using Player;
 using UnityEngine;
@@ -8,16 +9,18 @@ namespace Enemies
 {
     public class EnemyBat : Enemy
     {
-        [Header("Parameters")]
-        [SerializeField]
-        private float attackRate = 0.5f;
+        [Header("General")]
+        [SerializeField] private float aggroRadius = 20.0f;
 
-        [SerializeField]
-        private float aggroRadius = 20.0f;
-
+        [Header("Melee Attack")]
+        [SerializeField] private float attackRate = 0.5f;
+        [SerializeField] private float attackDamage = 10f;
+        [SerializeField] private float attackDamageRadius = 2f;
+        [SerializeField] private Transform attackPosition;
+        
         private PlayerController _player;
         private float _lastAttack;
-
+        
         private void Start()
         {
             _player = GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>();
@@ -30,7 +33,7 @@ namespace Enemies
             if (Vector3.Distance(_player.transform.position, transform.position) < aggroRadius)
             {
                 agent.Target = _player.transform.position;
-            
+
                 if (agent.Arrived && Time.time - _lastAttack > (1.0f / attackRate))
                 {
                     PerformAttack();
@@ -44,5 +47,14 @@ namespace Enemies
             animator.SetTrigger(EnemyAnimator.Attack);
         }
 
+        public void InflictDamage()
+        {
+            var colliders = Physics.OverlapSphere(attackPosition.position, attackDamageRadius);
+            foreach(var col in colliders)
+            {
+                if (col.gameObject != gameObject)
+                    col.gameObject.GetComponent<IKillable>()?.TakeDamage(attackDamage);
+            }
+        }
     }
 }

@@ -12,6 +12,9 @@ namespace Input
         public bool roll;
         public bool attack;
         public bool dropItem;
+        public bool throwItem;
+        public bool interact;
+        public bool openInventory;
 
         [Header("References")] 
         public PlayerInput reference;
@@ -66,6 +69,30 @@ namespace Input
         {
             dropItem = context.ReadValueAsButton();
         }
-    
+
+        public void OnThrowItem(InputAction.CallbackContext context)
+        {
+            throwItem = context.ReadValueAsButton();
+        }
+        
+        public void OnInteract(InputAction.CallbackContext context)
+        {
+            interact = context.ReadValueAsButton();
+        }
+        
+        public void OnOpenInventory(InputAction.CallbackContext context)
+        {
+            openInventory = context.ReadValueAsButton();
+        }
+        
+        public void Deactivate()
+        {
+            reference.DeactivateInput();
+        }
+
+        public void Activate()
+        {
+            reference.ActivateInput();
+        }
     }
 }

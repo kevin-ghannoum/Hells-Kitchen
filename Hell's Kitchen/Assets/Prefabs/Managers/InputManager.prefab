@@ -50,6 +50,8 @@ MonoBehaviour:
   roll: 0
   attack: 0
   dropItem: 0
+  interact: 0
+  openInventory: 0
   reference: {fileID: 207420216689281371}
 --- !u!114 &207420216689281371
 MonoBehaviour:
@@ -172,6 +174,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 0cf23d2b-bed0-427c-a481-b4f7c0bc0e7a
     m_ActionName: Player/DropItem[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 207420216689281370}
+        m_TargetAssemblyTypeName: Input.InputManager, Core
+        m_MethodName: OnInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f4e55406-7dba-4539-a31a-1ffc02464442
+    m_ActionName: Player/Interact[/Keyboard/ctrl]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 207420216689281370}
+        m_TargetAssemblyTypeName: Input.InputManager, Core
+        m_MethodName: OnOpenInventory
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b48f71ea-8962-4591-8416-4531aa899be7
+    m_ActionName: Player/OpenInventory[/Keyboard/tab]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard & Mouse
   m_DefaultActionMap: Player

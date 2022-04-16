@@ -4,7 +4,7 @@
     {
         public static string Speed => "Speed";
         public static string Attack => "Attack";
-        public static string OnTakeDamage => "OnTakeDamage";
+        public static string TakeHit => "TakeHit";
         public static string Die => "Die";
     }
 }

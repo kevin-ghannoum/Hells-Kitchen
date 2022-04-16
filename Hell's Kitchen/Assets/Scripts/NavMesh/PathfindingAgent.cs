@@ -77,7 +77,7 @@ public class PathfindingAgent : MonoBehaviour
         if (Vector3.Distance(transform.position, _path.Position) < (_path.Next == null ? ArrivalRadius : 0.5f))
         {
             _path = _path.Next;
-        }
+        } 
     }
 
     private void RecalculatePath()

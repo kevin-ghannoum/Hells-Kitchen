@@ -7,7 +7,7 @@ TagManager:
   - Generated
   - Pathfinding
   - Weapon
-  - SousChef
+  - UICamera
   layers:
   - Default
   - TransparentFX
@@ -17,8 +17,8 @@ TagManager:
   - UI
   - Decorations
   - Enemies
-  - SousChef
-  - 
+  - Collider
+  - Collectibles
   - 
   - 
   - 
