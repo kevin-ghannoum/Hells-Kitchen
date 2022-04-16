@@ -47,5 +47,7 @@ MonoBehaviour:
   playerCurrentHitPoints: 100
   playerMaxStamina: 5
   playerCurrentStamina: 5
-  carriedWeapon: {fileID: 0}
+  carriedWeapon: 0
   cashMoney: 0
+  dungeonTimeHasElapsed: 0
+  PurchasedWeapons: []

@@ -13,8 +13,8 @@ namespace Common
         public float playerCurrentHitPoints = 100f;
         public float playerMaxStamina = 5f;
         public float playerCurrentStamina = 5f;
-        public WeaponInstance carriedWeapon = WeaponInstance.Scimitar;
-        public bool IsCarryingWeapon => carriedWeapon != null;
+        public WeaponInstance carriedWeapon = WeaponInstance.None;
+        public bool IsCarryingWeapon => (carriedWeapon != WeaponInstance.None);
         public float cashMoney;
         public bool dungeonTimeHasElapsed;
 

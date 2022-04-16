@@ -1584,7 +1584,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 201836285290825875}
         m_TargetAssemblyTypeName: Player.PlayerController, Core
-        m_MethodName: PickUp
+        m_MethodName: ExecutePickUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

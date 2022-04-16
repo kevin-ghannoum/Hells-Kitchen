@@ -1,5 +1,4 @@
-// Developed using : https://www.raywenderlich.com/82-procedural-generation-of-mazes-with-unity
-using System;
+// Adapted from : https://www.raywenderlich.com/82-procedural-generation-of-mazes-with-unity
 using Common;
 using Common.Enums;
 using Common.Interfaces;
@@ -27,11 +26,7 @@ namespace Dungeon_Generation
         private void StartNewGame()
         {
             StartNewMaze();
-            var weapon = GameStateManager.Instance.carriedWeapon;
-            //if(!weapon)
-                //return;
-
-            //weapon.GetComponent<IPickup>().PickUp();
+            SetUpPlayerWeapon();
         }
         
         private void StartNewMaze()
@@ -47,6 +42,18 @@ namespace Dungeon_Generation
             player.enabled = true;
 
             GameObject.FindWithTag(Tags.Pathfinding).GetComponent<Pathfinding>().Bake(true);
+        }
+
+        private void SetUpPlayerWeapon()
+        {
+            // Set default weapon in case none is equipped when entering the dungeon
+            if (GameStateManager.Instance.carriedWeapon == WeaponInstance.None)
+                GameStateManager.Instance.carriedWeapon = WeaponInstance.Scimitar;
+            
+            // set weapon in players hand
+            var weapon = Weapons.Models.Weapons.GetItem(GameStateManager.Instance.carriedWeapon);
+            var weaponInstance = Instantiate(weapon.WeaponModel.Prefab);
+            weaponInstance.GetComponent<IPickup>()?.PickUp();
         }
  
         private void OnGoalTrigger(GameObject trigger, GameObject other)

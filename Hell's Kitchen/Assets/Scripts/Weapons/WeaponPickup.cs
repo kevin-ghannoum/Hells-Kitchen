@@ -17,9 +17,6 @@ namespace Weapons
         [SerializeField] private Quaternion rotation = Quaternion.identity;
         [SerializeField] private float scale = 0.3f;
 
-        [Header("Damage")]
-        public float damage = 10.0f;
-
         [Header("Throwing")]
         [SerializeField] private float throwSpeed = 35.0f;
         [SerializeField] private float throwAngularSpeed = 180.0f;
@@ -33,9 +30,18 @@ namespace Weapons
         protected Animator playerAnimator;
         private bool _canBePickedUp = true;
 
-        public bool CanPickUp => _canBePickedUp;
+        private float _damage = 10.0f;
+
+        public float Damage
+        {
+            get => _damage;
+            set => _damage = value;
+        }
 
         public virtual float Price { get; } = 10f;
+
+        [SerializeField] private WeaponInstance weaponInstance;
+        public WeaponInstance WeaponInstance { get => weaponInstance; }
 
         public void Reset()
         {
@@ -53,10 +59,10 @@ namespace Weapons
         {
             _canBePickedUp = false;
             ReparentObject();
-            AddListeners();
-            GameStateManager.Instance.carriedWeapon = gameObject;
+            GameStateManager.Instance.carriedWeapon = WeaponInstance;
             DisableRigidbody();
             SetOutline(false);
+            AddListeners();
         }
 
         public void Drop(InputAction.CallbackContext callbackContext)
@@ -65,7 +71,7 @@ namespace Weapons
             transform.SetParent(null);
             transform.localScale = new Vector3(1, 1, 1);
             RemoveListeners();
-            GameStateManager.Instance.carriedWeapon = null;
+            GameStateManager.Instance.carriedWeapon = WeaponInstance.None;
             EnableRigidBody();
             SetOutline(true);
         }
@@ -84,7 +90,7 @@ namespace Weapons
                 Random.Range(-throwAngularSpeed, throwAngularSpeed)
             );
             RemoveListeners();
-            GameStateManager.Instance.carriedWeapon = null;
+            GameStateManager.Instance.carriedWeapon = WeaponInstance.None;
             EnableRigidBody();
             SetOutline(true);
         }

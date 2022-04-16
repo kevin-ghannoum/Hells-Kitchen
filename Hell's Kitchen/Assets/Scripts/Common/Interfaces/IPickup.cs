@@ -1,4 +1,5 @@
-﻿using UnityEngine.InputSystem;
+﻿using Common.Enums;
+using UnityEngine.InputSystem;
 
 namespace Common.Interfaces
 {
@@ -7,5 +8,8 @@ namespace Common.Interfaces
         public void PickUp();
         public void Drop(InputAction.CallbackContext callbackContext);
         public void Throw(InputAction.CallbackContext callbackContext);
+        public float Damage { get; set; }
+        public float Price {get;}
+        public WeaponInstance WeaponInstance { get; }
     }
 }

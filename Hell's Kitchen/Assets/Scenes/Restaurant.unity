@@ -195,7 +195,7 @@ RectTransform:
   - {fileID: 908006479}
   - {fileID: 1646715773}
   m_Father: {fileID: 476693102}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -321,6 +321,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 40372203151353351, guid: e12c3b3264d0e524186504da5369e263, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 64470000209887823, guid: e12c3b3264d0e524186504da5369e263, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -596,6 +600,10 @@ PrefabInstance:
     - target: {fileID: 1087940301457135674, guid: bbe082510bb608b4b8f54f16575010f9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471086848112553623, guid: bbe082510bb608b4b8f54f16575010f9, type: 3}
+      propertyPath: cashMoney
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 7576151037634946458, guid: bbe082510bb608b4b8f54f16575010f9, type: 3}
       propertyPath: m_Name

@@ -43,8 +43,6 @@ namespace Player
         private float _speed = 0f;
         private IPickup _currentPickup;
 
-        private GameObject carriedWeapon;
-        
         private void Start()
         {
             _animator = GetComponentInChildren<Animator>();
@@ -53,15 +51,8 @@ namespace Player
 
         private void Awake()
         {
-            // Singleton instance
-            if (Instance != null && Instance != this)
-            {
-                Destroy(this);
-            }
-            else
-            {
+            if (Instance == null)
                 Instance = this;
-            }
 
             _animator = GetComponentInChildren<Animator>();
             _characterController = GetComponent<CharacterController>();
@@ -73,6 +64,9 @@ namespace Player
 
         private void OnDestroy()
         {
+            if (!_input)
+                return;
+            
             _input.reference.actions["Roll"].performed -= Roll;
             _input.reference.actions["PickUp"].performed -= PickUp;
         }
@@ -129,31 +123,6 @@ namespace Player
         public void PickUp(InputAction.CallbackContext callbackContext)
         {
             _animator.SetTrigger(PlayerAnimator.PickUp);
-        }
-
-        public void FaceTarget(Vector3 target)
-        {
-            var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-            if (!animatorStateInfo.IsName(PlayerAnimator.Roll) &&
-                (animatorStateInfo.IsName(PlayerAnimator.Move) || animatorStateInfo.normalizedTime > 0.5f))
-            {
-                transform.rotation = Quaternion.LookRotation(target - transform.position);
-            }
-        }
-
-        public void InflictMeleeDamage()
-        {
-            float damage = GameStateManager.Instance.carriedWeapon?.GetComponent<WeaponPickup>()?.damage ?? 0.0f;
-            var colliders = Physics.OverlapSphere(DamagePosition.position, DamageRadius, ~(1 << Layers.Player));
-            foreach (var col in colliders)
-            {
-                col.gameObject.GetComponent<IKillable>()?.TakeDamage(damage);
-            }
-        }
-
-        public void PickUp()
-        {
-            _currentPickup?.PickUp();
         }
 
         #endregion
@@ -225,6 +194,35 @@ namespace Player
         {
             _inventory.RemoveItemFromInventory(item, quantity);
             _inventoryUI.UpdateInventory(_inventory.GetInventoryItems());
+        }
+
+        #endregion
+
+        #region PlayerSpaceActions
+
+        public void FaceTarget(Vector3 target)
+        {
+            var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+            if (!animatorStateInfo.IsName(PlayerAnimator.Roll) &&
+                (animatorStateInfo.IsName(PlayerAnimator.Move) || animatorStateInfo.normalizedTime > 0.5f))
+            {
+                transform.rotation = Quaternion.LookRotation(target - transform.position);
+            }
+        }
+
+        public void InflictMeleeDamage()
+        {
+            float damage = GetComponentInChildren<WeaponPickup>()?.Damage ?? 0.0f;
+            var colliders = Physics.OverlapSphere(DamagePosition.position, DamageRadius, ~(1 << Layers.Player));
+            foreach (var col in colliders)
+            {
+                col.gameObject.GetComponent<IKillable>()?.TakeDamage(damage);
+            }
+        }
+
+        public void ExecutePickUp()
+        {
+            _currentPickup?.PickUp();
         }
 
         #endregion

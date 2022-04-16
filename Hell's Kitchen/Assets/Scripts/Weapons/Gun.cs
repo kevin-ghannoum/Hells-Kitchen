@@ -36,7 +36,7 @@ namespace Weapons
             for (int i = -bulletCount / 2; i <= bulletCount / 2; i++)
             {
                 var bullet = Instantiate(bulletPrefab, position + player.transform.right * 0.5f * i, rotation * Quaternion.Euler(0, i * bulletSpread, 0));
-                bullet.GetComponent<Bullet>().Damage = damage;
+                bullet.GetComponent<Bullet>().Damage = Damage;
                 bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletSpeed;
                 Destroy(bullet, bulletLifetime);
             }
