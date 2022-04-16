@@ -11,7 +11,8 @@ namespace Enemies
     {
         [Header("Parameters")]
         [SerializeField] private float attackRate = 0.5f;
-        [SerializeField] private float attackDamage = 15.0f;
+        [SerializeField] private float chargeDamage = 15.0f;
+        [SerializeField] private float attackDamage = 5.0f;
         [SerializeField] private float aggroRadius = 20.0f;
 
         [SerializeField] private float chargeSpeed = 10;
@@ -41,7 +42,7 @@ namespace Enemies
 
         private void PerformAttack()
         {
-            if (_currentChargeTime >= chargeTime && Time.time -_lastAttack > (1 / attackRate))
+            if (_currentChargeTime >= chargeTime && Time.time - _lastAttack > (1 / attackRate))
             {
                 animator.SetBool(EnemyAnimator.Attack, false);
                 _rb.velocity = Vector3.zero;
@@ -81,7 +82,11 @@ namespace Enemies
 
         public void OnPigTrigger(Collider col)
         {
-            if (_currentChargeTime < chargeTime)
+            if (_currentChargeTime < 0)
+            {
+                col.GetComponent<IKillable>()?.TakeDamage(chargeDamage);
+            }
+            else
             {
                 col.GetComponent<IKillable>()?.TakeDamage(attackDamage);
             }
