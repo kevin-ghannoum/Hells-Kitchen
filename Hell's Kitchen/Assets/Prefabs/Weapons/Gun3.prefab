@@ -113,7 +113,7 @@ MonoBehaviour:
   throwSpeed: 35
   throwAngularSpeed: 180
   rigidbody: {fileID: -5829496674821426535}
-  _weaponInstance: 3
+  weaponInstance: 3
   bulletSpeed: 40
   bulletLifetime: 3
   bulletSpread: 7
