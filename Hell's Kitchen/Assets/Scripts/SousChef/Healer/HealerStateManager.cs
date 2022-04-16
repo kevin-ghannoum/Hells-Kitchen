@@ -13,6 +13,7 @@ public class HealerStateManager : MonoBehaviour
     public HealerHealState healState = new HealerHealState();
     public Animator animator;
     public Transform magicCircle;
+    public Transform healCircle;
     public SousChef sc { get; set; }
     public SpellManager spells { get; set; }
 

@@ -24,8 +24,4 @@ public class Character : MonoBehaviour
         Debug.Log("'" + gameObject.name + "' got kilt");
         Destroy(gameObject);
     }
-
-    public bool isLowHP() {
-        return ((health/maxHealth)*100) < 60;
-    }
 }

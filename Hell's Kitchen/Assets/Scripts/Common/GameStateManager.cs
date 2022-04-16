@@ -43,5 +43,10 @@ namespace Common
             OrderList = new Dictionary<IRecipe, int>();
             PurchasedWeapons = new List<string>();
         }
+
+        public bool IsLowHP()
+        {
+            return ((playerCurrentHitPoints / playerMaxHitPoints) * 100) < 60;
+        }
     }
 }

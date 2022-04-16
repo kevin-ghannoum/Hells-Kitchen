@@ -1,3 +1,4 @@
+using Common;
 using Common.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,12 +25,13 @@ public class HealerAttackState : HealerBaseState
         healer.sc.faceTargetEnemy();
         healer.sc.agent.standStill = true;
 
-        if (healer.sc.targetEnemy == null && !isAttackAnimationPlaying) {
+
+        if ((healer.sc.targetEnemy == null || (healer.sc.isLowHP() || GameStateManager.Instance.IsLowHP())) && !isAttackAnimationPlaying) {
             healer.resetAttackCD();
             _photonCastTime = 0f;
             healer.magicCircle.gameObject.SetActive(false);
-            healer.SwitchState(healer.moveToTarget);
             healer.sc.agent.standStill = false;
+            healer.SwitchState(healer.moveToTarget);
             return;
         }
 

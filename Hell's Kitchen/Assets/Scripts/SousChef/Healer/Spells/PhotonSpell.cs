@@ -20,6 +20,8 @@ public class PhotonSpell : MonoBehaviour
     float centerSpeed = 12f;
     float arriveRadius = 0.75f;
 
+    [SerializeField] float AoE_delayBetweenTicks;
+
     [SerializeField] GameObject bulletExplosion;
     [SerializeField] public float aoeDamage;
     [SerializeField] public float singleTargetDamage;
@@ -52,7 +54,7 @@ public class PhotonSpell : MonoBehaviour
         }
 
         bigExplosionDelay -= Time.deltaTime;
-        if (bigExplosionDelay < 0) {
+        if (bigExplosionDelay < 0 && !stopFollowing) {
             AoE.gameObject.SetActive(true);
             lights.gameObject.SetActive(false);
             aoeDmgDelayAfterExplosion -= Time.deltaTime;
@@ -63,6 +65,7 @@ public class PhotonSpell : MonoBehaviour
                     hitList.Add(target);
                     killable.TakeDamage(singleTargetDamage);
                     killable.TakeDamage(aoeDamage);
+                    StartCoroutine(ExecuteAfterTime(AoE_delayBetweenTicks, target));
                 }
                 stopFollowing = true;
                 gameObject.GetComponent<SphereCollider>().enabled = true;
@@ -78,14 +81,24 @@ public class PhotonSpell : MonoBehaviour
             transform.Rotate(new Vector3(0, 5, 0));
     }
 
+    IEnumerator ExecuteAfterTime(float time, GameObject objToRemove)
+    {
+        yield return new WaitForSeconds(time);
+        hitList.Remove(objToRemove);
+        // Code to execute after the delay
+        Debug.Log("remove'd");
+    }
+
     List<GameObject> hitList = new List<GameObject> ();
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         Debug.Log("collided with" + other.name);
-        if (!hitList.Contains(other.gameObject) && other.gameObject.TryGetComponent(out IKillable killable) && other.tag != "Player") {
-            Instantiate(bulletExplosion, other.transform.position, Quaternion.identity);
+        if (!hitList.Contains(other.gameObject) && other.gameObject.TryGetComponent(out IKillable killable) && other.tag != "Player" && other.tag != "SousChef") {
+            Destroy(Instantiate(bulletExplosion, other.transform.position, Quaternion.identity), 2);
             hitList.Add(other.gameObject);
             killable.TakeDamage(aoeDamage);
+            StartCoroutine(ExecuteAfterTime(AoE_delayBetweenTicks, other.gameObject));
         }
     }
+
 }

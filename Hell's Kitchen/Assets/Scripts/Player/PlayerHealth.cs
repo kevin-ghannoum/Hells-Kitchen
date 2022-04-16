@@ -75,5 +75,7 @@ namespace Player
             Killed.Invoke();
             animator.SetTrigger(PlayerAnimator.Dead);
         }
+
+
     }
 }

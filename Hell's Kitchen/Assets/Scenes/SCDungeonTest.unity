@@ -451,6 +451,10 @@ PrefabInstance:
       propertyPath: searchRange
       value: 17
       objectReference: {fileID: 0}
+    - target: {fileID: 8080431647944246267, guid: cf4e945f8780c4a468d5ba3246ec8224, type: 3}
+      propertyPath: healSpellPrefab
+      value: 
+      objectReference: {fileID: 1948045767030177048, guid: 6576206d6ec678c4694e9e890961dfc7, type: 3}
     - target: {fileID: 8508594950140384773, guid: cf4e945f8780c4a468d5ba3246ec8224, type: 3}
       propertyPath: m_Layer
       value: 10
