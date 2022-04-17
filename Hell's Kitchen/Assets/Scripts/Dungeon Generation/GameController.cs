@@ -18,12 +18,10 @@ namespace Dungeon_Generation
         [SerializeField] private ClockUI clock;
         [SerializeField] private Transform mazeStart;
 
-        private MazeConstructor generator;
-        
-        private bool goalReached;
-        
+        private MazeConstructor _generator;
+
         void Start() {
-            generator = GetComponent<MazeConstructor>();
+            _generator = GetComponent<MazeConstructor>();
             StartNewGame();
         }
 
@@ -37,14 +35,13 @@ namespace Dungeon_Generation
         
         public void StartNewMaze()
         {
-            generator.GenerateNewMaze(mazeStart);
+            _generator.GenerateNewMaze(mazeStart);
 
-            float x = generator.StartCol * generator.hallwayWidth - (generator.hallwayWidth / 2);
+            float x = _generator.StartCol * _generator.hallwayWidth - (_generator.hallwayWidth / 2);
             float y = playerHeightPosition;
-            float z = generator.StartRow * generator.hallwayWidth - (generator.hallwayWidth / 2);
+            float z = _generator.StartRow * _generator.hallwayWidth - (_generator.hallwayWidth / 2);
             playerController.transform.position = new Vector3(x, y, z);
 
-            goalReached = false;
             playerController.enabled = true;
 
             GameObject.FindWithTag(Tags.Pathfinding).GetComponent<Pathfinding>().Bake(true);
