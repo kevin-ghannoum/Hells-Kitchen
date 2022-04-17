@@ -27,7 +27,7 @@ namespace Dungeon_Generation
             StartNewGame();
         }
 
-        private void StartNewGame()
+        public void StartNewGame()
         {
             StartNewMaze();
             SetUpPlayerWeapon();
@@ -35,7 +35,7 @@ namespace Dungeon_Generation
             SetDungeonClock();
         }
         
-        private void StartNewMaze()
+        public void StartNewMaze()
         {
             generator.GenerateNewMaze(mazeStart);
 
@@ -70,13 +70,12 @@ namespace Dungeon_Generation
 
         private void MovePlayerToStart()
         {
-            playerController.gameObject.transform.parent = mazeStart.parent;
-            var playerPosition = playerController.gameObject.transform;
-            var globalPosition = mazeStart.localPosition; //mazeStart.parent.TransformDirection(mazeStart.localPosition);
-            Debug.Log($"Global position {globalPosition}");
-            globalPosition.y += 0.2f;
-            playerPosition.transform.localPosition = globalPosition;
-            Debug.Log($"Player position {playerPosition.transform.localPosition}");
+            var player = GameObject.FindWithTag(Tags.Player);
+            var characterController = player.GetComponent<CharacterController>();
+            characterController.enabled = false;
+            var playerTransform = player.transform;
+            playerTransform.transform.localPosition = mazeStart.position;
+            characterController.enabled = true;
         }
 
         private void SetDungeonClock()
