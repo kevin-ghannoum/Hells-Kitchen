@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &641299537446487028
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3286728315942171380}
+  - component: {fileID: 4067887232228602103}
+  - component: {fileID: 4785572378396136855}
+  m_Layer: 0
+  m_Name: RestaurantManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3286728315942171380
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641299537446487028}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4067887232228602103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641299537446487028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85769c6fb62742feb215f43a158e859c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RestaurantSeats: []
+--- !u!114 &4785572378396136855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641299537446487028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c7933b70c7f4f7ab8bb6c7becf4e9c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customerPrefabs:
+  - {fileID: 2998557157183607799, guid: 01ff71ec7655bd54dad6f547494491f0, type: 3}
+  - {fileID: 779429222722382628, guid: 74bef70fba721ac4a8a8a34ca8aef3e2, type: 3}
+  - {fileID: 1502769333022584105, guid: 64ce63da99b1d8e4985ec4ad94960518, type: 3}
+  - {fileID: 8771115068108113901, guid: 24763d7a55a18d744bc25b090042a493, type: 3}
+  - {fileID: 950936325088134356, guid: 9ac6e172a1ec8cf4e8b29ef3e119cf79, type: 3}
+  - {fileID: 5637747980473722558, guid: 1558036611fcd014e996ab9ee18d05fe, type: 3}
+  - {fileID: 2586496241301909198, guid: 31a0c3631cda0ae44bd0f511d80eb99b, type: 3}
+  spawnPoints: []
+  numCustomersToSpawn: 10

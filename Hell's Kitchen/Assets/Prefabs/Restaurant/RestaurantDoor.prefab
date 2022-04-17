@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 3688115462359256417}
   - component: {fileID: 3408538134176666921}
   - component: {fileID: 3688115462359256418}
+  - component: {fileID: 8635916048967305915}
   m_Layer: 0
   m_Name: RestaurantDoor
   m_TagString: Untagged
@@ -222,6 +223,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberOfOrders: 5
   missedOrderPenalty: 10
+--- !u!114 &8635916048967305915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3686882462182886404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &3687248604989923098
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,6 +250,7 @@ GameObject:
   - component: {fileID: 3684321331040720034}
   - component: {fileID: 3699892976052741804}
   - component: {fileID: 3709460426775577820}
+  - component: {fileID: 7490721547737497181}
   m_Layer: 0
   m_Name: Cube_2
   m_TagString: Untagged
@@ -304,6 +322,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &7490721547737497181
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3687248604989923098}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 668594c1317554946a6aa92657395f16, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &1132368502973039529
 PrefabInstance:
   m_ObjectHideFlags: 0

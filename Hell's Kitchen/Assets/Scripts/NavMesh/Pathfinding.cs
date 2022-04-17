@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Unity.AI.Navigation;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -85,18 +86,22 @@ public class Pathfinding : MonoBehaviour
         public PathNode Next;
     }
 
-    [Header("Parameters")]
-    [SerializeField]
-    private Vector3 startPosition;
-
-    [SerializeField]
-    private Vector3 endPosition;
-
+    [Header("Debug")]
     [SerializeField]
     private bool showActivePath = true;
 
     [SerializeField]
     private bool showNavMesh = true;
+    
+    [SerializeField]
+    private Vector3 startPosition;
+
+    [SerializeField]
+    private Vector3 endPosition;
+    
+    [Header("Parameters")]
+    [SerializeField]
+    private bool buildAtRuntime = true;
 
     [Header("References")]
     [SerializeField]
@@ -249,7 +254,15 @@ public class Pathfinding : MonoBehaviour
         if (_nodes != null && !force)
             return;
 
-        navMeshSurface.BuildNavMesh();
+        if ((Application.isEditor && !EditorApplication.isPlaying) || buildAtRuntime)
+        {
+            navMeshSurface.BuildNavMesh();
+        }
+        UpdateNavMesh();
+    }
+    
+    public void UpdateNavMesh()
+    {
         var triangulation = NavMesh.CalculateTriangulation();
         var vertices = triangulation.vertices;
         var normals = vertices.Select(v => Vector3.up).ToArray();
@@ -276,6 +289,7 @@ public class Pathfinding : MonoBehaviour
             node.Successors = GenerateSuccessors(node);
         }
     }
+
 
     public PathNode FindPath(Vector3 start, Vector3 end, float navMeshHitRadius = 3.0f)
     {
@@ -472,20 +486,6 @@ public class Pathfinding : MonoBehaviour
         Vector3 portalRight = start;
         int apexIndex = 0, leftIndex = 0, rightIndex = 0;
         
-        // Simple paths, just construct one line from start to end
-        if (path.Next?.Next == null)
-        {
-            PathNode startNode = new PathNode() {
-                Position = start
-            };
-            PathNode endNode = new PathNode() {
-                Position = end
-            };
-            startNode.Next = endNode;
-            endNode.Prev = startNode;
-            return startNode;
-        }
-
         PathNode current = new PathNode() {
             Position = portalApex
         };
@@ -576,7 +576,7 @@ public class Pathfinding : MonoBehaviour
             Prev = current
         };
 
-        // Reconstruct path
+        // Reconstruct path forwards
         while (current.Prev != null)
         {
             current.Prev.Next = current;
@@ -585,7 +585,7 @@ public class Pathfinding : MonoBehaviour
 
         return current;
     }
-
+    
     #endregion
 
 }

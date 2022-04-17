@@ -10466,6 +10466,7 @@ GameObject:
   - component: {fileID: 8678223202679623979}
   - component: {fileID: 7885167716947913743}
   - component: {fileID: 5805860229341316405}
+  - component: {fileID: -5743778903240568242}
   m_Layer: 6
   m_Name: FlowerExit
   m_TagString: Untagged
@@ -10517,6 +10518,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggleGameObject: {fileID: 699362931658250572}
+--- !u!114 &-5743778903240568242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8306249193114989230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &8365983728283968412
 GameObject:
   m_ObjectHideFlags: 0
