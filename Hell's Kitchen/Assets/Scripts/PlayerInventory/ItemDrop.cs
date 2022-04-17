@@ -1,6 +1,7 @@
 using Common.Enums;
 using Enums.Items;
 using Player;
+using UI;
 using UnityEngine;
 
 namespace PlayerInventory
@@ -19,6 +20,7 @@ namespace PlayerInventory
             {
                 PlayerController player = other.gameObject.GetComponent<PlayerController>();
                 player.AddItemToInventory(Items.GetItem(item), quantity);
+                AdrenalinePointsUI.SpawnIngredientString(transform.position + 2.0f * Vector3.up, "+ " + quantity + " " + item);
                 Destroy(gameObject);
             }
         }
