@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Input;
 using PlayerInventory;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace UI
@@ -15,29 +13,14 @@ namespace UI
         [SerializeField] private int maxColNum = 4;
         [SerializeField] private int maxItemsPerPage = 20;
 
-        [SerializeField] private GameObject inventory;
         [SerializeField] private Transform inventoryContainer;
         [SerializeField] private Transform inventoryItemSlot;
         
-        private InputManager _input => InputManager.Instance;
         private float spacing = 30.0f;
-        private bool isUIActive = false;
-
-        private void Awake()
-        {
-            _input.reference.actions["OpenInventory"].performed += OpenInventory;
-        }
-
+        
         private void Start()
         {
             inventoryItemSlot = inventoryContainer.transform.GetChild(0);
-        }
-
-        // TODO: MOVE THIS LATER
-        void OpenInventory(InputAction.CallbackContext callbackContext)
-        {
-            isUIActive = !isUIActive;
-            inventory.SetActive(isUIActive);
         }
 
         public void UpdateInventory(Dictionary<Item, int> inventoryList)

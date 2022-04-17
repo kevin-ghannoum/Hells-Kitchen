@@ -1,4 +1,5 @@
-﻿using Input;
+﻿using Common.Enums;
+using Input;
 using TMPro;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ namespace UI
 
         private void LoadRestaurantScene()
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(Scenes.Restaurant);
         }
 
         public void OnQuit()
