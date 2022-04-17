@@ -87,7 +87,6 @@ namespace Dungeon_Generation
             parent.name = "Procedural Maze";
             parent.tag = Tags.Generated;
             Vector3 lastfloorPosition =  Vector3.zero;
-            startPlaced = false;
 
             for (int i = 0; i < data.GetLength(0); i++)
             {
@@ -99,7 +98,7 @@ namespace Dungeon_Generation
                         Vector3 floorPosition = new Vector3(i * hallwayWidth - (hallwayWidth / 2), 0, j * hallwayWidth - (hallwayWidth / 2));
                         lastfloorPosition = floorPosition;
             
-                        // Place Start Point
+                        // Place Start Point 
                         if(!startPlaced)
                             PlaceStartPosition(parent.transform, floorPosition);
                         
@@ -154,6 +153,7 @@ namespace Dungeon_Generation
 
         public void DisposeOldMaze()
         {
+            startPlaced = false;
             GameObject[] objects = GameObject.FindGameObjectsWithTag(Tags.Generated);
             foreach (GameObject obj in objects)
             {

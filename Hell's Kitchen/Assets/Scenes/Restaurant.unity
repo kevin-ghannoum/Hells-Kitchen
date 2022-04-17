@@ -357,10 +357,6 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7069730482295245346, guid: e12c3b3264d0e524186504da5369e263, type: 3}
-      propertyPath: realSecondsPerDay
-      value: 200
-      objectReference: {fileID: 0}
     - target: {fileID: 8266203883363038618, guid: e12c3b3264d0e524186504da5369e263, type: 3}
       propertyPath: m_IsActive
       value: 0

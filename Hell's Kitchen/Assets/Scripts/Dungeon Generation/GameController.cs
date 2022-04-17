@@ -70,14 +70,17 @@ namespace Dungeon_Generation
 
         private void MovePlayerToStart()
         {
-            var playerPosition = playerController.gameObject.transform.position;
-            playerPosition.x = mazeStart.localPosition.x;
-            //playerPosition.z = mazeStart.localPosition.z;
+            playerController.gameObject.transform.parent = mazeStart.parent;
+            var playerPosition = playerController.gameObject.transform;
+            var globalPosition = mazeStart.localPosition; //mazeStart.parent.TransformDirection(mazeStart.localPosition);
+            Debug.Log($"Global position {globalPosition}");
+            globalPosition.y += 0.2f;
+            playerPosition.transform.localPosition = globalPosition;
+            Debug.Log($"Player position {playerPosition.transform.localPosition}");
         }
 
         private void SetDungeonClock()
         {
-            
             if (!GameStateManager.Instance.dungeonTimeHasElapsed) return;
             
             // if true we are coming from the restaurant, so reset timer
