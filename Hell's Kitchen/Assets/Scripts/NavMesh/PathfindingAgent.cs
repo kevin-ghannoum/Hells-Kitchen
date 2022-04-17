@@ -6,7 +6,10 @@ public class PathfindingAgent : MonoBehaviour
 
     [Header("Parameters")]
     [SerializeField]
-    public float ArrivalRadius = 0.5f;
+    public float ArrivalRadius = 1.0f;
+
+    [SerializeField]
+    public float MidPointArrivalRadius = 0.5f;
 
     [SerializeField]
     public float TimeToTarget = 0.5f;
@@ -69,7 +72,7 @@ public class PathfindingAgent : MonoBehaviour
         }
 
         // Reached next point
-        if (Vector3.Distance(transform.position, _path.Position) < (_path.Next == null ? ArrivalRadius : 0.5f))
+        if (Vector3.Distance(transform.position, _path.Position) < (_path.Next == null ? ArrivalRadius : MidPointArrivalRadius))
         {
             _path = _path.Next;
         } 

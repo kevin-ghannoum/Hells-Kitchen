@@ -16,8 +16,7 @@ namespace Restaurant
         [SerializeField]
         private Animator animator;
 
-        private RestaurantManager.Seat _currentSeat;
-        private bool _isSitting;
+        private RestaurantSeat _currentSeat;
         
         private void Reset()
         {
@@ -29,18 +28,18 @@ namespace Restaurant
         private void Start()
         {
             _currentSeat = RestaurantManager.Instance.FindEmptySeat();
-            _currentSeat.taken = true;
+            _currentSeat.IsTaken = true;
         }
 
         private void Update()
         {
             agent.Target = _currentSeat.transform.position;
-            animator.SetFloat(CustomerAnimator.Speed, agent.Velocity.magnitude / agent.MaxVelocity);
-            animator.SetBool(CustomerAnimator.Sitting, _isSitting);
+            animator.SetFloat(RestaurantCustomerAnimator.Speed, agent.Velocity.magnitude / agent.MaxVelocity);
+            animator.SetBool(RestaurantCustomerAnimator.Sitting, _currentSeat.IsSitting);
             
             if (agent.IsArrived)
             {
-                _isSitting = true;
+                _currentSeat.IsSitting = true;
                 DisableRigidbody();
                 transform.position = _currentSeat.transform.position;
                 transform.rotation = _currentSeat.transform.rotation;

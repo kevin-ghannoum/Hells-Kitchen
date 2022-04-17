@@ -7,7 +7,7 @@ TagManager:
   - Generated
   - Pathfinding
   - Weapon
-  - UICamera
+  - Customer
   layers:
   - Default
   - TransparentFX

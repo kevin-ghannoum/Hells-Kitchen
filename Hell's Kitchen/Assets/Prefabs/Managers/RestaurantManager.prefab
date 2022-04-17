@@ -66,4 +66,5 @@ MonoBehaviour:
   - {fileID: 5637747980473722558, guid: 1558036611fcd014e996ab9ee18d05fe, type: 3}
   - {fileID: 2586496241301909198, guid: 31a0c3631cda0ae44bd0f511d80eb99b, type: 3}
   spawnPoints: []
-  numCustomersToSpawn: 10
+  spawnDelay: 1.5
+  numCustomersToSpawn: 20

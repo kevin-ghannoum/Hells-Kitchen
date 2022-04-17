@@ -9,15 +9,13 @@ namespace Restaurant
     {
         public static RestaurantManager Instance;
 
-        [Serializable]
-        public class Seat
-        {
-            public Transform transform;
-            public bool taken = false;
-        }
-
         [SerializeField]
-        public Seat[] RestaurantSeats;
+        public RestaurantSeat[] Seats;
+
+        private void Reset()
+        {
+           Seats = FindObjectsOfType<RestaurantSeat>();
+        }
 
         private void Awake()
         {
@@ -32,9 +30,9 @@ namespace Restaurant
             }
         }
 
-        public Seat FindEmptySeat()
+        public RestaurantSeat FindEmptySeat()
         {
-            var availableSeats = RestaurantSeats.Where(s => !s.taken).ToArray();
+            var availableSeats = Seats.Where(s => !s.IsTaken).ToArray();
             if (availableSeats.Length > 0)
             {
                 return availableSeats[Random.Range(0, availableSeats.Length)];

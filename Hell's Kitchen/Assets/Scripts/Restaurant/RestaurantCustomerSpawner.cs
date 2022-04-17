@@ -15,6 +15,9 @@ namespace Restaurant
         private Transform[] spawnPoints;
 
         [SerializeField]
+        private float spawnDelay = 1.5f;
+        
+        [SerializeField]
         private int numCustomersToSpawn = 5;
 
         private void Awake()
@@ -34,7 +37,7 @@ namespace Restaurant
         {
             for (int i = 0; i < numCustomersToSpawn; i++)
             {
-                SpawnCustomer();
+                Invoke(nameof(SpawnCustomer), spawnDelay * i + Random.Range(-0.5f, 0.5f));
             }
         }
 

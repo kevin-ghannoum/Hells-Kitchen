@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6852264384942106417}
   m_Layer: 0
   m_Name: Customer1
-  m_TagString: Untagged
+  m_TagString: Customer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,7 +49,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!136 &3570849974469040219
 CapsuleCollider:
@@ -77,8 +77,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afd420c264afa84ba3237d0d7e6c837, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ArrivalRadius: 0.5
-  TimeToTarget: 0.5
+  ArrivalRadius: 0.3
+  MidPointArrivalRadius: 0.5
+  TimeToTarget: 0.2
   MaxVelocity: 4
   rigidbody: {fileID: 8209930443288625871}
 --- !u!114 &6852264384942106417
