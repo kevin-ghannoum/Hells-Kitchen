@@ -80,10 +80,10 @@ MonoBehaviour:
   position: {x: 0.00049, y: 0.00466, z: 0.00078}
   rotation: {x: -0.045933098, y: 0.71820647, z: 0.6942452, w: 0.009657443}
   scale: 0.006666667
-  damage: 20
   throwSpeed: 35
   throwAngularSpeed: 180
   rigidbody: {fileID: 4141016623778023213}
+  weaponInstance: 1
   bulletSpeed: 40
   bulletLifetime: 3
   bulletSpread: 5
@@ -91,6 +91,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1449870570657687128, guid: d346a79e3bfb22a4b9e62452a046d611, type: 3}
   muzzlePrefab: {fileID: 5865868290920950645, guid: e4fc13f0b91963d40a44f5fca68df255, type: 3}
   shootPosition: {fileID: 3309744534898375491}
+  price: 10
 --- !u!114 &5816670607310056526
 MonoBehaviour:
   m_ObjectHideFlags: 0

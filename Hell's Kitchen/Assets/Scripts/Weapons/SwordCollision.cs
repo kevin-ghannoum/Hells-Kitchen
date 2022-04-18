@@ -3,16 +3,19 @@ using Common.Interfaces;
 using Player;
 using UnityEngine;
 
-public class SwordCollision : MonoBehaviour
+namespace Weapons
 {
-    [SerializeField] private float damage = 10f;
-    private void OnCollisionEnter(Collision collision)
+    public class SwordCollision : MonoBehaviour
     {
-        var animator = GameObject.FindWithTag(Tags.Player).GetComponentInChildren<Animator>();
-        var isSwordAttack = animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimator.SwordAttack);
-        if ( isSwordAttack && collision.gameObject.TryGetComponent(out IKillable killable))
+        [SerializeField] private float damage = 10f;
+        private void OnCollisionEnter(Collision collision)
         {
-            killable.TakeDamage(damage);
+            var animator = GameObject.FindWithTag(Tags.Player).GetComponentInChildren<Animator>();
+            var isSwordAttack = animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimator.SwordAttack);
+            if ( isSwordAttack && collision.gameObject.TryGetComponent(out IKillable killable))
+            {
+                killable.TakeDamage(damage);
+            }
         }
     }
 }
