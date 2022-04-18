@@ -10,10 +10,7 @@ namespace UI
 {
     public class InventoryUI : MonoBehaviour
     {
-        [SerializeField] private float itemSlotCellSize = 50.0f;
-        [SerializeField] private int maxColNum = 4;
         [SerializeField] private int maxItemsPerPage = 20;
-
         [SerializeField] private Transform inventoryContainer;
         [SerializeField] private Transform inventoryItemSlot;
         
@@ -38,23 +35,12 @@ namespace UI
                 RectTransform itemSlotRectTrans = Instantiate(inventoryItemSlot, inventoryContainer).GetComponent<RectTransform>();
                 itemSlotRectTrans.gameObject.SetActive(true);
 
-                // populate inventory slot
-                itemSlotRectTrans.anchoredPosition = new Vector2(x * itemSlotCellSize + (x+1)*1.5f*spacing, -y * itemSlotCellSize - (y+1)*1.5f*spacing);
-
                 // textual information
                 itemSlotRectTrans.GetComponentsInChildren<TextMeshProUGUI>()[0].text = inventoryList.ElementAt(i).Key.Name; // name
                 itemSlotRectTrans.GetComponentsInChildren<TextMeshProUGUI>()[1].text = inventoryList.ElementAt(i).Value.ToString(); // quantity
 
                 // sprites
                 itemSlotRectTrans.gameObject.GetComponentInChildren<Image>().sprite = inventoryList.ElementAt(i).Key.ItemModel.Sprite;
-                
-                // move to the next item
-                x++;
-                if (x > maxColNum)
-                {
-                    x = 0;
-                    y++;
-                }
             }
         }
 
