@@ -4,7 +4,6 @@ using System.Linq;
 using Common;
 using Common.Enums;
 using Input;
-using PlayerInventory;
 using PlayerInventory.Cooking;
 using Restaurant;
 using Restaurant.Enums;

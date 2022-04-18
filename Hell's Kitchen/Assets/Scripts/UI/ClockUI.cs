@@ -14,7 +14,6 @@ namespace UI
         public void ResetClock()
         {
             _day = 0f;
-            GameStateManager.Instance.dungeonTimeHasElapsed = false;
         }
 
         private void Update()

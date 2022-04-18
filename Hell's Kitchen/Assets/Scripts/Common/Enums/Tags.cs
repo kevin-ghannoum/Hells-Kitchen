@@ -8,5 +8,6 @@ namespace Common.Enums
         public static string Customer => "Customer";
         public static string Pathfinding = "Pathfinding";
         public static string Weapon => "Weapon";
+        public static string MazeStart => "MazeStart";
     }
 }

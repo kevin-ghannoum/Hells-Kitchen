@@ -7,7 +7,7 @@ TagManager:
   - Generated
   - Pathfinding
   - Weapon
-  - Customer
+  - MazeStart
   layers:
   - Default
   - TransparentFX

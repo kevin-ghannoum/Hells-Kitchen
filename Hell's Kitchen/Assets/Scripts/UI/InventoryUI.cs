@@ -1,43 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Input;
 using PlayerInventory;
+using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace UI
 {
     public class InventoryUI : MonoBehaviour
     {
-        [SerializeField] private float itemSlotCellSize = 50.0f;
-        [SerializeField] private int maxColNum = 4;
         [SerializeField] private int maxItemsPerPage = 20;
-
-        [SerializeField] private GameObject inventory;
         [SerializeField] private Transform inventoryContainer;
         [SerializeField] private Transform inventoryItemSlot;
         
-        private InputManager _input => InputManager.Instance;
         private float spacing = 30.0f;
-        private bool isUIActive = false;
-
-        private void Awake()
-        {
-            _input.reference.actions["OpenInventory"].performed += OpenInventory;
-        }
-
+        
         private void Start()
         {
             inventoryItemSlot = inventoryContainer.transform.GetChild(0);
-        }
-
-        // TODO: MOVE THIS LATER
-        void OpenInventory(InputAction.CallbackContext callbackContext)
-        {
-            isUIActive = !isUIActive;
-            inventory.SetActive(isUIActive);
         }
 
         public void UpdateInventory(Dictionary<Item, int> inventoryList)
@@ -54,26 +35,12 @@ namespace UI
                 RectTransform itemSlotRectTrans = Instantiate(inventoryItemSlot, inventoryContainer).GetComponent<RectTransform>();
                 itemSlotRectTrans.gameObject.SetActive(true);
 
-                // populate inventory slot
-                itemSlotRectTrans.anchoredPosition = new Vector2(x * itemSlotCellSize + (x+1)*1.5f*spacing, -y * itemSlotCellSize - (y+1)*1.5f*spacing);
-
                 // textual information
-                itemSlotRectTrans.GetComponentsInChildren<Text>()[0].text = inventoryList.ElementAt(i).Key.Name; // name
-                itemSlotRectTrans.GetComponentsInChildren<Text>()[1].text = inventoryList.ElementAt(i).Value.ToString(); // quantity
+                itemSlotRectTrans.GetComponentsInChildren<TextMeshProUGUI>()[0].text = inventoryList.ElementAt(i).Key.Name; // name
+                itemSlotRectTrans.GetComponentsInChildren<TextMeshProUGUI>()[1].text = inventoryList.ElementAt(i).Value.ToString(); // quantity
 
-                // 3d prefab
-                Transform itemPrefabModel =
-                    Instantiate(inventoryList.ElementAt(i).Key.ItemModel.UIVariant, itemSlotRectTrans)
-                        .GetComponent<Transform>();
-                itemPrefabModel.parent = itemSlotRectTrans;
-                
-                // move to the next item
-                x++;
-                if (x > maxColNum)
-                {
-                    x = 0;
-                    y++;
-                }
+                // sprites
+                itemSlotRectTrans.gameObject.GetComponentInChildren<Image>().sprite = inventoryList.ElementAt(i).Key.ItemModel.Sprite;
             }
         }
 

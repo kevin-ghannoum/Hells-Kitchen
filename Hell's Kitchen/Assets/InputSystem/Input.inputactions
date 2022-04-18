@@ -78,7 +78,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "OpenInventory",
+                    "name": "OpenPauseMenu",
                     "type": "Button",
                     "id": "b48f71ea-8962-4591-8416-4531aa899be7",
                     "expectedControlType": "Button",
@@ -227,7 +227,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "OpenInventory",
+                    "action": "OpenPauseMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
