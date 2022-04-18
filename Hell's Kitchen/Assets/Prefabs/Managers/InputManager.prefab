@@ -50,8 +50,9 @@ MonoBehaviour:
   roll: 0
   attack: 0
   dropItem: 0
+  throwItem: 0
   interact: 0
-  openInventory: 0
+  openPauseMenu: 0
   reference: {fileID: 207420216689281371}
 --- !u!114 &207420216689281371
 MonoBehaviour:
@@ -194,7 +195,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 207420216689281370}
         m_TargetAssemblyTypeName: Input.InputManager, Core
-        m_MethodName: OnOpenInventory
+        m_MethodName: OnOpenPauseMenu
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -206,6 +207,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: b48f71ea-8962-4591-8416-4531aa899be7
     m_ActionName: Player/OpenInventory[/Keyboard/tab]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 25cafb69-30d3-4f0d-9a38-7f6f7e561399
+    m_ActionName: Player/ThrowItem[/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard & Mouse
   m_DefaultActionMap: Player
