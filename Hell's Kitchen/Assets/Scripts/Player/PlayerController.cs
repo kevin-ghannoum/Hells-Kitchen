@@ -31,13 +31,13 @@ namespace Player
         [Header("Melee Attack")]
         [SerializeField] public Transform DamagePosition;
         [SerializeField] public float DamageRadius = 1.5f;
-        
+
         [SerializeField] private PhotonView _photonView;
 
         private Animator _animator;
         private CharacterController _characterController;
-        
-        
+
+
         private float _speed = 0f;
         private IPickup _currentPickup;
 
@@ -45,8 +45,8 @@ namespace Player
         {
             _photonView = GetComponent<PhotonView>();
             if (!_photonView.IsMine)
-                return; 
-            
+                return;
+
             _animator = GetComponentInChildren<Animator>();
             _characterController = GetComponent<CharacterController>();
 
@@ -57,8 +57,8 @@ namespace Player
         private void OnDestroy()
         {
             if (!_photonView.IsMine || !_input)
-                return; 
- 
+                return;
+
             _input.reference.actions["Roll"].performed -= Roll;
             _input.reference.actions["PickUp"].performed -= PickUp;
         }
@@ -66,7 +66,7 @@ namespace Player
         private void Update()
         {
             if (!_photonView.IsMine) return;
-            
+
             var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             if (animatorStateInfo.IsName(PlayerAnimator.Move))
             {
@@ -110,11 +110,23 @@ namespace Player
             if (GameStateData.playerCurrentStamina > staminaCostRoll)
             {
                 GameStateData.playerCurrentStamina -= staminaCostRoll;
-                _animator.SetTrigger(PlayerAnimator.Roll);
+                _photonView.RPC("RollRPC", RpcTarget.All);
             }
         }
 
+        [PunRPC]
+        private void RollRPC()
+        {
+            _animator.SetTrigger(PlayerAnimator.Roll);
+        }
+
         public void PickUp(InputAction.CallbackContext callbackContext)
+        {
+            _photonView.RPC("PickUpRPC", RpcTarget.All);
+        }
+
+        [PunRPC]
+        private void PickUpRPC()
         {
             _animator.SetTrigger(PlayerAnimator.PickUp);
         }
@@ -177,7 +189,7 @@ namespace Player
         {
             if (!_animator)
                 return;
-            
+
             var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             if (!animatorStateInfo.IsName(PlayerAnimator.Roll) &&
                 (animatorStateInfo.IsName(PlayerAnimator.Move) || animatorStateInfo.normalizedTime > 0.5f))

@@ -11,10 +11,9 @@ namespace Common
     public class GameStateManager : MonoBehaviour, IPunObservable
     {
         public static GameStateManager Instance;
-        
         [SerializeField] public PhotonView photonView;
         [SerializeField] public InventoryUI inventoryUI;
-        
+
         private void Awake()
         {
             if (Instance == null)
@@ -45,10 +44,10 @@ namespace Common
                 stream.SendNext(GameStateData.inventory);
                 stream.SendNext(GameStateData.cashMoney);
             }
-            else if(stream.IsReading)
+            else if (stream.IsReading)
             {
-                GameStateData.inventory = (Inventory) stream.ReceiveNext();
-                GameStateData.cashMoney = (float) stream.ReceiveNext();
+                GameStateData.inventory = (Inventory)stream.ReceiveNext();
+                GameStateData.cashMoney = (float)stream.ReceiveNext();
             }
         }
 
@@ -80,7 +79,7 @@ namespace Common
         {
             GameStateData.cashMoney = value;
         }
-        
+
         [PunRPC]
         public void AddPurchasedWeaponRPC(string weaponName)
         {
@@ -93,7 +92,7 @@ namespace Common
         {
             Instance.photonView.RPC(nameof(AddItemToInventoryRPC), RpcTarget.MasterClient, itemInstance, quantity);
         }
-        
+
         public static void RemoveItemFromInventory(ItemInstance itemInstance, int quantity)
         {
             Instance.photonView.RPC(nameof(RemoveItemFromInventoryRPC), RpcTarget.MasterClient, itemInstance, quantity);
