@@ -1,5 +1,7 @@
 using Common;
+using Common.Enums;
 using Common.Interfaces;
+using Input;
 using UI;
 using UnityEngine;
 using UnityEngine.Events;
@@ -74,6 +76,13 @@ namespace Player
             AudioSource.PlayClipAtPoint(deathSound, transform.position);
             Killed.Invoke();
             animator.SetTrigger(PlayerAnimator.Dead);
+            Invoke(nameof(GameOver), 2.5f);
+        }
+
+        private void GameOver()
+        {
+            InputManager.Instance.Deactivate();
+            UnityEngine.SceneManagement.SceneManager.LoadScene(Scenes.GameOver);
         }
     }
 }
