@@ -1,11 +1,10 @@
-﻿using Common.Enums;
-using Input;
+﻿using Input;
 using TMPro;
 using UnityEngine;
 
 namespace UI
 {
-    public class MainMenuUI : MonoBehaviour
+    public class MainMenuUI : MenuUI
     {
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private GameObject canvas;
@@ -24,16 +23,6 @@ namespace UI
             animator.Play("PlayerCamera"); // camera transition
             Invoke(nameof(LoadRestaurantScene), .5f); // scene change
             InputManager.Instance.Activate();
-        }
-
-        private void LoadRestaurantScene()
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(Scenes.Restaurant);
-        }
-
-        public void OnQuit()
-        {
-            Application.Quit();
         }
     }
 }

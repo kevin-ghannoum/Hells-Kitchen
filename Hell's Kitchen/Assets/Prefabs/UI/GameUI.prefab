@@ -1483,6 +1483,7 @@ GameObject:
   - component: {fileID: 2970630160776598067}
   - component: {fileID: 3092128607045796742}
   - component: {fileID: 3754463527632592955}
+  - component: {fileID: 6761736677469666786}
   m_Layer: 0
   m_Name: PauseMenu
   m_TagString: Untagged
@@ -1531,7 +1532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemSlotCellSize: 50
-  maxColNum: 4
+  maxColNum: 3
   maxItemsPerPage: 20
   inventoryContainer: {fileID: 4925667414293147057}
   inventoryItemSlot: {fileID: 9013861152837602896}
@@ -1548,6 +1549,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   content: {fileID: 6266053038896815884}
+--- !u!114 &6761736677469666786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6936960110431945081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 809c2d9e9dfd4326810aaf294e2cd845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6945621950951068494
 GameObject:
   m_ObjectHideFlags: 0
@@ -2894,8 +2907,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3754463527632592955}
-        m_TargetAssemblyTypeName: UI.PauseMenuUI, Core
-        m_MethodName: Exit
+        m_TargetAssemblyTypeName: UI.MenuUI, Core
+        m_MethodName: OnQuit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
