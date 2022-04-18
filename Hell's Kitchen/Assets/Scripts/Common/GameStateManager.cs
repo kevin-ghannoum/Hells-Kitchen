@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Common.Enums;
 using UnityEngine;
 
 namespace Common
@@ -12,36 +13,34 @@ namespace Common
         public float playerCurrentHitPoints = 100f;
         public float playerMaxStamina = 5f;
         public float playerCurrentStamina = 5f;
-        public GameObject carriedWeapon;
-        public bool IsCarryingWeapon => carriedWeapon != null;
-        public float cashMoney;
-        public bool dungeonTimeHasElapsed;
+        public WeaponInstance carriedWeapon = WeaponInstance.None;
+        public bool IsCarryingWeapon => (carriedWeapon != WeaponInstance.None);
+        public float cashMoney = 0f;
+        public bool dungeonTimeHasElapsed = true;
 
-        public Dictionary<IRecipe, int> OrderList;
-
-        public List<string> PurchasedWeapons;
+        public Dictionary<IRecipe, int> OrderList =  new Dictionary<IRecipe, int>();
+        public List<string> purchasedWeapons =  new List<string>();
         
         private void Awake()
         {
             if (Instance == null)
             {
                 Instance = this;
-                Initialize();
             }
 
             DontDestroyOnLoad(Instance.gameObject);
         }
 
-        private void Initialize()
+        private void ResetDefaults()
         {
             playerMaxHitPoints = 100f;
             playerCurrentHitPoints = playerMaxHitPoints;
             playerMaxStamina = 5f;
             playerCurrentStamina = playerMaxStamina;
             cashMoney = 0f;
-            carriedWeapon = null;
             OrderList = new Dictionary<IRecipe, int>();
-            PurchasedWeapons = new List<string>();
+            purchasedWeapons = new List<string>();
+            dungeonTimeHasElapsed = true;
         }
     }
 }
