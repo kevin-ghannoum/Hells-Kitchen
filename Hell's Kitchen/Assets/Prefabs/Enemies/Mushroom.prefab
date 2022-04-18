@@ -41,6 +41,9 @@ GameObject:
   - component: {fileID: 1951211359896451777}
   - component: {fileID: 2062262810902439603}
   - component: {fileID: 3357963645044035683}
+  - component: {fileID: -7822585900873194239}
+  - component: {fileID: 2951294671377517056}
+  - component: {fileID: 453064751614375469}
   m_Layer: 0
   m_Name: Mushroom
   m_TagString: Untagged
@@ -56,7 +59,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1179882390037061755}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.79033, y: 3.5, z: 39.97837}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1525805329640704254}
@@ -77,9 +80,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96851d8ebf894dd4fb51e735ce1c757a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 453064751614375469}
+  animator: {fileID: 3357963645044035683}
+  hitPoints: 100
+  deathDelay: 1
+  onKilled:
+    m_PersistentCalls:
+      m_Calls: []
   Speed: 0
   attackRange: 0
-  target: {fileID: 0}
   bullet: {fileID: 7909279519910436684, guid: 8e42300684f478147a67635629580caa, type: 3}
   bulletPos: {fileID: 2062262810795066108}
   anime: {fileID: 3357963645044035683}
@@ -102,6 +111,53 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!136 &-7822585900873194239
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179882390037061755}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.8
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!54 &2951294671377517056
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179882390037061755}
+  serializedVersion: 2
+  m_Mass: 10000
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &453064751614375469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179882390037061755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6afd420c264afa84ba3237d0d7e6c837, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ArrivalRadius: 0.5
+  time2target: 0.5
+  maxVelocity: 2
+  rigidbody: {fileID: 2951294671377517056}
+  standStill: 0
 --- !u!1 &2062262810795065987
 GameObject:
   m_ObjectHideFlags: 0
