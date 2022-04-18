@@ -2,10 +2,7 @@ namespace Enums.Items
 {
     public enum ItemType
     {
-        Ingredient,
-        RecipeResult,
-        Weapon,
-        Armour,
-        Shield,
+        Ingredient = 0,
+        RecipeResult = 1,
     }
 }

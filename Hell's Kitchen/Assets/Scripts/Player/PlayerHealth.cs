@@ -1,5 +1,7 @@
 using Common;
+using Common.Enums;
 using Common.Interfaces;
+using Input;
 using UI;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,6 +14,7 @@ namespace Player
         [SerializeField] private AudioClip takeDamageSound;
         [SerializeField] private AudioClip lowHealthSound;
         [SerializeField] private AudioClip deathSound;
+        [SerializeField] private float transitionToRestaurantTime = 4f;
         
         private float _invulnerabilityTime = 1;
         private float _invulnerabilityTimer = 1;
@@ -55,6 +58,7 @@ namespace Player
             // If the player's hp is at 0 or lower, they die
             if (HitPoints <= 0)
             {
+                HitPoints = 0;
                 Die();
                 return;
             }
@@ -74,6 +78,24 @@ namespace Player
             AudioSource.PlayClipAtPoint(deathSound, transform.position);
             Killed.Invoke();
             animator.SetTrigger(PlayerAnimator.Dead);
+            Invoke(nameof(ReturnToRestaurant), transitionToRestaurantTime);
+        }
+
+        private void ReturnToRestaurant()
+        {
+            var playerController = gameObject.GetComponent<PlayerController>();
+            if (playerController)
+            {
+                var heldWeapon = playerController.GetComponentInChildren<IPickup>();
+                if (heldWeapon != null)
+                {
+                    GameStateManager.Instance.carriedWeapon = WeaponInstance.None;
+                    heldWeapon.RemoveFromPlayer();
+                }
+            }
+
+            GameStateManager.Instance.playerCurrentHitPoints = GameStateManager.Instance.playerMaxHitPoints;
+            SceneManager.Instance.LoadRestaurantScene();
         }
     }
 }

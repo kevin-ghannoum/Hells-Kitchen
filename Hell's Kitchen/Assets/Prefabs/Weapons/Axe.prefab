@@ -79,10 +79,11 @@ MonoBehaviour:
   position: {x: 0.00003, y: 0.00146, z: 0.00154}
   rotation: {x: -0.477391, y: -0.52234924, z: -0.5109077, w: -0.4880804}
   scale: 0.01
-  damage: 70
   throwSpeed: 35
   throwAngularSpeed: 180
   rigidbody: {fileID: 2318580042839194963}
+  weaponInstance: 4
+  price: 10
 --- !u!114 &4923175181824825598
 MonoBehaviour:
   m_ObjectHideFlags: 0
