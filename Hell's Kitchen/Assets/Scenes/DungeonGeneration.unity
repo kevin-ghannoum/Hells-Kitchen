@@ -334,6 +334,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3850824973738963546, guid: e12c3b3264d0e524186504da5369e263, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -49.999878
+      objectReference: {fileID: 0}
     - target: {fileID: 5083638548816847263, guid: e12c3b3264d0e524186504da5369e263, type: 3}
       propertyPath: m_SizeDelta.x
       value: 281.3766
@@ -440,17 +444,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e12c3b3264d0e524186504da5369e263, type: 3}
---- !u!114 &1468963089 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 40372203151353348, guid: e12c3b3264d0e524186504da5369e263, type: 3}
-  m_PrefabInstance: {fileID: 1468963087}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b67cb75f73614906a19d89eba60ce60d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1468963090 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 432696461908021211, guid: e12c3b3264d0e524186504da5369e263, type: 3}
@@ -586,6 +579,22 @@ PrefabInstance:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 1715388640}
+    - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
+      propertyPath: enemies.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
+      propertyPath: enemies.Array.data[2]
+      value: 
+      objectReference: {fileID: 8853326291045279623, guid: 67ae90e948d2c574eb123fe400f50401, type: 3}
+    - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
+      propertyPath: enemies.Array.data[3]
+      value: 
+      objectReference: {fileID: 2832215523392890628, guid: 7ec358a1a42d81e499893f27759477cc, type: 3}
+    - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
+      propertyPath: enemies.Array.data[4]
+      value: 
+      objectReference: {fileID: 1179882390037061755, guid: 494a9162512d10c4f8228635aa34b066, type: 3}
     - target: {fileID: 2752677855204124927, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
       propertyPath: m_Name
       value: MazeController
@@ -602,7 +611,7 @@ PrefabInstance:
     - target: {fileID: 201836285290825875, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: _inventoryUI
       value: 
-      objectReference: {fileID: 1468963089}
+      objectReference: {fileID: 0}
     - target: {fileID: 1366883624018297259, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_RootOrder
       value: 7
