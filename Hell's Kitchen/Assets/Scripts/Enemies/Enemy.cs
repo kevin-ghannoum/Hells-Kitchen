@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 using Common.Interfaces;
 using Enemies.Enums;
 using UI;
@@ -27,6 +26,13 @@ namespace Enemies
 
         [SerializeField]
         protected UnityEvent onKilled;
+
+        [SerializeField]
+        protected GameObject dropObject;
+
+        [SerializeField] protected int maxDropsToSpawn = 3;
+        
+        [SerializeField][Range(0f, 1f)] private float multipleSpawnRate= 0.3f;
 
         #region Public Getters
 
@@ -82,13 +88,26 @@ namespace Enemies
             Invoke(nameof(Destroy), deathDelay);
             agent.enabled = false;
             enabled = false;
+            SpawnDropOnDeath();
+
+        }
+
+        private void SpawnDropOnDeath()
+        {
+            var shouldSpawnMore = Random.value < multipleSpawnRate;
+            var numSpawned = 0;
+            while (shouldSpawnMore && numSpawned < maxDropsToSpawn)
+            {
+                numSpawned++;
+                Instantiate(dropObject);
+            }
         }
 
         private void Destroy()
         {
             Destroy(gameObject);
         }
-
+        
         #endregion
         
     }

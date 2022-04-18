@@ -97,12 +97,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 5846106093173850358}
   animator: {fileID: 1652066377872060580}
-  damagePrefab: {fileID: 298881605022184068, guid: 3dd0aff8443794b4fa082e6645839d8f, type: 3}
   hitPoints: 100
   deathDelay: 1
   onKilled:
     m_PersistentCalls:
       m_Calls: []
+  dropObject: {fileID: 1493679383233396486, guid: 77b5e100d52ab8c4493a7f0330165ac6, type: 3}
+  maxDropsToSpawn: 3
+  multipleSpawnRate: 0.3
   aggroRadius: 20
   attackRate: 0.5
   attackDamage: 10
@@ -270,3 +272,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  pickUp:
+    m_PersistentCalls:
+      m_Calls: []
