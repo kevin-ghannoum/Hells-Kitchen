@@ -23,7 +23,7 @@ namespace Player
         [SerializeField] private float turnSmoothVelocity = 10f;
         [SerializeField] private float speedSmoothVelocity = 10f;
         [SerializeField] private AnimationCurve rollSpeedCurve;
-        [SerializeField] private InventoryUI _inventoryUI;
+        [SerializeField] private InventoryUI inventoryUI;
        
         [Header("Stamina")]
         [SerializeField] private float staminaCostRun = 1.0f;
@@ -186,13 +186,13 @@ namespace Player
         public void AddItemToInventory(Item item, int quantity)
         {
             _inventory.AddItemToInventory(item, quantity);
-            _inventoryUI.UpdateInventory(_inventory.GetInventoryItems());
+            inventoryUI.UpdateInventory(_inventory.GetInventoryItems());
         }
 
         public void RemoveItemFromInventory(Item item, int quantity)
         {
             _inventory.RemoveItemFromInventory(item, quantity);
-            _inventoryUI.UpdateInventory(_inventory.GetInventoryItems());
+            inventoryUI.UpdateInventory(_inventory.GetInventoryItems());
         }
 
         #endregion
