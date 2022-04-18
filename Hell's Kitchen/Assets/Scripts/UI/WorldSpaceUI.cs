@@ -26,7 +26,7 @@ namespace UI
             screenSpaceObject.position = camera.WorldToScreenPoint(transform.position);
         }
         
-        public virtual void Update()
+        public virtual void LateUpdate()
         {
             screenSpaceObject.position = camera.WorldToScreenPoint(transform.position);
         }

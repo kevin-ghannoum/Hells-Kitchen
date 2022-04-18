@@ -35,9 +35,9 @@ namespace UI
             _text.color = color;
         }
 
-        public override void Update()
+        public override void LateUpdate()
         {
-            base.Update();
+            base.LateUpdate();
             
             // Animation time
             _time += Time.deltaTime;

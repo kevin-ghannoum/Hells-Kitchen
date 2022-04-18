@@ -8,8 +8,10 @@ namespace UI
     {
         [SerializeField]
         private GameObject toggleGameObject;
-
+        
+        private Canvas _canvas;
         private bool _isDisabled = false;
+        
         public bool IsDisabled {
             get => _isDisabled;
             set {
@@ -21,6 +23,7 @@ namespace UI
 
         private void Start()
         {
+            _canvas = toggleGameObject.GetComponentInChildren<Canvas>();
             Disable();
         }
 
@@ -42,12 +45,12 @@ namespace UI
 
         public void Enable()
         {
-            toggleGameObject.SetActive(true);
+            _canvas.gameObject.SetActive(true);
         }
 
         public void Disable()
         {
-            toggleGameObject.SetActive(false);
+            _canvas.gameObject.SetActive(false);
         }
     }
 }
