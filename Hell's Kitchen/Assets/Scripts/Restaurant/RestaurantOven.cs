@@ -23,7 +23,7 @@ namespace Restaurant
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.gameObject.CompareTag(Tags.Player) && _input.WasPressedThisFrame(InputManager.Actions.Interact))
+            if (other.gameObject.CompareTag(Tags.Player) && _input.interact)
             {
                 AutoCraftOrderedRecipes();
             }
@@ -36,7 +36,10 @@ namespace Restaurant
             {
                 for (int i = 0; i < order.Quantity; i++)
                 {
-                    Cooking.CookRecipe(Cooking.GetItemRecipe(order.Item));
+                    if (Cooking.CookRecipe(Cooking.GetItemRecipe(order.Item)))
+                    {
+                        AdrenalinePointsUI.SpawnIngredientString(PlayerController.Instance.transform.position, $"+{order.Quantity} {Items.GetItem(order.Item).Name}");
+                    }
                 }
             }
         }

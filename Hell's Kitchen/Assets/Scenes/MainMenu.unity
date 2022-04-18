@@ -5118,18 +5118,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2054499851282172392, guid: 8ba524383f54e644d857ee2e16e3c773, type: 3}
-      propertyPath: m_FollowOffset.x
-      value: -5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2054499851282172392, guid: 8ba524383f54e644d857ee2e16e3c773, type: 3}
-      propertyPath: m_FollowOffset.y
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 2054499851282172392, guid: 8ba524383f54e644d857ee2e16e3c773, type: 3}
-      propertyPath: m_FollowOffset.z
-      value: -5
-      objectReference: {fileID: 0}
     - target: {fileID: 2054499852281444798, guid: 8ba524383f54e644d857ee2e16e3c773, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.267339
@@ -9523,7 +9511,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh168578
+  m_Name: pb_Mesh179356
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12114,7 +12102,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh168396
+  m_Name: pb_Mesh179214
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12340,10 +12328,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 827582974425361607, guid: 734606b3097a0964385a4b3b50a31661, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 827582974425361607, guid: 734606b3097a0964385a4b3b50a31661, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 827582974425361607, guid: 734606b3097a0964385a4b3b50a31661, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 827582974425361607, guid: 734606b3097a0964385a4b3b50a31661, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 827582975070146613, guid: 734606b3097a0964385a4b3b50a31661, type: 3}
       propertyPath: animator
       value: 
       objectReference: {fileID: 406711934}
+    - target: {fileID: 827582975265363642, guid: 734606b3097a0964385a4b3b50a31661, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 827582975265363642, guid: 734606b3097a0964385a4b3b50a31661, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 827582975265363642, guid: 734606b3097a0964385a4b3b50a31661, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 827582975265363642, guid: 734606b3097a0964385a4b3b50a31661, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 827582975553425738, guid: 734606b3097a0964385a4b3b50a31661, type: 3}
       propertyPath: m_Name
       value: MenuUI

@@ -38,18 +38,6 @@ public class RestaurantDoor : MonoBehaviour
         animator.SetBool(RestaurantDoorAnimator.Open, _numCustomers > 0);
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag(Tags.Player))
-        {
-            if (_input.interact)
-            {
-                ImposeFine();
-                SceneManager.Instance.LoadDungeonScene();
-            }
-        }
-    }
-    
     private IRecipe GetRandomOrder()
     {
         int index = Random.Range(0, _availableRecipes.Length);
@@ -80,4 +68,13 @@ public class RestaurantDoor : MonoBehaviour
         }
     }
 
+    public void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag(Tags.Player) && _input.interact)
+        {
+            ImposeFine();
+            SceneManager.Instance.LoadDungeonScene();
+        }
+    }
+    
 }
