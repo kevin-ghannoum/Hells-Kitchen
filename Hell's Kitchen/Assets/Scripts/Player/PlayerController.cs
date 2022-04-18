@@ -31,23 +31,23 @@ namespace Player
         [Header("Melee Attack")]
         [SerializeField] public Transform DamagePosition;
         [SerializeField] public float DamageRadius = 1.5f;
+        
+        [SerializeField] private PhotonView _photonView;
 
         private Animator _animator;
         private CharacterController _characterController;
-        private PhotonView _photonView;
+        
         
         private float _speed = 0f;
         private IPickup _currentPickup;
 
-        private void Start()
-        {
-            _animator = GetComponentInChildren<Animator>();
-            _characterController = GetComponent<CharacterController>();
-            _photonView = GetComponent<PhotonView>();
-        }
-
         private void Awake()
         {
+            _photonView = GetComponent<PhotonView>();
+            if (!_photonView.IsMine)
+                return; 
+            
+            Debug.Log(_photonView.GetHashCode());
             _animator = GetComponentInChildren<Animator>();
             _characterController = GetComponent<CharacterController>();
 
@@ -57,8 +57,9 @@ namespace Player
 
         private void OnDestroy()
         {
-            if (!_input)
-                return;
+            if (!_photonView.IsMine || !_input)
+                return; 
+ 
             _input.reference.actions["Roll"].performed -= Roll;
             _input.reference.actions["PickUp"].performed -= PickUp;
         }
@@ -85,6 +86,7 @@ namespace Player
                 _characterController.Move(Vector3.zero);
                 _speed = 0;
                 _animator.SetFloat(PlayerAnimator.Speed, _speed / runSpeed);
+                
             }
 
             UpdateStamina();

@@ -21,7 +21,6 @@ namespace Common
                 Instance = this;
             }
             photonView = GetComponent<PhotonView>();
-            // DontDestroyOnLoad(Instance.gameObject);
         }
 
         private void ResetDefaults()

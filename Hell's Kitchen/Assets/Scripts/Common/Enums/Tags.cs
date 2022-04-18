@@ -9,5 +9,6 @@ namespace Common.Enums
         public static string Weapon => "Weapon";
         public static string UICamera => "UICamera";
         public static string MazeStart => "MazeStart";
+        public static string MainCamera => "MainCamera";
     }
 }
