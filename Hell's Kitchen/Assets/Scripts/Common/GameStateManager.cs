@@ -45,7 +45,8 @@ namespace Common
             }
             else if(stream.IsReading)
             {
-                stream.ReceiveNext();
+                GameStateData.inventory = (Inventory) stream.ReceiveNext();
+                GameStateData.cashMoney = (float) stream.ReceiveNext();
             }
         }
 
