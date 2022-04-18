@@ -1,41 +1,45 @@
+using System;
 using System.Collections.Generic;
-using PlayerInventory;
 
-public class Inventory
+namespace PlayerInventory
 {
-    // hold a dictionary of items and quantities
-    private readonly Dictionary<Item, int> _itemDictionary = new Dictionary<Item, int>();
-
-    public Dictionary<Item, int> GetInventoryItems()
+    [Serializable]
+    public class Inventory
     {
-        return _itemDictionary;
-    }
+        // hold a dictionary of items and quantities
+        private readonly Dictionary<Item, int> _itemDictionary = new Dictionary<Item, int>();
 
-    // increment value if already in inventory else add
-    public void AddItemToInventory(Item item, int quantity)
-    {
-        if (_itemDictionary.ContainsKey(item))
+        public Dictionary<Item, int> GetInventoryItems()
         {
-            _itemDictionary[item] += quantity;
+            return _itemDictionary;
         }
-        else
-        {
-            _itemDictionary.Add(item, quantity);
-        }
-    }
 
-    // decrement value if (value-1) > 0 else remove
-    public void RemoveItemFromInventory(Item item, int quantity)
-    {
-        if (_itemDictionary.ContainsKey(item))
+        // increment value if already in inventory else add
+        public void AddItemToInventory(Item item, int quantity)
         {
-            if (_itemDictionary[item] - 1 <= 0)
+            if (_itemDictionary.ContainsKey(item))
             {
-                _itemDictionary.Remove(item);
+                _itemDictionary[item] += quantity;
             }
             else
             {
-                _itemDictionary[item] -= quantity;   
+                _itemDictionary.Add(item, quantity);
+            }
+        }
+
+        // decrement value if (value-1) > 0 else remove
+        public void RemoveItemFromInventory(Item item, int quantity)
+        {
+            if (_itemDictionary.ContainsKey(item))
+            {
+                if (_itemDictionary[item] - 1 <= 0)
+                {
+                    _itemDictionary.Remove(item);
+                }
+                else
+                {
+                    _itemDictionary[item] -= quantity;   
+                }
             }
         }
     }

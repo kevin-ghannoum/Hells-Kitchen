@@ -1,4 +1,5 @@
-﻿using Enums.Items;
+﻿using Common.Enums.Items;
+using Enums.Items;
 using UnityEngine;
 using UnityEngine.UI;
 

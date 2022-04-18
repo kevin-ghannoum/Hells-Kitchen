@@ -15,7 +15,7 @@ namespace UI
 
         private void Update()
         {
-            coinValue.text = $"x {GameStateManager.Instance.cashMoney}";
+            coinValue.text = $"x {GameStateData.cashMoney}";
         }
     }
 }

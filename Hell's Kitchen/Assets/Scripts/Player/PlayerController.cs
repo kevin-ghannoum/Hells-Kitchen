@@ -1,20 +1,16 @@
-using System;
-using System.Collections.Generic;
 using Common;
 using Common.Enums;
 using Common.Interfaces;
 using Input;
-using UI;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Weapons;
-using PlayerInventory;
 
 namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
-        public static PlayerController Instance; // singleton
         private InputManager _input => InputManager.Instance;
 
         [Header("Parameters")]
@@ -23,8 +19,7 @@ namespace Player
         [SerializeField] private float turnSmoothVelocity = 10f;
         [SerializeField] private float speedSmoothVelocity = 10f;
         [SerializeField] private AnimationCurve rollSpeedCurve;
-        [SerializeField] private InventoryUI inventoryUI;
-       
+
         [Header("Stamina")]
         [SerializeField] private float staminaCostRun = 1.0f;
         [SerializeField] private float staminaCostRoll = 1.0f;
@@ -39,7 +34,8 @@ namespace Player
 
         private Animator _animator;
         private CharacterController _characterController;
-        private Inventory _inventory = new Inventory();
+        private PhotonView _photonView;
+        
         private float _speed = 0f;
         private IPickup _currentPickup;
 
@@ -47,17 +43,14 @@ namespace Player
         {
             _animator = GetComponentInChildren<Animator>();
             _characterController = GetComponent<CharacterController>();
+            _photonView = GetComponent<PhotonView>();
         }
 
         private void Awake()
         {
-            if (Instance == null)
-                Instance = this;
-
             _animator = GetComponentInChildren<Animator>();
             _characterController = GetComponent<CharacterController>();
-            _inventory = new Inventory();
-            
+
             _input.reference.actions["Roll"].performed += Roll;
             _input.reference.actions["PickUp"].performed += PickUp;
         }
@@ -72,6 +65,8 @@ namespace Player
 
         private void Update()
         {
+            if (!_photonView.IsMine) return;
+            
             var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             if (animatorStateInfo.IsName(PlayerAnimator.Move))
             {
@@ -112,9 +107,9 @@ namespace Player
 
         public void Roll(InputAction.CallbackContext callbackContext)
         {
-            if (GameStateManager.Instance.playerCurrentStamina > staminaCostRoll)
+            if (GameStateData.playerCurrentStamina > staminaCostRoll)
             {
-                GameStateManager.Instance.playerCurrentStamina -= staminaCostRoll;
+                GameStateData.playerCurrentStamina -= staminaCostRoll;
                 _animator.SetTrigger(PlayerAnimator.Roll);
             }
         }
@@ -153,12 +148,12 @@ namespace Player
 
         private bool CanSprint()
         {
-            return GameStateManager.Instance.playerCurrentStamina > 0;
+            return GameStateData.playerCurrentStamina > 0;
         }
 
         private void UpdateStamina()
         {
-            var stamina = GameStateManager.Instance.playerCurrentStamina;
+            var stamina = GameStateData.playerCurrentStamina;
             if (_input.run)
             {
                 stamina -= Time.deltaTime * staminaCostRun;
@@ -168,31 +163,10 @@ namespace Player
             else if (!_animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimator.Roll))
             {
                 stamina += Time.deltaTime * staminaRegenRate;
-                if (stamina > GameStateManager.Instance.playerMaxStamina)
-                    stamina = GameStateManager.Instance.playerMaxStamina;
+                if (stamina > GameStateData.playerMaxStamina)
+                    stamina = GameStateData.playerMaxStamina;
             }
-            GameStateManager.Instance.playerCurrentStamina = stamina;
-        }
-
-        #endregion
-
-        #region PlayerInventory
-
-        public Inventory GetPlayerInventory()
-        {
-            return _inventory;
-        }
-
-        public void AddItemToInventory(Item item, int quantity)
-        {
-            _inventory.AddItemToInventory(item, quantity);
-            inventoryUI.UpdateInventory(_inventory.GetInventoryItems());
-        }
-
-        public void RemoveItemFromInventory(Item item, int quantity)
-        {
-            _inventory.RemoveItemFromInventory(item, quantity);
-            inventoryUI.UpdateInventory(_inventory.GetInventoryItems());
+            GameStateData.playerCurrentStamina = stamina;
         }
 
         #endregion

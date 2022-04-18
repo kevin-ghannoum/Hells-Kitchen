@@ -39,7 +39,7 @@ namespace Dungeon_Generation
                     _animator.SetTrigger(ObjectAnimator.OpenChest);
                     toggleUI.IsDisabled = true;
                     var amount = GetRandomAmountInRange();
-                    GameStateManager.Instance.cashMoney += amount;
+                    GameStateManager.SetCashMoney(GameStateData.cashMoney + amount);
                     AdrenalinePointsUI.SpawnGoldNumbers(transform.position + 2.0f * Vector3.up, amount);
                 }
             }

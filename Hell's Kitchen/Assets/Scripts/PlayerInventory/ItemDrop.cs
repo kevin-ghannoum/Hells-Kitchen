@@ -1,5 +1,7 @@
+using Common;
 using Common.Enums;
 using Enums.Items;
+using Photon.Pun;
 using Player;
 using UI;
 using UnityEngine;
@@ -19,9 +21,9 @@ namespace PlayerInventory
             if (other.CompareTag(Tags.Player))
             {
                 PlayerController player = other.gameObject.GetComponent<PlayerController>();
-                player.AddItemToInventory(Items.GetItem(item), quantity);
+                GameStateManager.AddItemToInventory(item, quantity);
                 AdrenalinePointsUI.SpawnIngredientString(transform.position + 2.0f * Vector3.up, "+ " + quantity + " " + item);
-                Destroy(gameObject);
+                PhotonNetwork.Destroy(gameObject);
             }
         }
     }

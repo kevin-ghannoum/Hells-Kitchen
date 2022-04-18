@@ -2,6 +2,7 @@
 using Common;
 using Common.Enums;
 using Common.Interfaces;
+using Photon.Pun;
 using UnityEngine;
 using Player;
 using UI;
@@ -56,12 +57,12 @@ namespace Dungeon_Generation
             }
                 
             // Set default weapon in case none is equipped when entering the dungeon
-            if (GameStateManager.Instance.carriedWeapon == WeaponInstance.None)
-                GameStateManager.Instance.carriedWeapon = defaultWeapon;
+            if (GameStateData.carriedWeapon == WeaponInstance.None)
+                GameStateData.carriedWeapon = defaultWeapon;
             
             // set weapon in players hand
-            var weapon = Weapons.Models.Weapons.GetItem(GameStateManager.Instance.carriedWeapon);
-            var weaponInstance = Instantiate(weapon.WeaponModel.Prefab);
+            var weapon = Weapons.Models.Weapons.GetItem(GameStateData.carriedWeapon);
+            var weaponInstance = PhotonNetwork.Instantiate(weapon.WeaponModel.Prefab.name, Vector3.zero, Quaternion.identity);
             weaponInstance.GetComponent<IPickup>()?.PickUp();
         }
 
@@ -77,11 +78,11 @@ namespace Dungeon_Generation
 
         private void SetDungeonClock()
         {
-            if (!GameStateManager.Instance.dungeonTimeHasElapsed) return;
+            if (!GameStateData.dungeonTimeHasElapsed) return;
             
             // if true we are coming from the restaurant, so reset timer
             clock.ResetClock();
-            GameStateManager.Instance.dungeonTimeHasElapsed = false;
+            GameStateData.dungeonTimeHasElapsed = false;
         }
     }
 }

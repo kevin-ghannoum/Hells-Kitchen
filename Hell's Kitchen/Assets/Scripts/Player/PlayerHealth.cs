@@ -24,8 +24,8 @@ namespace Player
 
         public float HitPoints
         {
-            get => GameStateManager.Instance.playerCurrentHitPoints;
-            set => GameStateManager.Instance.playerCurrentHitPoints = value;
+            get => GameStateData.playerCurrentHitPoints;
+            set => GameStateData.playerCurrentHitPoints = value;
         }
 
         void Update()
@@ -89,12 +89,12 @@ namespace Player
                 var heldWeapon = playerController.GetComponentInChildren<IPickup>();
                 if (heldWeapon != null)
                 {
-                    GameStateManager.Instance.carriedWeapon = WeaponInstance.None;
+                    GameStateData.carriedWeapon = WeaponInstance.None;
                     heldWeapon.RemoveFromPlayer();
                 }
             }
 
-            GameStateManager.Instance.playerCurrentHitPoints = GameStateManager.Instance.playerMaxHitPoints;
+            GameStateData.playerCurrentHitPoints = GameStateData.playerMaxHitPoints;
             SceneManager.Instance.LoadRestaurantScene();
         }
     }

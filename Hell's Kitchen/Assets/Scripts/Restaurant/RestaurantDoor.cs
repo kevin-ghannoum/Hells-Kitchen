@@ -48,7 +48,7 @@ public class RestaurantDoor : MonoBehaviour
     {
         foreach (var order in RestaurantManager.Instance.OrderList)
         {
-            GameStateManager.Instance.cashMoney -= order.Quantity * missedOrderPenalty;
+            GameStateManager.SetCashMoney(GameStateData.cashMoney - order.Quantity * missedOrderPenalty);
         }
     }
 

@@ -2,6 +2,7 @@
 
 using System.Linq;
 using Common.Enums;
+using Photon.Pun;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -183,7 +184,8 @@ namespace Dungeon_Generation
         {
             if (Random.value < enemySpawnRate)
             {
-                Instantiate(enemies[Random.Range(0, enemies.Length)], position, Quaternion.identity);
+                var enemy = enemies[Random.Range(0, enemies.Length)];
+                PhotonNetwork.Instantiate(enemy.name, position, Quaternion.identity);
             }
         }
 

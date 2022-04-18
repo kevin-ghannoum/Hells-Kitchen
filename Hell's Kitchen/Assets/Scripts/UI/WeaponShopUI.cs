@@ -40,7 +40,7 @@ namespace UI
                 return;
 
             var weaponCost = weaponComponent.Price;
-            if (GameStateManager.Instance.cashMoney < weaponCost)
+            if (GameStateData.cashMoney < weaponCost)
             {
                 errorText.text = $"Insufficient funds to purchase {weapon.name}.";
                 return;
@@ -60,7 +60,7 @@ namespace UI
                 var buttonComponent = button.GetComponent<Button>();
                 buttonComponent.onClick.AddListener(delegate { BuyWeapon(weapon, buttonComponent); });
 
-                if (GameStateManager.Instance.purchasedWeapons.Contains(weapon.name))
+                if (GameStateData.purchasedWeapons.Contains(weapon.name))
                     buttonComponent.interactable = false;
 
                 var text = button.GetComponentInChildren<TextMeshProUGUI>();
@@ -77,8 +77,8 @@ namespace UI
 
         private void PerformTransaction(string weaponName, float cost)
         {
-            GameStateManager.Instance.cashMoney -= cost;
-            GameStateManager.Instance.purchasedWeapons.Add(weaponName);
+            GameStateManager.SetCashMoney(GameStateData.cashMoney - cost);
+            GameStateManager.AddPurchasedWeapon(weaponName);
         }
     }
 }

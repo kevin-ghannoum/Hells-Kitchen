@@ -1,25 +1,19 @@
 using System.Collections.Generic;
-using Common.Enums;
+using Common.Enums.Items;
+using Enums.Items;
+using Photon.Pun;
+using PlayerInventory;
+using UI;
 using UnityEngine;
 
 namespace Common
 {
-    public class GameStateManager : MonoBehaviour
+    public class GameStateManager : MonoBehaviour, IPunObservable
     {
         public static GameStateManager Instance;
-
-        // Player
-        public float playerMaxHitPoints = 100f;
-        public float playerCurrentHitPoints = 100f;
-        public float playerMaxStamina = 5f;
-        public float playerCurrentStamina = 5f;
-        public WeaponInstance carriedWeapon = WeaponInstance.None;
-        public bool IsCarryingWeapon => (carriedWeapon != WeaponInstance.None);
-        public float cashMoney = 0f;
-        public bool dungeonTimeHasElapsed = true;
-
-        public Dictionary<IRecipe, int> OrderList =  new Dictionary<IRecipe, int>();
-        public List<string> purchasedWeapons =  new List<string>();
+        
+        [SerializeField] public PhotonView photonView;
+        [SerializeField] public InventoryUI inventoryUI;
         
         private void Awake()
         {
@@ -27,20 +21,91 @@ namespace Common
             {
                 Instance = this;
             }
-
-            DontDestroyOnLoad(Instance.gameObject);
+            photonView = GetComponent<PhotonView>();
+            inventoryUI = FindObjectOfType<InventoryUI>();
         }
 
         private void ResetDefaults()
         {
-            playerMaxHitPoints = 100f;
-            playerCurrentHitPoints = playerMaxHitPoints;
-            playerMaxStamina = 5f;
-            playerCurrentStamina = playerMaxStamina;
-            cashMoney = 0f;
-            OrderList = new Dictionary<IRecipe, int>();
-            purchasedWeapons = new List<string>();
-            dungeonTimeHasElapsed = true;
+            GameStateData.playerMaxHitPoints = 100f;
+            GameStateData.playerCurrentHitPoints = GameStateData.playerMaxHitPoints;
+            GameStateData.playerMaxStamina = 5f;
+            GameStateData.playerCurrentStamina = GameStateData.playerMaxStamina;
+            GameStateData.cashMoney = 0f;
+            GameStateData.purchasedWeapons = new List<string>();
+            GameStateData.dungeonTimeHasElapsed = true;
+        }
+
+        #region PUNCallbacks
+
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if (stream.IsWriting)
+            {
+                stream.SendNext(GameStateData.inventory);
+                stream.SendNext(GameStateData.cashMoney);
+            }
+            else if(stream.IsReading)
+            {
+                stream.ReceiveNext();
+            }
+        }
+
+        #endregion
+
+        #region SharedState
+
+        public Inventory GetPlayerInventory()
+        {
+            return GameStateData.inventory;
+        }
+
+        [PunRPC]
+        public void AddItemToInventoryRPC(ItemInstance itemInstance, int quantity)
+        {
+            GameStateData.inventory.AddItemToInventory(Items.GetItem(itemInstance), quantity);
+            inventoryUI.UpdateInventory(GameStateData.inventory.GetInventoryItems());
+        }
+
+        [PunRPC]
+        public void RemoveItemFromInventoryRPC(ItemInstance itemInstance, int quantity)
+        {
+            GameStateData.inventory.RemoveItemFromInventory(Items.GetItem(itemInstance), quantity);
+            inventoryUI.UpdateInventory(GameStateData.inventory.GetInventoryItems());
+        }
+
+        [PunRPC]
+        public void SetCashMoneyRPC(float value)
+        {
+            GameStateData.cashMoney = value;
+        }
+        
+        [PunRPC]
+        public void AddPurchasedWeaponRPC(string weaponName)
+        {
+            GameStateData.purchasedWeapons.Add(weaponName);
+        }
+
+        #endregion
+
+        public static void AddItemToInventory(ItemInstance itemInstance, int quantity)
+        {
+            Instance.photonView.RPC(nameof(AddItemToInventoryRPC), RpcTarget.MasterClient, itemInstance, quantity);
+        }
+        
+        public static void RemoveItemFromInventory(ItemInstance itemInstance, int quantity)
+        {
+            Instance.photonView.RPC(nameof(RemoveItemFromInventoryRPC), RpcTarget.MasterClient, itemInstance, quantity);
+        }
+
+        public static void SetCashMoney(float value)
+        {
+            Instance.photonView.RPC(nameof(SetCashMoneyRPC), RpcTarget.MasterClient, value);
+        }
+
+        public static void AddPurchasedWeapon(string weaponName)
+        {
+            Instance.photonView.RPC(nameof(AddPurchasedWeaponRPC), RpcTarget.MasterClient, weaponName);
         }
     }
 }

@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Common;
 using Enums.Items;
-using Player;
-using UnityEngine;
 
 namespace PlayerInventory.Cooking
 {
@@ -10,15 +9,17 @@ namespace PlayerInventory.Cooking
     {
         private static bool InventoryContainsAllIngredients(List<(Item item, int quantity)> ingredientList)
         {
-            if (PlayerController.Instance.GetPlayerInventory().GetInventoryItems().Count == 0)
+            var inventory = GameStateManager.Instance.GetPlayerInventory();
+            if (inventory.GetInventoryItems().Count == 0)
                 return false;
         
             Dictionary<Item, bool> ingredientCheckList = new Dictionary<Item, bool>();
+            
             foreach (var (item, quantity) in ingredientList)
             {
-                if (PlayerController.Instance.GetPlayerInventory().GetInventoryItems().ContainsKey(item)) // if ingredient in inventory
+                if (inventory.GetInventoryItems().ContainsKey(item)) // if ingredient in inventory
                 {
-                    if (PlayerController.Instance.GetPlayerInventory().GetInventoryItems()[item] >= quantity) // if ingredient qt sufficient
+                    if (inventory.GetInventoryItems()[item] >= quantity) // if ingredient qt sufficient
                     {
                         ingredientCheckList[item] = true;
                     }
@@ -49,11 +50,11 @@ namespace PlayerInventory.Cooking
                 // remove used items
                 foreach (var (item, quantity) in ingredientList)
                 {
-                    PlayerController.Instance.RemoveItemFromInventory(item, quantity);
+                    GameStateManager.RemoveItemFromInventory(item.ItemInstance, quantity);
                 }
             
                 // add recipe result to inventory
-                PlayerController.Instance.AddItemToInventory(recipe.GetRecipeResult(), 1);
+                GameStateManager.AddItemToInventory(recipe.GetRecipeResult().ItemInstance, 1);
                 return true;
             }
             return false;

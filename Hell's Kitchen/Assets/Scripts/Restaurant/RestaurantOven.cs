@@ -2,6 +2,7 @@
 using System.Linq;
 using Common;
 using Common.Enums;
+using Common.Enums.Items;
 using Enums.Items;
 using Input;
 using Player;
@@ -32,13 +33,14 @@ namespace Restaurant
         private void AutoCraftOrderedRecipes()
         {
             var orderList = RestaurantManager.Instance.OrderList.Where(o => !o.Served);
+            var player = GameObject.FindWithTag(Tags.Player);
             foreach (var order in orderList)
             {
                 for (int i = 0; i < order.Quantity; i++)
                 {
                     if (Cooking.CookRecipe(Cooking.GetItemRecipe(order.Item)))
                     {
-                        AdrenalinePointsUI.SpawnIngredientString(PlayerController.Instance.transform.position, $"+{order.Quantity} {Items.GetItem(order.Item).Name}");
+                        AdrenalinePointsUI.SpawnIngredientString(player.transform.position, $"+{order.Quantity} {Items.GetItem(order.Item).Name}");
                     }
                 }
             }
@@ -47,10 +49,10 @@ namespace Restaurant
         private void DebugAddInventoryAndOrders()
         {
             // TODO Remove After Testing
-            GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>().AddItemToInventory(Items.Fish, 20);
-            GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>().AddItemToInventory(Items.Honey, 20);
-            GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>().AddItemToInventory(Items.Mushroom, 20);
-            GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>().AddItemToInventory(Items.Meat, 20);
+            GameStateManager.AddItemToInventory(ItemInstance.Fish, 20);
+            GameStateManager.AddItemToInventory(ItemInstance.Honey, 20);
+            GameStateManager.AddItemToInventory(ItemInstance.Mushroom, 20);
+            GameStateManager.AddItemToInventory(ItemInstance.Meat, 20);
         }
     }
 }

@@ -4,14 +4,14 @@ namespace PlayerInventory
 {
     public class Item
     {
-        public readonly ItemType ItemType;
+        public readonly ItemInstance ItemInstance;
         public readonly string Name;
         public readonly float Rarity;
         public readonly ItemModel ItemModel;
 
-        public Item(ItemType itemType, string name, float rarity, ItemModel itemModel)
+        public Item(ItemInstance itemInstance, string name, float rarity, ItemModel itemModel)
         {
-            ItemType = itemType;
+            ItemInstance = itemInstance;
             Name = name;
             Rarity = rarity;
             ItemModel = itemModel;

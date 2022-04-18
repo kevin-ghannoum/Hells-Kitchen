@@ -1,4 +1,3 @@
-using System;
 using Common;
 using UnityEngine;
 
@@ -23,7 +22,7 @@ namespace UI
             if (_day >= 1f)
             {
                 // Time elapsed, stop clock and let player find exit
-                GameStateManager.Instance.dungeonTimeHasElapsed = true;
+                GameStateData.dungeonTimeHasElapsed = true;
                 return;
             }
 
