@@ -29,21 +29,25 @@ public class HealerAttackState : HealerBaseState
         healer.sc.agent.standStill = true;
 
 
-        if ((!isAttackAnimationPlaying && !isCasting) && (healer.sc.targetEnemy == null || (healer.sc.isLowHP() || Common.GameStateManager.Instance.IsLowHP()))) {
-            healer.resetAttackCD();
-            healer.sc.agent.standStill = false;
-            healer.magicCircle.gameObject.SetActive(false);
-            healer.SwitchState(healer.moveToTarget);
+        if ((!isAttackAnimationPlaying && !isCasting) &&
+        (healer.sc.targetEnemy == null || (healer.sc.isLowHP() || Common.GameStateManager.Instance.IsLowHP())))
+        {
+            resetVars(healer);
             return;
+        }
+
+        if (isCasting && healer.sc.targetEnemy == null) {
+            bool enemyFound = healer.sc.FindEnemy();
+            if (!enemyFound) {
+                resetVars(healer);
+                return;
+            }
         }
 
         if (isAttackAnimationPlaying) {
             _attackAnimationTime += Time.deltaTime;
             if (_attackAnimationTime > attackAnimationTime) {
-                healer.resetAttackCD();
-                healer.sc.agent.standStill = false;
-                healer.magicCircle.gameObject.SetActive(false);
-                healer.SwitchState(healer.moveToTarget);
+                resetVars(healer);
                 return;
             }
         }
@@ -57,20 +61,21 @@ public class HealerAttackState : HealerBaseState
             if (_photonCastTime >= photonCastTime)
             {
                 isAttackAnimationPlaying = true;
-                //healer.animator.SetTrigger("Attack");
                 Debug.Log("@Attack attacking xD");
-                //healer.sc.agent.standStill = false;
-                //play attack animation
                 healer.spells.HealerSpell_Photon(healer.sc.targetEnemy);
                 healer.magicCircle.gameObject.SetActive(false);
                 _photonCastTime = 0f;
                 healer.sc.targetEnemy = null;
                 healer.resetAttackCD();
                 isCasting = false;
-                //healer.SwitchState(healer.moveToTarget);
             }
         }
+    }
 
-
+    private void resetVars(HealerStateManager healer) {
+        healer.resetAttackCD();
+        healer.sc.agent.standStill = false;
+        healer.magicCircle.gameObject.SetActive(false);
+        healer.SwitchState(healer.moveToTarget);
     }
 }

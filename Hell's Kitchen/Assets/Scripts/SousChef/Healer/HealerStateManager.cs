@@ -43,6 +43,39 @@ public class HealerStateManager : MonoBehaviour
     float _delayBetweenTeleports = 0f;
     bool canTeleport() => _delayBetweenTeleports >= delayBetweenTeleports;
     bool shouldTeleport() => !sc.agent.standStill && sc.agent.IsMoving() && sc.agent.Target != null && (Vector3.Distance(transform.position, sc.agent.Target) > 15);
+    //bool shouldTeleport() => !sc.agent.standStill && sc.agent.Target != null && (Vector3.Distance(transform.position, sc.agent.Target) > 15);
+
+    //implemented from https://web.archive.org/web/20060909012810/http://local.wasp.uwa.edu.au/~pbourke/geometry/sphereline/
+    public bool lineSphereIntesection(Vector3 p0, Vector3 p1, Vector3 center, float radius, out Vector3[] intersectionPoints)
+    {
+        Vector3 P = new Vector3(); //delta p
+
+        //get delta p line segment
+        P.x = p1.x - p0.x;
+        P.z = p1.z - p0.z;
+
+        //(x-center_x)^2+(y-center_y)^2+(z-center_z)^2=r^2
+        float x = P.x * P.x + P.z * P.z;
+        float y = 2 * (P.x * (p0.x - center.x) + P.z * (p0.z - center.z));
+        float z = center.x * center.x + center.z * center.z;
+        z += p0.x * p0.x + p0.z * p0.z;
+        z -= 2 * (center.x * p0.x + center.z * p0.z);
+        z -= radius * radius;
+
+        //b^2 - 4*a*c
+        float quadraticSqrtPart = Mathf.Pow(y, 2) - 4 * x * z;
+        if (quadraticSqrtPart < 0 || Mathf.Abs(x) < float.Epsilon)
+        {
+            intersectionPoints = new Vector3[] { Vector3.zero, Vector3.zero };
+            return false;
+        }
+        float u0 = (-y + Mathf.Sqrt(quadraticSqrtPart)) / (2 * x);
+        float u1 = (-y - Mathf.Sqrt(quadraticSqrtPart)) / (2 * x);
+        intersectionPoints = new Vector3[2];
+        intersectionPoints[0] = new Vector3(p0.x + u0 * (p1.x - p0.x), 0, p0.z + u0 * (p1.z - p0.z));
+        intersectionPoints[1] = new Vector3(p0.x + u1 * (p1.x - p0.x), 0, p0.z + u1 * (p1.z - p0.z));
+        return true;
+    }
     private void Update()
     {
 
@@ -58,43 +91,79 @@ public class HealerStateManager : MonoBehaviour
         {
             beganTeleport = true;
             var node = sc.agent.currentNode;
-            Vector3 sourcePoint = transform.position;
-            Vector3 targetPoint = sc.agent.Target;
-            float teleportDistReduction = 0f;
-            if (node != null && node.Next != null)
+            Vector3 fxSpawnPos = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+            Vector3 pointOfIntersection = Vector3.zero;
+            if (Vector3.Distance(transform.position, sc.agent.Target) < maxTeleportDistance)
             {
-                //if (Vector3.Distance(node.Next.Position, transform.position) < Vector3.Distance(transform.position, sc.agent.Target))
-                {
-                    targetPoint = node.Next.Position;
-                }
-                //cut corners (not teleport to a node if possible)
-
-                /*if (Vector3.Distance(targetPoint, sourcePoint) < maxTeleportDistance - teleportDistReduction) {
-                    teleportDistReduction = Vector3.Distance(targetPoint, sourcePoint);
-                    if (node.Next.Next != null)
-                    {
-                        sourcePoint = node.Next.Position;
-                        targetPoint = node.Next.Next.Position;
-                    }
-                    else {
-                        Debug.Log("xD");
-                        targetPoint = sc.agent.Target;
-                    }
-                }*/
+                pointOfIntersection = transform.position + (sc.agent.Target - transform.position).normalized * maxTeleportDistance;
             }
-            float teleportDist = Mathf.Min(maxTeleportDistance, Vector3.Distance(targetPoint, sourcePoint)) - teleportDistReduction;
-            Debug.DrawLine(sourcePoint, targetPoint, Color.magenta, 3f);
-            Vector3 teleportDir = (targetPoint - sourcePoint).normalized;
-            NavMeshHit endPos;
-            if (!NavMesh.SamplePosition(transform.position + (teleportDir * teleportDist), out endPos, 1, NavMesh.AllAreas))
+            else if (node != null && node.Next != null)
             {
+                Vector3 p0 = node.Position;
+                Vector3 p1 = node.Next.Position;
+                if (Vector3.Distance(p0, transform.position) > maxTeleportDistance)
+                {
+                    pointOfIntersection = transform.position + (p0 - transform.position).normalized * maxTeleportDistance;
+                }
+                else
+                {
+                    while (node.Next != null)
+                    {
+                        p0 = node.Position;
+                        p1 = node.Next.Position;
+                        Debug.DrawLine(p0, p1, Color.cyan);
+                        Vector3[] intersectionPoints;
+                        if (lineSphereIntesection(p0, p1, transform.position, maxTeleportDistance, out intersectionPoints))
+                        {
+                            Debug.DrawLine(transform.position, intersectionPoints[0], Color.blue);
+                            if (Vector3.Distance(p0, transform.position) < maxTeleportDistance && Vector3.Distance(p1, transform.position) > maxTeleportDistance)
+                            {
+                                //maybe gotta make p1 be sc.agent.Target if dist diff
+                                pointOfIntersection = intersectionPoints[0];
+                                break;
+                            }
+                        }
+                        node = node.Next;
+                    }
+                }
+                Debug.DrawRay(pointOfIntersection, Vector3.up * 100f, Color.magenta, 0.25f);
+                //Debug.Log("le point of intersect:" + pointOfIntersection);
+                //Debug.Log("transform.position:" + transform.position);
+                //return;
+            }
+            else {
+                if (node == null)
+                {
+                    Debug.Log("1xD");
+                    return;
+                }
+                else {
+                    Debug.Log("2xD");
+                    pointOfIntersection = transform.position + (node.Position - transform.position).normalized * maxTeleportDistance;
+                }
+                //pointOfIntersection = transform.position + (sc.agent.Target - transform.position).normalized * maxTeleportDistance;
+            }
+            //return;
+            float teleportDist = Mathf.Min(maxTeleportDistance, Vector3.Distance(pointOfIntersection, transform.position));
+            Debug.DrawLine(transform.position, pointOfIntersection, Color.magenta, 3f);
+            //Vector3 teleportDir = (targetPoint - sourcePoint).normalized;
+            NavMeshHit endPos;
+            //if (!NavMesh.SamplePosition(transform.position + (teleportDir * teleportDist), out endPos, 1, NavMesh.AllAreas))
+            
+            if (!NavMesh.SamplePosition(pointOfIntersection, out endPos, 1, NavMesh.AllAreas))
+            {
+                Debug.DrawRay(transform.position, Vector3.up * 100f, Color.blue, 20f);
+                Debug.DrawRay(pointOfIntersection, Vector3.up * 100f, Color.red, 20f);
+                Debug.DrawLine(transform.position, pointOfIntersection, Color.cyan, 20f);
+                Debug.Log("oob, cancel tp xd");
                 return;
             }
-            Vector3 fxSpawnPos = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
-            Vector3 fxEndPos = transform.position + (teleportDir * teleportDist);
+
+            Vector3 fxEndPos = endPos.position;//transform.position + (teleportDir * teleportDist);
             fxEndPos = new Vector3(fxEndPos.x, fxEndPos.y + 2, fxEndPos.z);
             Instantiate(startTeleportPrefab, fxSpawnPos, Quaternion.identity);
-            transform.position += teleportDir * teleportDist;
+            Vector3 endSpawnPos = new Vector3(endPos.position.x, transform.position.y, endPos.position.z);
+            transform.position = endSpawnPos;//+= teleportDir * teleportDist;
             _delayBetweenTeleports = 0f;
             Instantiate(endTeleportPrefab, fxEndPos, Quaternion.identity);
 
@@ -107,5 +176,10 @@ public class HealerStateManager : MonoBehaviour
     public void SwitchState(HealerBaseState state) {
         currentState = state;
         state.EnterState(this);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, maxTeleportDistance);
     }
 }
