@@ -8,6 +8,7 @@ TagManager:
   - Pathfinding
   - Weapon
   - MazeStart
+  - Customer
   layers:
   - Default
   - TransparentFX

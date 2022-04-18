@@ -30,8 +30,6 @@ namespace Input
         {
             if (Instance == null)
                 Instance = this;
-
-            DontDestroyOnLoad(Instance.gameObject);
         }
 
         private void OnDestroy()
