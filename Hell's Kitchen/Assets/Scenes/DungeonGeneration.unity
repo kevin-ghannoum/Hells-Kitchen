@@ -308,6 +308,10 @@ PrefabInstance:
       propertyPath: coinValue
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3850824973738963546, guid: e12c3b3264d0e524186504da5369e263, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -49.999878
+      objectReference: {fileID: 0}
     - target: {fileID: 8266203883709237399, guid: e12c3b3264d0e524186504da5369e263, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -560,7 +564,7 @@ PrefabInstance:
     - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
       propertyPath: enemies.Array.data[0]
       value: 
-      objectReference: {fileID: 8853326291045279623, guid: 67ae90e948d2c574eb123fe400f50401, type: 3}
+      objectReference: {fileID: 2832215523392890628, guid: 7ec358a1a42d81e499893f27759477cc, type: 3}
     - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
       propertyPath: enemies.Array.data[1]
       value: 

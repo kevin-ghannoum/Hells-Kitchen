@@ -13,23 +13,21 @@ namespace Enemies
         [SerializeField] private float attackRange;
         [SerializeField] private float followRange;
         [SerializeField] private PlayerController target;
-        [SerializeField] private Animator anime;
         [SerializeField] private float attackDamage;
         [SerializeField] private float attackRate;
         private float distance;
         private float timeCounter = 5;
-        private float eventCounter = 2;
-        private bool isAttacking = false;
+        private AudioSource audio;
+        private int audioController = 0;
 
         private void Awake()
         {
             target = GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>();
-            anime = gameObject.GetComponent<Animator>();
+            audio = gameObject.GetComponent<AudioSource>();
         }
         public override void Update()
         {
             timeCounter += Time.deltaTime;
-            eventCounter += Time.deltaTime;
             distance = Vector3.Distance(transform.position, target.transform.position);
 
             if (distance < followRange)
@@ -38,16 +36,18 @@ namespace Enemies
 
                 if (distance < attackRange && timeCounter > attackRate)
                 {
-                    eventCounter = 0;
+                    agent.enabled = false;
                     particle.Play();
-                    anime.SetBool("attacking", true);
+                    audio.Play();
+                    animator.SetTrigger(EnemyAnimator.Attack);
                     Invoke("Attack", 0.3f);
+                    Invoke("resumeFollow", 1f);
                     timeCounter = 0;
                 }
-                else
-                {
-                    anime.SetBool("attacking", false);
-                }
+            }
+            else
+            {
+                audioController = 0;
             }
         }
 
@@ -64,10 +64,9 @@ namespace Enemies
             }
         }
 
-        protected override void Die()
+        private void resumeFollow()
         {
-            base.Die();
-            Destroy(GetComponentInChildren<PigCollider>());
+            agent.enabled = true;
         }
     }
 }

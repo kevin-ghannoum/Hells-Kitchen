@@ -570,7 +570,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8448228120583304839}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 10000
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
@@ -592,9 +592,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: -875698226314182790}
   animator: {fileID: 7556626888925966291}
-  damagePrefab: {fileID: 0}
-  hitPoints: 0
-  deathDelay: 0
+  hitPoints: 30
+  deathDelay: 1
   onKilled:
     m_PersistentCalls:
       m_Calls: []
