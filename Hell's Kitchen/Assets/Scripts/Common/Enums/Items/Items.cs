@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using System.Reflection;
 using PlayerInventory;
+using UnityEditor;
+using UnityEngine;
 
 namespace Enums.Items
 {
@@ -13,7 +15,7 @@ namespace Enums.Items
         public static readonly Item Mushroom = new Item(ItemType.Ingredient, "Mushroom", 1.0f, ItemModel.Mushroom);
 
         // Recipe results
-        public static readonly Item Hamburger = new Item(ItemType.RecipeResult, "Burger", 1.0f, ItemModel.Burger);
+        public static readonly Item Hamburger = new Item(ItemType.RecipeResult, "Hamburger", 1.0f, ItemModel.Burger);
         public static readonly Item Salad = new Item(ItemType.RecipeResult, "Salad", 1.0f, ItemModel.Salad);
         public static readonly Item Sushi = new Item(ItemType.RecipeResult, "Sushi", 1.0f, ItemModel.Sushi);
 

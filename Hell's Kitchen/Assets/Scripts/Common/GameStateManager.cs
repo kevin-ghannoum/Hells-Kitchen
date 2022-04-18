@@ -16,9 +16,6 @@ namespace Common
         public bool IsCarryingWeapon => carriedWeapon != null;
         public float cashMoney;
         public bool dungeonTimeHasElapsed;
-
-        public Dictionary<IRecipe, int> OrderList;
-
         public List<string> PurchasedWeapons;
         
         private void Awake()
@@ -40,7 +37,6 @@ namespace Common
             playerCurrentStamina = playerMaxStamina;
             cashMoney = 0f;
             carriedWeapon = null;
-            OrderList = new Dictionary<IRecipe, int>();
             PurchasedWeapons = new List<string>();
         }
     }

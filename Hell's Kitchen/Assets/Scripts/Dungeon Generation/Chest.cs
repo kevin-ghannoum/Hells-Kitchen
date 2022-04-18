@@ -12,7 +12,7 @@ namespace Dungeon_Generation
     {
         [SerializeField] private int amountMinInclusive = 20;
         [SerializeField] private int amountMaxExclusive = 40;
-        [SerializeField] private ToggleUI toggleUI;
+        [SerializeField] private ProximityToggleUI toggleUI;
 
         private bool _isLooted = false;
         

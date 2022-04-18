@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Common;
 using Common.Enums;
 using Input;
 using PlayerInventory;
 using PlayerInventory.Cooking;
+using Restaurant;
 using Restaurant.Enums;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -19,8 +21,7 @@ public class RestaurantDoor : MonoBehaviour
     
     private InputManager _input => InputManager.Instance;
     private static IRecipe[] _availableRecipes;
-    private Dictionary<IRecipe, int> OrderList => GameStateManager.Instance.OrderList;
-    
+
     private int _numCustomers = 0;
     
     private void Awake()
@@ -45,30 +46,11 @@ public class RestaurantDoor : MonoBehaviour
             if (_input.interact)
             {
                 ImposeFine();
-                ClearOrderList();
-                GetRestaurantOrders(numberOfOrders);
                 SceneManager.Instance.LoadDungeonScene();
             }
         }
     }
     
-    public void GetRestaurantOrders(int numOfOrders)
-    {
-        for (int i = 0; i < numOfOrders; i++)
-        {
-            IRecipe order = GetRandomOrder();
-            if (OrderList.ContainsKey(order))
-                OrderList[order]++;
-            else
-                OrderList.Add(order, 1);
-        }
-    }
-    
-    public void ClearOrderList()
-    {
-        OrderList.Clear();
-    }
-
     private IRecipe GetRandomOrder()
     {
         int index = Random.Range(0, _availableRecipes.Length);
@@ -77,9 +59,9 @@ public class RestaurantDoor : MonoBehaviour
 
     private void ImposeFine()
     {
-        foreach (var order in OrderList)
+        foreach (var order in RestaurantManager.Instance.OrderList)
         {
-            GameStateManager.Instance.cashMoney -= order.Value * missedOrderPenalty;
+            GameStateManager.Instance.cashMoney -= order.Quantity * missedOrderPenalty;
         }
     }
 

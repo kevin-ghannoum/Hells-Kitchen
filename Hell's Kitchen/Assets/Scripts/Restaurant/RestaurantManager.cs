@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -12,9 +12,20 @@ namespace Restaurant
         [SerializeField]
         public RestaurantSeat[] Seats;
 
+        [SerializeField]
+        public RestaurantTable[] Tables;
+        
+        public List<RestaurantOrder> OrderList => Instance.Tables.Aggregate(
+            new List<RestaurantOrder>(), 
+            (acc, t) => {
+                acc.AddRange(t.OrderList);
+                return acc;
+            });
+
         private void Reset()
         {
            Seats = FindObjectsOfType<RestaurantSeat>();
+           Tables = FindObjectsOfType<RestaurantTable>();
         }
 
         private void Awake()

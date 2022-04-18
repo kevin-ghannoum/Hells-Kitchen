@@ -162,7 +162,9 @@ MonoBehaviour:
   seats:
   - {fileID: 0}
   - {fileID: 0}
-  toggleUI: {fileID: 2155225328677407256}
+  interactUI: {fileID: 2155225328677407256}
+  restaurantUI: {fileID: 84578108050428633}
+  orderItemPrefab: {fileID: 3202725611455143154, guid: b3afaf2dffaf2d24ab561b49aa7ca0a7, type: 3}
 --- !u!1001 &750436164117734040
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -428,7 +430,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3036241724363243191, guid: d42bdfaaa267a3d48b45c282cf63b5c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3036241724363243191, guid: d42bdfaaa267a3d48b45c282cf63b5c3, type: 3}
       propertyPath: m_LocalPosition.z

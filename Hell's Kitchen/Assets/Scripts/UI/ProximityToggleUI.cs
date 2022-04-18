@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UI
 {
-    public class ToggleUI : MonoBehaviour
+    public class ProximityToggleUI : MonoBehaviour
     {
         [SerializeField]
         private GameObject toggleGameObject;
