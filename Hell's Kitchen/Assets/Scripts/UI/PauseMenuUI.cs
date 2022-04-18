@@ -1,4 +1,5 @@
-﻿using Input;
+﻿using System;
+using Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +15,11 @@ namespace UI
         private void Awake()
         {
             _input.reference.actions["OpenPauseMenu"].performed += OpenPauseMenu;
+        }
+
+        private void OnDestroy()
+        {
+            _input.reference.actions["OpenPauseMenu"].performed -= OpenPauseMenu;
         }
 
         public void OpenPauseMenu(InputAction.CallbackContext callbackContext)
