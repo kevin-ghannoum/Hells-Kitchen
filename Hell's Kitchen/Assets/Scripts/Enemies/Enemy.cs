@@ -96,11 +96,10 @@ namespace Enemies
         {
             var shouldSpawnMore = Random.value < multipleSpawnRate;
             var numSpawned = 0;
-            while (shouldSpawnMore && numSpawned < maxDropsToSpawn)
-            {
+            do {
                 numSpawned++;
                 Instantiate(dropObject);
-            }
+            } while (shouldSpawnMore && numSpawned < maxDropsToSpawn);
         }
 
         private void Destroy()

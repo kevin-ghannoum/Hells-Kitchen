@@ -91,7 +91,8 @@ namespace Player
                     heldWeapon.RemoveFromPlayer();
                 }
             }
-                    
+
+            GameStateManager.Instance.playerCurrentHitPoints = GameStateManager.Instance.playerMaxHitPoints;
             SceneManager.Instance.LoadRestaurantScene();
         }
     }
