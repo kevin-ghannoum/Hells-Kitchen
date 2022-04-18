@@ -104,7 +104,7 @@ namespace Enemies
 
             do{
                 numSpawned++;
-                PhotonNetwork.Instantiate(nameof(dropObject), spawnPosition, Quaternion.identity);
+                PhotonNetwork.Instantiate(dropObject.name, spawnPosition, Quaternion.identity);
                 spawnPosition += offset;
             } while (shouldSpawnMore && numSpawned < maxDropsToSpawn);
         }

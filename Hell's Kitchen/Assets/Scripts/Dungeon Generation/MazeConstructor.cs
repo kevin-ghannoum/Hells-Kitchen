@@ -185,7 +185,7 @@ namespace Dungeon_Generation
             if (Random.value < enemySpawnRate)
             {
                 var enemy = enemies[Random.Range(0, enemies.Length)];
-                PhotonNetwork.Instantiate(nameof(enemy), position, Quaternion.identity);
+                PhotonNetwork.Instantiate(enemy.name, position, Quaternion.identity);
             }
         }
 

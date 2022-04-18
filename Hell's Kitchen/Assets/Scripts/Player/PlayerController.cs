@@ -11,7 +11,6 @@ namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
-        public static PlayerController Instance; // singleton
         private InputManager _input => InputManager.Instance;
 
         [Header("Parameters")]
@@ -49,9 +48,6 @@ namespace Player
 
         private void Awake()
         {
-            if (Instance == null)
-                Instance = this;
-
             _animator = GetComponentInChildren<Animator>();
             _characterController = GetComponent<CharacterController>();
 

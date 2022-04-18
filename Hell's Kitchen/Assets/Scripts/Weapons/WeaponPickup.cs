@@ -48,7 +48,7 @@ namespace Weapons
             rigidbody = GetComponent<Rigidbody>();
         }
 
-        public virtual void Awake()
+        public virtual void Start()
         {
             GameObject playerObject = GameObject.FindWithTag(Tags.Player);
             playerController = playerObject.GetComponent<PlayerController>();

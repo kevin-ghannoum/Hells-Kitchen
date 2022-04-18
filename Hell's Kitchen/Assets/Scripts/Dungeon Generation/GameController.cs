@@ -62,7 +62,7 @@ namespace Dungeon_Generation
             
             // set weapon in players hand
             var weapon = Weapons.Models.Weapons.GetItem(GameStateData.carriedWeapon);
-            var weaponInstance = PhotonNetwork.Instantiate(nameof(weapon.WeaponModel.Prefab), Vector3.zero, Quaternion.identity);
+            var weaponInstance = PhotonNetwork.Instantiate(weapon.WeaponModel.Prefab.name, Vector3.zero, Quaternion.identity);
             weaponInstance.GetComponent<IPickup>()?.PickUp();
         }
 
