@@ -12,6 +12,9 @@ namespace Weapons
         public override void Use(InputAction.CallbackContext callbackContext)
         {
             base.Use(callbackContext);
+            if (!playerAnimator)
+                return;
+            
             playerAnimator.SetTrigger(PlayerAnimator.SwordAttack);
         }
     }

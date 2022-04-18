@@ -22,7 +22,7 @@ namespace Shops
             _weapons = GameObject.FindGameObjectsWithTag(Tags.Weapon).ToList();
             foreach (var weapon in _weapons)
             {
-                if(!GameStateManager.Instance.PurchasedWeapons.Contains(weapon.name))
+                if(!GameStateManager.Instance.purchasedWeapons.Contains(weapon.name))
                     weapon.SetActive(false);
             }
         }

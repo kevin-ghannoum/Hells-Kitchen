@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Common;
 using Common.Enums;
 using Input;
-using PlayerInventory;
 using PlayerInventory.Cooking;
 using UnityEngine;
 using Random = UnityEngine.Random;
