@@ -17,9 +17,6 @@ namespace Weapons
         [SerializeField] private Quaternion rotation = Quaternion.identity;
         [SerializeField] private float scale = 0.3f;
 
-        [Header("Damage")]
-        public float damage = 10.0f;
-
         [Header("Throwing")]
         [SerializeField] private float throwSpeed = 35.0f;
         [SerializeField] private float throwAngularSpeed = 180.0f;
@@ -29,13 +26,22 @@ namespace Weapons
         private new Rigidbody rigidbody;
         
         private InputManager input => InputManager.Instance;
-        protected PlayerController player;
+        protected PlayerController playerController;
         protected Animator playerAnimator;
         private bool _canBePickedUp = true;
 
-        public bool CanPickUp => _canBePickedUp;
+        private float _damage = 10.0f;
+
+        public float Damage
+        {
+            get => _damage;
+            set => _damage = value;
+        }
 
         public virtual float Price { get; } = 10f;
+
+        [SerializeField] private WeaponInstance weaponInstance;
+        public WeaponInstance WeaponInstance { get => weaponInstance; }
 
         public void Reset()
         {
@@ -45,27 +51,32 @@ namespace Weapons
         public virtual void Awake()
         {
             GameObject playerObject = GameObject.FindWithTag(Tags.Player);
-            player = playerObject.GetComponent<PlayerController>();
+            playerController = playerObject.GetComponent<PlayerController>();
             playerAnimator = playerObject.GetComponentInChildren<Animator>();
         }
 
         public virtual void PickUp()
         {
             _canBePickedUp = false;
-            ReparentObject();
-            AddListeners();
-            GameStateManager.Instance.carriedWeapon = gameObject;
+            GameStateManager.Instance.carriedWeapon = WeaponInstance;
+            ReparentObjectToPlayerHand();
             DisableRigidbody();
             SetOutline(false);
+            AddListeners();
         }
 
         public void Drop(InputAction.CallbackContext callbackContext)
+        {
+            RemoveFromPlayer();
+        }
+
+        public void RemoveFromPlayer()
         {
             _canBePickedUp = true;
             transform.SetParent(null);
             transform.localScale = new Vector3(1, 1, 1);
             RemoveListeners();
-            GameStateManager.Instance.carriedWeapon = null;
+            GameStateManager.Instance.carriedWeapon = WeaponInstance.None;
             EnableRigidBody();
             SetOutline(true);
         }
@@ -75,25 +86,26 @@ namespace Weapons
             _canBePickedUp = true;
             transform.SetParent(null);
             transform.localScale = new Vector3(1, 1, 1);
-            transform.position = player.DamagePosition.position;
-            transform.rotation = player.transform.rotation;
-            rigidbody.velocity = player.transform.forward * throwSpeed;
+            transform.position = playerController.DamagePosition.position;
+            transform.rotation = playerController.transform.rotation;
+            rigidbody.velocity = playerController.transform.forward * throwSpeed;
             rigidbody.angularVelocity = new Vector3(
                 Random.Range(-throwAngularSpeed, throwAngularSpeed), 
                 Random.Range(-throwAngularSpeed, throwAngularSpeed), 
                 Random.Range(-throwAngularSpeed, throwAngularSpeed)
             );
             RemoveListeners();
-            GameStateManager.Instance.carriedWeapon = null;
+            GameStateManager.Instance.carriedWeapon = WeaponInstance.None;
             EnableRigidBody();
             SetOutline(true);
         }
 
-        private void ReparentObject()
+        private void ReparentObjectToPlayerHand()
         {
-            Transform hand = player.GetComponent<PlayerController>().CharacterHand;
+            Transform hand = playerController?.CharacterHand;
             if (!hand)
-                return;
+                throw new MissingReferenceException();
+
 
             gameObject.transform.SetParent(hand, false);
             gameObject.transform.localScale = new Vector3(scale, scale, scale);
@@ -106,7 +118,7 @@ namespace Weapons
             Ray mouseRay = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             Plane floor = new Plane(Vector3.up, 0);
             floor.Raycast(mouseRay, out float dist);
-            player.FaceTarget(mouseRay.GetPoint(dist));
+            playerController.FaceTarget(mouseRay.GetPoint(dist));
         }
 
         protected virtual void AddListeners()
