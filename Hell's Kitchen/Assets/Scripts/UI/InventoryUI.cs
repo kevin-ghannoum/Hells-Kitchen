@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using PlayerInventory;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,14 +42,11 @@ namespace UI
                 itemSlotRectTrans.anchoredPosition = new Vector2(x * itemSlotCellSize + (x+1)*1.5f*spacing, -y * itemSlotCellSize - (y+1)*1.5f*spacing);
 
                 // textual information
-                itemSlotRectTrans.GetComponentsInChildren<Text>()[0].text = inventoryList.ElementAt(i).Key.Name; // name
-                itemSlotRectTrans.GetComponentsInChildren<Text>()[1].text = inventoryList.ElementAt(i).Value.ToString(); // quantity
+                itemSlotRectTrans.GetComponentsInChildren<TextMeshProUGUI>()[0].text = inventoryList.ElementAt(i).Key.Name; // name
+                itemSlotRectTrans.GetComponentsInChildren<TextMeshProUGUI>()[1].text = inventoryList.ElementAt(i).Value.ToString(); // quantity
 
-                // 3d prefab
-                Transform itemPrefabModel =
-                    Instantiate(inventoryList.ElementAt(i).Key.ItemModel.UIVariant, itemSlotRectTrans)
-                        .GetComponent<Transform>();
-                itemPrefabModel.parent = itemSlotRectTrans;
+                // sprites
+                itemSlotRectTrans.gameObject.GetComponentInChildren<Image>().sprite = inventoryList.ElementAt(i).Key.ItemModel.Sprite;
                 
                 // move to the next item
                 x++;
