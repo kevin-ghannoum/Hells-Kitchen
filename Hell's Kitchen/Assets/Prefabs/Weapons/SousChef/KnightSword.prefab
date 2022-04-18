@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 7276348324309883332}
   - component: {fileID: -4351065390285577925}
   - component: {fileID: 215459539002084217}
-  m_Layer: 10
+  - component: {fileID: -5153257334211800644}
+  m_Layer: 0
   m_Name: KnightSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,11 +62,11 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4015762886a2a674982171a79628d0d0, type: 2}
+  - {fileID: 2100000, guid: 755142b9749d5814f9d74533b9cc9316, type: 2}
   - {fileID: 2100000, guid: 89681c9c65630864e9a9688fc19d6946, type: 2}
   - {fileID: 2100000, guid: 89681c9c65630864e9a9688fc19d6946, type: 2}
-  - {fileID: 2100000, guid: bfb71678882e9244d9c96aa813b5b92e, type: 2}
-  - {fileID: 2100000, guid: bfb71678882e9244d9c96aa813b5b92e, type: 2}
+  - {fileID: 2100000, guid: 755142b9749d5814f9d74533b9cc9316, type: 2}
+  - {fileID: 2100000, guid: 0218a32dbbe730547abc5e03f4aa83c5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,7 +99,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.01142395, y: 0.0026114413, z: 0.05452775}
+  m_Size: {x: 0.01, y: 0.002, z: 0.05452775}
   m_Center: {x: 0, y: 0, z: 0.019076195}
 --- !u!54 &215459539002084217
 Rigidbody:
@@ -116,3 +117,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &-5153257334211800644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9221740705109538833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e0a6d247a4d7cd40830761c9127600b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  knight: {fileID: 0}
+  spark: {fileID: 5116675159107743781, guid: 7703781282563c44baad628a181fc819, type: 3}

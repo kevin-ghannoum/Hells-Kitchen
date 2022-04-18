@@ -68,6 +68,7 @@ public class KnightAttackState : KnightBaseState
                     //basic attack ends
                     isAttacking = false;
                     knight.sc.agent.standStill = false;
+                    knight.weapon.GetComponent<Collider>().enabled = false;
                     return;
                 }
                 //TODO: deal damage
@@ -94,6 +95,7 @@ public class KnightAttackState : KnightBaseState
                             knight.animator.SetTrigger("Attack");
                             knight.sc.agent.standStill = true;
                             _attackAnimationTime = attackAnimationTime;
+                            knight.weapon.GetComponent<Collider>().enabled = true;
                         }
                         else{
                             //neither basic attack nor skill available, approach

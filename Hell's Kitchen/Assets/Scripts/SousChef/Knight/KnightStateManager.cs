@@ -10,6 +10,7 @@ public class KnightStateManager : MonoBehaviour
     public KnightFollowState followState = new KnightFollowState();
     public KnightLootState lootState = new KnightLootState();
     public Animator animator;
+    public GameObject weapon;
     public SousChef sc { get; set; }
     public SpellManager spells { get; set; }
 
