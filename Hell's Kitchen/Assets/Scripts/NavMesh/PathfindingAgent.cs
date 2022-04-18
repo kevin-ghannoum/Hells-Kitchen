@@ -6,24 +6,25 @@ public class PathfindingAgent : MonoBehaviour
 
     [Header("Parameters")]
     [SerializeField]
-    public float ArrivalRadius = 0.5f;
+    public float ArrivalRadius = 1.0f;
 
     [SerializeField]
-    private float time2target = 0.5f;
+    public float MidPointArrivalRadius = 0.5f;
+
+    [SerializeField]
+    public float TimeToTarget = 0.5f;
     
     [SerializeField]
-    private float maxVelocity = 2.0f;
+    public float MaxVelocity = 2.0f;
     
     [Header("References")]
     [SerializeField]
     private new Rigidbody rigidbody;
     
-    public bool Arrived => _path == null;
+    public bool IsArrived => _path == null;
 
     private Pathfinding.PathNode _path;
     private Vector3 _target;
-
-    public bool standStill = false;
     
     public Vector3 Target {
         get => _target;
@@ -53,26 +54,25 @@ public class PathfindingAgent : MonoBehaviour
         }
 
         // Get next point along path
-        // var closestPointOnPath = Utils.GetClosestPointOnLine(_lastPath.Position, _path.Position, transform.position);
         var nextPoint = _path.Position;
         Debug.DrawLine(transform.position, nextPoint, Color.red);
 
         // Compute desired velocity
-        var desiredVelocity = (nextPoint - transform.position) / time2target;
-        if (_path.Next != null || desiredVelocity.magnitude > maxVelocity)
+        var desiredVelocity = (nextPoint - transform.position) / TimeToTarget;
+        if (_path.Next != null || desiredVelocity.magnitude > MaxVelocity)
         {
-            desiredVelocity = desiredVelocity.normalized * maxVelocity;
+            desiredVelocity = desiredVelocity.normalized * MaxVelocity;
         }
 
         // Apply velocity and rotation
         rigidbody.velocity = desiredVelocity;
         if (rigidbody.velocity != Vector3.zero)
         {
-            transform.rotation = Quaternion.LookRotation(rigidbody.velocity.normalized);
+            transform.rotation = Quaternion.LookRotation(rigidbody.velocity);
         }
 
         // Reached next point
-        if (Vector3.Distance(transform.position, _path.Position) < (_path.Next == null ? ArrivalRadius : 0.5f))
+        if (Vector3.Distance(transform.position, _path.Position) < (_path.Next == null ? ArrivalRadius : MidPointArrivalRadius))
         {
             _path = _path.Next;
         } 
@@ -85,9 +85,5 @@ public class PathfindingAgent : MonoBehaviour
             _path = Pathfinding.Instance.FindPath(transform.position, Target)?.Next;
         }
     }
-    
-    public bool IsMoving() {
-        return Velocity != Vector3.zero;
-    }
-    
+
 }

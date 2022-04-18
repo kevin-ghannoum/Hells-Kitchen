@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 543019816075129815}
   - component: {fileID: 8251617937220051307}
   - component: {fileID: 543019816075129812}
+  - component: {fileID: 2489670858785083864}
   m_Layer: 0
   m_Name: CookingOven
   m_TagString: Untagged
@@ -225,6 +226,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 604817f80ea14ff3b392a6a9a0912625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2489670858785083864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2437096894043422585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &2437654441025294793
 GameObject:
   m_ObjectHideFlags: 0

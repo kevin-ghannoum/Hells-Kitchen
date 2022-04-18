@@ -10,7 +10,6 @@ namespace Shops
 {
     public class WeaponShopkeeper : MonoBehaviour
     {
-        [SerializeField] private GameObject interactText;
         [SerializeField] private WeaponShopUI shopUI;
         
         private InputManager _input => InputManager.Instance;
@@ -18,7 +17,6 @@ namespace Shops
 
         private void Start()
         {
-            interactText.SetActive(false);
             _weapons = GameObject.FindGameObjectsWithTag(Tags.Weapon).ToList();
             foreach (var weapon in _weapons)
             {
@@ -31,24 +29,7 @@ namespace Shops
         {
             if (other.gameObject.CompareTag(Tags.Player) && _input.interact)
             {
-                interactText.SetActive(false);
                 shopUI.Initialize(_weapons);
-            }
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag(Tags.Player))
-            {
-                interactText.SetActive(true);
-            }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.gameObject.CompareTag(Tags.Player))
-            {
-                interactText.SetActive(false);
             }
         }
     }

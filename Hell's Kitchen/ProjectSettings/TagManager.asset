@@ -7,8 +7,8 @@ TagManager:
   - Generated
   - Pathfinding
   - Weapon
-  - UICamera
   - MazeStart
+  - Customer
   layers:
   - Default
   - TransparentFX
@@ -20,7 +20,7 @@ TagManager:
   - Enemies
   - Collider
   - Collectibles
-  - 
+  - Characters
   - 
   - 
   - 

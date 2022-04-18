@@ -1,34 +1,51 @@
-﻿using System;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 public class ItemModel
 {
     public readonly GameObject Prefab;
+    public readonly GameObject UIVariant;
     public readonly Sprite Sprite;
 
-    private ItemModel(string path1, string path2 = null)
+    private ItemModel(string prefabPath, string uiVariantPath = null, string spritePath = null)
     {
-        Prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path1);
-
-        if (!String.IsNullOrEmpty(path2))
-        {
-            Sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path2);
-        }
-        else
-        {
-            Sprite = null;
-        }
+        Prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+        UIVariant = !string.IsNullOrEmpty(uiVariantPath) ? AssetDatabase.LoadAssetAtPath<GameObject>(uiVariantPath) : null;
+        Sprite = !string.IsNullOrEmpty(spritePath) ? AssetDatabase.LoadAssetAtPath<Sprite>(spritePath) : null;
     }
 
     // Ingredients
-    public static readonly ItemModel Honey = new ItemModel("Assets/Prefabs/Ingredients/Honey.prefab", "Assets/Sprites/ingredients/freepik_honey_1378430.png");
-    public static readonly ItemModel Meat = new ItemModel("Assets/Prefabs/Ingredients/Meat.prefab", "Assets/Sprites/ingredients/freepik_meat_2058020.png");
-    public static readonly ItemModel Fish = new ItemModel("Assets/Prefabs/Ingredients/Fish.prefab", "Assets/Sprites/ingredients/freepik_fish_394730.png");
-    public static readonly ItemModel Mushroom = new ItemModel("Assets/Prefabs/Ingredients/Mushroom.prefab", "Assets/Sprites/ingredients/freepik_mushroom_1412518.png");
+    public static readonly ItemModel Honey = new ItemModel(
+        "Assets/Prefabs/Ingredients/Honey.prefab", 
+        "Assets/Prefabs/Ingredients/Honey UI Variant.prefab"
+    );
+    public static readonly ItemModel Meat = new ItemModel(
+        "Assets/Prefabs/Ingredients/Meat.prefab", 
+        "Assets/Prefabs/Ingredients/Meat UI Variant.prefab"
+    );
+    public static readonly ItemModel Fish = new ItemModel(
+        "Assets/Prefabs/Ingredients/Fish.prefab", 
+        "Assets/Prefabs/Ingredients/Fish UI Variant.prefab"
+    );
+    public static readonly ItemModel Mushroom = new ItemModel(
+        "Assets/Prefabs/Ingredients/Mushroom.prefab", 
+        "Assets/Prefabs/Ingredients/Mushroom UI Variant.prefab"
+    );
     
     // Recipe Results
-    public static readonly ItemModel Burger = new ItemModel("Assets/Prefabs/Ingredients/Hamburger.prefab", "Assets/Sprites/ingredients/freepik_hamurger_3075977.png");
-    public static readonly ItemModel Salad = new ItemModel("Assets/Prefabs/Ingredients/Salad.prefab", "Assets/Sprites/ingredients/freepik_salad_1057510.png");
-    public static readonly ItemModel Sushi = new ItemModel("Assets/Prefabs/Ingredients/Sushi.prefab", "Assets/Sprites/ingredients/freepik_sushi_3978725.png");
+    public static readonly ItemModel Burger = new ItemModel(
+        "Assets/Prefabs/Ingredients/Hamburger.prefab", 
+        "Assets/Prefabs/Ingredients/Hamburger UI Variant.prefab", 
+        "Assets/Sprites/Items/Hamburger.png"
+    );
+    public static readonly ItemModel Salad = new ItemModel(
+        "Assets/Prefabs/Ingredients/Salad.prefab", 
+        "Assets/Prefabs/Ingredients/Salad UI Variant.prefab",
+        "Assets/Sprites/Items/Salad.png"
+    );
+    public static readonly ItemModel Sushi = new ItemModel(
+        "Assets/Prefabs/Ingredients/Sushi.prefab", 
+        "Assets/Prefabs/Ingredients/Sushi UI Variant.prefab",
+        "Assets/Sprites/Items/Sushi.png"
+    );
 }

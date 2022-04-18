@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Common.Enums.Items;
 using Enums.Items;
 using Photon.Pun;
 using PlayerInventory;
@@ -9,10 +10,10 @@ namespace Common
 {
     public class GameStateManager : MonoBehaviour, IPunObservable
     {
-        [SerializeField] public PhotonView photonView;
         public static GameStateManager Instance;
-
-        public InventoryUI inventoryUI;
+        
+        [SerializeField] public PhotonView photonView;
+        [SerializeField] public InventoryUI inventoryUI;
         
         private void Awake()
         {
@@ -21,6 +22,7 @@ namespace Common
                 Instance = this;
             }
             photonView = GetComponent<PhotonView>();
+            inventoryUI = FindObjectOfType<InventoryUI>();
         }
 
         private void ResetDefaults()

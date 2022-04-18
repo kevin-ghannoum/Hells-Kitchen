@@ -23,7 +23,6 @@ public class HealerAttackState : HealerBaseState
     public override void UpdateState(HealerStateManager healer)
     {
         healer.sc.faceTargetEnemy();
-        healer.sc.agent.standStill = true;
         _cooldownBetweenAttacks += Time.deltaTime;
         //do a reposition check while waaiting for cd (ie if enemy gets too close, run away instead of sittin there xd
         if (healer.canAttack()) {
@@ -34,7 +33,6 @@ public class HealerAttackState : HealerBaseState
             {
                 healer.animator.SetTrigger("Attack");
                 Debug.Log("@Attack attacking xD");
-                healer.sc.agent.standStill = false;
                 //play attack animation
                 healer.spells.HealerSpell_Photon(healer.sc.targetEnemy.transform.position);
                 healer.sc.targetEnemy.GetComponent<Character>().TakeDamage(photonDamage);

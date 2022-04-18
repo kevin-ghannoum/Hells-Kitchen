@@ -21,12 +21,9 @@ public class HealerFollowState : HealerBaseState
             {
                 healer.sc.agent.Target = healer.sc.player.transform.position;
             }
-            if (healer.sc.agent.ArrivalRadius != healer.sc.followDistance)
-            {
-                healer.sc.agent.ArrivalRadius = healer.sc.followDistance;
-            }
+            healer.sc.agent.ArrivalRadius = healer.sc.followDistance;
             //if ((healer.transform.position - healer.sc.agent.Target).magnitude < healer.sc.followDistance) {
-            if (!healer.sc.agent.IsMoving())
+            if (healer.sc.agent.IsArrived)
             {
                 Debug.Log("arrived");
                 //implement healer idle state

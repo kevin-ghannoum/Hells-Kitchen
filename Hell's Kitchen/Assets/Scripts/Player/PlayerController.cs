@@ -47,7 +47,6 @@ namespace Player
             if (!_photonView.IsMine)
                 return; 
             
-            Debug.Log(_photonView.GetHashCode());
             _animator = GetComponentInChildren<Animator>();
             _characterController = GetComponent<CharacterController>();
 
@@ -86,7 +85,6 @@ namespace Player
                 _characterController.Move(Vector3.zero);
                 _speed = 0;
                 _animator.SetFloat(PlayerAnimator.Speed, _speed / runSpeed);
-                
             }
 
             UpdateStamina();

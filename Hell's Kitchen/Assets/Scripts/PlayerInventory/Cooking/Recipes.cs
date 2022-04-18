@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Common.Enums.Items;
 using Enums.Items;
 
 namespace PlayerInventory.Cooking

@@ -11,24 +11,14 @@ namespace UI
         
         [SerializeField]
         public RectTransform screenSpaceObject;
-
-        protected new Camera camera;
-
-        public virtual void Reset()
-        {
-            canvas = GetComponent<Canvas>();
-        }
-
-        public virtual void Start()
-        {
-            camera = Camera.main;
-            canvas.worldCamera = camera;
-            screenSpaceObject.position = camera.WorldToScreenPoint(transform.position);
-        }
         
-        public virtual void Update()
+        public virtual void LateUpdate()
         {
-            screenSpaceObject.position = camera.WorldToScreenPoint(transform.position);
+            var camera = Camera.main;
+            if (camera)
+            {
+                screenSpaceObject.position = camera.WorldToScreenPoint(transform.position);
+            }
         }
     }
 }

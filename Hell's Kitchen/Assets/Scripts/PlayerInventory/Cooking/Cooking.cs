@@ -1,6 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Common;
-using Player;
+using Enums.Items;
 
 namespace PlayerInventory.Cooking
 {
@@ -57,6 +58,11 @@ namespace PlayerInventory.Cooking
                 return true;
             }
             return false;
+        }
+        
+        public static IRecipe GetItemRecipe(ItemInstance item)
+        {
+            return (IRecipe)Activator.CreateInstance(Type.GetType($"PlayerInventory.Cooking.Recipes+{item}"));
         }
         
         #region CookingRecipes

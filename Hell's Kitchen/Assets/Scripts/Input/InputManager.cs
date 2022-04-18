@@ -16,10 +16,15 @@ namespace Input
         public bool interact;
         public bool openPauseMenu;
 
-        [Header("References")] 
+        [Header("References")]
         public PlayerInput reference;
 
         public static InputManager Instance;
+
+        public static class Actions
+        {
+            public static string Interact => "Interact";
+        }
 
         private void Awake()
         {
@@ -91,6 +96,23 @@ namespace Input
         public void Activate()
         {
             reference.ActivateInput();
+        }
+        
+        public bool IsPressed(string actionName)
+        {
+            return reference.actions[actionName].ReadValue<float>() > 0f;
+        }
+ 
+        public bool WasPressedThisFrame(string actionName)
+        {
+            var inputAction = reference.actions[actionName];
+            return inputAction.triggered && inputAction.ReadValue<float>() > 0f;
+        }
+ 
+        public bool WasReleasedThisFrame(string actionName)
+        {
+            var inputAction = reference.actions[actionName];
+            return inputAction.triggered && inputAction.ReadValue<float>() == 0f;
         }
     }
 }

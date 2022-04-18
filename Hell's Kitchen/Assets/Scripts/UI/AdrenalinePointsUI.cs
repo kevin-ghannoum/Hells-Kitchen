@@ -28,17 +28,16 @@ namespace UI
         private float _time;
         private TextMeshProUGUI _text;
 
-        public override void Start()
+        public void Start()
         {
-            base.Start();
             _text = canvas.GetComponentInChildren<TextMeshProUGUI>();
             _text.text = string.IsNullOrEmpty(stringText) ? $"{(value > 0 ? "+" : "")}{value}" : stringText;
             _text.color = color;
         }
 
-        public override void Update()
+        public override void LateUpdate()
         {
-            base.Update();
+            base.LateUpdate();
             
             // Animation time
             _time += Time.deltaTime;

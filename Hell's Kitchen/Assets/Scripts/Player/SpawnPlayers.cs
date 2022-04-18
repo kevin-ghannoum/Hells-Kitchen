@@ -8,12 +8,14 @@ namespace Player
     {
         [SerializeField] private GameObject playerPrefab;
         [SerializeField] private Transform[] spawnPoints;
+        
         private void Awake()
         {
             int numPlayers = PhotonNetwork.PlayerList.Length - 1;
             var spawnPoint = spawnPoints[numPlayers % spawnPoints.Length];
             var player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, Quaternion.identity);
             player.GetComponentInChildren<Camera>().gameObject.tag = Tags.MainCamera;
+            Debug.Log(player.transform.Find("VirtualCamera"));
             player.transform.Find("VirtualCamera").gameObject.SetActive(true);
         }
     }

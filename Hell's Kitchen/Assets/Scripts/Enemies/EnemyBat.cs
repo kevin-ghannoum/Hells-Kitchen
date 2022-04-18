@@ -34,7 +34,7 @@ namespace Enemies
             {
                 agent.Target = _player.transform.position;
 
-                if (agent.Arrived && Time.time - _lastAttack > (1.0f / attackRate))
+                if (agent.IsArrived && Time.time - _lastAttack > (1.0f / attackRate))
                 {
                     PerformAttack();
                     _lastAttack = Time.time;

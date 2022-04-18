@@ -1,101 +1,62 @@
-using System.Collections;
-using System.Collections.Generic;
 using Common.Enums;
 using UnityEngine;
+using Common.Interfaces;
+using Enemies.Enums;
+using Player;
 
-public class BeeEnemy : MonoBehaviour
+namespace Enemies
 {
-    private float Speed = 5;
-    [SerializeField] private float attackRange;
-    private GameObject target;
-    private GameObject[] targetList;
-    private float timeCounter;
-    private float wanderTimeCounter;
-    private GameObject Hive;
-    private Vector3 wanderPos;
-    private float wanderRadius = 7f;
-    private bool wanderCheck = true;
-    [SerializeField] private Animator anime;
-
-    private void Start()
+    public class BeeEnemy : Enemy
     {
-        targetList = GameObject.FindGameObjectsWithTag(Tags.Player);
-        Hive = GameObject.Find("Hive");
-        anime = gameObject.GetComponent<Animator>();
-        anime.SetBool("walking", true);
-        attackRange = 7;
-    }
+        private float Speed = 5;
+        [SerializeField] private float attackRange;
+        private PlayerController target;
+        private float timeCounter = 2;
+        private float wanderTimeCounter;
+        private float attackDur = 2;
+        private GameObject Hive;
+        private Vector3 wanderPos;
+        private float wanderRadius = 7f;
+        private bool wanderCheck = true;
+        [SerializeField] private Animator anime;
 
-    private void Update()
-    {
-        target = findCloset(targetList);
-        timeCounter += Time.deltaTime;
-        wanderTimeCounter += Time.deltaTime;
-        Vector3 hiveDirection = Hive.transform.position - transform.position;
-        hiveDirection.y = 0;
-        Vector3 targetDirection = target.transform.position - transform.position;
-        targetDirection.y = 0;
-
-        if (targetDirection.magnitude < 8)
+        private void Start()
         {
-            transform.LookAt(target.transform);
-            transform.position += targetDirection.normalized * Speed * Time.deltaTime;
-
+            target = GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>();
+            // Hive = GameObject.Find("Hive");
+            anime = gameObject.GetComponent<Animator>();
+            attackRange = 10;
         }
-        else
+
+        public override void Update()
         {
-            if (hiveDirection.magnitude > 8)
+            anime.SetBool("walking", true);
+            anime.SetBool("attacking", false);
+            timeCounter += Time.deltaTime;
+
+            if (Vector3.Distance(target.transform.position, transform.position) < attackRange)
             {
-                transform.LookAt(Hive.transform);
-                transform.position += hiveDirection.normalized * Speed * Time.deltaTime;
-            }
-            else
-            {
-                //wander
-                if (wanderCheck)
-                {
-                    wanderPos = new Vector3(Random.Range(Hive.transform.position.x - wanderRadius, Hive.transform.position.x + wanderRadius),
-                                            0,
-                                            Random.Range(Hive.transform.position.z - wanderRadius, Hive.transform.position.z + wanderRadius));
+                agent.Target = target.transform.position;
 
-                    wanderCheck = false;
-                }
-
-                Vector3 wanderDirection = wanderPos - transform.position;
-                wanderDirection = new Vector3(wanderDirection.x, 0, wanderDirection.z);
-                Debug.Log(Vector3.Distance(wanderPos, transform.position));
-
-                if (Vector3.Distance(wanderPos, new Vector3(transform.position.x, 0, transform.position.z)) < 2f && wanderTimeCounter > Random.Range(2, 4))
+                if (Vector3.Distance(target.transform.position, transform.position) < 1.2 && timeCounter > 1)
                 {
-                    wanderCheck = true;
-                    wanderTimeCounter = 0;
-                }
-                else if(Vector3.Distance(wanderPos, new Vector3(transform.position.x, 0, transform.position.z)) < 2f)
-                {
-                    // TODO is something supposed to go here?
-                }
-                else
-                {
-                    transform.rotation = Quaternion.LookRotation(wanderDirection);
-                    transform.position += wanderDirection.normalized * Speed * Time.deltaTime;
+                    anime.SetBool("walking", false);
+                    anime.SetBool("attacking", true);
+                    Attack();
+                    timeCounter = 0;
                 }
             }
         }
-    }
 
-    private GameObject findCloset(GameObject[] targetList)
-    {
-        GameObject currentTarget = targetList[0];
-        float distance = (targetList[0].transform.position - transform.position).magnitude;
-
-        for (int i = 1; i < targetList.Length; i++)
+        private void Attack()
         {
-            if (distance > (targetList[i].transform.position - transform.position).magnitude)
+            var colliders = Physics.OverlapSphere(transform.position, 3);
+
+            foreach (var col in colliders)
             {
-                currentTarget = targetList[i];
+                if (col.gameObject.CompareTag(Tags.Player))
+                    col.gameObject.GetComponent<IKillable>().TakeDamage(5);
             }
         }
-
-        return currentTarget;
     }
 }
