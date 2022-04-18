@@ -1,4 +1,4 @@
-﻿using Common.Enums;
+﻿using Common;
 using UnityEngine;
 
 namespace UI
@@ -7,17 +7,17 @@ namespace UI
     {
         public void LoadRestaurantScene()
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(Scenes.Restaurant);
+            SceneManager.Instance.LoadRestaurantScene();
         }
 
         public void OnQuit()
         {
-            Application.Quit();
+            SceneManager.Instance.QuitGame();
         }
         
         public void ReturnToMenu()
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(Scenes.MainMenu);
+            SceneManager.Instance.LoadMainMenu();
         }
     }
 }
