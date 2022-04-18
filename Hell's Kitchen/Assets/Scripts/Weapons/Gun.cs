@@ -1,3 +1,4 @@
+using Photon.Pun;
 using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -29,8 +30,18 @@ namespace Weapons
             playerAnimator.SetTrigger(PlayerAnimator.Shoot);
         }
         
+        [PunRPC]
         private void Fire()
         {
+            var photonView = GetComponentInParent<PhotonView>();
+            if (!photonView || !photonView.AmOwner)
+                return;
+            
+            photonView.RPC(nameof(ShootBullet), RpcTarget.AllViaServer);
+        }
+
+        private void ShootBullet()
+        { 
             var position = shootPosition.position;
             var rotation = playerController.transform.rotation;
             

@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using Common.Enums;
+using Photon.Pun;
+using PlayerInventory;
+using UI;
 using UnityEngine;
 
 namespace Common
 {
-    public class GameStateManager : MonoBehaviour
+    public class GameStateManager : MonoBehaviour, IPunObservable
     {
         public static GameStateManager Instance;
 
@@ -20,6 +23,9 @@ namespace Common
 
         public Dictionary<IRecipe, int> OrderList =  new Dictionary<IRecipe, int>();
         public List<string> purchasedWeapons =  new List<string>();
+        
+        public Inventory inventory = new Inventory();
+        public InventoryUI inventoryUI;
         
         private void Awake()
         {
@@ -42,5 +48,43 @@ namespace Common
             purchasedWeapons = new List<string>();
             dungeonTimeHasElapsed = true;
         }
+
+        #region PUNCallbacks
+
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if (stream.IsWriting)
+            {
+                stream.SendNext(inventory);
+                stream.SendNext(cashMoney);
+            }
+            else if(stream.IsReading)
+            {
+                stream.ReceiveNext();
+            }
+        }
+
+        #endregion
+
+        #region PlayerInventory
+
+        public Inventory GetPlayerInventory()
+        {
+            return inventory;
+        }
+
+        public void AddItemToInventory(Item item, int quantity)
+        {
+            inventory.AddItemToInventory(item, quantity);
+            inventoryUI.UpdateInventory(inventory.GetInventoryItems());
+        }
+
+        public void RemoveItemFromInventory(Item item, int quantity)
+        {
+            inventory.RemoveItemFromInventory(item, quantity);
+            inventoryUI.UpdateInventory(inventory.GetInventoryItems());
+        }
+
+        #endregion
     }
 }

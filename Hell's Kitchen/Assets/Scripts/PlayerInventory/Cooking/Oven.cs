@@ -12,12 +12,6 @@ namespace PlayerInventory.Cooking
     {
         private InputManager _input => InputManager.Instance;
 
-        private void Start()
-        {
-            // TODO Remove after feature complete
-            DebugAddInventoryAndOrders();
-        }
-
         private void OnTriggerStay(Collider other)
         {
             if (other.gameObject.CompareTag(Tags.Player) && _input.dropItem)
@@ -54,19 +48,6 @@ namespace PlayerInventory.Cooking
             }
             
             GameStateManager.Instance.cashMoney += totalIncome;
-        }
-
-        private void DebugAddInventoryAndOrders()
-        {
-            // TODO Remove After Testing
-            GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>().AddItemToInventory(Items.Fish, 20);
-            GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>().AddItemToInventory(Items.Honey, 20);
-            GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>().AddItemToInventory(Items.Mushroom, 20);
-            GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>().AddItemToInventory(Items.Meat, 20);
-            
-            GameStateManager.Instance.OrderList.Add(new Recipes.Hamburger(), 1);
-            GameStateManager.Instance.OrderList.Add(new Recipes.Salad(), 2);
-            GameStateManager.Instance.OrderList.Add(new Recipes.Sushi(), 5);
         }
     }
 }
