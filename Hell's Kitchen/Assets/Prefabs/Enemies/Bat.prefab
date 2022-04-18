@@ -99,9 +99,6 @@ MonoBehaviour:
   animator: {fileID: 1652066377872060580}
   hitPoints: 100
   deathDelay: 1
-  onKilled:
-    m_PersistentCalls:
-      m_Calls: []
   dropObject: {fileID: 1493679383233396486, guid: 77b5e100d52ab8c4493a7f0330165ac6, type: 3}
   maxDropsToSpawn: 3
   multipleSpawnRate: 0.3

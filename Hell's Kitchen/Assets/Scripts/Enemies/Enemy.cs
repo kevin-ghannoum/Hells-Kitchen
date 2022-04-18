@@ -1,6 +1,7 @@
 using Common.Interfaces;
 using Enemies.Enums;
 using UI;
+using Unity.Plastic.Newtonsoft.Json.Serialization;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,19 +26,17 @@ namespace Enemies
         private float deathDelay;
 
         [SerializeField]
-        protected UnityEvent onKilled;
-
-        [SerializeField]
         protected GameObject dropObject;
 
         [SerializeField] protected int maxDropsToSpawn = 3;
         
         [SerializeField][Range(0f, 1f)] private float multipleSpawnRate= 0.3f;
 
+        private bool isKilled = false;
+
         #region Public Getters
 
         public float HitPoints => hitPoints;
-        public UnityEvent Killed => onKilled;
 
         #endregion
 
@@ -83,22 +82,29 @@ namespace Enemies
 
         protected virtual void Die()
         {
-            Killed?.Invoke();
             animator.SetTrigger(EnemyAnimator.Die);
             Invoke(nameof(Destroy), deathDelay);
             agent.enabled = false;
             enabled = false;
-            SpawnDropOnDeath();
-
+            ItemDropOnDeath();
+            isKilled = true;
         }
 
-        private void SpawnDropOnDeath()
+        private void ItemDropOnDeath()
         {
+            if (isKilled)
+                return;
+            
+            var spawnPosition = new Vector3(gameObject.transform.position.x, 0.2f, gameObject.transform.position.z);
+            var offset = new Vector3(1f, 0f, 0.5f);
+            
             var shouldSpawnMore = Random.value < multipleSpawnRate;
             var numSpawned = 0;
-            do {
+
+            do{
                 numSpawned++;
-                Instantiate(dropObject);
+                Instantiate(dropObject, spawnPosition, Quaternion.identity);
+                spawnPosition += offset;
             } while (shouldSpawnMore && numSpawned < maxDropsToSpawn);
         }
 
