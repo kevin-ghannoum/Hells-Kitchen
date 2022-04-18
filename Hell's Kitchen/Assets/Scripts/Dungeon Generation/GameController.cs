@@ -2,6 +2,7 @@
 using Common;
 using Common.Enums;
 using Common.Interfaces;
+using Photon.Pun;
 using UnityEngine;
 using Player;
 using UI;
@@ -61,7 +62,7 @@ namespace Dungeon_Generation
             
             // set weapon in players hand
             var weapon = Weapons.Models.Weapons.GetItem(GameStateManager.Instance.carriedWeapon);
-            var weaponInstance = Instantiate(weapon.WeaponModel.Prefab);
+            var weaponInstance = PhotonNetwork.Instantiate(nameof(weapon.WeaponModel.Prefab), Vector3.zero, Quaternion.identity);
             weaponInstance.GetComponent<IPickup>()?.PickUp();
         }
 

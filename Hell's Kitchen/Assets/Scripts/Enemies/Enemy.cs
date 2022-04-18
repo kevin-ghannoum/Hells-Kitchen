@@ -1,5 +1,6 @@
 using Common.Interfaces;
 using Enemies.Enums;
+using Photon.Pun;
 using UI;
 using Unity.Plastic.Newtonsoft.Json.Serialization;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace Enemies
 {
     
     [RequireComponent(typeof(PathfindingAgent))]
-    public class Enemy : MonoBehaviour, IKillable
+    public class Enemy : MonoBehaviour, IKillable, IPunObservable
     {
         [Header("References")]
         [SerializeField]
@@ -103,18 +104,29 @@ namespace Enemies
 
             do{
                 numSpawned++;
-                Instantiate(dropObject, spawnPosition, Quaternion.identity);
+                PhotonNetwork.Instantiate(nameof(dropObject), spawnPosition, Quaternion.identity);
                 spawnPosition += offset;
             } while (shouldSpawnMore && numSpawned < maxDropsToSpawn);
         }
 
         private void Destroy()
         {
-            Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
         
         #endregion
-        
+
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if (stream.IsWriting)
+            {
+                stream.SendNext(hitPoints);
+            }
+            else if (stream.IsReading)
+            {
+                stream.ReceiveNext();
+            }
+        }
     }
 
 }
