@@ -1,14 +1,11 @@
-using System;
-using System.Collections.Generic;
 using Common;
 using Common.Enums;
 using Common.Interfaces;
 using Input;
-using UI;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Weapons;
-using PlayerInventory;
 
 namespace Player
 {
@@ -38,6 +35,7 @@ namespace Player
 
         private Animator _animator;
         private CharacterController _characterController;
+        private PhotonView _photonView;
         
         private float _speed = 0f;
         private IPickup _currentPickup;
@@ -46,6 +44,7 @@ namespace Player
         {
             _animator = GetComponentInChildren<Animator>();
             _characterController = GetComponent<CharacterController>();
+            _photonView = GetComponent<PhotonView>();
         }
 
         private void Awake()
@@ -70,6 +69,8 @@ namespace Player
 
         private void Update()
         {
+            if (!_photonView.IsMine) return;
+            
             var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             if (animatorStateInfo.IsName(PlayerAnimator.Move))
             {
@@ -110,9 +111,9 @@ namespace Player
 
         public void Roll(InputAction.CallbackContext callbackContext)
         {
-            if (GameStateManager.Instance.playerCurrentStamina > staminaCostRoll)
+            if (GameStateData.playerCurrentStamina > staminaCostRoll)
             {
-                GameStateManager.Instance.playerCurrentStamina -= staminaCostRoll;
+                GameStateData.playerCurrentStamina -= staminaCostRoll;
                 _animator.SetTrigger(PlayerAnimator.Roll);
             }
         }
@@ -151,12 +152,12 @@ namespace Player
 
         private bool CanSprint()
         {
-            return GameStateManager.Instance.playerCurrentStamina > 0;
+            return GameStateData.playerCurrentStamina > 0;
         }
 
         private void UpdateStamina()
         {
-            var stamina = GameStateManager.Instance.playerCurrentStamina;
+            var stamina = GameStateData.playerCurrentStamina;
             if (_input.run)
             {
                 stamina -= Time.deltaTime * staminaCostRun;
@@ -166,10 +167,10 @@ namespace Player
             else if (!_animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimator.Roll))
             {
                 stamina += Time.deltaTime * staminaRegenRate;
-                if (stamina > GameStateManager.Instance.playerMaxStamina)
-                    stamina = GameStateManager.Instance.playerMaxStamina;
+                if (stamina > GameStateData.playerMaxStamina)
+                    stamina = GameStateData.playerMaxStamina;
             }
-            GameStateManager.Instance.playerCurrentStamina = stamina;
+            GameStateData.playerCurrentStamina = stamina;
         }
 
         #endregion

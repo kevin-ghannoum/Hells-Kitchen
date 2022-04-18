@@ -16,7 +16,7 @@ namespace Dungeon_Generation
             if(other.gameObject.CompareTag(Tags.Player) && _input.interact)
             {
                 var gameController = GameObject.FindObjectOfType<GameController>();
-                if (GameStateManager.Instance.dungeonTimeHasElapsed || !gameController)
+                if (GameStateData.dungeonTimeHasElapsed || !gameController)
                     ReturnToRestaurant(other.gameObject);
                 else
                     gameController.StartNewGame();
@@ -31,12 +31,12 @@ namespace Dungeon_Generation
                 var heldWeapon = playerController.GetComponentInChildren<IPickup>();
                 if (heldWeapon != null)
                 {
-                    GameStateManager.Instance.carriedWeapon = WeaponInstance.None;
+                    GameStateData.carriedWeapon = WeaponInstance.None;
                     heldWeapon.RemoveFromPlayer();
                 }
             }
 
-            GameStateManager.Instance.playerCurrentHitPoints = GameStateManager.Instance.playerMaxHitPoints;
+            GameStateData.playerCurrentHitPoints = GameStateData.playerMaxHitPoints;
             SceneManager.Instance.LoadRestaurantScene();
         }
     }

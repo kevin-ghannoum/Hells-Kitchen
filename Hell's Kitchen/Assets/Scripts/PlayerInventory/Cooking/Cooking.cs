@@ -49,11 +49,11 @@ namespace PlayerInventory.Cooking
                 // remove used items
                 foreach (var (item, quantity) in ingredientList)
                 {
-                    GameStateManager.Instance.RemoveItemFromInventory(item, quantity);
+                    GameStateManager.RemoveItemFromInventory(item.ItemInstance, quantity);
                 }
             
                 // add recipe result to inventory
-                GameStateManager.Instance.AddItemToInventory(recipe.GetRecipeResult(), 1);
+                GameStateManager.AddItemToInventory(recipe.GetRecipeResult().ItemInstance, 1);
                 return true;
             }
             return false;

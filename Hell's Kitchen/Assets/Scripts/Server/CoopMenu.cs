@@ -1,4 +1,6 @@
-﻿using Common.Enums;
+﻿using Common;
+using Common.Enums;
+using Input;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
@@ -35,7 +37,8 @@ namespace UI
 
         public override void OnJoinedRoom()
         {
-            PhotonNetwork.LoadLevel(Scenes.Restaurant);
+            SceneManager.Instance.LoadRestaurantScene();
+            InputManager.Instance.Activate();
         }
     }
 }

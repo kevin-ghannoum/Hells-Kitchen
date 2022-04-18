@@ -13,13 +13,13 @@ namespace UI
         private void Start()
         {
             healthSlider.minValue = 0f;
-            healthSlider.maxValue = GameStateManager.Instance.playerMaxHitPoints;
+            healthSlider.maxValue = GameStateData.playerMaxHitPoints;
         }
 
         private void Update()
         {
-            healthValue.text = $"{GameStateManager.Instance.playerCurrentHitPoints} / {GameStateManager.Instance.playerMaxHitPoints}";
-            healthSlider.value = GameStateManager.Instance.playerCurrentHitPoints;
+            healthValue.text = $"{GameStateData.playerCurrentHitPoints} / {GameStateData.playerMaxHitPoints}";
+            healthSlider.value = GameStateData.playerCurrentHitPoints;
         }
     }
 }

@@ -58,7 +58,7 @@ namespace Weapons
         public virtual void PickUp()
         {
             _canBePickedUp = false;
-            GameStateManager.Instance.carriedWeapon = WeaponInstance;
+            GameStateData.carriedWeapon = WeaponInstance;
             ReparentObjectToPlayerHand();
             DisableRigidbody();
             SetOutline(false);
@@ -76,7 +76,7 @@ namespace Weapons
             transform.SetParent(null);
             transform.localScale = new Vector3(1, 1, 1);
             RemoveListeners();
-            GameStateManager.Instance.carriedWeapon = WeaponInstance.None;
+            GameStateData.carriedWeapon = WeaponInstance.None;
             EnableRigidBody();
             SetOutline(true);
         }
@@ -95,7 +95,7 @@ namespace Weapons
                 Random.Range(-throwAngularSpeed, throwAngularSpeed)
             );
             RemoveListeners();
-            GameStateManager.Instance.carriedWeapon = WeaponInstance.None;
+            GameStateData.carriedWeapon = WeaponInstance.None;
             EnableRigidBody();
             SetOutline(true);
         }
@@ -140,7 +140,7 @@ namespace Weapons
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(Tags.Player) && _canBePickedUp && !GameStateManager.Instance.IsCarryingWeapon)
+            if (other.CompareTag(Tags.Player) && _canBePickedUp && !GameStateData.IsCarryingWeapon)
             {
                 other.GetComponent<PlayerController>().OnPickupTriggerEnter(this);
             }

@@ -21,7 +21,7 @@ namespace PlayerInventory
             if (other.CompareTag(Tags.Player))
             {
                 PlayerController player = other.gameObject.GetComponent<PlayerController>();
-                GameStateManager.Instance.AddItemToInventory(Items.GetItem(item), quantity);
+                GameStateManager.AddItemToInventory(item, quantity);
                 AdrenalinePointsUI.SpawnIngredientString(transform.position + 2.0f * Vector3.up, "+ " + quantity + " " + item);
                 PhotonNetwork.Destroy(gameObject);
             }

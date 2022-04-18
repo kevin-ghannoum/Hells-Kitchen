@@ -14,7 +14,7 @@ public class RestaurantDoor : MonoBehaviour
     private InputManager _input => InputManager.Instance;
 
     private static IRecipe[] _availableRecipes;
-    private Dictionary<IRecipe, int> OrderList => GameStateManager.Instance.OrderList;
+    private Dictionary<IRecipe, int> OrderList = new Dictionary<IRecipe, int>(); // TODO: cristian will fix this
 
     private void Awake()
     {
@@ -62,7 +62,7 @@ public class RestaurantDoor : MonoBehaviour
     {
         foreach (var order in OrderList)
         {
-            GameStateManager.Instance.cashMoney -= order.Value * missedOrderPenalty;
+            GameStateManager.SetCashMoney(GameStateData.cashMoney - order.Value * missedOrderPenalty);
         }
     }
     

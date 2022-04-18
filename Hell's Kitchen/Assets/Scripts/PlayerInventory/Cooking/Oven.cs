@@ -3,6 +3,7 @@ using Common;
 using Common.Enums;
 using Enums.Items;
 using Input;
+using Photon.Pun;
 using Player;
 using UnityEngine;
 
@@ -23,31 +24,33 @@ namespace PlayerInventory.Cooking
             }
         }
 
+        [PunRPC]
         private void AutoCraftOrderedRecipes()
         {
-            var orderList = GameStateManager.Instance.OrderList;
-            var keys = orderList.Keys.ToList();
+            // TODO: take whatever is on Cristian's branch
+            // var orderList = GameStateManager.Instance.OrderList;
+            // var keys = orderList.Keys.ToList();
             var totalIncome = 0f;
-            foreach (var key in keys)
-            {
-                int numToCraft = orderList[key];
-                for (int i = 0; i < numToCraft; i++)
-                {
-                    if (Cooking.CookRecipe(key))
-                    {
-                        // Get money based on order
-                        totalIncome += key.GetCost();
-                        
-                        // Decrement number of recipes available to cook
-                        if (orderList[key] > 1)
-                            orderList[key]--;
-                        else
-                            orderList.Remove(key);
-                    }
-                }
-            }
+            // foreach (var key in keys)
+            // {
+            //     int numToCraft = orderList[key];
+            //     for (int i = 0; i < numToCraft; i++)
+            //     {
+            //         if (Cooking.CookRecipe(key))
+            //         {
+            //             // Get money based on order
+            //             totalIncome += key.GetCost();
+            //             
+            //             // Decrement number of recipes available to cook
+            //             if (orderList[key] > 1)
+            //                 orderList[key]--;
+            //             else
+            //                 orderList.Remove(key);
+            //         }
+            //     }
+            // }
             
-            GameStateManager.Instance.cashMoney += totalIncome;
+            GameStateManager.SetCashMoney(GameStateData.cashMoney + totalIncome);
         }
     }
 }
