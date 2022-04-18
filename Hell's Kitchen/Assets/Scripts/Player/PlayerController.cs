@@ -110,7 +110,7 @@ namespace Player
             if (GameStateData.playerCurrentStamina > staminaCostRoll)
             {
                 GameStateData.playerCurrentStamina -= staminaCostRoll;
-                GetComponentInChildren<PhotonView>().RPC("RollRPC", RpcTarget.All);
+                GetComponentInChildren<PhotonView>().RPC("RollRPC", RpcTarget.AllViaServer);
             }
         }
 
@@ -122,7 +122,7 @@ namespace Player
 
         public void PickUp(InputAction.CallbackContext callbackContext)
         {
-            GetComponentInChildren<PhotonView>().RPC("PickUpRPC", RpcTarget.All);
+            GetComponentInChildren<PhotonView>().RPC("PickUpRPC", RpcTarget.AllViaServer);
         }
 
         [PunRPC]

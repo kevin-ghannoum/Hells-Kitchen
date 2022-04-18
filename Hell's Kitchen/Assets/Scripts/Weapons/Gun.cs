@@ -28,7 +28,7 @@ namespace Weapons
                 return;
 
             var photonView = GetComponentInParent<PhotonView>();
-            photonView.RPC("ShootRPC", RpcTarget.All);
+            photonView.RPC("ShootRPC", RpcTarget.AllViaServer);
         }
 
         [PunRPC]

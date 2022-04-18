@@ -55,7 +55,7 @@ namespace Player
                 return;
 
             // HP calculation and animation
-            photonView.RPC("TakeHitRPC", RpcTarget.All);
+            photonView.RPC("TakeHitRPC", RpcTarget.AllViaServer);
             HitPoints -= damage;
             _invulnerabilityTimer = 0;
 
@@ -84,7 +84,7 @@ namespace Player
         {
             AudioSource.PlayClipAtPoint(deathSound, transform.position);
             Killed.Invoke();
-            photonView.RPC("DeadRPC", RpcTarget.All);
+            photonView.RPC("DeadRPC", RpcTarget.AllViaServer);
             Invoke(nameof(ReturnToRestaurant), transitionToRestaurantTime);
         }
 
