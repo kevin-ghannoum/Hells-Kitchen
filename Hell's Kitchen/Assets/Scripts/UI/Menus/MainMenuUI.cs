@@ -9,6 +9,8 @@ namespace UI
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private GameObject canvas;
         [SerializeField] private Animator animator;
+        [SerializeField] private GameObject mainMenu;
+        [SerializeField] private GameObject coopMenu;
 
         private void Awake()
         {
@@ -24,6 +26,18 @@ namespace UI
             animator.Play("PlayerCamera"); // camera transition
             Invoke(nameof(LoadRestaurantScene), .5f); // scene change
             InputManager.Instance.Activate();
+        }
+
+        public void CoopMode()
+        {
+            mainMenu.SetActive(false);
+            coopMenu.SetActive(true);
+        }
+
+        public void Back()
+        {
+            mainMenu.SetActive(true);
+            coopMenu.SetActive(false);
         }
     }
 }
