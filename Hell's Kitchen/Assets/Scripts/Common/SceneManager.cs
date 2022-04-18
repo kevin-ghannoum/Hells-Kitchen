@@ -1,4 +1,5 @@
 ﻿using Common.Enums;
+using Photon.Pun;
 using UnityEngine;
 
 namespace Common
@@ -12,28 +13,29 @@ namespace Common
             if (Instance == null)
                 Instance = this;
 
+            PhotonNetwork.AutomaticallySyncScene = true;
             DontDestroyOnLoad(Instance.gameObject);
         }
 
         public void LoadMainMenu()
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(Scenes.MainMenu);
+            PhotonNetwork.LoadLevel(Scenes.MainMenu);
         }
 
 
         public void LoadGameOverScene()
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(Scenes.GameOver);
+            PhotonNetwork.LoadLevel(Scenes.GameOver);
         }
 
         public void LoadRestaurantScene()
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(Scenes.Restaurant);
+            PhotonNetwork.LoadLevel(Scenes.Restaurant);
         }
 
         public void LoadDungeonScene()
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(Scenes.Dungeon);
+            PhotonNetwork.LoadLevel(Scenes.Dungeon);
         }
         
         public void QuitGame()

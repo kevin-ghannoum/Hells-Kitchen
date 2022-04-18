@@ -23,8 +23,7 @@ namespace Player
         [SerializeField] private float turnSmoothVelocity = 10f;
         [SerializeField] private float speedSmoothVelocity = 10f;
         [SerializeField] private AnimationCurve rollSpeedCurve;
-        [SerializeField] private InventoryUI _inventoryUI;
-       
+
         [Header("Stamina")]
         [SerializeField] private float staminaCostRun = 1.0f;
         [SerializeField] private float staminaCostRoll = 1.0f;
@@ -39,7 +38,7 @@ namespace Player
 
         private Animator _animator;
         private CharacterController _characterController;
-        private Inventory _inventory = new Inventory();
+        
         private float _speed = 0f;
         private IPickup _currentPickup;
 
@@ -56,8 +55,7 @@ namespace Player
 
             _animator = GetComponentInChildren<Animator>();
             _characterController = GetComponent<CharacterController>();
-            _inventory = new Inventory();
-            
+
             _input.reference.actions["Roll"].performed += Roll;
             _input.reference.actions["PickUp"].performed += PickUp;
         }
@@ -172,27 +170,6 @@ namespace Player
                     stamina = GameStateManager.Instance.playerMaxStamina;
             }
             GameStateManager.Instance.playerCurrentStamina = stamina;
-        }
-
-        #endregion
-
-        #region PlayerInventory
-
-        public Inventory GetPlayerInventory()
-        {
-            return _inventory;
-        }
-
-        public void AddItemToInventory(Item item, int quantity)
-        {
-            _inventory.AddItemToInventory(item, quantity);
-            _inventoryUI.UpdateInventory(_inventory.GetInventoryItems());
-        }
-
-        public void RemoveItemFromInventory(Item item, int quantity)
-        {
-            _inventory.RemoveItemFromInventory(item, quantity);
-            _inventoryUI.UpdateInventory(_inventory.GetInventoryItems());
         }
 
         #endregion
