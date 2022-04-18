@@ -190,6 +190,10 @@ PrefabInstance:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 1737616103}
+    - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
+      propertyPath: enemySpawnRate
+      value: 0.308
+      objectReference: {fileID: 0}
     - target: {fileID: 2752677855204124927, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
       propertyPath: m_Name
       value: MazeController
@@ -422,6 +426,10 @@ PrefabInstance:
       value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 238747066, guid: ab126534be57d744eab097b38e421eda, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 238747066, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_LocalPosition.z
       value: -10
       objectReference: {fileID: 0}
@@ -479,6 +487,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab126534be57d744eab097b38e421eda, type: 3}
+--- !u!1 &363843376 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 238747065, guid: ab126534be57d744eab097b38e421eda, type: 3}
+  m_PrefabInstance: {fileID: 363843375}
+  m_PrefabAsset: {fileID: 0}
+--- !u!124 &363843377
+Behaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363843376}
+  m_Enabled: 1
 --- !u!1001 &407878163
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -663,7 +684,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4017579666321907560, guid: cf4e945f8780c4a468d5ba3246ec8224, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4362474867069765074, guid: cf4e945f8780c4a468d5ba3246ec8224, type: 3}
       propertyPath: m_RootOrder
@@ -946,6 +967,10 @@ PrefabInstance:
     - target: {fileID: 2558013046334156685, guid: 9fc348fdaf1694d41b5cb105dbbeb7e2, type: 3}
       propertyPath: m_Name
       value: Knight
+      objectReference: {fileID: 0}
+    - target: {fileID: 2558013046334156685, guid: 9fc348fdaf1694d41b5cb105dbbeb7e2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2896997620268381495, guid: 9fc348fdaf1694d41b5cb105dbbeb7e2, type: 3}
       propertyPath: m_RootOrder
