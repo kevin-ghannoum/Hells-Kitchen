@@ -14,6 +14,7 @@ namespace UI
         {
             title.outlineWidth = .05f;
             title.outlineColor = Color.black;
+            animator.Play("MenuCamera");
             InputManager.Instance.Deactivate();
         }
 

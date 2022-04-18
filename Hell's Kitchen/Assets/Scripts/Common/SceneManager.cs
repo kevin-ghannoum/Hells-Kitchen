@@ -17,11 +17,13 @@ namespace Common
 
         public void LoadMainMenu()
         {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(Scenes.MainMenu);
         }
 
 
         public void LoadGameOverScene()
         {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(Scenes.GameOver);
         }
 
         public void LoadRestaurantScene()
