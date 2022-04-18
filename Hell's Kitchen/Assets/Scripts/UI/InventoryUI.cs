@@ -28,6 +28,11 @@ namespace UI
             _input.reference.actions["OpenInventory"].performed += OpenInventory;
         }
 
+        private void OnDestroy()
+        {
+            _input.reference.actions["OpenInventory"].performed -= OpenInventory;
+        }
+
         private void Start()
         {
             inventoryItemSlot = inventoryContainer.transform.GetChild(0);

@@ -57,6 +57,7 @@ namespace Player
             // If the player's hp is at 0 or lower, they die
             if (HitPoints <= 0)
             {
+                HitPoints = 0;
                 Die();
                 return;
             }
