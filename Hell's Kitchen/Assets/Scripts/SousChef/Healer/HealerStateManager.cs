@@ -27,8 +27,6 @@ public class HealerStateManager : MonoBehaviour
         sc = gameObject.GetComponent<SousChef>();
         currentState = followState;
         currentState.EnterState(this);
-        transform.position = sc.player.transform.position;
-
     }
 
 

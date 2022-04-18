@@ -13,7 +13,7 @@ public class SousChef : MonoBehaviour, IKillable
     [SerializeField] public float followDistance;
     [SerializeField] public float attackRange;
     [SerializeField] public float searchRange; // must be bigger than follow Distance and attackRange
-    [SerializeField] public GameObject player;
+    public GameObject player;
     [SerializeField] public PathfindingAgent agent;
     public float hitPoints;
     public float HitPoints => hitPoints;
@@ -25,8 +25,9 @@ public class SousChef : MonoBehaviour, IKillable
     // public Transform currentLootTarget { get; set; }
 
     GameObject gameStateManager;
-    void Start()
+    void Awake()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         hitPoints = maxHealth;
         agent.Target = player.transform.position;
         agent.ArrivalRadius = followDistance;
