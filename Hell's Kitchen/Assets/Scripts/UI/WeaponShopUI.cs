@@ -60,7 +60,7 @@ namespace UI
                 var buttonComponent = button.GetComponent<Button>();
                 buttonComponent.onClick.AddListener(delegate { BuyWeapon(weapon, buttonComponent); });
 
-                if (GameStateManager.Instance.PurchasedWeapons.Contains(weapon.name))
+                if (GameStateManager.Instance.purchasedWeapons.Contains(weapon.name))
                     buttonComponent.interactable = false;
 
                 var text = button.GetComponentInChildren<TextMeshProUGUI>();
@@ -78,7 +78,7 @@ namespace UI
         private void PerformTransaction(string weaponName, float cost)
         {
             GameStateManager.Instance.cashMoney -= cost;
-            GameStateManager.Instance.PurchasedWeapons.Add(weaponName);
+            GameStateManager.Instance.purchasedWeapons.Add(weaponName);
         }
     }
 }

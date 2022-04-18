@@ -14,7 +14,7 @@ namespace Input
         public bool dropItem;
         public bool throwItem;
         public bool interact;
-        public bool openInventory;
+        public bool openPauseMenu;
 
         [Header("References")] 
         public PlayerInput reference;
@@ -80,9 +80,9 @@ namespace Input
             interact = context.ReadValueAsButton();
         }
         
-        public void OnOpenInventory(InputAction.CallbackContext context)
+        public void OnOpenPauseMenu(InputAction.CallbackContext context)
         {
-            openInventory = context.ReadValueAsButton();
+            openPauseMenu = context.ReadValueAsButton();
         }
         
         public void Deactivate()

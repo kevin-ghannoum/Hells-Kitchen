@@ -17,4 +17,9 @@ public class PigCollider : MonoBehaviour
     {
         pig.OnPigTrigger(col);
     }
+
+    void OnTriggerStay(Collider col)
+    {
+        pig.OnPigChargeTrigger(col);
+    }
 }

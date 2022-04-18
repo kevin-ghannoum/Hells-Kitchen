@@ -8,8 +8,7 @@ TagManager:
   - Pathfinding
   - Weapon
   - UICamera
-  - SousChef
-  - GameStateManager
+  - MazeStart
   layers:
   - Default
   - TransparentFX
@@ -21,9 +20,9 @@ TagManager:
   - Enemies
   - Collider
   - Collectibles
-  - SousChef
   - 
-  - lensFlareShell
+  - 
+  - 
   - 
   - 
   - 

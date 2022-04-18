@@ -369,14 +369,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: -741644595512488671}
   animator: {fileID: 3995912497361030879}
-  damagePrefab: {fileID: 298881605022184068, guid: 3dd0aff8443794b4fa082e6645839d8f, type: 3}
   hitPoints: 150
   deathDelay: 1
-  onKilled:
-    m_PersistentCalls:
-      m_Calls: []
+  dropObject: {fileID: 5575247230749135019, guid: 00853119909c0ee498d31c19ec69d00d, type: 3}
+  maxDropsToSpawn: 4
+  multipleSpawnRate: 0.4
   attackRate: 0.25
-  attackDamage: 15
+  chargeDamage: 15
+  attackDamage: 5
   aggroRadius: 25
   chargeSpeed: 15
   chargeTime: 1

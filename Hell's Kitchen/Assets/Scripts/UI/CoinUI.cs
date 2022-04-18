@@ -10,12 +10,12 @@ namespace UI
 
         private void Start()
         {
-            coinValue.text = "{000}";
+            coinValue.text = "x {000}";
         }
 
         private void Update()
         {
-            coinValue.text = $"{GameStateManager.Instance.cashMoney}";
+            coinValue.text = $"x {GameStateManager.Instance.cashMoney}";
         }
     }
 }

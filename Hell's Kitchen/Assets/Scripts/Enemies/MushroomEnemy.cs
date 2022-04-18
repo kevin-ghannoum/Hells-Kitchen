@@ -1,61 +1,59 @@
-using System.Collections;
-using System.Collections.Generic;
 using Common.Enums;
+using Common.Interfaces;
+using Enemies.Enums;
+using Player;
 using UnityEngine;
 
-public class MushroomEnemy : MonoBehaviour
+namespace Enemies
 {
-    [SerializeField] private float Speed;
-    [SerializeField] private float attackRange;
-    [SerializeField] private GameObject target;
-    private GameObject[] targetList;
-    [SerializeField] private GameObject bullet;
-    [SerializeField] private Transform bulletPos;
-    private float timeCounter;
-
-    [SerializeField] private Animator anime;
-
-    private void Start()
+    public class MushroomEnemy : Enemy
     {
-        targetList = GameObject.FindGameObjectsWithTag(Tags.Player);
-        anime = gameObject.GetComponent<Animator>();
-        attackRange = 10;
-    }
+        [SerializeField] private float Speed;
+        [SerializeField] private float attackRange;
+        private PlayerController target;
+        [SerializeField] private GameObject bullet;
+        [SerializeField] private Transform bulletPos;
+        private float timeCounter = 2;
+        private Vector3 direction;
 
-    private void Update()
-    {
-        anime.SetBool("shooting", false);
-        target = findCloset(targetList);
-        timeCounter += Time.deltaTime;
-        Vector3 direction = target.transform.position - transform.position;
+        [SerializeField] private Animator anime;
 
-        if ((direction).magnitude < attackRange)
+        private void Start()
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 200f);
-
-            if (timeCounter > 2)
-            {
-                anime.SetBool("shooting", true);
-                GameObject Bullet = GameObject.Instantiate(bullet, bulletPos.position, Quaternion.identity);
-                Bullet.GetComponent<BulletControl>().direction = direction;
-                timeCounter = 0;
-            }
+            target = GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>();
+            anime = gameObject.GetComponent<Animator>();
+            attackRange = 20;
         }
-    }
-
-    private GameObject findCloset(GameObject[] targetList)
-    {
-        GameObject currentTarget = targetList[0];
-        float distance = (targetList[0].transform.position - transform.position).magnitude;
-
-        for (int i = 1; i < targetList.Length; i++)
+        public override void Update()
         {
-            if (distance > (targetList[i].transform.position - transform.position).magnitude)
+            timeCounter += Time.deltaTime;
+            agent.Target = target.transform.position;
+            direction = target.transform.position - transform.position;
+
+            if (direction.magnitude < attackRange)
             {
-                currentTarget = targetList[i];
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 200f);
+
+                if (timeCounter > 2)
+                {
+                    RaycastHit hit;
+                    if (Physics.Raycast(transform.position + Vector3.up * 0.5f, (target.transform.position - transform.position).normalized, out hit))
+                    {
+                        if (hit.collider.gameObject.tag == "Player")
+                        {
+                            Invoke("shoot", 0.5f);
+                            timeCounter = 0;
+                        }
+                    }
+                }
             }
         }
 
-        return currentTarget;
+        private void shoot()
+        {
+            animator.SetTrigger(EnemyAnimator.Attack);
+            GameObject Bullet = GameObject.Instantiate(bullet, bulletPos.position, Quaternion.identity);
+            Bullet.GetComponent<BulletControl>().direction = direction.normalized;
+        }
     }
 }

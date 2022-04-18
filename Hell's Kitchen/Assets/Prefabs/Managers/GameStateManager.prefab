@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7471086848112553623}
   m_Layer: 0
   m_Name: GameStateManager
-  m_TagString: GameStateManager
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   playerCurrentHitPoints: 100
   playerMaxStamina: 5
   playerCurrentStamina: 5
-  carriedWeapon: {fileID: 0}
+  carriedWeapon: 0
   cashMoney: 0
-  dungeonTimeHasElapsed: 0
-  PurchasedWeapons: []
+  dungeonTimeHasElapsed: 1
+  purchasedWeapons: []

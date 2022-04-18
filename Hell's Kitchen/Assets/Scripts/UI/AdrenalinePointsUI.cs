@@ -1,7 +1,5 @@
-using System;
 using TMPro;
 using UnityEditor;
-using UnityEditor.Graphs;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,6 +9,9 @@ namespace UI
     {
         [SerializeField]
         public float value = 200;
+        
+        [SerializeField]
+        public string stringText = "";
         
         [SerializeField]
         private float offsetY = 50;
@@ -31,7 +32,7 @@ namespace UI
         {
             base.Start();
             _text = canvas.GetComponentInChildren<TextMeshProUGUI>();
-            _text.text = $"{(value > 0 ? "+" : "")}{value}";
+            _text.text = string.IsNullOrEmpty(stringText) ? $"{(value > 0 ? "+" : "")}{value}" : stringText;
             _text.color = color;
         }
 
@@ -44,7 +45,7 @@ namespace UI
             var normalizedTime = _time / animationTime;
             
             // Set text and color
-            _text.text = $"{(value > 0 ? "+" : "")}{value}";
+            _text.text = string.IsNullOrEmpty(stringText) ? $"{(value > 0 ? "+" : "")}{value}" : stringText;
             var textColor = new Color(color.r, color.g, color.b, 1.0f - normalizedTime);
             _text.color = textColor;
             
@@ -68,7 +69,12 @@ namespace UI
             SpawnAdrenalineNumbers(worldPosition, value, 70, new Color(0.9058824f, 0.2941177f, 0.2941177f));
         }
 
-        public static void SpawnAdrenalineNumbers(Vector3 worldPosition, float value, float offsetY, Color color)
+        public static void SpawnIngredientString(Vector3 worldPosition, string value)
+        {
+            SpawnAdrenalineText(worldPosition, value, 70, Color.grey);
+        }
+
+        private static void SpawnAdrenalineNumbers(Vector3 worldPosition, float value, float offsetY, Color color)
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/UI/AdrenalinePointsUI.prefab");
             var points = Instantiate(prefab, worldPosition + new Vector3(Random.Range(-.5f, .5f), 0, Random.Range(-.5f, .5f)), Quaternion.identity);
@@ -76,6 +82,21 @@ namespace UI
             if (adrenalinePointsUI)
             {
                 adrenalinePointsUI.value = value;
+                adrenalinePointsUI.stringText = "";
+                adrenalinePointsUI.color = color;
+                adrenalinePointsUI.offsetY = offsetY;
+            }
+        }
+        
+        private static void SpawnAdrenalineText(Vector3 worldPosition, string text, float offsetY, Color color)
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/UI/AdrenalinePointsUI.prefab");
+            var points = Instantiate(prefab, worldPosition + new Vector3(Random.Range(-.5f, .5f), 0, Random.Range(-.5f, .5f)), Quaternion.identity);
+            var adrenalinePointsUI = points.GetComponent<AdrenalinePointsUI>();
+            if (adrenalinePointsUI)
+            {
+                adrenalinePointsUI.value = 0;
+                adrenalinePointsUI.stringText = text;
                 adrenalinePointsUI.color = color;
                 adrenalinePointsUI.offsetY = offsetY;
             }
