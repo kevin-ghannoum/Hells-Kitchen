@@ -522,7 +522,7 @@ MonoBehaviour:
   staminaCostRoll: 1
   staminaRegenRate: 1
   CharacterHand: {fileID: 5702439285158563841}
-  DamagePosition: {fileID: 0}
+  DamagePosition: {fileID: 2940187845684406615}
   DamageRadius: 1.5
   _photonView: {fileID: 0}
 --- !u!114 &8088586115401309953
