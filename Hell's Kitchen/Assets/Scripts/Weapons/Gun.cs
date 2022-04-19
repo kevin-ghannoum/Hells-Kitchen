@@ -36,19 +36,19 @@ namespace Weapons
             if (!photonView || !photonView.AmOwner)
                 return;
 
-            photonView.RPC(nameof(ShootBullet), RpcTarget.AllViaServer);
+            photonView.RPC(nameof(ShootBullet), RpcTarget.All, playerController.transform.right, playerController.transform.rotation);
         }
         
         [PunRPC]
-        private void ShootBullet()
+        private void ShootBullet(Vector3 playerRightTransform, Quaternion playerRotation)
         {
             var position = shootPosition.position;
-            var rotation = playerController.transform.rotation;
+            var rotation = playerRotation;
 
             // Bullets
             for (int i = -bulletCount / 2; i <= bulletCount / 2; i++)
             {
-                var bullet = Instantiate(bulletPrefab, position + playerController.transform.right * 0.5f * i, rotation * Quaternion.Euler(0, i * bulletSpread, 0));
+                var bullet = Instantiate(bulletPrefab, position + playerRightTransform * 0.5f * i, rotation * Quaternion.Euler(0, i * bulletSpread, 0));
                 bullet.GetComponent<Bullet>().Damage = Damage;
                 bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletSpeed;
                 Destroy(bullet, bulletLifetime);
