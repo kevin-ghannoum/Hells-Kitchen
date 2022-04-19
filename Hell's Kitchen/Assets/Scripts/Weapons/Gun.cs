@@ -27,16 +27,16 @@ namespace Weapons
             base.Use(callbackContext);
             if (!playerAnimator)
                 return;
-
+            
             playerAnimator.SetTrigger(PlayerAnimator.Shoot);
         }
 
         private void Fire()
         {
-            var photonView = GetComponent<PhotonView>();
-            if (!photonView || !photonView.IsMine)
+            Debug.Log($"FIRE - IS MINE - {photonView.IsMine}");
+            if (!photonView.IsMine)
                 return;
-
+            
             ShootBullet(playerController.transform.right,  playerController.transform.rotation);
         }
         
@@ -73,10 +73,13 @@ namespace Weapons
             animationEvents.fireGun.RemoveListener(Fire);
         }
 
-        IEnumerator  DestroyBullet(GameObject bullet)
+        IEnumerator DestroyBullet(GameObject bullet)
         {
             yield return new WaitForSeconds(bulletLifetime);
-            PhotonNetwork.Destroy(bullet);
+            if (bullet != null)
+            {
+                PhotonNetwork.Destroy(bullet);
+            }
         }
     }
 }

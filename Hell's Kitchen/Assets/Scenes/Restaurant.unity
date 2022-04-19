@@ -1971,6 +1971,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4914411154632036035, guid: 9ada5b05506059547a13c4326c596216, type: 3}
+      propertyPath: OwnershipTransfer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5389441482071718669, guid: 9ada5b05506059547a13c4326c596216, type: 3}
       propertyPath: m_Name
       value: Scimitar

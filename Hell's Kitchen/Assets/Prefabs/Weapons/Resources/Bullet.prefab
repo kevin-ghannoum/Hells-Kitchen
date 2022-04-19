@@ -219,6 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletHit: {fileID: 5865868290920950645, guid: 7db9188bbb1c6d24a840cbad90a00c8a, type: 3}
+  photonView: {fileID: 3254242285646836382}
 --- !u!114 &3254242285646836382
 MonoBehaviour:
   m_ObjectHideFlags: 0

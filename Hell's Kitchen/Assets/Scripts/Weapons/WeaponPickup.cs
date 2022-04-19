@@ -34,7 +34,7 @@ namespace Weapons
 
         private float _damage = 10.0f;
 
-        private PhotonView _photonView;
+        protected PhotonView photonView;
 
         public float Damage
         {
@@ -54,19 +54,19 @@ namespace Weapons
 
         private void Awake()
         {
-            _photonView = GetComponent<PhotonView>();
+            photonView = GetComponent<PhotonView>();
         }
 
         public virtual void PickUp()
         {
             GetComponentsFromLocalPlayer();
-            var viewId = NetworkHelper.GetLocalPlayerObject().GetComponent<PhotonView>().ViewID;
-            
             _canBePickedUp = false;
+            
+            TransferOwnership();
+            photonView.RPC(nameof(PickUpRPC), RpcTarget.All, true);
+            photonView.RPC(nameof(ReparentObjectToPlayerHandRPC), RpcTarget.All, NetworkHelper.GetLocalPlayerPhotonView().ViewID);
+            photonView.RPC(nameof(DisableRigidbody), RpcTarget.All);
             GameStateData.carriedWeapon = WeaponInstance;
-            _photonView.RPC(nameof(ReparentObjectToPlayerHand), RpcTarget.All, viewId);
-           // ReparentObjectToPlayerHand(viewId);
-            _photonView.RPC(nameof(DisableRigidbody), RpcTarget.All);
             AddListeners();
         }
 
@@ -77,19 +77,16 @@ namespace Weapons
 
         public void RemoveFromPlayer()
         {
-            _canBePickedUp = true;
-            transform.SetParent(null);
-            transform.localScale = new Vector3(1, 1, 1);
             RemoveListeners();
+            
+            photonView.RPC(nameof(PickUpRPC), RpcTarget.All, false);
+            photonView.RPC(nameof(RemoveObjectParentRPC), RpcTarget.All);
+            photonView.RPC(nameof(EnableRigidBody), RpcTarget.All);
             GameStateData.carriedWeapon = WeaponInstance.None;
-            _photonView.RPC(nameof(EnableRigidBody), RpcTarget.All);
         }
 
         public void Throw(InputAction.CallbackContext callbackContext)
         {
-            _canBePickedUp = true;
-            transform.SetParent(null);
-            transform.localScale = new Vector3(1, 1, 1);
             transform.position = playerController.DamagePosition.position;
             transform.rotation = playerController.transform.rotation;
             rigidbody.velocity = playerController.transform.forward * throwSpeed;
@@ -99,8 +96,11 @@ namespace Weapons
                 Random.Range(-throwAngularSpeed, throwAngularSpeed)
             );
             RemoveListeners();
+            
+            photonView.RPC(nameof(PickUpRPC), RpcTarget.All, false);
+            photonView.RPC(nameof(RemoveObjectParentRPC), RpcTarget.All);
+            photonView.RPC(nameof(EnableRigidBody), RpcTarget.All);
             GameStateData.carriedWeapon = WeaponInstance.None;
-            _photonView.RPC(nameof(EnableRigidBody), RpcTarget.All);
         }
 
         private void GetComponentsFromLocalPlayer()
@@ -111,9 +111,9 @@ namespace Weapons
         }
 
         [PunRPC]
-        private void ReparentObjectToPlayerHand(int viewID)
+        public void ReparentObjectToPlayerHandRPC(int viewID)
         {
-            playerController ??= PhotonView.Find(viewID).gameObject.GetComponent<PlayerController>();
+            playerController = PhotonView.Find(viewID).gameObject.GetComponent<PlayerController>();
             Transform hand = playerController?.CharacterHand;
             if (!hand)
                 throw new MissingReferenceException();
@@ -123,6 +123,13 @@ namespace Weapons
             gameObject.transform.localScale = new Vector3(scale, scale, scale);
             gameObject.transform.localPosition = position;
             gameObject.transform.localRotation = rotation;
+        }
+        
+        [PunRPC]
+        public void RemoveObjectParentRPC()
+        {
+            transform.SetParent(null);
+            transform.localScale = new Vector3(1, 1, 1);
         }
 
         public virtual void Use(InputAction.CallbackContext callbackContext)
@@ -137,7 +144,7 @@ namespace Weapons
         {
             if (!input)
                 throw new MissingReferenceException("Input Not Found");
-
+            
             input.reference.actions["Attack"].performed += Use;
             input.reference.actions["DropItem"].performed += Drop;
             input.reference.actions["ThrowItem"].performed += Throw;
@@ -152,9 +159,6 @@ namespace Weapons
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!_photonView.IsMine)
-                return;
-            
             if (other.CompareTag(Tags.Player) && _canBePickedUp && !GameStateData.IsCarryingWeapon)
             {
                 var pv = other.GetComponent<PhotonView>();
@@ -162,15 +166,11 @@ namespace Weapons
                 {
                     other.GetComponent<PlayerController>().OnPickupTriggerEnter(this);
                 }
-                
             }
         }
         
         private void OnTriggerExit(Collider other)
         {
-            if (!_photonView.IsMine)
-                return;
-
             if (other.CompareTag(Tags.Player))
             {
                 var pv = other.GetComponent<PhotonView>();
@@ -201,6 +201,20 @@ namespace Weapons
             rigidbody.useGravity = true;
             rigidbody.isKinematic = false;
             SetOutline(true);
+        }
+        
+        [PunRPC]
+        public void PickUpRPC(bool pickedUp)
+        {
+            _canBePickedUp = !pickedUp;
+        }
+
+        private void TransferOwnership()
+        {
+            if (!photonView.IsMine)
+            {
+                photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
+            }
         }
 
         private void SetOutline(bool isEnabled)

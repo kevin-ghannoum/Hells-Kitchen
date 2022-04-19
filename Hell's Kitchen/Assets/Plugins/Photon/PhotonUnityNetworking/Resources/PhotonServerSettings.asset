@@ -45,16 +45,17 @@ MonoBehaviour:
   - LoadDungeonRPC
   - LoadGameOverRPC
   - LoadRestaurantRPC
+  - LootChest
+  - PickUp
+  - PickUpRPC
   - RemoveItemFromInventoryRPC
+  - ReparentObjectToPlayerHandRPC
   - ReturnToRestaurantRPC
   - ServeOrdersRPC
   - SetCashMoneyRPC
   - SetGameObjectActiveByNameRPC
-  - ShootBullet
-  - SwordAttackRPC
   - TakeDamage
-  - LootChest
-  - PickUp
+  - RemoveObjectParentRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

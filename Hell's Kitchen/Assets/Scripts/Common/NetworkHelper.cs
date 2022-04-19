@@ -9,14 +9,12 @@ namespace Common
     {
         public static PlayerController GetLocalPlayerController()
         {
-           var players =  GameObject.FindGameObjectsWithTag(Tags.Player);
-           foreach (var player in players)
-           {
-               if (player.GetComponent<PhotonView>().IsMine)
-                   return player.GetComponent<PlayerController>();
-           }
-
-           return null;
+            return GetLocalPlayerObject().GetComponent<PlayerController>();
+        }
+        
+        public static PhotonView GetLocalPlayerPhotonView()
+        {
+            return GetLocalPlayerObject().GetComponent<PhotonView>();
         }
         
         public static GameObject GetLocalPlayerObject()
