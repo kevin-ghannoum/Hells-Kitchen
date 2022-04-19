@@ -100,3 +100,4 @@ MonoBehaviour:
   maxMazeSize: 15
   hallwayWidth: 10
   hallwayHeight: 4
+  photonView: {fileID: 0}

@@ -624,6 +624,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MazeController
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
 --- !u!1001 &1715388639
@@ -688,6 +692,10 @@ PrefabInstance:
     - target: {fileID: 8141198540569047468, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: sceneViewId
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8626758597531007161, guid: ab126534be57d744eab097b38e421eda, type: 3}
+      propertyPath: sceneViewId
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab126534be57d744eab097b38e421eda, type: 3}

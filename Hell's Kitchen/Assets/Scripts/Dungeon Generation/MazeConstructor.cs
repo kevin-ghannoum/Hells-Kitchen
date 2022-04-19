@@ -31,28 +31,29 @@ namespace Dungeon_Generation
         [SerializeField][Range(0f, 1f)] private float chestSpawnRate = 0.01f;
         [SerializeField][Range(0f, 1f)] private float rockSpawnRate = 0.05f;
         [SerializeField][Range(0f, 1f)] private float debrisSpawnRate = 0.1f;
-        
+
         [Header("Generation Settings")]
         [SerializeField][Range(0f, 1f)] private float placementThreshold = 0.1f;
         [SerializeField] private int rockMinNum = 3;
         [SerializeField] private int rockMaxNum = 7;
-        
+
         [SerializeField] private int debrisMinNum = 1;
         [SerializeField] private int debrisMaxNum = 3;
-        
+
         [SerializeField] private int minMazeSize = 20;
         [SerializeField] private int maxMazeSize = 30;
-        
+
         [SerializeField] public float hallwayWidth = 5.0f;
         [SerializeField] public float hallwayHeight = 3.0f;
 
+        [SerializeField] private PhotonView photonView;
+
         private MazeDataGenerator _dataGenerator;
 
-        private Transform mazeStart;
-        private bool startPlaced;
+        private bool _startPlaced;
 
-        public int StartRow { get; private set; }
-        public int StartCol { get; private set; }
+        public readonly int StartRow = 0;
+        public readonly int StartCol = 0;
 
         public int[,] Data { get; private set; }
 
@@ -61,65 +62,80 @@ namespace Dungeon_Generation
             _dataGenerator = new MazeDataGenerator(placementThreshold);
 
             // default to walls surrounding a single empty cell
-            Data = new [,] {
+            Data = new[,] {
                 {1, 1, 1},
                 {1, 0, 1},
                 {1, 1, 1}
             };
         }
-        
-        public void GenerateNewMaze(Transform mazeStart)
+
+        public void GenerateNewMaze()
         {
-            DisposeOldMaze();
-            
-            Data = _dataGenerator.FromDimensions(
-                GetRandomOddNumberInRange(minMazeSize, maxMazeSize), 
-                GetRandomOddNumberInRange(minMazeSize, maxMazeSize)
-            );
-            
-            this.mazeStart = mazeStart;
-            GenerateMazeFromData(Data);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                Data = _dataGenerator.FromDimensions(
+                    GetRandomOddNumberInRange(minMazeSize, maxMazeSize),
+                    GetRandomOddNumberInRange(minMazeSize, maxMazeSize)
+                );
+                photonView.RPC(nameof(GenerateMazeRPC), RpcTarget.All, Data);
+            }
         }
 
-        private void GenerateMazeFromData(int[,] data)
+        [PunRPC]
+        private void GenerateMazeRPC(int[,] data)
+        {
+            DisposeOldMaze();
+
+            Data = data;
+            GenerateMaze();
+        }
+
+        private void GenerateMaze()
         {
             GameObject parent = new GameObject();
             parent.transform.position = Vector3.zero;
             parent.name = "Procedural Maze";
             parent.tag = Tags.Generated;
-            Vector3 lastfloorPosition =  Vector3.zero;
+            Vector3 lastfloorPosition = Vector3.zero;
 
-            for (int i = 0; i < data.GetLength(0); i++)
+            for (int i = 0; i < Data.GetLength(0); i++)
             {
-                for (int j = 0; j < data.GetLength(1); j++)
+                for (int j = 0; j < Data.GetLength(1); j++)
                 {
-                    if (data[i, j] == 0)
+                    if (Data[i, j] == 0)
                     {
                         // Floor position
                         Vector3 floorPosition = new Vector3(i * hallwayWidth - (hallwayWidth / 2), 0, j * hallwayWidth - (hallwayWidth / 2));
                         lastfloorPosition = floorPosition;
-            
+
                         // Place Start Point 
-                        if(!startPlaced)
+                        if (!_startPlaced)
                             PlaceStartPosition(parent.transform, floorPosition);
-                        
+
                         // Spawn everything
                         SpawnFloor(parent.transform, floorPosition);
-                        SpawnEnemy(floorPosition);
-                        if (!SpawnChest(parent.transform, floorPosition))
-                            SpawnDebris(parent.transform, floorPosition);
-                        
                         SpawnRocks(parent.transform, floorPosition);
                         SpawnWalls(parent.transform, floorPosition, i, j);
+                        
+                        // Spawn shared game objects
+                        if (PhotonNetwork.IsMasterClient)
+                        {
+                            SpawnEnemy(floorPosition);
+                            if (!SpawnChest(floorPosition))
+                                SpawnDebris(floorPosition);
+                        }
                     }
                 }
             }
-            
+
             // End portal
-            PlaceGoal(parent.transform, lastfloorPosition);
-            
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PlaceGoal(lastfloorPosition);
+            }
+
             // Spawn pillars
-            SpawnPillars(parent.transform, data);
+            SpawnPillars(parent.transform);
         }
 
         private Vector3?[] GetEmptyNeighbours(int x, int y)
@@ -147,14 +163,15 @@ namespace Dungeon_Generation
 
         private void PlaceStartPosition(Transform parent, Vector3 position)
         {
-            startPlaced = true;
-            mazeStart.parent = parent;
-            mazeStart.localPosition = position;
+            _startPlaced = true;
+            var gameController = GetComponent<GameController>();
+            gameController.mazeStart.parent = parent;
+            gameController.mazeStart.localPosition = position;
         }
 
         public void DisposeOldMaze()
         {
-            startPlaced = false;
+            _startPlaced = false;
             GameObject[] objects = GameObject.FindGameObjectsWithTag(Tags.Generated);
             foreach (GameObject obj in objects)
             {
@@ -162,15 +179,11 @@ namespace Dungeon_Generation
             }
         }
 
-        private void PlaceGoal(Transform parent, Vector3 position)
+        private void PlaceGoal(Vector3 position)
         {
-            GameObject obj = Instantiate(exitPrefab , parent);
-            obj.transform.localPosition = position;
-            obj.transform.rotation = RandomRotation();
+            GameObject obj = PhotonNetwork.Instantiate(exitPrefab.name, position, RandomRotation());
             obj.name = "Exit";
             obj.tag = Tags.Generated;
-
-            obj.GetComponent<BoxCollider>().isTrigger = true;
         }
 
         private void SpawnFloor(Transform parent, Vector3 position)
@@ -178,41 +191,6 @@ namespace Dungeon_Generation
             GameObject floor = Instantiate(floorPrefab, parent);
             floor.transform.localPosition = position;
             floor.transform.localScale = new Vector3(hallwayWidth, 1, hallwayWidth);
-        }
-
-        private void SpawnEnemy(Vector3 position)
-        {
-            if (Random.value < enemySpawnRate)
-            {
-                var enemy = enemies[Random.Range(0, enemies.Length)];
-                PhotonNetwork.Instantiate(enemy.name, position, Quaternion.identity);
-            }
-        }
-
-        private bool SpawnChest(Transform parent, Vector3 position)
-        {
-            if (Random.value < chestSpawnRate)
-            {
-                GameObject chest = Instantiate(chestPrefab, parent);
-                chest.transform.position = position + RandomTileOffset();
-                chest.transform.rotation = Quaternion.Euler(0, Random.Range(-30, 30) - 135, 0);
-                return true;
-            }
-            return false;
-        }
-
-        private void SpawnDebris(Transform parent, Vector3 position)
-        {
-            if (Random.value < debrisSpawnRate)
-            {
-                int numDebris = Random.Range(debrisMinNum, debrisMaxNum);
-                for (int d = 0; d < numDebris; d++)
-                {
-                    GameObject debris = Instantiate(debrisPrefabs[Random.Range(0, debrisPrefabs.Length)], parent);
-                    debris.transform.position = position + RandomTileOffset() + new Vector3(0, 0.1f, 0);
-                    debris.transform.rotation = RandomRotation();
-                }
-            }
         }
 
         private void SpawnRocks(Transform parent, Vector3 position)
@@ -237,49 +215,25 @@ namespace Dungeon_Generation
                 // Skip nulls
                 if (neighbours[n] == null)
                     continue;
-                            
+
                 // Spawn wall
-                Vector3 wallPosition = ((Vector3)neighbours[n] + position) / 2;
+                Vector3 wallPosition = ((Vector3) neighbours[n] + position) / 2;
                 GameObject wall = Instantiate(wallPrefab, parent);
                 wall.transform.localPosition = wallPosition;
                 wall.transform.localScale = new Vector3(1, hallwayHeight, hallwayWidth);
                 wall.transform.localRotation = Quaternion.Euler(0, 90 * n, 0);
-                            
+
                 // Spawn Wall Decorations
                 if (!SpawnTorch(wall.transform))
                     SpawnWindow(wall.transform);
             }
         }
 
-        private bool SpawnTorch(Transform wall)
+        private void SpawnPillars(Transform parent)
         {
-            if (Random.value < torchSpawnRate)
+            for (int i = 0; i < Data.GetLength(0); i++)
             {
-                const float torchHeight = 3.0f / 5.0f;
-                GameObject torch = Instantiate(torchPrefab, wall);
-                torch.transform.localPosition = new Vector3(0, torchHeight, Random.Range(-0.5f, 0.5f));
-                torch.transform.localScale = new Vector3(1, 1 / hallwayHeight, 1 / hallwayWidth);
-                return true;
-            }
-            return false;
-        }
-
-        private void SpawnWindow(Transform wall)
-        {
-            if (Random.value < windowSpawnRate)
-            {
-                const float windowHeight = 4.0f / 7.0f;
-                GameObject torch = Instantiate(windowPrefab, wall);
-                torch.transform.localPosition = new Vector3(0, windowHeight, Random.Range(-0.1f, 0.1f));
-                torch.transform.localScale = new Vector3(1, 1 / hallwayHeight, 1 / hallwayWidth);
-            }
-        }
-
-        private void SpawnPillars(Transform parent, int[,] data)
-        {
-            for (int i = 0; i < data.GetLength(0); i++)
-            {
-                for (int j = 0; j < data.GetLength(1); j++)
+                for (int j = 0; j < Data.GetLength(1); j++)
                 {
                     int[,] offsets = {
                         {0, 0},
@@ -308,6 +262,68 @@ namespace Dungeon_Generation
             }
         }
 
+        private void SpawnEnemy(Vector3 position)
+        {
+            if (Random.value < enemySpawnRate)
+            {
+                var enemy = enemies[Random.Range(0, enemies.Length)];
+                PhotonNetwork.Instantiate(enemy.name, position, Quaternion.identity);
+            }
+        }
+
+        private bool SpawnChest(Vector3 position)
+        {
+            if (Random.value < chestSpawnRate)
+            {
+                PhotonNetwork.Instantiate(chestPrefab.name,
+                    position + RandomTileOffset(),
+                    Quaternion.Euler(0, Random.Range(-30, 30) - 135, 0)
+                );
+                return true;
+            }
+            return false;
+        }
+
+        private void SpawnDebris(Vector3 position)
+        {
+            if (Random.value < debrisSpawnRate)
+            {
+                int numDebris = Random.Range(debrisMinNum, debrisMaxNum);
+                for (int d = 0; d < numDebris; d++)
+                {
+                    PhotonNetwork.Instantiate(debrisPrefabs[Random.Range(0, debrisPrefabs.Length)].name,
+                        position + RandomTileOffset() + new Vector3(0, 0.1f, 0),
+                        RandomRotation()
+                    );
+                }
+            }
+        }
+
+        private bool SpawnTorch(Transform wall)
+        {
+            if (Random.value < torchSpawnRate)
+            {
+                const float torchHeight = 3.0f / 5.0f;
+                PhotonNetwork.Instantiate(torchPrefab.name,
+                    wall.position + new Vector3(0, torchHeight, Random.Range(-0.5f, 0.5f)),
+                    wall.rotation
+                );
+                return true;
+            }
+            return false;
+        }
+
+        private void SpawnWindow(Transform wall)
+        {
+            if (Random.value < windowSpawnRate)
+            {
+                const float windowHeight = 4.0f / 7.0f;
+                GameObject torch = Instantiate(windowPrefab, wall);
+                torch.transform.localPosition = new Vector3(0, windowHeight, Random.Range(-0.1f, 0.1f));
+                torch.transform.localScale = new Vector3(1, 1 / hallwayHeight, 1 / hallwayWidth);
+            }
+        }
+
         private Vector3 RandomTileOffset()
         {
             return new Vector3(Random.Range(-hallwayWidth / 3, hallwayWidth / 3), 0, Random.Range(-hallwayWidth / 3, hallwayWidth / 3));
@@ -324,6 +340,5 @@ namespace Dungeon_Generation
             if (num % 2 == 0) num += 1;
             return num;
         }
-        
     }
 }

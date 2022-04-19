@@ -17,7 +17,7 @@ namespace Dungeon_Generation
         [SerializeField] private float playerHeightPosition = 0f;
         [SerializeField] private WeaponInstance defaultWeapon = WeaponInstance.Scimitar;
         [SerializeField] private ClockUI clock;
-        [SerializeField] private Transform mazeStart;
+        [SerializeField] public Transform mazeStart;
 
         private MazeConstructor _generator;
 
@@ -36,7 +36,7 @@ namespace Dungeon_Generation
         
         public void StartNewMaze()
         {
-            _generator.GenerateNewMaze(mazeStart);
+            _generator.GenerateNewMaze();
 
             float x = _generator.StartCol * _generator.hallwayWidth - (_generator.hallwayWidth / 2);
             float y = playerHeightPosition;
