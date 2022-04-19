@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Enums.Items;
 
 namespace PlayerInventory
 {
@@ -7,15 +8,15 @@ namespace PlayerInventory
     public class Inventory
     {
         // hold a dictionary of items and quantities
-        private readonly Dictionary<Item, int> _itemDictionary = new Dictionary<Item, int>();
+        private readonly Dictionary<ItemInstance, int> _itemDictionary = new Dictionary<ItemInstance, int>();
 
-        public Dictionary<Item, int> GetInventoryItems()
+        public Dictionary<ItemInstance, int> GetInventoryItems()
         {
             return _itemDictionary;
         }
 
         // increment value if already in inventory else add
-        public void AddItemToInventory(Item item, int quantity)
+        public void AddItemToInventory(ItemInstance item, int quantity)
         {
             if (_itemDictionary.ContainsKey(item))
             {
@@ -28,7 +29,7 @@ namespace PlayerInventory
         }
 
         // decrement value if (value-1) > 0 else remove
-        public void RemoveItemFromInventory(Item item, int quantity)
+        public void RemoveItemFromInventory(ItemInstance item, int quantity)
         {
             if (_itemDictionary.ContainsKey(item))
             {
@@ -41,6 +42,11 @@ namespace PlayerInventory
                     _itemDictionary[item] -= quantity;   
                 }
             }
+        }
+
+        public bool HasItem(ItemInstance item, int quantity)
+        {
+            return _itemDictionary.ContainsKey(item) && _itemDictionary[item] >= quantity;
         }
     }
 }

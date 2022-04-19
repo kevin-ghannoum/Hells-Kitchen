@@ -5,7 +5,6 @@ using Common.Enums;
 using Common.Enums.Items;
 using Enums.Items;
 using Input;
-using Player;
 using PlayerInventory.Cooking;
 using UI;
 using UnityEngine;
@@ -34,14 +33,29 @@ namespace Restaurant
         {
             var orderList = RestaurantManager.Instance.OrderList.Where(o => !o.Served);
             var player = GameObject.FindWithTag(Tags.Player);
+
+            Dictionary<ItemInstance, int> neededItems = new Dictionary<ItemInstance, int>();
             foreach (var order in orderList)
             {
-                for (int i = 0; i < order.Quantity; i++)
+                if (neededItems.ContainsKey(order.Item))
+                    neededItems[order.Item] += order.Quantity;
+                else 
+                    neededItems.Add(order.Item, order.Quantity);
+            }
+            
+            foreach (var item in GameStateData.inventory.GetInventoryItems())
+            {
+                if (neededItems.ContainsKey(item.Key))
+                    neededItems[item.Key] -= item.Value;
+                else 
+                    neededItems.Add(item.Key, -item.Value);
+            }
+            
+            foreach (var item in neededItems)
+            {
+                if (item.Value > 0 && Cooking.CookRecipe(Cooking.GetItemRecipe(item.Key), item.Value))
                 {
-                    if (Cooking.CookRecipe(Cooking.GetItemRecipe(order.Item)))
-                    {
-                        AdrenalinePointsUI.SpawnIngredientString(player.transform.position, $"+{order.Quantity} {Items.GetItem(order.Item).Name}");
-                    }
+                    AdrenalinePointsUI.SpawnIngredientString(player.transform.position, $"+{item.Value} {Items.GetItem(item.Key).Name}");
                 }
             }
         }

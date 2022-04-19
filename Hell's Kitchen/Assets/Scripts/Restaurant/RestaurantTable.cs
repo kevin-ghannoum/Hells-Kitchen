@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Common;
 using Common.Enums;
 using Enums.Items;
 using Input;
@@ -43,8 +44,11 @@ namespace Restaurant
             {
                 foreach (var order in OrderList)
                 {
-                    // TODO: REMOVE INVENTORY ITEM
-                    order.Served = true;
+                    if (GameStateData.inventory.HasItem(order.Item, order.Quantity))
+                    {
+                        GameStateManager.RemoveItemFromInventory(order.Item, order.Quantity);
+                        order.Served = true;
+                    }
                 }
                 RefreshOrderUI();
             }
