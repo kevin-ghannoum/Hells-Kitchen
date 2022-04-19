@@ -34,6 +34,7 @@ public class KnightAttackState : KnightBaseState
     public override void UpdateState(KnightStateManager knight)
     {
         if(knight.sc.targetEnemy == null){
+            knight.sc.agent.standStill = false;
             knight.SwitchState(knight.followState);
         }
         else{
@@ -71,7 +72,7 @@ public class KnightAttackState : KnightBaseState
                     knight.weapon.GetComponent<Collider>().enabled = false;
                     return;
                 }
-                //TODO: deal damage
+                
                 return;
             }
 
