@@ -9,6 +9,8 @@ TagManager:
   - Weapon
   - UICamera
   - MazeStart
+  - SousChef
+  - Hive
   layers:
   - Default
   - TransparentFX

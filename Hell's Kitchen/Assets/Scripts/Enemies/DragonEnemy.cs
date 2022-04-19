@@ -12,7 +12,8 @@ namespace Enemies
         [SerializeField] private ParticleSystem particle;
         [SerializeField] private float attackRange;
         [SerializeField] private float followRange;
-        [SerializeField] private PlayerController target;
+        [SerializeField] private PlayerController Player;
+        [SerializeField] private GameObject sousChef;
         [SerializeField] private float attackDamage;
         [SerializeField] private float attackRate;
         private float distance;
@@ -22,17 +23,18 @@ namespace Enemies
 
         private void Awake()
         {
-            target = GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>();
+            Player = GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>();
             audio = gameObject.GetComponent<AudioSource>();
         }
         public override void Update()
         {
             timeCounter += Time.deltaTime;
-            distance = Vector3.Distance(transform.position, target.transform.position);
+
+            distance = Vector3.Distance(transform.position, Player.transform.position);
 
             if (distance < followRange)
             {
-                agent.Target = target.transform.position;
+                agent.Target = Player.transform.position;
 
                 if (distance < attackRange && timeCounter > attackRate)
                 {

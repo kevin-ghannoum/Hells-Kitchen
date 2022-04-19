@@ -505,13 +505,14 @@ MonoBehaviour:
   animator: {fileID: 2832215523392890650}
   hitPoints: 100
   deathDelay: 1
-  onKilled:
-    m_PersistentCalls:
-      m_Calls: []
+  dropObject: {fileID: 0}
+  maxDropsToSpawn: 3
+  multipleSpawnRate: 0.3
   particle: {fileID: 3138838321479631500}
   attackRange: 3
   followRange: 15
-  target: {fileID: 0}
+  Player: {fileID: 0}
+  sousChef: {fileID: 0}
   attackDamage: 20
   attackRate: 3
 --- !u!114 &8717405591280451424
@@ -573,7 +574,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f7ed810332ff69a498df8d1f8aa08812, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.541
+  m_Volume: 0.276
   m_Pitch: 1
   Loop: 0
   Mute: 0
