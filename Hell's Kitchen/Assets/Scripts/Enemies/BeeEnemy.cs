@@ -32,12 +32,11 @@ namespace Enemies
 
         public override void Update()
         {
-
+            hiveList = GameObject.FindGameObjectsWithTag("Hive");
             timeCounter += Time.deltaTime;
             if (hiveList.Length > 0)
             {
                 targetHive = checkHive(hiveList);
-
                 
                 if (Vector3.Distance(transform.position, target.transform.position) < attackRange)
                 {
@@ -99,7 +98,6 @@ namespace Enemies
                     currentTarget = hive;
                 }
             }
-
             return currentTarget;
         }
     }

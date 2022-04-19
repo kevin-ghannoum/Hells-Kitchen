@@ -91,6 +91,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7982584569142088491}
   - component: {fileID: -3175766577125209615}
+  - component: {fileID: 3101461929203838807}
+  - component: {fileID: 3163713041105894162}
+  - component: {fileID: 2065254939949611564}
+  - component: {fileID: -5467536929955882981}
+  - component: {fileID: 1368198132102035673}
   m_Layer: 0
   m_Name: beehive
   m_TagString: Hive
@@ -127,3 +132,91 @@ CapsuleCollider:
   m_Height: 1000
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &3101461929203838807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7317231139000338833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7f9c3153d39733459c0c2aee1448e92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 1368198132102035673}
+  animator: {fileID: -5467536929955882981}
+  hitPoints: 10
+  deathDelay: 1
+  dropObject: {fileID: 7868689882263519358, guid: bc2e15e3cc92b1d4aa3c387c0c311381, type: 3}
+  maxDropsToSpawn: 3
+  multipleSpawnRate: 0.3
+--- !u!54 &3163713041105894162
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7317231139000338833}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &2065254939949611564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7317231139000338833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6afd420c264afa84ba3237d0d7e6c837, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ArrivalRadius: 0.5
+  time2target: 0.5
+  maxVelocity: 2
+  rigidbody: {fileID: 3163713041105894162}
+  standStill: 0
+--- !u!95 &-5467536929955882981
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7317231139000338833}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5440f98cff9286b46a97406a593b2a3d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1368198132102035673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7317231139000338833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6afd420c264afa84ba3237d0d7e6c837, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ArrivalRadius: 0.5
+  time2target: 0.5
+  maxVelocity: 2
+  rigidbody: {fileID: 3163713041105894162}
+  standStill: 0
