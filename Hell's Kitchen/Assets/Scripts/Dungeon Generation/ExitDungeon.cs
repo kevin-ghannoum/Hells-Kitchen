@@ -44,7 +44,7 @@ namespace Dungeon_Generation
                 }
             }
         }
-        
+
         private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.CompareTag(Tags.Player))

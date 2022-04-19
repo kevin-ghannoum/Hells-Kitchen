@@ -12,7 +12,7 @@ namespace Shops
     public class WeaponShopkeeper : MonoBehaviour
     {
         [SerializeField] private WeaponShopUI shopUI;
-        
+
         private InputManager _input => InputManager.Instance;
         private List<GameObject> _weapons;
 
@@ -21,7 +21,7 @@ namespace Shops
             _weapons = GameObject.FindGameObjectsWithTag(Tags.Weapon).ToList();
             foreach (var weapon in _weapons)
             {
-                if(!GameStateData.purchasedWeapons.Contains(weapon.name))
+                if (!GameStateData.purchasedWeapons.Contains(weapon.name))
                     weapon.SetActive(false);
             }
         }

@@ -19,7 +19,11 @@ namespace Enemies
         [SerializeField] private float chargeSpeed = 10;
         [SerializeField] private float chargeTime = 3;
         [SerializeField] private float chargeRange = 10.0f;
+        [SerializeField] private AudioClip idleSound;
+        [SerializeField] private AudioClip attackSound;
+        [SerializeField] private AudioClip deathSound;
 
+        private AudioSource _as;
         private float _currentChargeTime;
         private float _lastAttack;
         private Vector3 _chargeDirection;
@@ -27,14 +31,20 @@ namespace Enemies
 
         private void Start()
         {
+            if (!photonView.IsMine)
+                return;
+
             _rb = GetComponent<Rigidbody>();
+            _as = GetComponent<AudioSource>();
+            _as.loop = true;
+            photonView.RPC(nameof(PlayIdleSoundRPC), RpcTarget.All);
         }
 
         public override void Update()
         {
             if (!photonView.IsMine)
                 return;
-            
+
             var player = FindClosestPlayer();
             if (player != null)
             {
@@ -63,6 +73,7 @@ namespace Enemies
                         _lastAttack = Time.time;
                         animator.SetBool(EnemyAnimator.Attack, true);
                         transform.rotation = Quaternion.LookRotation(_chargeDirection);
+                        photonView.RPC(nameof(PlayAttackSoundRPC), RpcTarget.All);
                     }
                 }
             }
@@ -76,12 +87,37 @@ namespace Enemies
                 else
                 {
                     agent.enabled = true;
+                    if (_as.clip == attackSound)
+                    {
+                        photonView.RPC(nameof(PlayIdleSoundRPC), RpcTarget.All);
+                    }
                 }
             }
         }
 
+        [PunRPC]
+        private void PlayIdleSoundRPC()
+        {
+            _as.clip = idleSound;
+            _as.Play();
+        }
+
+        [PunRPC]
+        private void PlayAttackSoundRPC()
+        {
+            _as.clip = attackSound;
+            _as.Play();
+        }
+
+        [PunRPC]
+        private void PlayDeathSoundRPC()
+        {
+            AudioSource.PlayClipAtPoint(deathSound, transform.position);
+        }
+
         protected override void Die()
         {
+            photonView.RPC(nameof(PlayDeathSoundRPC), RpcTarget.All);
             base.Die();
             Destroy(GetComponentInChildren<PigCollider>());
         }

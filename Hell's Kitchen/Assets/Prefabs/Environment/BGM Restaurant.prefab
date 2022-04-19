@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 800718221488657219}
   - component: {fileID: 800718221488657216}
   m_Layer: 0
-  m_Name: BGM
+  m_Name: BGM Restaurant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,15 +41,15 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1567dc48834bd0c4a91691afc7eca5ae, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 6fd3def9c53a2c44ab15b95fe2a68ba7, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.075
+  m_Volume: 0.025
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 160
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

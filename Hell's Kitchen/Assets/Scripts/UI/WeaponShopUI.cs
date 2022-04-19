@@ -47,7 +47,7 @@ namespace UI
                 return;
             }
 
-            PerformTransaction(weapon.name,weaponCost);
+            PerformTransaction(weapon.name, weaponCost);
             GameStateManager.Instance.photonView.RPC(nameof(GameStateManager.SetGameObjectActiveByNameRPC), RpcTarget.All, weapon.name);
             errorText.text = string.Empty;
             button.interactable = false;
@@ -55,7 +55,7 @@ namespace UI
 
         private void CreateButtons()
         {
-            foreach (var weapon  in _weapons)
+            foreach (var weapon in _weapons)
             {
                 var button = Instantiate(buttonPrefab, gridLayout.transform);
                 var buttonComponent = button.GetComponent<Button>();

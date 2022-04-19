@@ -57,6 +57,14 @@ MonoBehaviour:
   - TakeDamage
   - RemoveObjectParentRPC
   - LootChestRPC
+  - PlayAttackSoundRPC
+  - PlayChestSoundRPC
+  - PlayDeathSoundRPC
+  - PlayGunshotSoundRPC
+  - PlayIdleSoundRPC
+  - PlayLowHealthSoundRPC
+  - PlaySWordSlashSoundRPC
+  - PlayTakeDamageSoundRPC
   - SpawnLocalPlayer
   - SpawnPlayerInScene
   DisableAutoOpenWizard: 1

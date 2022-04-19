@@ -56,9 +56,9 @@ namespace Player
             // Invulnerability after getting hit
             if (_invulnerabilityTimer < _invulnerabilityTime)
                 return;
-            
+
             _invulnerabilityTimer = 0;
-            
+
             // HP calculation and animation
             if (photonView.IsMine)
             {
@@ -72,24 +72,36 @@ namespace Player
                     Die();
                     return;
                 }
+
+                if (HitPoints > 25)
+                {
+                    photonView.RPC(nameof(PlayTakeDamageSoundRPC), RpcTarget.All);
+                }
+                else
+                {
+                    photonView.RPC(nameof(PlayLowHealthSoundRPC), RpcTarget.All);
+                }
             }
-            
+
             // Damage numbers
             AdrenalinePointsUI.SpawnDamageNumbers(transform.position + 2.0f * Vector3.up, -damage);
+        }
 
-            if (HitPoints > 25)
-            {
-                AudioSource.PlayClipAtPoint(takeDamageSound, transform.position);
-            }
-            else
-            {
-                AudioSource.PlayClipAtPoint(lowHealthSound, transform.position);
-            }
+        [PunRPC]
+        private void PlayTakeDamageSoundRPC()
+        {
+            AudioSource.PlayClipAtPoint(takeDamageSound, transform.position);
+        }
+
+        [PunRPC]
+        private void PlayLowHealthSoundRPC()
+        {
+            AudioSource.PlayClipAtPoint(lowHealthSound, transform.position);
         }
 
         private void Die()
         {
-            AudioSource.PlayClipAtPoint(deathSound, transform.position);
+            photonView.RPC(nameof(PlayDeathSoundRPC), RpcTarget.All);
             Killed.Invoke();
             animator.SetTrigger(PlayerAnimator.Dead);
             Invoke(nameof(ReturnToRestaurant), transitionToRestaurantTime);
@@ -98,6 +110,12 @@ namespace Player
         private void ReturnToRestaurant()
         {
             photonView.RPC(nameof(ReturnToRestaurantRPC), RpcTarget.All);
+        }
+
+        [PunRPC]
+        private void PlayDeathSoundRPC()
+        {
+            AudioSource.PlayClipAtPoint(deathSound, transform.position);
         }
 
         [PunRPC]

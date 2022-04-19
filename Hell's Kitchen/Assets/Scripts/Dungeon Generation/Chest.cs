@@ -16,9 +16,10 @@ namespace Dungeon_Generation
         [SerializeField] private int amountMaxExclusive = 40;
         [SerializeField] private ProximityToggleUI toggleUI;
         [SerializeField] private PhotonView photonView;
+        [SerializeField] private AudioClip chestSound;
 
         private bool _isLooted = false;
-        
+
         private InputManager _input => InputManager.Instance;
         private Animator _animator;
 
@@ -43,7 +44,7 @@ namespace Dungeon_Generation
                 }
             }
         }
-        
+
         private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.CompareTag(Tags.Player))
@@ -60,10 +61,17 @@ namespace Dungeon_Generation
         {
             if (_isLooted)
                 return;
-            
+
             _animator.SetTrigger(ObjectAnimator.OpenChest);
             var amount = GetRandomAmountInRange();
             photonView.RPC(nameof(LootChestRPC), RpcTarget.All, amount);
+            photonView.RPC(nameof(PlayChestSoundRPC), RpcTarget.All);
+        }
+
+        [PunRPC]
+        private void PlayChestSoundRPC()
+        {
+            AudioSource.PlayClipAtPoint(chestSound, transform.position);
         }
 
         [PunRPC]

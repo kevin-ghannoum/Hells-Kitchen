@@ -16,6 +16,8 @@ namespace Common
         public static GameStateManager Instance;
         [SerializeField] public PhotonView photonView;
         [SerializeField] public InventoryUI inventoryUI;
+        [SerializeField] private AudioClip kachingSound;
+        [SerializeField] private AudioClip cookingSound;
 
         private void Awake()
         {
@@ -46,26 +48,26 @@ namespace Common
             if (stream.IsWriting)
             {
                 var inventoryItems = GameStateData.inventory.GetInventoryItems();
-                var serializedInventoryItems = 
+                var serializedInventoryItems =
                     inventoryItems.Keys
-                        .ToDictionary(k => (int) k, k => inventoryItems[k]);
+                        .ToDictionary(k => (int)k, k => inventoryItems[k]);
                 stream.SendNext(serializedInventoryItems);
                 stream.SendNext(GameStateData.cashMoney);
                 stream.SendNext(GameStateData.dungeonClock);
             }
             else if (stream.IsReading)
             {
-                var serializedInventoryItems = (Dictionary<int, int>) stream.ReceiveNext();
-                var inventoryItems = 
+                var serializedInventoryItems = (Dictionary<int, int>)stream.ReceiveNext();
+                var inventoryItems =
                     serializedInventoryItems.Keys
-                        .ToDictionary(k => (ItemInstance) k, k => serializedInventoryItems[k]);
+                        .ToDictionary(k => (ItemInstance)k, k => serializedInventoryItems[k]);
                 GameStateData.inventory.SetInventoryItems(inventoryItems);
                 GameStateData.cashMoney = (float)stream.ReceiveNext();
                 inventoryUI.UpdateInventory(inventoryItems);
                 GameStateData.dungeonClock = (float)stream.ReceiveNext();
             }
         }
-        
+
         [PunRPC]
         public void SetGameObjectActiveByNameRPC(string objectName)
         {
@@ -73,7 +75,7 @@ namespace Common
             var obj = weaponCollection.transform.Find(objectName);
             if (!obj)
                 return;
-            
+
             obj.gameObject.SetActive(true);
         }
 
@@ -98,12 +100,14 @@ namespace Common
         {
             GameStateData.inventory.RemoveItemFromInventory(itemInstance, quantity);
             inventoryUI.UpdateInventory(GameStateData.inventory.GetInventoryItems());
+            AudioSource.PlayClipAtPoint(cookingSound, transform.position);
         }
 
         [PunRPC]
         public void SetCashMoneyRPC(float value)
         {
             GameStateData.cashMoney = value;
+            AudioSource.PlayClipAtPoint(kachingSound, transform.position);
         }
 
         [PunRPC]
