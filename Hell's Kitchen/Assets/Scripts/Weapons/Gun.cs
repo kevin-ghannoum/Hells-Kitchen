@@ -1,3 +1,4 @@
+using System.Collections;
 using Photon.Pun;
 using Player;
 using UnityEngine;
@@ -33,13 +34,12 @@ namespace Weapons
         private void Fire()
         {
             var photonView = GetComponent<PhotonView>();
-            if (!photonView || !photonView.AmOwner)
+            if (!photonView || !photonView.IsMine)
                 return;
 
-            photonView.RPC(nameof(ShootBullet), RpcTarget.All, playerController.transform.right, playerController.transform.rotation);
+            ShootBullet(playerController.transform.right,  playerController.transform.rotation);
         }
         
-        [PunRPC]
         private void ShootBullet(Vector3 playerRightTransform, Quaternion playerRotation)
         {
             var position = shootPosition.position;
@@ -48,10 +48,10 @@ namespace Weapons
             // Bullets
             for (int i = -bulletCount / 2; i <= bulletCount / 2; i++)
             {
-                var bullet = Instantiate(bulletPrefab, position + playerRightTransform * 0.5f * i, rotation * Quaternion.Euler(0, i * bulletSpread, 0));
+                var bullet = PhotonNetwork.Instantiate(bulletPrefab.name, position + playerRightTransform * 0.5f * i, rotation * Quaternion.Euler(0, i * bulletSpread, 0));
                 bullet.GetComponent<Bullet>().Damage = Damage;
                 bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletSpeed;
-                Destroy(bullet, bulletLifetime);
+                StartCoroutine(nameof(DestroyBullet), bullet);
             }
 
             // Muzzle
@@ -71,6 +71,12 @@ namespace Weapons
             base.RemoveListeners();
             var animationEvents = playerAnimator.GetComponentInChildren<AnimationEventIntermediate>();
             animationEvents.fireGun.RemoveListener(Fire);
+        }
+
+        IEnumerator  DestroyBullet(GameObject bullet)
+        {
+            yield return new WaitForSeconds(bulletLifetime);
+            PhotonNetwork.Destroy(bullet);
         }
     }
 }

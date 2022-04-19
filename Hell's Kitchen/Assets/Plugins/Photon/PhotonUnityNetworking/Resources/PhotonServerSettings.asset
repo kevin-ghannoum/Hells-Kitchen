@@ -40,6 +40,8 @@ MonoBehaviour:
   - DeadRPC
   - DestroyPlayerRPC
   - DestroyRpc
+  - DisableRigidbody
+  - EnableRigidBody
   - GenerateMazeRPC
   - LoadDungeonRPC
   - LoadGameOverRPC
@@ -48,8 +50,6 @@ MonoBehaviour:
   - ServeOrdersRPC
   - SetCashMoneyRPC
   - SetGameObjectActiveByNameRPC
-  - ShootBullet
-  - SwordAttackRPC
   - TakeHitRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
