@@ -22,7 +22,7 @@ public class RestaurantDoor : MonoBehaviour
     private static IRecipe[] _availableRecipes;
 
     private int _numCustomers = 0;
-    private bool isInTrigger;
+    private bool _isInTrigger;
 
     private void Awake()
     {
@@ -43,12 +43,11 @@ public class RestaurantDoor : MonoBehaviour
 
     private void LeaveRestaurant(InputAction.CallbackContext obj)
     {
-        if (!isInTrigger)
+        if (!_isInTrigger)
             return;
         
         ImposeFine();
-        var player = NetworkHelper.GetLocalPlayerObject();
-        SceneManager.Instance.LoadDungeonScene(player.GetComponent<PhotonView>());
+        SceneManager.Instance.LoadDungeonScene();
     }
 
     private void Reset()
@@ -85,7 +84,7 @@ public class RestaurantDoor : MonoBehaviour
 
         if (other.gameObject.CompareTag(Tags.Player))
         {
-            isInTrigger = true;
+            _isInTrigger = true;
         }
     }
 
@@ -93,13 +92,13 @@ public class RestaurantDoor : MonoBehaviour
     {
         if (other.CompareTag(Tags.Customer))
         {
-            isInTrigger = false;
+            _isInTrigger = false;
             _numCustomers--;
         }
         
         if (other.gameObject.CompareTag(Tags.Player))
         {
-            isInTrigger = false;
+            _isInTrigger = false;
         }
     }
 }

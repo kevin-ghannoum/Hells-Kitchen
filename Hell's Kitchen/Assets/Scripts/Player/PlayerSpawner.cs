@@ -16,16 +16,17 @@ namespace Player
             if(!shouldSpawnOnAwake)
                 return;
             
-            SpawnPlayersInScene();
+            SpawnPlayerInScene();
         }
 
-        public void SpawnPlayersInScene()
+        public void SpawnPlayerInScene()
         {
             int numPlayers = PhotonNetwork.PlayerList.Length - 1;
             var spawnPoint = spawnPoints[numPlayers % spawnPoints.Length];
             var player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, Quaternion.identity);
             player.GetComponentInChildren<Camera>().gameObject.tag = Tags.MainCamera;
             player.transform.Find("VirtualCamera").gameObject.SetActive(true);
+            GameStateData.player = player;
         }
     }
 }

@@ -49,10 +49,13 @@ namespace Enemies
 
         public void InflictDamage()
         {
+            if (!photonView.IsMine)
+                return;
+            
             var colliders = Physics.OverlapSphere(attackPosition.position, attackDamageRadius);
             foreach(var col in colliders)
             {
-                if (col.gameObject != gameObject)
+                if (!col.CompareTag(Tags.Enemy))
                     col.gameObject.GetComponent<IKillable>()?.TakeDamage(attackDamage);
             }
         }

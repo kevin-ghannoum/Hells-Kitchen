@@ -286,12 +286,11 @@ GameObject:
   - component: {fileID: 6554618451462168338}
   - component: {fileID: 3995912497361030879}
   - component: {fileID: 1124244370969427687}
-  - component: {fileID: 6212027994138152863}
   - component: {fileID: 6775129859552254707}
   - component: {fileID: 4107992854787252041}
   m_Layer: 7
   m_Name: Pig
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -378,6 +377,7 @@ MonoBehaviour:
   dropObject: {fileID: 5575247230749135019, guid: 00853119909c0ee498d31c19ec69d00d, type: 3}
   maxDropsToSpawn: 4
   multipleSpawnRate: 0.4
+  photonView: {fileID: 1124244370969427687}
   attackRate: 0.25
   chargeDamage: 15
   attackDamage: 5
@@ -424,28 +424,11 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 6554618451462168338}
-  - {fileID: 6212027994138152863}
   - {fileID: 6775129859552254707}
   - {fileID: 4107992854787252041}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &6212027994138152863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4794755069063066433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &6775129859552254707
 MonoBehaviour:
   m_ObjectHideFlags: 0

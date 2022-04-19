@@ -29,21 +29,23 @@ namespace Dungeon_Generation
         public void StartNewGame()
         {
             StartNewMaze();
-            playerSpawner.SpawnPlayersInScene();
+            if (GameStateData.player == null)
+            {
+                playerSpawner.SpawnPlayerInScene();
+            }
+            else
+            {
+                Debug.Log(mazeStart.position);
+                GameStateData.player.transform.position = mazeStart.position;
+                GameStateData.player.transform.rotation = mazeStart.rotation;
+            }
             SetUpPlayerWeapon();
-            //MovePlayerToStart();
             SetDungeonClock();
         }
         
         public void StartNewMaze()
         {
             _generator.GenerateNewMaze();
-
-            float x = _generator.StartCol * _generator.hallwayWidth - (_generator.hallwayWidth / 2);
-            float y = playerHeightPosition;
-            float z = _generator.StartRow * _generator.hallwayWidth - (_generator.hallwayWidth / 2);
-
-            GameObject.FindWithTag(Tags.Pathfinding).GetComponent<Pathfinding>().Bake(true);
         }
 
         private void SetUpPlayerWeapon()

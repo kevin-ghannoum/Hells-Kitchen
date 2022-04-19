@@ -13,35 +13,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 238747066, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.217583
+      value: 6.6153913
       objectReference: {fileID: 0}
     - target: {fileID: 238747066, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.981682
+      value: 15.08
       objectReference: {fileID: 0}
     - target: {fileID: 238747066, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 20.395206
+      value: 9.090163
       objectReference: {fileID: 0}
     - target: {fileID: 238747066, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.35708976
+      value: 0.7802275
       objectReference: {fileID: 0}
     - target: {fileID: 238747066, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.10573854
+      value: 0.4947712
       objectReference: {fileID: 0}
     - target: {fileID: 238747066, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.88987154
+      value: 0.32318085
       objectReference: {fileID: 0}
     - target: {fileID: 238747066, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.263505
-      objectReference: {fileID: 0}
-    - target: {fileID: 807330855, guid: ab126534be57d744eab097b38e421eda, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      value: -0.20494094
       objectReference: {fileID: 0}
     - target: {fileID: 807330856, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_LocalPosition.x
@@ -133,7 +129,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1852094099853187857, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_Name
-      value: Player Variant
+      value: PlayerRestaurant
       objectReference: {fileID: 0}
     - target: {fileID: 4308270244318326342, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_IsActive
@@ -150,6 +146,10 @@ PrefabInstance:
     - target: {fileID: 8141198540569047468, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: ObservedComponents.Array.data[2]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9212518410050988233, guid: ab126534be57d744eab097b38e421eda, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab126534be57d744eab097b38e421eda, type: 3}

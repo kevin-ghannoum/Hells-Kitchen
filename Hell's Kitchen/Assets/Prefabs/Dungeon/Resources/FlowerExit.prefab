@@ -10467,9 +10467,10 @@ GameObject:
   - component: {fileID: 7885167716947913743}
   - component: {fileID: 5805860229341316405}
   - component: {fileID: 5895657112118790826}
+  - component: {fileID: 211323335678195306}
   m_Layer: 6
   m_Name: FlowerExit
-  m_TagString: Untagged
+  m_TagString: SharedDecoration
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10530,6 +10531,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3717bae4728816447b08e15e383bc1de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &211323335678195306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8306249193114989230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8365983728283968412
 GameObject:
   m_ObjectHideFlags: 0

@@ -15058,6 +15058,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3015702726022638115, guid: 327acd1363581b24b9696e7868eaa402, type: 3}
+      propertyPath: sceneViewId
+      value: 43
+      objectReference: {fileID: 0}
     - target: {fileID: 6180776476762493701, guid: 327acd1363581b24b9696e7868eaa402, type: 3}
       propertyPath: m_Name
       value: SceneManager

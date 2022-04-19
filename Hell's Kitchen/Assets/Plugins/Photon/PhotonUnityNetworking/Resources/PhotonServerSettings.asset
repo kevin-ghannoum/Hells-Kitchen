@@ -38,7 +38,9 @@ MonoBehaviour:
   - AddPurchasedWeaponRPC
   - ClickRpc
   - DeadRPC
+  - DestroyPlayerRPC
   - DestroyRpc
+  - GenerateMazeRPC
   - LoadDungeonRPC
   - LoadGameOverRPC
   - LoadRestaurantRPC
@@ -49,8 +51,6 @@ MonoBehaviour:
   - ShootBullet
   - SwordAttackRPC
   - TakeHitRPC
-  - ServeOrdersRPC
-  - GenerateMazeRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

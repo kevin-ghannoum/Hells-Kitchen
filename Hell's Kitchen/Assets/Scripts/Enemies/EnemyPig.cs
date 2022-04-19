@@ -82,19 +82,24 @@ namespace Enemies
 
         public void OnPigTrigger(Collider col)
         {
+            if (!photonView.IsMine)
+                return;
+            
             if (_currentChargeTime < 0)
             {
-                col.GetComponent<IKillable>()?.TakeDamage(chargeDamage);
+                if (!col.CompareTag(Tags.Enemy))
+                    col.GetComponent<IKillable>()?.TakeDamage(chargeDamage);
             }
             else
             {
-                col.GetComponent<IKillable>()?.TakeDamage(attackDamage);
+                if (!col.CompareTag(Tags.Enemy))
+                    col.GetComponent<IKillable>()?.TakeDamage(attackDamage);
             }
         }
 
         public void OnPigChargeTrigger(Collider col)
         {
-            if (col.tag == Tags.Player && _currentChargeTime < 0)
+            if (photonView.IsMine && !col.CompareTag(Tags.Enemy) && _currentChargeTime < 0)
             {
                 col.GetComponent<IKillable>()?.TakeDamage(chargeDamage);
             }

@@ -14,11 +14,10 @@ GameObject:
   - component: {fileID: 5846106093173850358}
   - component: {fileID: 8513932910647922711}
   - component: {fileID: 105471592295607375}
-  - component: {fileID: 1619560705097020191}
   - component: {fileID: 2408522582973234600}
   m_Layer: 7
   m_Name: Bat
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,6 +104,7 @@ MonoBehaviour:
   dropObject: {fileID: 1493679383233396486, guid: 77b5e100d52ab8c4493a7f0330165ac6, type: 3}
   maxDropsToSpawn: 3
   multipleSpawnRate: 0.3
+  photonView: {fileID: 105471592295607375}
   aggroRadius: 20
   attackRate: 0.5
   attackDamage: 10
@@ -130,27 +130,10 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 8513932910647922711}
-  - {fileID: 1619560705097020191}
   - {fileID: 2408522582973234600}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &1619560705097020191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7839222235967640288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &2408522582973234600
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,6 +8,14 @@ namespace Common
     {
         public static SceneManager Instance;
 
+        [SerializeField]
+        private PhotonView photonView;
+
+        private void Reset()
+        {
+            photonView = GetComponent<PhotonView>();
+        }
+
         private void Awake()
         {
             if (Instance == null)
@@ -15,28 +23,33 @@ namespace Common
 
             PhotonNetwork.AutomaticallySyncScene = true;
         }
-        
+
+        [PunRPC]
+        private void DestroyPlayerRPC()
+        {
+            if (GameStateData.player != null)
+            {
+                Destroy(GameStateData.player);
+                GameStateData.player = null;
+            }
+        }
+
         public void LoadMainMenu()
         {
             PhotonNetwork.LoadLevel(Scenes.MainMenu);
         }
         
-        public void LoadGameOverScene(PhotonView photonView)
+        public void LoadGameOverScene()
         {
             photonView.RPC(nameof(LoadGameOverRPC), RpcTarget.MasterClient);
         }
 
-        public void LoadRestaurantScene(PhotonView photonView)
+        public void LoadRestaurantScene()
         {
             photonView.RPC(nameof(LoadRestaurantRPC), RpcTarget.MasterClient);
         }
-        
-        public void LoadRestaurantScene()
-        {
-            PhotonNetwork.LoadLevel(Scenes.Restaurant);
-        }
 
-        public void LoadDungeonScene(PhotonView photonView)
+        public void LoadDungeonScene()
         {
             photonView.RPC(nameof(LoadDungeonRPC), RpcTarget.MasterClient);
         }
@@ -55,18 +68,21 @@ namespace Common
         [PunRPC]
         private void LoadRestaurantRPC()
         {
+            photonView.RPC(nameof(DestroyPlayerRPC), RpcTarget.All);
             PhotonNetwork.LoadLevel(Scenes.Restaurant);
         }
         
         [PunRPC]
         private void LoadDungeonRPC()
         {
+            photonView.RPC(nameof(DestroyPlayerRPC), RpcTarget.All);
             PhotonNetwork.LoadLevel(Scenes.Dungeon);
         }
 
         [PunRPC]
         private void LoadGameOverRPC()
         {
+            photonView.RPC(nameof(DestroyPlayerRPC), RpcTarget.All);
             PhotonNetwork.LoadLevel(Scenes.GameOver);
         }
 

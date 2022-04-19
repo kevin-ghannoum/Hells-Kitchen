@@ -38,7 +38,7 @@ namespace Dungeon_Generation
             }
 
             GameStateData.playerCurrentHitPoints = GameStateData.playerMaxHitPoints;
-            SceneManager.Instance.LoadRestaurantScene(player.GetComponent<PhotonView>());
+            SceneManager.Instance.LoadRestaurantScene();
         }
     }
 }

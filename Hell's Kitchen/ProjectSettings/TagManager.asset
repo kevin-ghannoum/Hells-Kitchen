@@ -9,6 +9,8 @@ TagManager:
   - Weapon
   - MazeStart
   - Customer
+  - Enemy
+  - SharedDecoration
   layers:
   - Default
   - TransparentFX

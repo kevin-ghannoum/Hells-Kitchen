@@ -3,6 +3,7 @@
 using System.Linq;
 using Common.Enums;
 using Photon.Pun;
+using Server;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,9 +21,7 @@ namespace Dungeon_Generation
         [SerializeField] private GameObject exitPrefab;
         [SerializeField] private GameObject[] rockPrefabs;
         [SerializeField] private GameObject[] debrisPrefabs;
-
-        [Header("Enemy Prefabs")]
-        [SerializeField] private GameObject[] enemies;
+        [SerializeField] private GameObject[] enemyPrefabs;
 
         [Header("Spawn Rates")]
         [SerializeField][Range(0f, 1f)] private float torchSpawnRate = 0.1f;
@@ -57,7 +56,7 @@ namespace Dungeon_Generation
 
         public int[,] Data { get; private set; }
 
-        void Awake()
+        private void Awake()
         {
             _dataGenerator = new MazeDataGenerator(placementThreshold);
 
@@ -77,17 +76,19 @@ namespace Dungeon_Generation
                     GetRandomOddNumberInRange(minMazeSize, maxMazeSize),
                     GetRandomOddNumberInRange(minMazeSize, maxMazeSize)
                 );
-                photonView.RPC(nameof(GenerateMazeRPC), RpcTarget.All, Data);
+                photonView.RPC(nameof(GenerateMazeRPC), RpcTarget.All, Serializer.SerializeInt2D(Data));
             }
         }
 
         [PunRPC]
-        private void GenerateMazeRPC(int[,] data)
+        private void GenerateMazeRPC(byte[] bytes)
         {
             DisposeOldMaze();
 
-            Data = data;
+            Data = Serializer.DeserializeInt2D(bytes);
             GenerateMaze();
+            
+            GameObject.FindWithTag(Tags.Pathfinding).GetComponent<Pathfinding>().Bake(true);
         }
 
         private void GenerateMaze()
@@ -176,6 +177,21 @@ namespace Dungeon_Generation
             foreach (GameObject obj in objects)
             {
                 Destroy(obj);
+            }
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag(Tags.Enemy);
+                foreach (var enemy in enemies)
+                {
+                    PhotonNetwork.Destroy(enemy);
+                }
+                
+                GameObject[] decorations = GameObject.FindGameObjectsWithTag(Tags.SharedDecoration);
+                foreach (var decoration in decorations)
+                {
+                    PhotonNetwork.Destroy(decoration);
+                }
             }
         }
 
@@ -266,7 +282,7 @@ namespace Dungeon_Generation
         {
             if (Random.value < enemySpawnRate)
             {
-                var enemy = enemies[Random.Range(0, enemies.Length)];
+                var enemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
                 PhotonNetwork.Instantiate(enemy.name, position, Quaternion.identity);
             }
         }
@@ -303,9 +319,9 @@ namespace Dungeon_Generation
         {
             if (Random.value < torchSpawnRate)
             {
-                const float torchHeight = 3.0f / 5.0f;
+                float torchHeight = hallwayHeight * 3.0f / 5.0f;
                 PhotonNetwork.Instantiate(torchPrefab.name,
-                    wall.position + new Vector3(0, torchHeight, Random.Range(-0.5f, 0.5f)),
+                    wall.position + torchHeight * Vector3.up + wall.forward * hallwayWidth * Random.Range(-0.5f, 0.5f),
                     wall.rotation
                 );
                 return true;

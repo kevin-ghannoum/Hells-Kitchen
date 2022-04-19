@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Common.Enums;
 using PlayerInventory;
+using UnityEngine;
 
 namespace Common
 {
@@ -19,5 +20,7 @@ namespace Common
         public static bool dungeonTimeHasElapsed = true;
 
         public static Inventory inventory = new Inventory();
+
+        public static GameObject player = null;
     }
 }

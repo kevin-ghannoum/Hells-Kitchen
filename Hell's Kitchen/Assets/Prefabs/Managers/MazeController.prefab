@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2752677855204124920}
   - component: {fileID: 2752677855204124921}
   - component: {fileID: 2752677855204124922}
+  - component: {fileID: 6978460921469491496}
   m_Layer: 0
   m_Name: MazeController
   m_TagString: Untagged
@@ -44,11 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81b5c49913b52a146a2ccfaa8398dd93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 0}
   playerHeightPosition: 0
   defaultWeapon: 7
   clock: {fileID: 0}
   mazeStart: {fileID: 0}
+  playerSpawner: {fileID: 0}
 --- !u!114 &2752677855204124922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,7 +83,7 @@ MonoBehaviour:
   - {fileID: 4770508354603840657, guid: 3c6dbca2d82cdab4abb7a48a23623b51, type: 3}
   - {fileID: 5502087388369685447, guid: 4a800b939cf10474fb1c43b364810f20, type: 3}
   - {fileID: 4960195001528040362, guid: 3c67dae0937f97f4aa36f8cb0fb1e2dc, type: 3}
-  enemies:
+  enemyPrefabs:
   - {fileID: 7839222235967640288, guid: 4ac12db71e65fbd4ca9d0a92c4b5e5b1, type: 3}
   - {fileID: 4794755069063066433, guid: 1d60d1758c970fb4cabcb56b300aa68a, type: 3}
   torchSpawnRate: 0.1
@@ -100,4 +101,26 @@ MonoBehaviour:
   maxMazeSize: 15
   hallwayWidth: 10
   hallwayHeight: 4
-  photonView: {fileID: 0}
+  photonView: {fileID: 6978460921469491496}
+--- !u!114 &6978460921469491496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2752677855204124927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

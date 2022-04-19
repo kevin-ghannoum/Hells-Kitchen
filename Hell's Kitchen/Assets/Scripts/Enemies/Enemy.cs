@@ -29,7 +29,9 @@ namespace Enemies
 
         [SerializeField] protected int maxDropsToSpawn = 3;
         
-        [SerializeField][Range(0f, 1f)] private float multipleSpawnRate= 0.3f;
+        [SerializeField][Range(0f, 1f)] private float multipleSpawnRate = 0.3f;
+
+        [SerializeField] protected PhotonView photonView;
 
         private bool isKilled = false;
 
@@ -100,7 +102,7 @@ namespace Enemies
             var shouldSpawnMore = Random.value < multipleSpawnRate;
             var numSpawned = 0;
 
-            do{
+            do {
                 numSpawned++;
                 PhotonNetwork.Instantiate(dropObject.name, spawnPosition, Quaternion.identity);
                 spawnPosition += offset;
@@ -109,7 +111,10 @@ namespace Enemies
 
         private void Destroy()
         {
-            PhotonNetwork.Destroy(gameObject);
+            if (photonView.IsMine)
+            {
+                PhotonNetwork.Destroy(gameObject);
+            }
         }
         
         #endregion
