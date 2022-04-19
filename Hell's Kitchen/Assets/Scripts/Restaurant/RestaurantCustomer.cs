@@ -1,4 +1,5 @@
-﻿using Restaurant.Enums;
+﻿using Photon.Pun;
+using Restaurant.Enums;
 using UnityEngine;
 
 namespace Restaurant
@@ -16,6 +17,9 @@ namespace Restaurant
         [SerializeField]
         private Animator animator;
 
+        [SerializeField]
+        private PhotonView photonView;
+
         private RestaurantSeat _currentSeat;
         
         private void Reset()
@@ -23,6 +27,7 @@ namespace Restaurant
             agent = GetComponent<PathfindingAgent>();
             rigidbody = GetComponent<Rigidbody>();
             animator = GetComponentInChildren<Animator>();
+            photonView = GetComponent<PhotonView>();
         }
 
         private void Start()
@@ -33,6 +38,12 @@ namespace Restaurant
 
         private void Update()
         {
+            agent.enabled = photonView.IsMine;
+            rigidbody.detectCollisions = photonView.IsMine;
+            rigidbody.useGravity = photonView.IsMine;
+            if (!photonView.IsMine)
+                return;
+            
             agent.Target = _currentSeat.transform.position;
             animator.SetFloat(RestaurantCustomerAnimator.Speed, agent.Velocity.magnitude / agent.MaxVelocity);
             animator.SetBool(RestaurantCustomerAnimator.Sitting, _currentSeat.IsSitting);
@@ -48,16 +59,22 @@ namespace Restaurant
 
         private void DisableRigidbody()
         {
-            rigidbody.detectCollisions = false;
-            rigidbody.useGravity = false;
-            rigidbody.isKinematic = true;
+            if (photonView.IsMine)
+            {
+                rigidbody.detectCollisions = false;
+                rigidbody.useGravity = false;
+                rigidbody.isKinematic = true;
+            }
         }
         
         private void EnableRigidbody()
         {
-            rigidbody.detectCollisions = true;
-            rigidbody.useGravity = true;
-            rigidbody.isKinematic = false;
+            if (photonView.IsMine)
+            {
+                rigidbody.detectCollisions = true;
+                rigidbody.useGravity = true;
+                rigidbody.isKinematic = false;
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using System;
-using Common.Enums;
+﻿using Common.Enums;
+using Photon.Pun;
 using UnityEngine;
 
 namespace UI
@@ -31,7 +31,11 @@ namespace UI
         {
             if (!_isDisabled && other.gameObject.CompareTag(Tags.Player))
             {
-                Enable();
+                var photonView = other.GetComponent<PhotonView>();
+                if (photonView != null && photonView.IsMine)
+                {
+                    Enable();
+                }
             }
         }
         
@@ -39,7 +43,11 @@ namespace UI
         {
             if (!_isDisabled && other.gameObject.CompareTag(Tags.Player))
             {
-                Disable();
+                var photonView = other.GetComponent<PhotonView>();
+                if (photonView != null && photonView.IsMine)
+                {
+                    Disable();
+                }
             }
         }
 

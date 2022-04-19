@@ -3,6 +3,7 @@ using System.Linq;
 using Common;
 using Common.Enums;
 using Input;
+using Photon.Pun;
 using UI;
 using UnityEngine;
 
@@ -27,9 +28,13 @@ namespace Shops
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.gameObject.CompareTag(Tags.Player) && _input.interact)
+            if (other.gameObject.CompareTag(Tags.Player))
             {
-                shopUI.Initialize(_weapons);
+                var pv = other.GetComponent<PhotonView>();
+                if (pv != null && pv.IsMine && _input.interact)
+                {
+                    shopUI.Initialize(_weapons);
+                }
             }
         }
     }

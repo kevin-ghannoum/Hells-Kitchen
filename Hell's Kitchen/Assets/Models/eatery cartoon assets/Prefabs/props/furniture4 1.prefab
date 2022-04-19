@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8857876211275154199}
   - component: {fileID: 5233335181429100937}
   - component: {fileID: 587476191923784654}
+  - component: {fileID: 5695120577466690127}
   m_Layer: 0
   m_Name: furniture4 1
   m_TagString: Untagged
@@ -169,6 +170,30 @@ MonoBehaviour:
   interactUI: {fileID: 8857876211275154199}
   restaurantUI: {fileID: 5233335181429100937}
   orderItemPrefab: {fileID: 3202725611455143154, guid: b3afaf2dffaf2d24ab561b49aa7ca0a7, type: 3}
+  photonView: {fileID: 5695120577466690127}
+--- !u!114 &5695120577466690127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9180108098460546452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 587476191923784654}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1001 &770779545253322829
 PrefabInstance:
   m_ObjectHideFlags: 0

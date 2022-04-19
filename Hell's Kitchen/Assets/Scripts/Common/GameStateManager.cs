@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using Common.Enums.Items;
 using Enums.Items;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using PlayerInventory;
+using Restaurant;
 using UI;
 using UnityEngine;
 
@@ -23,6 +24,7 @@ namespace Common
             }
             photonView = GetComponent<PhotonView>();
             inventoryUI = FindObjectOfType<InventoryUI>();
+            PhotonPeer.RegisterType(typeof(RestaurantOrder), (byte)'O', RestaurantOrder.Serialize, RestaurantOrder.Deserialize);
         }
 
         private void ResetDefaults()
@@ -100,22 +102,22 @@ namespace Common
 
         public static void AddItemToInventory(ItemInstance itemInstance, int quantity)
         {
-            Instance.photonView.RPC(nameof(AddItemToInventoryRPC), RpcTarget.MasterClient, itemInstance, quantity);
+            Instance.photonView.RPC(nameof(AddItemToInventoryRPC), RpcTarget.All, itemInstance, quantity);
         }
 
         public static void RemoveItemFromInventory(ItemInstance itemInstance, int quantity)
         {
-            Instance.photonView.RPC(nameof(RemoveItemFromInventoryRPC), RpcTarget.MasterClient, itemInstance, quantity);
+            Instance.photonView.RPC(nameof(RemoveItemFromInventoryRPC), RpcTarget.All, itemInstance, quantity);
         }
 
         public static void SetCashMoney(float value)
         {
-            Instance.photonView.RPC(nameof(SetCashMoneyRPC), RpcTarget.MasterClient, value);
+            Instance.photonView.RPC(nameof(SetCashMoneyRPC), RpcTarget.All, value);
         }
 
         public static void AddPurchasedWeapon(string weaponName)
         {
-            Instance.photonView.RPC(nameof(AddPurchasedWeaponRPC), RpcTarget.MasterClient, weaponName);
+            Instance.photonView.RPC(nameof(AddPurchasedWeaponRPC), RpcTarget.All, weaponName);
         }
     }
 }

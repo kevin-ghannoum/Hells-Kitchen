@@ -5,13 +5,15 @@ using Common.Enums;
 using Common.Enums.Items;
 using Enums.Items;
 using Input;
+using Photon.Pun;
 using UI;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 namespace Restaurant
 {
-    public class RestaurantTable : MonoBehaviour
+    public class RestaurantTable : MonoBehaviour, IPunObservable
     {
         [SerializeField]
         private RestaurantSeat[] seats;
@@ -25,12 +27,17 @@ namespace Restaurant
         [SerializeField]
         private GameObject orderItemPrefab;
 
+        [SerializeField]
+        private PhotonView photonView;
+
         private InputManager _input => InputManager.Instance;
-        public readonly List<RestaurantOrder> OrderList = new List<RestaurantOrder>();
-        
+        public List<RestaurantOrder> OrderList = new List<RestaurantOrder>();
+        private readonly Dictionary<int, RestaurantOrderItem> _orderUIObjects = new Dictionary<int, RestaurantOrderItem>();
+
         private void Reset()
         {
             seats = GetComponentsInChildren<RestaurantSeat>();
+            photonView = GetComponent<PhotonView>();
         }
 
         private void Update()
@@ -39,22 +46,37 @@ namespace Restaurant
             interactUI.IsDisabled = OrderList.All(o => o.Served);
         }
 
-        private void OnTriggerStay(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(Tags.Player) && _input.interact)
+            if (other.gameObject.CompareTag(Tags.Player))
             {
-                foreach (var order in OrderList)
+                var pv = other.GetComponent<PhotonView>();
+                if (pv != null && pv.IsMine)
                 {
-                    ServeOrder(order);
+                    _input.reference.actions["Interact"].performed += ServeOrders;
                 }
-                RefreshOrderUI();
             }
         }
-
+        
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject.CompareTag(Tags.Player))
+            {
+                var pv = other.GetComponent<PhotonView>();
+                if (pv != null && pv.IsMine)
+                {
+                    _input.reference.actions["Interact"].performed -= ServeOrders;
+                }
+            }
+        }        
+        
         public void OnCustomerSit()
         {
-            OrderList.Add(GenerateRandomOrder());
-            RefreshOrderUI();
+            if (photonView.IsMine)
+            {
+                OrderList.Add(GenerateRandomOrder());
+                RefreshOrderUI();
+            }
         }
 
         private void RefreshOrderUI()
@@ -62,15 +84,16 @@ namespace Restaurant
             foreach (var order in OrderList)
             {
                 RestaurantOrderItem orderItem;
-                if (order.UIObject != null)
+                if (_orderUIObjects.ContainsKey(order.ID))
                 {
-                    orderItem = order.UIObject;
+                    orderItem = _orderUIObjects[order.ID];
                 }
                 else
                 {
-                    orderItem = order.UIObject =
+                    orderItem =
                         Instantiate(orderItemPrefab, restaurantUI.gameObject.transform.Find("RestaurantOrderUI/Canvas/Container/InnerContainer"))
                         .GetComponent<RestaurantOrderItem>();
+                    _orderUIObjects.Add(order.ID, orderItem);
                 }
                 orderItem.Item = order.Item;
                 orderItem.Quantity = order.Quantity;
@@ -97,6 +120,21 @@ namespace Restaurant
             }
         }
 
+        [PunRPC]
+        private void ServeOrdersRPC()
+        {
+            foreach (var restaurantOrder in OrderList)
+            {
+                ServeOrder(restaurantOrder);
+            }
+            RefreshOrderUI();
+        }
+
+        private void ServeOrders(InputAction.CallbackContext context)
+        {
+            photonView.RPC(nameof(ServeOrdersRPC), RpcTarget.All);
+        }
+
         private RestaurantOrder GenerateRandomOrder()
         {
             ItemInstance[] possibleValues = {
@@ -110,6 +148,19 @@ namespace Restaurant
                 Quantity = Random.Range(1, 4),
                 CashMoney = Random.Range(20, 40)
             };
+        }
+        
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if (stream.IsWriting)
+            {
+                stream.SendNext(OrderList.ToArray());
+            } 
+            else if (stream.IsReading)
+            {
+                OrderList = ((RestaurantOrder[]) stream.ReceiveNext()).ToList();
+                RefreshOrderUI();
+            }
         }
     }
 }

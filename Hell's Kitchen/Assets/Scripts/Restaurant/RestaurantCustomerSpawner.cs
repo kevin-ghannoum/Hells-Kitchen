@@ -1,4 +1,5 @@
 ﻿using System;
+using Photon.Pun;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -35,9 +36,12 @@ namespace Restaurant
 
         private void Start()
         {
-            for (int i = 0; i < numCustomersToSpawn; i++)
+            if (PhotonNetwork.IsMasterClient)
             {
-                Invoke(nameof(SpawnCustomer), spawnDelay * i + Random.Range(-0.5f, 0.5f));
+                for (int i = 0; i < numCustomersToSpawn; i++)
+                {
+                    Invoke(nameof(SpawnCustomer), spawnDelay * i + Random.Range(-0.5f, 0.5f));
+                }
             }
         }
 
@@ -50,7 +54,7 @@ namespace Restaurant
             var customerPrefab = customerPrefabs[Random.Range(0, customerPrefabs.Length)];
 
             // Spawn
-            Instantiate(customerPrefab, spawnPoint.position, spawnPoint.rotation);
+            PhotonNetwork.InstantiateRoomObject(customerPrefab.name, spawnPoint.position, spawnPoint.rotation);
         }
 
     }
