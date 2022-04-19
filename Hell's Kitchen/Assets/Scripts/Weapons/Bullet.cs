@@ -1,6 +1,7 @@
 using System;
 using Common.Enums;
 using Common.Interfaces;
+using Photon.Pun;
 using UnityEngine;
 
 namespace Weapons
@@ -16,7 +17,7 @@ namespace Weapons
             if (!obj.CompareTag(Tags.Player))
             {
                 obj.GetComponent<IKillable>()?.TakeDamage(Damage);
-                Destroy(gameObject);
+                PhotonNetwork.Destroy(gameObject);
                 var hitFx = Instantiate(bulletHit, collision.contacts[0].point, Quaternion.identity);
                 Destroy(hitFx, 3.0f);
             }

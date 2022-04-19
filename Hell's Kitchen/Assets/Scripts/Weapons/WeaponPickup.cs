@@ -1,9 +1,11 @@
-﻿using Common;
+﻿using System;
+using Common;
 using Common.Enums;
 using Common.Interfaces;
 using Player;
 using UnityEngine;
 using Input;
+using Photon.Pun;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
@@ -32,6 +34,8 @@ namespace Weapons
 
         private float _damage = 10.0f;
 
+        private PhotonView _photonView;
+
         public float Damage
         {
             get => _damage;
@@ -48,15 +52,21 @@ namespace Weapons
             rigidbody = GetComponent<Rigidbody>();
         }
 
+        private void Awake()
+        {
+            _photonView = GetComponent<PhotonView>();
+        }
+
         public virtual void PickUp()
         {
-            GetComponentsFromPlayer();
+            GetComponentsFromLocalPlayer();
+            var viewId = NetworkHelper.GetLocalPlayerObject().GetComponent<PhotonView>().ViewID;
             
             _canBePickedUp = false;
             GameStateData.carriedWeapon = WeaponInstance;
-            ReparentObjectToPlayerHand();
-            DisableRigidbody();
-            SetOutline(false);
+            _photonView.RPC(nameof(ReparentObjectToPlayerHand), RpcTarget.All, viewId);
+           // ReparentObjectToPlayerHand(viewId);
+            _photonView.RPC(nameof(DisableRigidbody), RpcTarget.All);
             AddListeners();
         }
 
@@ -72,8 +82,7 @@ namespace Weapons
             transform.localScale = new Vector3(1, 1, 1);
             RemoveListeners();
             GameStateData.carriedWeapon = WeaponInstance.None;
-            EnableRigidBody();
-            SetOutline(true);
+            _photonView.RPC(nameof(EnableRigidBody), RpcTarget.All);
         }
 
         public void Throw(InputAction.CallbackContext callbackContext)
@@ -91,20 +100,20 @@ namespace Weapons
             );
             RemoveListeners();
             GameStateData.carriedWeapon = WeaponInstance.None;
-            EnableRigidBody();
-            SetOutline(true);
+            _photonView.RPC(nameof(EnableRigidBody), RpcTarget.All);
         }
 
-        private void GetComponentsFromPlayer()
+        private void GetComponentsFromLocalPlayer()
         {
             GameObject playerObject = NetworkHelper.GetLocalPlayerObject();
             playerController = playerObject.GetComponent<PlayerController>();
             playerAnimator = playerObject.GetComponentInChildren<Animator>();
         }
 
-        private void ReparentObjectToPlayerHand()
+        [PunRPC]
+        private void ReparentObjectToPlayerHand(int viewID)
         {
-            playerController ??= NetworkHelper.GetLocalPlayerController(); 
+            playerController ??= PhotonView.Find(viewID).gameObject.GetComponent<PlayerController>();
             Transform hand = playerController?.CharacterHand;
             if (!hand)
                 throw new MissingReferenceException();
@@ -143,34 +152,55 @@ namespace Weapons
 
         private void OnTriggerEnter(Collider other)
         {
+            if (!_photonView.IsMine)
+                return;
+            
             if (other.CompareTag(Tags.Player) && _canBePickedUp && !GameStateData.IsCarryingWeapon)
             {
-                other.GetComponent<PlayerController>().OnPickupTriggerEnter(this);
+                var pv = other.GetComponent<PhotonView>();
+                if (pv != null && pv.IsMine)
+                {
+                    other.GetComponent<PlayerController>().OnPickupTriggerEnter(this);
+                }
+                
             }
         }
         
         private void OnTriggerExit(Collider other)
         {
+            if (!_photonView.IsMine)
+                return;
+
             if (other.CompareTag(Tags.Player))
             {
-                other.GetComponent<PlayerController>().OnPickupTriggerExit(this);
+                var pv = other.GetComponent<PhotonView>();
+                if (pv != null && pv.IsMine)
+                {
+                    other.GetComponent<PlayerController>().OnPickupTriggerExit(this);
+                }
             }
         }
 
-        private void DisableRigidbody()
+        [PunRPC]
+        public void DisableRigidbody()
         {
+            Debug.Log("DISABLE");
             rigidbody.detectCollisions = false;
             rigidbody.useGravity = false;
             rigidbody.isKinematic = true;
             rigidbody.velocity = Vector3.zero;
             rigidbody.angularVelocity = Vector3.zero;
+            SetOutline(false);
         }
 
-        private void EnableRigidBody()
+        [PunRPC]
+        public void EnableRigidBody()
         {
+            Debug.Log("ENABLE");
             rigidbody.detectCollisions = true;
             rigidbody.useGravity = true;
             rigidbody.isKinematic = false;
+            SetOutline(true);
         }
 
         private void SetOutline(bool isEnabled)

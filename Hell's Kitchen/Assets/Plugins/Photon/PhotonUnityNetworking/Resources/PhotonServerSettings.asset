@@ -39,6 +39,8 @@ MonoBehaviour:
   - ClickRpc
   - DestroyPlayerRPC
   - DestroyRpc
+  - DisableRigidbody
+  - EnableRigidBody
   - GenerateMazeRPC
   - LoadDungeonRPC
   - LoadGameOverRPC
