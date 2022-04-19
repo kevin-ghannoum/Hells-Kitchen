@@ -11,6 +11,7 @@ namespace Shops
 {
     public class WeaponShopkeeper : MonoBehaviour
     {
+        [SerializeField] private GameObject interactText;
         [SerializeField] private WeaponShopUI shopUI;
         
         private InputManager _input => InputManager.Instance;

@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using Common;
-using Player;
 using UnityEngine;
 
 public class HealerHealState : HealerBaseState
@@ -17,7 +14,6 @@ public class HealerHealState : HealerBaseState
         healer.sc.agent.standStill = false;
         isAttackAnimationPlaying = false;
         isCasting = false;
-
     }
 
     //call this if enemy damages souschef while casting, onDamaged event maybe? Xd
@@ -61,7 +57,7 @@ public class HealerHealState : HealerBaseState
             {
                 healer.animator.SetTrigger("CastSpell");
                 healer.healCircle.gameObject.SetActive(false);
-                healer.spells.HealerSpell_Heal(healer.sc.hitPoints > GameStateManager.Instance.playerCurrentHitPoints ? healer.sc.player.transform.position : healer.transform.position);
+                healer.spells.HealerSpell_Heal(healer.sc.hitPoints > GameStateData.playerCurrentHitPoints ? healer.sc.player.transform.position : healer.transform.position);
                 _healCastTime = 0f;
                 _delayBetweenCast = 0f;
                 isAttackAnimationPlaying = true;
