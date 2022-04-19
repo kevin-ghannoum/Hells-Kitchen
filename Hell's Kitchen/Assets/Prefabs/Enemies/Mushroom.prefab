@@ -84,9 +84,9 @@ MonoBehaviour:
   animator: {fileID: 3357963645044035683}
   hitPoints: 100
   deathDelay: 1
-  onKilled:
-    m_PersistentCalls:
-      m_Calls: []
+  dropObject: {fileID: 1493679383233396486, guid: 77b5e100d52ab8c4493a7f0330165ac6, type: 3}
+  maxDropsToSpawn: 3
+  multipleSpawnRate: 0.3
   Speed: 0
   attackRange: 0
   bullet: {fileID: 7909279519910436684, guid: 8e42300684f478147a67635629580caa, type: 3}
@@ -134,8 +134,8 @@ Rigidbody:
   m_GameObject: {fileID: 1179882390037061755}
   serializedVersion: 2
   m_Mass: 10000
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Drag: 1
+  m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
