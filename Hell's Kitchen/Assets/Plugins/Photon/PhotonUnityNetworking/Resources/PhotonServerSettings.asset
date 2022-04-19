@@ -34,23 +34,21 @@ MonoBehaviour:
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
-  - ClickRpc
-  - DestroyRpc
-  - DestroySpaceship
-  - Fire
-  - RespawnSpaceship
   - AddItemToInventoryRPC
   - AddPurchasedWeaponRPC
-  - AutoCraftOrderedRecipes
-  - RemoveItemFromInventoryRPC
-  - SetCashMoneyRPC
-  - PickUpRPC
-  - RollRPC
+  - ClickRpc
   - DeadRPC
-  - TakeHitRPC
-  - ShootRPC
-  - SwordAttackRPC
+  - DestroyRpc
+  - LoadDungeonRPC
+  - LoadGameOverRPC
+  - LoadRestaurantRPC
+  - RemoveItemFromInventoryRPC
   - ServeOrdersRPC
+  - SetCashMoneyRPC
+  - SetGameObjectActiveByNameRPC
+  - ShootBullet
+  - SwordAttackRPC
+  - TakeHitRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

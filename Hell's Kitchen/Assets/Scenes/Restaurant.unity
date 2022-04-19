@@ -4528,6 +4528,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawnPlayers
       objectReference: {fileID: 0}
+    - target: {fileID: 1662986158024480343, guid: da75bf6655a0bc644b6062334d584eff, type: 3}
+      propertyPath: shouldSpawnOnAwake
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1662986158972169735, guid: da75bf6655a0bc644b6062334d584eff, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.2

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Common;
 using Common.Interfaces;
 using Input;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -47,7 +48,7 @@ namespace UI
             }
 
             PerformTransaction(weapon.name,weaponCost);
-            weapon.SetActive(true);
+            GameStateManager.Instance.photonView.RPC(nameof(GameStateManager.SetGameObjectActiveByNameRPC), RpcTarget.All, weapon.name);
             errorText.text = string.Empty;
             button.interactable = false;
         }
