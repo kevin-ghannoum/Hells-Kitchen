@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Common;
 using Common.Enums;
 using Input;
@@ -8,6 +5,7 @@ using PlayerInventory.Cooking;
 using Restaurant;
 using Restaurant.Enums;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 using SceneManager = Common.SceneManager;
 
@@ -22,10 +20,24 @@ public class RestaurantDoor : MonoBehaviour
     private static IRecipe[] _availableRecipes;
 
     private int _numCustomers = 0;
-    
+    private bool isInTrigger;
+
     private void Awake()
     {
         _availableRecipes = new IRecipe[] {new Recipes.Hamburger(), new Recipes.Salad(), new Recipes.Sushi()};
+        if (!_input)
+            return;
+
+        _input.reference.actions["Interact"].performed += LeaveRestaurant;
+    }
+
+    private void LeaveRestaurant(InputAction.CallbackContext obj)
+    {
+        if (!isInTrigger)
+            return;
+        
+        ImposeFine();
+        SceneManager.Instance.LoadDungeonScene();
     }
 
     private void Reset()
@@ -56,7 +68,13 @@ public class RestaurantDoor : MonoBehaviour
     {
         if (other.CompareTag(Tags.Customer))
         {
+           
             _numCustomers++;
+        }
+
+        if (other.gameObject.CompareTag(Tags.Player))
+        {
+            isInTrigger = true;
         }
     }
 
@@ -64,17 +82,13 @@ public class RestaurantDoor : MonoBehaviour
     {
         if (other.CompareTag(Tags.Customer))
         {
+            isInTrigger = false;
             _numCustomers--;
         }
-    }
-
-    public void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag(Tags.Player) && _input.interact)
+        
+        if (other.gameObject.CompareTag(Tags.Player))
         {
-            ImposeFine();
-            SceneManager.Instance.LoadDungeonScene();
+            isInTrigger = false;
         }
     }
-    
 }
