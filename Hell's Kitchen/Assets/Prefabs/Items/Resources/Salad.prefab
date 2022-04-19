@@ -145,6 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quantity: 1
   item: 5
+  photonView: {fileID: 3421540210328960449}
 --- !u!114 &3421540210328960449
 MonoBehaviour:
   m_ObjectHideFlags: 0

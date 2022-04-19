@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7118c4f9015d44092b7bc2482e605f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  realSecondsPerDay: 30
+  realSecondsPerDay: 120
   clockHandTransform: {fileID: 2212016401594425030}
   clockHandOffset: 90
 --- !u!1 &5120374345819064813

@@ -1,3 +1,4 @@
+using Common.Enums;
 using Common.Interfaces;
 using Enemies.Enums;
 using Photon.Pun;
@@ -39,6 +40,8 @@ namespace Enemies
 
         public float HitPoints => hitPoints;
 
+        public PhotonView PhotonView => photonView;
+
         #endregion
 
         #region Unity Events
@@ -60,6 +63,7 @@ namespace Enemies
 
         #region Public Methods
 
+        [PunRPC]
         public virtual void TakeDamage(float damage)
         {
             // HP calculation and animation
@@ -87,7 +91,10 @@ namespace Enemies
             Invoke(nameof(Destroy), deathDelay);
             agent.enabled = false;
             enabled = false;
-            ItemDropOnDeath();
+            if (photonView.IsMine)
+            {
+                ItemDropOnDeath();
+            }
             isKilled = true;
         }
 
@@ -129,6 +136,23 @@ namespace Enemies
             {
                 stream.ReceiveNext();
             }
+        }
+
+        public GameObject FindClosestPlayer()
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag(Tags.Player);
+            float closestDist = float.MaxValue;
+            GameObject closestPlayer = null;
+            foreach (var player in players)
+            {
+                float dist = Vector3.Distance(transform.position, player.transform.position);
+                if (dist < closestDist)
+                {
+                    closestDist = dist;
+                    closestPlayer = player;
+                }
+            }
+            return closestPlayer;
         }
     }
 

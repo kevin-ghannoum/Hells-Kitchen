@@ -37,7 +37,6 @@ MonoBehaviour:
   - AddItemToInventoryRPC
   - AddPurchasedWeaponRPC
   - ClickRpc
-  - DeadRPC
   - DestroyPlayerRPC
   - DestroyRpc
   - GenerateMazeRPC
@@ -45,12 +44,15 @@ MonoBehaviour:
   - LoadGameOverRPC
   - LoadRestaurantRPC
   - RemoveItemFromInventoryRPC
+  - ReturnToRestaurantRPC
   - ServeOrdersRPC
   - SetCashMoneyRPC
   - SetGameObjectActiveByNameRPC
   - ShootBullet
   - SwordAttackRPC
-  - TakeHitRPC
+  - TakeDamage
+  - LootChest
+  - PickUp
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

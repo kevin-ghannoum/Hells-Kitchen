@@ -85,7 +85,7 @@ namespace Common
             photonView.RPC(nameof(DestroyPlayerRPC), RpcTarget.All);
             PhotonNetwork.LoadLevel(Scenes.GameOver);
         }
-
+        
         #endregion
         
     }

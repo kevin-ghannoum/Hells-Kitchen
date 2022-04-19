@@ -2,6 +2,7 @@
 using Common.Enums;
 using Common.Interfaces;
 using Enemies.Enums;
+using Photon.Pun;
 using Player;
 using UnityEngine;
 
@@ -18,21 +19,19 @@ namespace Enemies
         [SerializeField] private float attackDamageRadius = 2f;
         [SerializeField] private Transform attackPosition;
         
-        private PlayerController _player;
         private float _lastAttack;
-        
-        private void Start()
-        {
-            _player = GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>();
-        }
 
         public override void Update()
         {
+            if (!photonView.IsMine)
+                return;
+            
             base.Update();
 
-            if (Vector3.Distance(_player.transform.position, transform.position) < aggroRadius)
+            var player = FindClosestPlayer();
+            if (Vector3.Distance(player.transform.position, transform.position) < aggroRadius)
             {
-                agent.Target = _player.transform.position;
+                agent.Target = player.transform.position;
 
                 if (agent.IsArrived && Time.time - _lastAttack > (1.0f / attackRate))
                 {
@@ -56,7 +55,7 @@ namespace Enemies
             foreach(var col in colliders)
             {
                 if (!col.CompareTag(Tags.Enemy))
-                    col.gameObject.GetComponent<IKillable>()?.TakeDamage(attackDamage);
+                    col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.All, attackDamage);
             }
         }
     }

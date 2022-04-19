@@ -16,11 +16,11 @@ namespace Dungeon_Generation
         {
             if(other.gameObject.CompareTag(Tags.Player) && _input.interact)
             {
-                var gameController = GameObject.FindObjectOfType<GameController>();
+                var gameController = FindObjectOfType<GameController>();
                 if (GameStateData.dungeonTimeHasElapsed || !gameController)
                     ReturnToRestaurant(other.gameObject);
                 else
-                    gameController.StartNewGame();
+                    SceneManager.Instance.LoadDungeonScene();
             }
         }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Common;
 using Common.Enums;
 using Input;
@@ -68,7 +69,8 @@ public class RestaurantDoor : MonoBehaviour
 
     private void ImposeFine()
     {
-        foreach (var order in RestaurantManager.Instance.OrderList)
+        var missedOrders = RestaurantManager.Instance.OrderList.Where(o => !o.Served);
+        foreach (var order in missedOrders)
         {
             GameStateManager.SetCashMoney(GameStateData.cashMoney - order.Quantity * missedOrderPenalty);
         }
