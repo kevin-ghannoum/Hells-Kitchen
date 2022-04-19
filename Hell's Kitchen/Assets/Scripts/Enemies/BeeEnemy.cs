@@ -36,20 +36,19 @@ namespace Enemies
             timeCounter += Time.deltaTime;
             if (hiveList.Length > 0)
             {
+                anime.SetBool("Attack", false);
                 targetHive = checkHive(hiveList);
-                
+
                 if (Vector3.Distance(transform.position, target.transform.position) < attackRange)
                 {
                     agent.enabled = true;
                     agent.Target = target.transform.position;
-
-                    if (Vector3.Distance(target.transform.position, transform.position) < 1.2 && timeCounter > 1)
+                    if (Vector3.Distance(target.transform.position, transform.position) < 2 && timeCounter > 2)
                     {
-                        anime.SetBool("Attack", true);
+                        animator.SetTrigger(EnemyAnimator.Attack);
                         Attack();
                         timeCounter = 0;
                     }
-                    anime.SetBool("Attack", false);
                 }
                 else if (Vector3.Distance(transform.position, targetHive.transform.position) > 7)
                 {
