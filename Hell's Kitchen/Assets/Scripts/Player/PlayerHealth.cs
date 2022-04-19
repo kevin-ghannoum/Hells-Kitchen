@@ -104,17 +104,5 @@ namespace Player
             GameStateData.playerCurrentHitPoints = GameStateData.playerMaxHitPoints;
             SceneManager.Instance.LoadRestaurantScene();
         }
-
-        [PunRPC]
-        private void TakeHitRPC()
-        {
-            animator.SetTrigger(PlayerAnimator.TakeHit);
-        }
-
-        [PunRPC]
-        private void DeadRPC()
-        {
-            animator.SetTrigger(PlayerAnimator.Dead);
-        }
     }
 }

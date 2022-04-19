@@ -11,6 +11,7 @@ TagManager:
   - Customer
   - Enemy
   - SharedDecoration
+  - SousChef
   layers:
   - Default
   - TransparentFX
@@ -23,6 +24,7 @@ TagManager:
   - Collider
   - Collectibles
   - Characters
+  - SousChef
   - 
   - 
   - 

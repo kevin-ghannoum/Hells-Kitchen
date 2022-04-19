@@ -1,20 +1,29 @@
+using Common;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class HealerMoveToTargetState : HealerBaseState
 {
+    int fleeTile = -1;
+
     public override void EnterState(HealerStateManager healer)
     {
         Debug.Log("@MoveToTarget state");
-        healer.animator.SetBool("isRunning", true);
     }
+
+
+
+    bool walkingBackToPlayer = false;
+    bool foundFleePoint = false;
+    Vector3 fleePoint;
 
     public override void UpdateState(HealerStateManager healer)
     {
         healer.sc.FindEnemy();
         healer.sc.FindLoot();
-        if (healer.sc.character.isLowHP() && healer.sc.targetEnemy == null)
+        if (healer.sc.isLowHP() || GameStateManager.Instance.IsLowHP())
         {
             healer.SwitchState(healer.healState);
             return;
@@ -23,28 +32,37 @@ public class HealerMoveToTargetState : HealerBaseState
         {
             if (healer.sc.GetDistanceToEnemy() > healer.sc.attackRange + 2)
             {
-                healer.sc.MoveToEnemy();
+                //healer.sc.MoveToEnemy();
+                if (healer.sc.agent.Target != healer.sc.targetEnemy.transform.position)
+                    healer.sc.agent.Target = healer.sc.targetEnemy.transform.position;
+                Debug.Log("implement moveToEnemy");
+
             }
             else if (healer.sc.GetDistanceToEnemy() < healer.sc.attackRange - 2)
             {
                 healer.sc.Flee();
             }
-            else if (healer.sc.character.isLowHP()) {
+            else if (healer.sc.isLowHP()) {
+                foundFleePoint = false;
                 healer.SwitchState(healer.healState);
                 return;
             }
             else
             {
+                foundFleePoint = false;
+                Debug.Log("distanceToEnemy=" + healer.sc.GetDistanceToEnemy() + ", healer.sc.attackRange=" + healer.sc.attackRange);
                 healer.SwitchState(healer.attackState);
                 return;
             }
         }
         else if (healer.sc.targetLoot != null)
         {
+            foundFleePoint = false;
             healer.SwitchState(healer.lootState);
             return;
         }
         else {
+            foundFleePoint = false;
             healer.SwitchState(healer.followState);
         }
     }

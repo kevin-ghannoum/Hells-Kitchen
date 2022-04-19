@@ -25,10 +25,12 @@ public class PathfindingAgent : MonoBehaviour
 
     private Pathfinding.PathNode _path;
     private Vector3 _target;
+    public bool standStill = false;
     
     public Vector3 Target {
         get => _target;
-        set {
+        set
+        {
             if (_target != value)
             {
                 _target = value;
@@ -47,7 +49,7 @@ public class PathfindingAgent : MonoBehaviour
     private void Update()
     {
         // Arrived
-        if (_path == null)
+        if (_path == null || standStill)
         {
             rigidbody.velocity = Vector3.zero;
             return;
@@ -85,5 +87,11 @@ public class PathfindingAgent : MonoBehaviour
             _path = Pathfinding.Instance.FindPath(transform.position, Target)?.Next;
         }
     }
+
+    public bool IsMoving() => rigidbody.velocity != Vector3.zero;
+
+    public bool PathIsNull() => _path == null;
+
+    public Pathfinding.PathNode currentNode => _path; //using for teleport
 
 }
