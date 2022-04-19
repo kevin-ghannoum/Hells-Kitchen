@@ -22,5 +22,6 @@ namespace Common
         public static Inventory inventory = new Inventory();
 
         public static GameObject player = null;
+        public static GameObject sousChef = null;
     }
 }
