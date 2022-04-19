@@ -503,20 +503,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 8717405591280451424}
   animator: {fileID: 2832215523392890650}
-  hitPoints: 200
+  hitPoints: 100
   deathDelay: 1
-<<<<<<< Updated upstream
-  dropObject: {fileID: 0}
-=======
-  dropObject: {fileID: 5561624463644519806, guid: d6ebfe640306d0c419f8a9fcb27d644d, type: 3}
->>>>>>> Stashed changes
-  maxDropsToSpawn: 3
-  multipleSpawnRate: 0.3
+  onKilled:
+    m_PersistentCalls:
+      m_Calls: []
   particle: {fileID: 3138838321479631500}
   attackRange: 3
   followRange: 15
-  Player: {fileID: 0}
-  sousChef: {fileID: 0}
+  target: {fileID: 0}
   attackDamage: 20
   attackRate: 3
 --- !u!114 &8717405591280451424
@@ -545,8 +540,8 @@ Rigidbody:
   m_GameObject: {fileID: 2832215523392890628}
   serializedVersion: 2
   m_Mass: 10000
-  m_Drag: 1
-  m_AngularDrag: 1
+  m_Drag: 0
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -578,7 +573,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f7ed810332ff69a498df8d1f8aa08812, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.276
+  m_Volume: 0.541
   m_Pitch: 1
   Loop: 0
   Mute: 0

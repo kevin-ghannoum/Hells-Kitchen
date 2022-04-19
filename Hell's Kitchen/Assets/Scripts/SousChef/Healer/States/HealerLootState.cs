@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class HealerLootState : HealerBaseState
 {
+    float pickUpTime = 1f;
+    float _pickUpTime = 0f;
+    bool pickUp = true;
+
     public override void EnterState(HealerStateManager healer)
     {
         Debug.Log("@Loot state");
@@ -23,9 +27,19 @@ public class HealerLootState : HealerBaseState
                 }
             }
             else{
-                // pick up
-                // destroy loot
-                // play animation
+                // pick up + destroy loot: implemented in ItemDrop.cs
+                healer.sc.agent.standStill = true;
+                _pickUpTime += Time.deltaTime;
+                if(pickUp){
+                    // play animation once
+                    Debug.Log("@PickUp picking up xD");
+                    healer.animator.SetTrigger("PickUp");
+                }
+                if(_pickUpTime >= pickUpTime){
+                    healer.sc.agent.standStill = false;
+                    _pickUpTime = 0f;
+                    healer.SwitchState(healer.followState);
+                }
             }
         }
         else{

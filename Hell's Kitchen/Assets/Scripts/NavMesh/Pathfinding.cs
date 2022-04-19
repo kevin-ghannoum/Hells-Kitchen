@@ -40,7 +40,7 @@ public class Pathfinding : MonoBehaviour
             if (other.GetType() != typeof(PolygonNode))
                 return false;
 
-            PolygonNode node = (PolygonNode) other;
+            PolygonNode node = (PolygonNode)other;
             return Vertices.SequenceEqual(node.Vertices);
         }
     }
@@ -70,7 +70,7 @@ public class Pathfinding : MonoBehaviour
             if (other.GetType() != typeof(PolygonPathNode))
                 return false;
 
-            PolygonPathNode otherNode = (PolygonPathNode) other;
+            PolygonPathNode otherNode = (PolygonPathNode)other;
             return Node.Equals(otherNode.Node);
         }
     }
@@ -110,7 +110,7 @@ public class Pathfinding : MonoBehaviour
 
     private PolygonPathNode _activePolyPath;
     private PolygonPathNode _activePolyPathEnd;
-    
+
     #region Unity Events
 
     private void Awake()
@@ -160,7 +160,7 @@ public class Pathfinding : MonoBehaviour
             // End
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(_activePathEnd.Position, 1.0f);
-            
+
             // Start poly
             Gizmos.color = Color.green;
             for (int i = 0; i < _activePolyPath.Node.Vertices.Length; i++)
@@ -174,7 +174,7 @@ public class Pathfinding : MonoBehaviour
             {
                 Gizmos.DrawLine(_activePolyPathEnd.Node.Vertices[i], _activePolyPathEnd.Node.Vertices[(i + 1) % _activePolyPathEnd.Node.Vertices.Length]);
             }
-            
+
             // Portals
             Gizmos.color = Color.yellow;
             var portals = BuildPortalList(_activePolyPath, _activePathEnd.Position);
@@ -254,7 +254,8 @@ public class Pathfinding : MonoBehaviour
         var vertices = triangulation.vertices;
         var normals = vertices.Select(v => Vector3.up).ToArray();
         var indices = triangulation.indices;
-        _mesh = new Mesh {
+        _mesh = new Mesh
+        {
             vertices = vertices,
             normals = normals,
             triangles = indices
@@ -301,7 +302,7 @@ public class Pathfinding : MonoBehaviour
         _activePath = StringPull(_activePolyPath, start, end);
         if (_activePath == null)
             return null;
-        
+
         _activePathEnd = _activePath;
         while (_activePathEnd.Next != null)
             _activePathEnd = _activePathEnd.Next;
@@ -327,7 +328,7 @@ public class Pathfinding : MonoBehaviour
         var polyNode = _nodes.FirstOrDefault(n => Utils.CheckPointInTriangle(n.Vertices, position));
         if (polyNode != null)
             return polyNode;
-        
+
         // Find the closest edge and return its node
         PolygonNode closestNode = null;
         float closestDist = float.MaxValue;
@@ -415,7 +416,7 @@ public class Pathfinding : MonoBehaviour
             openList.Sort((a, b) => Mathf.CeilToInt(a.F - b.F));
         }
 
-        end:
+    end:
         // Reconstruct path forwards
         if (path != null)
         {
@@ -458,7 +459,7 @@ public class Pathfinding : MonoBehaviour
             node = node.Next;
         }
 
-        portals.Add(new[] {end, end});
+        portals.Add(new[] { end, end });
 
         return portals.ToArray();
     }
@@ -471,14 +472,16 @@ public class Pathfinding : MonoBehaviour
         Vector3 portalLeft = portals[0][0];
         Vector3 portalRight = start;
         int apexIndex = 0, leftIndex = 0, rightIndex = 0;
-        
+
         // Simple paths, just construct one line from start to end
         if (path.Next?.Next == null)
         {
-            PathNode startNode = new PathNode() {
+            PathNode startNode = new PathNode()
+            {
                 Position = start
             };
-            PathNode endNode = new PathNode() {
+            PathNode endNode = new PathNode()
+            {
                 Position = end
             };
             startNode.Next = endNode;
@@ -486,7 +489,8 @@ public class Pathfinding : MonoBehaviour
             return startNode;
         }
 
-        PathNode current = new PathNode() {
+        PathNode current = new PathNode()
+        {
             Position = portalApex
         };
 
@@ -512,7 +516,8 @@ public class Pathfinding : MonoBehaviour
                 {
                     // Cant tighten funnel, recalculate new apex and funnel
                     // Right over left, insert left to path and restart scan from portal left point
-                    current = new PathNode {
+                    current = new PathNode
+                    {
                         Position = portalLeft,
                         Prev = current
                     };
@@ -548,7 +553,8 @@ public class Pathfinding : MonoBehaviour
                 {
                     // Cant tighten funnel, recalculate new apex and funnel
                     // Left over right, insert right to path and restart scan from portal right point
-                    current = new PathNode {
+                    current = new PathNode
+                    {
                         Position = portalRight,
                         Prev = current
                     };
@@ -571,7 +577,8 @@ public class Pathfinding : MonoBehaviour
         }
 
         // Add last point
-        current = new PathNode {
+        current = new PathNode
+        {
             Position = end,
             Prev = current
         };

@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
 
-public static class Utils {
+public static class Utils
+{
 
-    public static float SignedAngle(Vector3 first, Vector3 second) {
+    public static float SignedAngle(Vector3 first, Vector3 second)
+    {
         return Vector2.SignedAngle(new Vector2(first.x, first.z), new Vector2(second.x, second.z));
     }
 
-    public static Vector3 GetClosestPointOnLine(Vector3 start, Vector3 end, Vector3 point) {
+    public static Vector3 GetClosestPointOnLine(Vector3 start, Vector3 end, Vector3 point)
+    {
         // Get direction and magnitude
         Vector3 dir = (end - start);
         float magnitudeMax = dir.magnitude;
         dir = dir.normalized;
-        
+
         // Project point on line
         Vector3 pointDir = point - start;
         float lineProjection = Vector3.Dot(pointDir, dir);
@@ -19,17 +22,18 @@ public static class Utils {
         return start + dir * lineProjection;
     }
 
-    public static Vector3 GetPointOnLineAtDistance(Vector3 start, Vector3 end, float distance) {
+    public static Vector3 GetPointOnLineAtDistance(Vector3 start, Vector3 end, float distance)
+    {
         // Get direction and magnitude
         Vector3 dir = (end - start);
         float magnitudeMax = dir.magnitude;
         dir = dir.normalized;
-        
+
         // Take point at distance
         distance = Mathf.Clamp(distance, 0.0f, magnitudeMax);
         return start + dir * distance;
     }
-    
+
     public static bool CheckPointInTriangle(Vector3[] triangle, Vector3 p)
     {
         Vector3 a = triangle[0], b = triangle[1], c = triangle[2];
