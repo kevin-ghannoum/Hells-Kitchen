@@ -27,7 +27,7 @@ namespace Enemies
             target = GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>();
             hiveList = GameObject.FindGameObjectsWithTag("Hive");
             anime = gameObject.GetComponent<Animator>();
-            attackRange = 8;
+            attackRange = 10;
         }
 
         public override void Update()

@@ -489,7 +489,7 @@ MonoBehaviour:
   animator: {fileID: 2972807466387419755}
   hitPoints: 30
   deathDelay: 1
-  dropObject: {fileID: 0}
+  dropObject: {fileID: 5575247230749135019, guid: 00853119909c0ee498d31c19ec69d00d, type: 3}
   maxDropsToSpawn: 3
   multipleSpawnRate: 0.3
   attackRange: 0
