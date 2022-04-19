@@ -581,8 +581,16 @@ PrefabInstance:
       objectReference: {fileID: 1715388640}
     - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
       propertyPath: enemies.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
+      propertyPath: enemies.Array.data[0]
+      value: 
+      objectReference: {fileID: 8448228120583304839, guid: 9f3a7438164efc648967c3b9a7c871f4, type: 3}
+    - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
+      propertyPath: enemies.Array.data[1]
+      value: 
+      objectReference: {fileID: 3133543536111421036, guid: e0721682eb4527749b5db8935c6dcf6e, type: 3}
     - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
       propertyPath: enemies.Array.data[2]
       value: 
@@ -594,11 +602,15 @@ PrefabInstance:
     - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
       propertyPath: enemies.Array.data[4]
       value: 
-      objectReference: {fileID: 1179882390037061755, guid: 494a9162512d10c4f8228635aa34b066, type: 3}
+      objectReference: {fileID: 7839222235967640288, guid: 4ac12db71e65fbd4ca9d0a92c4b5e5b1, type: 3}
     - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
       propertyPath: enemies.Array.data[5]
       value: 
-      objectReference: {fileID: 8448228120583304839, guid: 9f3a7438164efc648967c3b9a7c871f4, type: 3}
+      objectReference: {fileID: 1179882390037061755, guid: 494a9162512d10c4f8228635aa34b066, type: 3}
+    - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
+      propertyPath: enemies.Array.data[6]
+      value: 
+      objectReference: {fileID: 4794755069063066433, guid: 1d60d1758c970fb4cabcb56b300aa68a, type: 3}
     - target: {fileID: 2752677855204124927, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
       propertyPath: m_Name
       value: MazeController

@@ -503,11 +503,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 8717405591280451424}
   animator: {fileID: 2832215523392890650}
-  hitPoints: 100
+  hitPoints: 80
   deathDelay: 1
-  onKilled:
-    m_PersistentCalls:
-      m_Calls: []
+  dropObject: {fileID: 0}
+  maxDropsToSpawn: 5
+  multipleSpawnRate: 0.3
   particle: {fileID: 3138838321479631500}
   attackRange: 3
   followRange: 15

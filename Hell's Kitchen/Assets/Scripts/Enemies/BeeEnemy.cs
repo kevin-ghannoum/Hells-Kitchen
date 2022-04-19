@@ -27,35 +27,50 @@ namespace Enemies
             target = GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>();
             hiveList = GameObject.FindGameObjectsWithTag("Hive");
             anime = gameObject.GetComponent<Animator>();
-            attackRange = 10;
+            attackRange = 8;
         }
 
         public override void Update()
         {
+
+            timeCounter += Time.deltaTime;
             if (hiveList.Length > 0)
             {
                 targetHive = checkHive(hiveList);
-            }
 
-            if (Vector3.Distance(transform.position, targetHive.transform.position) > 7)
-            {
-                anime.SetBool("walking", true);
-                agent.Target = targetHive.transform.position;
+                
+                if (Vector3.Distance(transform.position, target.transform.position) < attackRange)
+                {
+                    agent.enabled = true;
+                    agent.Target = target.transform.position;
+
+                    if (Vector3.Distance(target.transform.position, transform.position) < 1.2 && timeCounter > 1)
+                    {
+                        anime.SetBool("attack", true);
+                        Attack();
+                        timeCounter = 0;
+                    }
+                    anime.SetBool("attack", false);
+                }
+                else if (Vector3.Distance(transform.position, targetHive.transform.position) > 7)
+                {
+                    agent.enabled = true;
+                    agent.Target = targetHive.transform.position;
+                }
+                else
+                {
+                    agent.enabled = false;
+                }
             }
             else
             {
-                anime.SetBool("walking", true);
-                anime.SetBool("attacking", false);
-                timeCounter += Time.deltaTime;
-
-                if (Vector3.Distance(target.transform.position, transform.position) < attackRange)
+                if (Vector3.Distance(transform.position, target.transform.position) < attackRange)
                 {
                     agent.Target = target.transform.position;
 
                     if (Vector3.Distance(target.transform.position, transform.position) < 1.2 && timeCounter > 1)
                     {
-                        anime.SetBool("walking", false);
-                        anime.SetBool("attacking", true);
+                        animator.SetTrigger(EnemyAnimator.Attack);
                         Attack();
                         timeCounter = 0;
                     }
