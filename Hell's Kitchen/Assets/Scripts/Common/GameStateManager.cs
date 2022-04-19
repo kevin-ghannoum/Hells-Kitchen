@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Common.Enums.Items;
 using Enums.Items;
 using Photon.Pun;
@@ -41,13 +42,22 @@ namespace Common
         {
             if (stream.IsWriting)
             {
-                stream.SendNext(GameStateData.inventory);
+                var inventoryItems = GameStateData.inventory.GetInventoryItems();
+                var serializedInventoryItems = 
+                    inventoryItems.Keys
+                        .ToDictionary(k => (int) k, k => inventoryItems[k]);
+                stream.SendNext(serializedInventoryItems);
                 stream.SendNext(GameStateData.cashMoney);
             }
             else if (stream.IsReading)
             {
-                GameStateData.inventory = (Inventory)stream.ReceiveNext();
+                var serializedInventoryItems = (Dictionary<int, int>) stream.ReceiveNext();
+                var inventoryItems = 
+                    serializedInventoryItems.Keys
+                        .ToDictionary(k => (ItemInstance) k, k => serializedInventoryItems[k]);
+                GameStateData.inventory.SetInventoryItems(inventoryItems);
                 GameStateData.cashMoney = (float)stream.ReceiveNext();
+                inventoryUI.UpdateInventory(inventoryItems);
             }
         }
 

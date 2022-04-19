@@ -4,7 +4,7 @@ using UnityEngine;
 [CustomEditor(typeof(Pathfinding))]
 public class PathfindingEditor : Editor
 {
-
+    
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
@@ -26,5 +26,5 @@ public class PathfindingEditor : Editor
         }
         GUILayout.EndHorizontal();
     }
-
+    
 }

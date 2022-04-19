@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Enums.Items;
 
 namespace PlayerInventory
@@ -8,7 +9,12 @@ namespace PlayerInventory
     public class Inventory
     {
         // hold a dictionary of items and quantities
-        private readonly Dictionary<ItemInstance, int> _itemDictionary = new Dictionary<ItemInstance, int>();
+        private Dictionary<ItemInstance, int> _itemDictionary = new Dictionary<ItemInstance, int>();
+
+        public void SetInventoryItems(Dictionary<ItemInstance, int> items)
+        {
+            _itemDictionary = items;
+        }
 
         public Dictionary<ItemInstance, int> GetInventoryItems()
         {

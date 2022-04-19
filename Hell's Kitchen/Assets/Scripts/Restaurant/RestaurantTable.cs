@@ -2,6 +2,7 @@
 using System.Linq;
 using Common;
 using Common.Enums;
+using Common.Enums.Items;
 using Enums.Items;
 using Input;
 using UI;
@@ -44,11 +45,7 @@ namespace Restaurant
             {
                 foreach (var order in OrderList)
                 {
-                    if (GameStateData.inventory.HasItem(order.Item, order.Quantity))
-                    {
-                        GameStateManager.RemoveItemFromInventory(order.Item, order.Quantity);
-                        order.Served = true;
-                    }
+                    ServeOrder(order);
                 }
                 RefreshOrderUI();
             }
@@ -82,6 +79,24 @@ namespace Restaurant
             }
         }
 
+        private void ServeOrder(RestaurantOrder order)
+        {
+            if (GameStateData.inventory.HasItem(order.Item, order.Quantity))
+            {
+                // Remove items and give money
+                GameStateManager.RemoveItemFromInventory(order.Item, order.Quantity);
+                GameStateManager.SetCashMoney(GameStateData.cashMoney + order.CashMoney);
+                
+                // Spawn some adrenaline points
+                var position = transform.position + 2.0f * Vector3.up;
+                AdrenalinePointsUI.SpawnIngredientString(position, $"-{order.Quantity} {Items.GetItem(order.Item).Name}");
+                AdrenalinePointsUI.SpawnGoldNumbers(position, order.CashMoney);
+                
+                // Set served
+                order.Served = true;
+            }
+        }
+
         private RestaurantOrder GenerateRandomOrder()
         {
             ItemInstance[] possibleValues = {
@@ -92,7 +107,8 @@ namespace Restaurant
             
             return new RestaurantOrder() {
                 Item = possibleValues[Random.Range(0, possibleValues.Length)],
-                Quantity = Random.Range(1, 4)
+                Quantity = Random.Range(1, 4),
+                CashMoney = Random.Range(20, 40)
             };
         }
     }

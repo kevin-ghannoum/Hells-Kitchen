@@ -2,9 +2,7 @@ using Common.Interfaces;
 using Enemies.Enums;
 using Photon.Pun;
 using UI;
-using Unity.Plastic.Newtonsoft.Json.Serialization;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Enemies
 {

@@ -44,23 +44,23 @@ namespace Player
         private void Awake()
         {
             _photonView = GetComponent<PhotonView>();
-            if (!_photonView.IsMine)
-                return;
-
             _animator = GetComponentInChildren<Animator>();
             _characterController = GetComponent<CharacterController>();
 
-            _input.reference.actions["Roll"].performed += Roll;
-            _input.reference.actions["PickUp"].performed += PickUp;
+            if (_photonView.IsMine)
+            {
+                _input.reference.actions["Roll"].performed += Roll;
+                _input.reference.actions["PickUp"].performed += PickUp;
+            }
         }
 
         private void OnDestroy()
         {
-            if (!_photonView.IsMine || !_input)
-                return;
-
-            _input.reference.actions["Roll"].performed -= Roll;
-            _input.reference.actions["PickUp"].performed -= PickUp;
+            if (_photonView.IsMine && _input)
+            {
+                _input.reference.actions["Roll"].performed -= Roll;
+                _input.reference.actions["PickUp"].performed -= PickUp;
+            }
         }
 
         private void Update()
@@ -110,27 +110,15 @@ namespace Player
             if (GameStateData.playerCurrentStamina > staminaCostRoll)
             {
                 GameStateData.playerCurrentStamina -= staminaCostRoll;
-                GetComponentInChildren<PhotonView>().RPC("RollRPC", RpcTarget.AllViaServer);
+                _animator.SetTrigger(PlayerAnimator.Roll);
             }
-        }
-
-        [PunRPC]
-        private void RollRPC()
-        {
-            _animator.SetTrigger(PlayerAnimator.Roll);
         }
 
         public void PickUp(InputAction.CallbackContext callbackContext)
         {
-            GetComponentInChildren<PhotonView>().RPC("PickUpRPC", RpcTarget.AllViaServer);
-        }
-
-        [PunRPC]
-        private void PickUpRPC()
-        {
             _animator.SetTrigger(PlayerAnimator.PickUp);
         }
-
+        
         #endregion
 
         #region PlayerMovement

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 238747066}
   - component: {fileID: 238747068}
   - component: {fileID: 238747067}
-  - component: {fileID: 2536583312237978602}
   - component: {fileID: 4672266657061108603}
   - component: {fileID: 2621730353807203385}
   m_Layer: 3
@@ -112,14 +111,6 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!81 &2536583312237978602
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 238747065}
-  m_Enabled: 1
 --- !u!114 &4672266657061108603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,6 +199,7 @@ GameObject:
   - component: {fileID: 807330856}
   - component: {fileID: 807330857}
   - component: {fileID: 807330858}
+  - component: {fileID: 7676672313843238970}
   m_Layer: 3
   m_Name: VirtualCamera
   m_TagString: Untagged
@@ -280,6 +272,14 @@ MonoBehaviour:
   PlayerIndex: -1
   XYAxis: {fileID: 0}
   ZAxis: {fileID: 8796723930607333131, guid: ff17835fb1a71eb4da6ab9101dca6f4a, type: 3}
+--- !u!81 &7676672313843238970
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807330855}
+  m_Enabled: 1
 --- !u!1 &850218474
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,6 +492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 768127235450584867}
+  photonView: {fileID: 0}
   takeDamageSound: {fileID: 8300000, guid: 722bfe1a680d68a49b133308e897de2a, type: 3}
   lowHealthSound: {fileID: 8300000, guid: 3f551c312493b4647ab1bd4892e8831a, type: 3}
   deathSound: {fileID: 8300000, guid: 236fe2b344d071242bfdd14fbb3ca818, type: 3}
@@ -1124,6 +1125,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -7718791123680963917, guid: 1fbfc1c93eee29d45b37f09ea62dee0f, type: 3}
   m_PrefabInstance: {fileID: 6611981409262568114}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8626758597531007161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6269876953597624291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 4949083426243803884}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!114 &9167867730613228193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1169,7 +1193,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &771997032528606083
+--- !u!114 &4949083426243803884
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

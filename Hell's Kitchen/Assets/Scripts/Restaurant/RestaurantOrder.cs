@@ -7,6 +7,7 @@ namespace Restaurant
         public ItemInstance Item;
         public int Quantity;
         public bool Served;
+        public float CashMoney;
         public RestaurantOrderItem UIObject;
     }
 }
