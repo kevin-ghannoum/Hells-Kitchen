@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+using Common;
+using Common.Enums;
 using UnityEngine;
 
 public class HealSpell : MonoBehaviour
@@ -12,12 +12,12 @@ public class HealSpell : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag(Tags.Player))
         {
             Destroy(Instantiate(onHealAnimationPrefab, other.transform.position, Quaternion.identity), 2);
-            Common.GameStateManager.Instance.playerCurrentHitPoints += healthIncrement;
+            GameStateData.playerCurrentHitPoints += healthIncrement;
         }
-        else if (other.gameObject.tag == "SousChef")
+        else if (other.gameObject.CompareTag(Tags.SousChef))
         {
             Destroy(Instantiate(onHealAnimationPrefab, other.transform.position, Quaternion.identity), 2);
             other.GetComponent<SousChef>().hitPoints += healthIncrement;
@@ -37,23 +37,23 @@ public class HealSpell : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-
-        if (other.gameObject.tag == "Player") {
-            if (playerRegenTick >= healTickDelay) {
+        if (other.gameObject.CompareTag(Tags.Player))
+        {
+            if (playerRegenTick >= healTickDelay)
+            {
                 Destroy(Instantiate(onHealAnimationPrefab, other.transform.position, Quaternion.identity), 2);
-                Common.GameStateManager.Instance.playerCurrentHitPoints += healthIncrement;
+                GameStateData.playerCurrentHitPoints += healthIncrement;
                 playerRegenTick = 0;
             }
-            
         }
-        else if (other.gameObject.tag == "SousChef") {
+        else if (other.gameObject.CompareTag(Tags.SousChef))
+        {
             if (ssRegenTick >= healTickDelay)
             {
                 Destroy(Instantiate(onHealAnimationPrefab, other.transform.position, Quaternion.identity), 2);
                 other.GetComponent<SousChef>().hitPoints += healthIncrement;
                 ssRegenTick = 0;
             }
-            
         }
     }
 }
