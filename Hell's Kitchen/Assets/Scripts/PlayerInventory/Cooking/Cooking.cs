@@ -7,7 +7,7 @@ namespace PlayerInventory.Cooking
 {
     public static class Cooking
     {
-        private static bool InventoryContainsAllIngredients(List<(Item item, int quantity)> ingredientList)
+        private static bool InventoryContainsAllIngredients(List<(Item item, int quantity)> ingredientList, int count = 1)
         {
             var inventory = GameStateManager.Instance.GetPlayerInventory();
             if (inventory.GetInventoryItems().Count == 0)
@@ -17,9 +17,9 @@ namespace PlayerInventory.Cooking
             
             foreach (var (item, quantity) in ingredientList)
             {
-                if (inventory.GetInventoryItems().ContainsKey(item)) // if ingredient in inventory
+                if (inventory.GetInventoryItems().ContainsKey(item.ItemInstance)) // if ingredient in inventory
                 {
-                    if (inventory.GetInventoryItems()[item] >= quantity) // if ingredient qt sufficient
+                    if (inventory.GetInventoryItems()[item.ItemInstance] >= quantity * count) // if ingredient qt sufficient
                     {
                         ingredientCheckList[item] = true;
                     }
@@ -41,11 +41,11 @@ namespace PlayerInventory.Cooking
             return true;
         }
 
-        public static bool CookRecipe(IRecipe recipe)
+        public static bool CookRecipe(IRecipe recipe, int recipeCount = 1)
         {
             List<(Item item, int quantity)> ingredientList = recipe.GetIngredientList();
         
-            if (InventoryContainsAllIngredients(ingredientList))
+            if (InventoryContainsAllIngredients(ingredientList, recipeCount))
             {
                 // remove used items
                 foreach (var (item, quantity) in ingredientList)

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using PlayerInventory;
+using Common.Enums.Items;
+using Enums.Items;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,18 +14,14 @@ namespace UI
         [SerializeField] private int maxItemsPerPage = 20;
         [SerializeField] private Transform inventoryContainer;
         [SerializeField] private Transform inventoryItemSlot;
-        
-        private float spacing = 30.0f;
-        
+
         private void Start()
         {
             inventoryItemSlot = inventoryContainer.transform.GetChild(0);
         }
 
-        public void UpdateInventory(Dictionary<Item, int> inventoryList)
+        public void UpdateInventory(Dictionary<ItemInstance, int> inventoryList)
         {
-            int x = 0, y = 0;
-
             int smallestLength = Math.Min(maxItemsPerPage, inventoryList.Count);
             
             // clear previous data
@@ -35,12 +32,14 @@ namespace UI
                 RectTransform itemSlotRectTrans = Instantiate(inventoryItemSlot, inventoryContainer).GetComponent<RectTransform>();
                 itemSlotRectTrans.gameObject.SetActive(true);
 
+                var item = Items.GetItem(inventoryList.ElementAt(i).Key);
+                
                 // textual information
-                itemSlotRectTrans.GetComponentsInChildren<TextMeshProUGUI>()[0].text = inventoryList.ElementAt(i).Key.Name; // name
+                itemSlotRectTrans.GetComponentsInChildren<TextMeshProUGUI>()[0].text = item.Name; // name
                 itemSlotRectTrans.GetComponentsInChildren<TextMeshProUGUI>()[1].text = inventoryList.ElementAt(i).Value.ToString(); // quantity
 
                 // sprites
-                itemSlotRectTrans.gameObject.GetComponentInChildren<Image>().sprite = inventoryList.ElementAt(i).Key.ItemModel.Sprite;
+                itemSlotRectTrans.gameObject.GetComponentInChildren<Image>().sprite = item.ItemModel.Sprite;
             }
         }
 

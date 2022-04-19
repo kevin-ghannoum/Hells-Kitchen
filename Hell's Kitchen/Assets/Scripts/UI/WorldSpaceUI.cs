@@ -1,6 +1,4 @@
-﻿using System;
-using Common.Enums;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UI
 {

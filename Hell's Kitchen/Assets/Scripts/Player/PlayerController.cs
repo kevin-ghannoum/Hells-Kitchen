@@ -58,7 +58,7 @@ namespace Player
         {
             if (!_photonView.IsMine || !_input)
                 return; 
- 
+            
             _input.reference.actions["Roll"].performed -= Roll;
             _input.reference.actions["PickUp"].performed -= PickUp;
         }

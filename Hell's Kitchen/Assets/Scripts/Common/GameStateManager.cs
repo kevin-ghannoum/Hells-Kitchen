@@ -63,14 +63,14 @@ namespace Common
         [PunRPC]
         public void AddItemToInventoryRPC(ItemInstance itemInstance, int quantity)
         {
-            GameStateData.inventory.AddItemToInventory(Items.GetItem(itemInstance), quantity);
+            GameStateData.inventory.AddItemToInventory(itemInstance, quantity);
             inventoryUI.UpdateInventory(GameStateData.inventory.GetInventoryItems());
         }
 
         [PunRPC]
         public void RemoveItemFromInventoryRPC(ItemInstance itemInstance, int quantity)
         {
-            GameStateData.inventory.RemoveItemFromInventory(Items.GetItem(itemInstance), quantity);
+            GameStateData.inventory.RemoveItemFromInventory(itemInstance, quantity);
             inventoryUI.UpdateInventory(GameStateData.inventory.GetInventoryItems());
         }
 

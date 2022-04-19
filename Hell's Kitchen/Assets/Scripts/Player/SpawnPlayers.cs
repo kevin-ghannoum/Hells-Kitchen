@@ -15,7 +15,6 @@ namespace Player
             var spawnPoint = spawnPoints[numPlayers % spawnPoints.Length];
             var player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, Quaternion.identity);
             player.GetComponentInChildren<Camera>().gameObject.tag = Tags.MainCamera;
-            Debug.Log(player.transform.Find("VirtualCamera"));
             player.transform.Find("VirtualCamera").gameObject.SetActive(true);
         }
     }
