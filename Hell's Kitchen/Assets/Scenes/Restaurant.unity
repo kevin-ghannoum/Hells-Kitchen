@@ -259,7 +259,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponSlotPrefab: {fileID: 5702623046459068291, guid: baeec416b3dfa5448b83bc9d4a659fd1, type: 3}
-  buttonPrefab: {fileID: 8602964161585771657, guid: 7e24a9948e73d73428146012df3846b4, type: 3}
   gridLayout: {fileID: 1525817435}
   errorText: {fileID: 1646715774}
 --- !u!4 &19397220 stripped
@@ -15283,5 +15282,14 @@ PrefabInstance:
       propertyPath: shopUI
       value: 
       objectReference: {fileID: 18018301}
+    - target: {fileID: 7988105395521181638, guid: 86e244032d1429b419aaeececac03980, type: 3}
+      propertyPath: interactText
+      value: 
+      objectReference: {fileID: 7988105395366380295}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86e244032d1429b419aaeececac03980, type: 3}
+--- !u!1 &7988105395366380295 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8470900823888466180, guid: 86e244032d1429b419aaeececac03980, type: 3}
+  m_PrefabInstance: {fileID: 7988105395366380294}
+  m_PrefabAsset: {fileID: 0}
