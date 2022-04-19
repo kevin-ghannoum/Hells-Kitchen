@@ -1,6 +1,8 @@
+using System;
 using Common;
 using Common.Enums;
 using Input;
+using Photon.Pun;
 using PlayerInventory.Cooking;
 using Restaurant;
 using Restaurant.Enums;
@@ -31,13 +33,22 @@ public class RestaurantDoor : MonoBehaviour
         _input.reference.actions["Interact"].performed += LeaveRestaurant;
     }
 
+    private void OnDestroy()
+    {
+        if (!_input)
+            return;
+        
+        _input.reference.actions["Interact"].performed -= LeaveRestaurant;
+    }
+
     private void LeaveRestaurant(InputAction.CallbackContext obj)
     {
         if (!isInTrigger)
             return;
         
         ImposeFine();
-        SceneManager.Instance.LoadDungeonScene();
+        var player = NetworkHelper.GetLocalPlayerObject();
+        SceneManager.Instance.LoadDungeonScene(player.GetComponent<PhotonView>());
     }
 
     private void Reset()

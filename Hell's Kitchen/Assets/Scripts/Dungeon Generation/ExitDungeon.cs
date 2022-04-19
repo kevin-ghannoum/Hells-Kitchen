@@ -2,6 +2,7 @@ using Common;
 using Common.Enums;
 using Common.Interfaces;
 using Input;
+using Photon.Pun;
 using Player;
 using UnityEngine;
 
@@ -37,7 +38,7 @@ namespace Dungeon_Generation
             }
 
             GameStateData.playerCurrentHitPoints = GameStateData.playerMaxHitPoints;
-            SceneManager.Instance.LoadRestaurantScene();
+            SceneManager.Instance.LoadRestaurantScene(player.GetComponent<PhotonView>());
         }
     }
 }

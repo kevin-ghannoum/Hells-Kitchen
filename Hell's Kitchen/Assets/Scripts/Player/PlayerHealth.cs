@@ -102,7 +102,7 @@ namespace Player
             }
 
             GameStateData.playerCurrentHitPoints = GameStateData.playerMaxHitPoints;
-            SceneManager.Instance.LoadRestaurantScene();
+            SceneManager.Instance.LoadRestaurantScene(this.gameObject.GetComponent<PhotonView>());
         }
 
         [PunRPC]

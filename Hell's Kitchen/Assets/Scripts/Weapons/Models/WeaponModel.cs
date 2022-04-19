@@ -13,14 +13,14 @@ namespace Weapons.Models
         }
 
         // Guns
-        public static readonly WeaponModel Pistol = new WeaponModel("Pistol.prefab");
-        public static readonly WeaponModel Shotgun = new WeaponModel("Shotgun.prefab");
-        public static readonly WeaponModel Revolver = new WeaponModel("Revolver.prefab");
+        public static readonly WeaponModel Pistol = new WeaponModel("Pistol");
+        public static readonly WeaponModel Shotgun = new WeaponModel("Shotgun");
+        public static readonly WeaponModel Revolver = new WeaponModel("Revolver");
         
         // Blades
-        public static readonly WeaponModel GreatSword = new WeaponModel("GreatSword.prefab");
-        public static readonly WeaponModel LongSword = new WeaponModel("LongSword.prefab");
-        public static readonly WeaponModel Scimitar = new WeaponModel("Scimitar.prefab");
-        public static readonly WeaponModel Axe = new WeaponModel("Axe.prefab");
+        public static readonly WeaponModel GreatSword = new WeaponModel("GreatSword");
+        public static readonly WeaponModel LongSword = new WeaponModel("LongSword");
+        public static readonly WeaponModel Scimitar = new WeaponModel("Scimitar");
+        public static readonly WeaponModel Axe = new WeaponModel("Axe");
     }
 }

@@ -62,6 +62,17 @@ namespace Common
                 inventoryUI.UpdateInventory(inventoryItems);
             }
         }
+        
+        [PunRPC]
+        public void SetGameObjectActiveByNameRPC(string objectName)
+        {
+            var weaponCollection = GameObject.Find("WeaponCollection");
+            var obj = weaponCollection.transform.Find(objectName);
+            if (!obj)
+                return;
+            
+            obj.gameObject.SetActive(true);
+        }
 
         #endregion
 

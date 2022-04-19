@@ -14,28 +14,31 @@ namespace Common
                 Instance = this;
 
             PhotonNetwork.AutomaticallySyncScene = true;
-            DontDestroyOnLoad(Instance.gameObject);
         }
-
+        
         public void LoadMainMenu()
         {
             PhotonNetwork.LoadLevel(Scenes.MainMenu);
         }
-
-
-        public void LoadGameOverScene()
+        
+        public void LoadGameOverScene(PhotonView photonView)
         {
-            PhotonNetwork.LoadLevel(Scenes.GameOver);
+            photonView.RPC(nameof(LoadGameOverRPC), RpcTarget.MasterClient);
         }
 
+        public void LoadRestaurantScene(PhotonView photonView)
+        {
+            photonView.RPC(nameof(LoadRestaurantRPC), RpcTarget.MasterClient);
+        }
+        
         public void LoadRestaurantScene()
         {
             PhotonNetwork.LoadLevel(Scenes.Restaurant);
         }
 
-        public void LoadDungeonScene()
+        public void LoadDungeonScene(PhotonView photonView)
         {
-            PhotonNetwork.LoadLevel(Scenes.Dungeon);
+            photonView.RPC(nameof(LoadDungeonRPC), RpcTarget.MasterClient);
         }
         
         public void QuitGame()
@@ -46,5 +49,28 @@ namespace Common
             Application.Quit();
 #endif
         }
+
+        #region PUNCallabacks
+
+        [PunRPC]
+        private void LoadRestaurantRPC()
+        {
+            PhotonNetwork.LoadLevel(Scenes.Restaurant);
+        }
+        
+        [PunRPC]
+        private void LoadDungeonRPC()
+        {
+            PhotonNetwork.LoadLevel(Scenes.Dungeon);
+        }
+
+        [PunRPC]
+        private void LoadGameOverRPC()
+        {
+            PhotonNetwork.LoadLevel(Scenes.GameOver);
+        }
+
+        #endregion
+        
     }
 }

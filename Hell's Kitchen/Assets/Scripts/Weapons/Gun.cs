@@ -27,26 +27,19 @@ namespace Weapons
             if (!playerAnimator)
                 return;
 
-            var photonView = GetComponentInParent<PhotonView>();
-            photonView.RPC("ShootRPC", RpcTarget.AllViaServer);
-        }
-
-        [PunRPC]
-        private void ShootRPC()
-        {
             playerAnimator.SetTrigger(PlayerAnimator.Shoot);
         }
 
-        [PunRPC]
         private void Fire()
         {
-            var photonView = GetComponentInParent<PhotonView>();
+            var photonView = GetComponent<PhotonView>();
             if (!photonView || !photonView.AmOwner)
                 return;
 
             photonView.RPC(nameof(ShootBullet), RpcTarget.AllViaServer);
         }
-
+        
+        [PunRPC]
         private void ShootBullet()
         {
             var position = shootPosition.position;
