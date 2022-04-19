@@ -46,11 +46,11 @@ namespace Enemies
 
                     if (Vector3.Distance(target.transform.position, transform.position) < 1.2 && timeCounter > 1)
                     {
-                        anime.SetBool("attack", true);
+                        anime.SetBool("Attack", true);
                         Attack();
                         timeCounter = 0;
                     }
-                    anime.SetBool("attack", false);
+                    anime.SetBool("Attack", false);
                 }
                 else if (Vector3.Distance(transform.position, targetHive.transform.position) > 7)
                 {
