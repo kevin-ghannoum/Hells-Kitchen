@@ -2,6 +2,7 @@
 using Common.Enums;
 using Input;
 using Photon.Pun;
+using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 
@@ -15,7 +16,10 @@ namespace UI
         {
             if (PhotonNetwork.IsConnected)
             {
-                PhotonNetwork.CreateRoom(gameRoomInput.text);
+                RoomOptions roomOptions = new RoomOptions();
+                roomOptions.PlayerTtl = 10000;
+                roomOptions.MaxPlayers = 2;
+                PhotonNetwork.CreateRoom(gameRoomInput.text, roomOptions);
             }
             else
             {

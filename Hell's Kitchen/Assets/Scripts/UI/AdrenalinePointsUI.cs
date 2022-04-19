@@ -75,7 +75,7 @@ namespace UI
 
         private static void SpawnAdrenalineNumbers(Vector3 worldPosition, float value, float offsetY, Color color)
         {
-            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/UI/AdrenalinePointsUI.prefab");
+            var prefab = Resources.Load<GameObject>("AdrenalinePointsUI");
             var points = Instantiate(prefab, worldPosition + new Vector3(Random.Range(-.5f, .5f), 0, Random.Range(-.5f, .5f)), Quaternion.identity);
             var adrenalinePointsUI = points.GetComponent<AdrenalinePointsUI>();
             if (adrenalinePointsUI)
@@ -89,7 +89,7 @@ namespace UI
         
         private static void SpawnAdrenalineText(Vector3 worldPosition, string text, float offsetY, Color color)
         {
-            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/UI/AdrenalinePointsUI.prefab");
+            var prefab = Resources.Load<GameObject>("AdrenalinePointsUI");
             var points = Instantiate(prefab, worldPosition + new Vector3(Random.Range(-.5f, .5f), 0, Random.Range(-.5f, .5f)), Quaternion.identity);
             var adrenalinePointsUI = points.GetComponent<AdrenalinePointsUI>();
             if (adrenalinePointsUI)

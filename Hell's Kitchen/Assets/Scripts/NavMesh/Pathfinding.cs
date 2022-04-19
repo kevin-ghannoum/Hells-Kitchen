@@ -3,7 +3,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Unity.AI.Navigation;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -254,7 +253,7 @@ public class Pathfinding : MonoBehaviour
         if (_nodes != null && !force)
             return;
 
-        if ((Application.isEditor && !EditorApplication.isPlaying) || buildAtRuntime)
+        if ((Application.isEditor && !Application.isPlaying) || buildAtRuntime)
         {
             navMeshSurface.BuildNavMesh();
         }
