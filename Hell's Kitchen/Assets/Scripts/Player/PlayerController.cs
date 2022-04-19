@@ -24,7 +24,7 @@ namespace Player
         [SerializeField] private float speedSmoothVelocity = 10f;
         [SerializeField] private AnimationCurve rollSpeedCurve;
         [SerializeField] private InventoryUI _inventoryUI;
-       
+
         [Header("Stamina")]
         [SerializeField] private float staminaCostRun = 1.0f;
         [SerializeField] private float staminaCostRoll = 1.0f;
@@ -57,7 +57,7 @@ namespace Player
             _animator = GetComponentInChildren<Animator>();
             _characterController = GetComponent<CharacterController>();
             _inventory = new Inventory();
-            
+
             _input.reference.actions["Roll"].performed += Roll;
             _input.reference.actions["PickUp"].performed += PickUp;
         }
@@ -72,16 +72,43 @@ namespace Player
 
         private void Update()
         {
+
             var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-            if (animatorStateInfo.IsName(PlayerAnimator.Move))
+            if (animatorStateInfo.IsName(PlayerAnimator.Move) || animatorStateInfo.IsName(PlayerAnimator.StrafeLeft) || animatorStateInfo.IsName(PlayerAnimator.StrafeRight) || animatorStateInfo.IsName(PlayerAnimator.StrafeBack))
             {
                 MovePlayer();
-                RotatePlayer();
+                if (_input.move != Vector2.zero)
+                    RotatePlayer();
             }
             else if (animatorStateInfo.IsName(PlayerAnimator.Roll))
             {
-                float rollSpeed = rollSpeedCurve.Evaluate(animatorStateInfo.normalizedTime) * (runSpeed - walkSpeed) + walkSpeed;
+                RotatePlayer();
+                float rollSpeed = rollSpeedCurve.Evaluate(animatorStateInfo.normalizedTime) * (runSpeed - walkSpeed) + walkSpeed *1.5f;
                 Vector3 movement = Vector3.forward * rollSpeed * Time.deltaTime;
+                _characterController.Move(transform.TransformDirection(movement));
+                _animator.SetFloat(PlayerAnimator.Speed, _speed / runSpeed);
+            }
+            else if (animatorStateInfo.IsName(PlayerAnimator.Backflip))
+            {
+                RotatePlayer();
+                float rollSpeed = rollSpeedCurve.Evaluate(animatorStateInfo.normalizedTime) * (runSpeed - walkSpeed) + walkSpeed * 1.0f;
+                Vector3 movement = -Vector3.forward * rollSpeed * Time.deltaTime;
+                _characterController.Move(transform.TransformDirection(movement));
+                _animator.SetFloat(PlayerAnimator.Speed, _speed / runSpeed);
+            }
+            else if (animatorStateInfo.IsName(PlayerAnimator.SlideLeft))
+            {
+                RotatePlayer();
+                float rollSpeed = rollSpeedCurve.Evaluate(animatorStateInfo.normalizedTime) * (runSpeed - walkSpeed) + walkSpeed * 1.0f;
+                Vector3 movement = -Vector3.right * rollSpeed * Time.deltaTime;
+                _characterController.Move(transform.TransformDirection(movement));
+                _animator.SetFloat(PlayerAnimator.Speed, _speed / runSpeed);
+            }
+            else if (animatorStateInfo.IsName(PlayerAnimator.SlideRight))
+            {
+                RotatePlayer();
+                float rollSpeed = rollSpeedCurve.Evaluate(animatorStateInfo.normalizedTime) * (runSpeed - walkSpeed) + walkSpeed * 1.0f;
+                Vector3 movement = Vector3.right * rollSpeed * Time.deltaTime;
                 _characterController.Move(transform.TransformDirection(movement));
                 _animator.SetFloat(PlayerAnimator.Speed, _speed / runSpeed);
             }
@@ -115,9 +142,18 @@ namespace Player
             if (GameStateManager.Instance.playerCurrentStamina > staminaCostRoll)
             {
                 GameStateManager.Instance.playerCurrentStamina -= staminaCostRoll;
-                _animator.SetTrigger(PlayerAnimator.Roll);
+                if (_input.move.y < 0)//do backflip/slides if not pressin fwd xd
+                    _animator.SetTrigger(PlayerAnimator.Backflip);
+                else if (_input.move.x > 0)
+                    _animator.SetTrigger(PlayerAnimator.SlideRight);
+                else if (_input.move.x < 0)
+                    _animator.SetTrigger(PlayerAnimator.SlideLeft);
+                else
+                    _animator.SetTrigger(PlayerAnimator.Roll);
             }
         }
+
+
 
         public void PickUp(InputAction.CallbackContext callbackContext)
         {
@@ -132,17 +168,48 @@ namespace Player
         {
             float targetSpeed = _input.move.normalized.magnitude * GetMovementSpeed();
             _speed = Mathf.Lerp(_speed, targetSpeed, speedSmoothVelocity * Time.deltaTime);
-            Vector3 movement = Vector3.forward * _speed * Time.deltaTime;
-            _characterController.Move(transform.TransformDirection(movement));
+            /*Vector3 movement = Vector3.forward * _speed * Time.deltaTime;
+            _characterController.Move(transform.TransformDirection(movement));*/
+
+            //Vector3 move = (new Vector3(_input.move.x, 0, _input.move.y)).normalized;
+            
+            //z-targetting strafe
+            Vector3 input = new Vector3(_input.move.x, 0, _input.move.y);
+            if (input.x != 0) //restrict forward movement
+                input = new Vector3(input.x, 0, 0);
+            
+            input = input.normalized;
+            Vector3 direction = transform.TransformDirection(input);
+            _characterController.Move(direction * Time.deltaTime * _speed);
+
+
             _animator.SetFloat(PlayerAnimator.Speed, _speed / runSpeed);
+            _animator.SetBool(PlayerAnimator.StrafeLeft, _input.move.x < 0);
+            _animator.SetBool(PlayerAnimator.StrafeRight, _input.move.x > 0);
+            _animator.SetBool(PlayerAnimator.StrafeBack, _input.move.y < 0);
         }
 
         private void RotatePlayer()
         {
-            Vector3 targetDirection = new Vector3(_input.move.x, 0f, _input.move.y);
-            if (targetDirection == Vector3.zero)
-                return;
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirection), turnSmoothVelocity * Time.deltaTime);
+            {
+                Vector2 mousePos = UnityEngine.Input.mousePosition;
+                Ray mouseRay = Camera.main.ScreenPointToRay(mousePos);
+                Plane p = new Plane(Vector3.up, transform.position);
+                if (p.Raycast(mouseRay, out float hitDist))
+                {
+                    Vector3 hitPoint = mouseRay.GetPoint(hitDist);
+                    var targetRotation = Quaternion.LookRotation(hitPoint - transform.position);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 15f * Time.deltaTime);
+                }
+            }
+            /*else {
+                Vector3 targetDirection = new Vector3(_input.move.x, 0f, _input.move.y);
+                if (targetDirection == Vector3.zero)
+                    return;
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirection), turnSmoothVelocity * Time.deltaTime);
+            }*/
+
+
         }
 
         private float GetMovementSpeed()
@@ -203,10 +270,10 @@ namespace Player
         {
             if (!_animator)
                 return;
-            
+
             var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-            if (!animatorStateInfo.IsName(PlayerAnimator.Roll) &&
-                (animatorStateInfo.IsName(PlayerAnimator.Move) || animatorStateInfo.normalizedTime > 0.5f))
+            //if (!animatorStateInfo.IsName(PlayerAnimator.Roll) &&
+            if ((animatorStateInfo.IsName(PlayerAnimator.Move) || animatorStateInfo.normalizedTime > 0.5f))
             {
                 transform.rotation = Quaternion.LookRotation(target - transform.position);
             }

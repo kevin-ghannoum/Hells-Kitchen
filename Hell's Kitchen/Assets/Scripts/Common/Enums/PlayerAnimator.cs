@@ -15,5 +15,23 @@
         public static string Dead => "Dead";
 
         public static string PickUp => "PickUp";
+
+        public static string StrafeLeft => "StrafeLeft";
+
+        public static string StrafeRight => "StrafeRight";
+
+        public static string StrafeBack => "StrafeBack";
+
+        public static string Backflip => "Backflip";
+        public static string SlideRight => "SlideRight";
+
+        public static string SlideLeft => "SlideLeft";
+        public static string RunStrafeLeft => "RunStrafeLeft";
+
+        public static string RunStrafeRight => "RunStrafeRight";
+
+
+
+
     }
 }
