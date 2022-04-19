@@ -29,8 +29,8 @@ namespace Dungeon_Generation
         public void StartNewGame()
         {
             StartNewMaze();
-            SetUpPlayerWeapon();
             playerSpawner.SpawnPlayersInScene();
+            SetUpPlayerWeapon();
             //MovePlayerToStart();
             SetDungeonClock();
         }

@@ -18,5 +18,17 @@ namespace Common
 
            return null;
         }
+        
+        public static GameObject GetLocalPlayerObject()
+        {
+            var players =  GameObject.FindGameObjectsWithTag(Tags.Player);
+            foreach (var player in players)
+            {
+                if (player.GetComponent<PhotonView>().IsMine)
+                    return player;
+            }
+
+            return null;
+        }
     }
 }

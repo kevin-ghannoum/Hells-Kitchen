@@ -50,7 +50,7 @@ namespace Weapons
 
         public virtual void Start()
         {
-            GameObject playerObject = GameObject.FindWithTag(Tags.Player);
+            GameObject playerObject = NetworkHelper.GetLocalPlayerObject();
             playerController = playerObject.GetComponent<PlayerController>();
             playerAnimator = playerObject.GetComponentInChildren<Animator>();
         }
@@ -102,6 +102,7 @@ namespace Weapons
 
         private void ReparentObjectToPlayerHand()
         {
+            playerController ??= NetworkHelper.GetLocalPlayerController(); 
             Transform hand = playerController?.CharacterHand;
             if (!hand)
                 throw new MissingReferenceException();
