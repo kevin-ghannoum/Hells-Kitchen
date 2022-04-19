@@ -13,11 +13,11 @@ namespace Dungeon_Generation
 
     public class GameController : MonoBehaviour
     {
-        [SerializeField] private PlayerController playerController;
         [SerializeField] private float playerHeightPosition = 0f;
         [SerializeField] private WeaponInstance defaultWeapon = WeaponInstance.Scimitar;
         [SerializeField] private ClockUI clock;
         [SerializeField] private Transform mazeStart;
+        [SerializeField] private PlayerSpawner playerSpawner;
 
         private MazeConstructor _generator;
 
@@ -30,7 +30,8 @@ namespace Dungeon_Generation
         {
             StartNewMaze();
             SetUpPlayerWeapon();
-            MovePlayerToStart();
+            playerSpawner.SpawnPlayersInScene();
+            //MovePlayerToStart();
             SetDungeonClock();
         }
         
@@ -41,15 +42,16 @@ namespace Dungeon_Generation
             float x = _generator.StartCol * _generator.hallwayWidth - (_generator.hallwayWidth / 2);
             float y = playerHeightPosition;
             float z = _generator.StartRow * _generator.hallwayWidth - (_generator.hallwayWidth / 2);
-            playerController.transform.position = new Vector3(x, y, z);
-
-            playerController.enabled = true;
 
             GameObject.FindWithTag(Tags.Pathfinding).GetComponent<Pathfinding>().Bake(true);
         }
 
         private void SetUpPlayerWeapon()
         {
+            var playerController = NetworkHelper.GetLocalPlayerController();
+            if (!playerController)
+                return;
+            
             var heldWeapon = playerController.gameObject.GetComponentInChildren<IPickup>();
             if (heldWeapon != null)
             {
@@ -66,15 +68,15 @@ namespace Dungeon_Generation
             weaponInstance.GetComponent<IPickup>()?.PickUp();
         }
 
-        private void MovePlayerToStart()
-        {
-            var player = GameObject.FindWithTag(Tags.Player);
-            var characterController = player.GetComponent<CharacterController>();
-            characterController.enabled = false;
-            var playerTransform = player.transform;
-            playerTransform.transform.localPosition = mazeStart.position;
-            characterController.enabled = true;
-        }
+        // private void MovePlayerToStart()
+        // {
+        //     var player = GameObject.FindWithTag(Tags.Player);
+        //     var characterController = player.GetComponent<CharacterController>();
+        //     characterController.enabled = false;
+        //     var playerTransform = player.transform;
+        //     playerTransform.transform.localPosition = mazeStart.position;
+        //     characterController.enabled = true;
+        // }
 
         private void SetDungeonClock()
         {
