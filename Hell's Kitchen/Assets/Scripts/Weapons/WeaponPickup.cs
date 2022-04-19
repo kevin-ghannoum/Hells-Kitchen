@@ -48,15 +48,10 @@ namespace Weapons
             rigidbody = GetComponent<Rigidbody>();
         }
 
-        public virtual void Start()
-        {
-            GameObject playerObject = NetworkHelper.GetLocalPlayerObject();
-            playerController = playerObject.GetComponent<PlayerController>();
-            playerAnimator = playerObject.GetComponentInChildren<Animator>();
-        }
-
         public virtual void PickUp()
         {
+            GetComponentsFromPlayer();
+            
             _canBePickedUp = false;
             GameStateData.carriedWeapon = WeaponInstance;
             ReparentObjectToPlayerHand();
@@ -98,6 +93,13 @@ namespace Weapons
             GameStateData.carriedWeapon = WeaponInstance.None;
             EnableRigidBody();
             SetOutline(true);
+        }
+
+        private void GetComponentsFromPlayer()
+        {
+            GameObject playerObject = NetworkHelper.GetLocalPlayerObject();
+            playerController = playerObject.GetComponent<PlayerController>();
+            playerAnimator = playerObject.GetComponentInChildren<Animator>();
         }
 
         private void ReparentObjectToPlayerHand()

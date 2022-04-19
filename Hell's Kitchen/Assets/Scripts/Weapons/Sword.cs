@@ -16,12 +16,10 @@ namespace Weapons
             if (!playerAnimator)
                 return;
 
-            var photonView = GetComponentInParent<PhotonView>();
-            photonView.RPC("SwordAttackRPC", RpcTarget.AllViaServer);
+            SwordAttack();
         }
-
-        [PunRPC]
-        private void SwordAttackRPC()
+        
+        private void SwordAttack()
         {
             playerAnimator.SetTrigger(PlayerAnimator.SwordAttack);
         }
