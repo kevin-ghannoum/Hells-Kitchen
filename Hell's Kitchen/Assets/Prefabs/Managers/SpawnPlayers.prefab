@@ -46,9 +46,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 374073095347085077, guid: 8ba524383f54e644d857ee2e16e3c773, type: 3}
+  sousChefPrefab: {fileID: 4017579666321907560, guid: cf4e945f8780c4a468d5ba3246ec8224, type: 3}
   spawnPoints:
   - {fileID: 1662986158972169735}
   - {fileID: 1662986159553052096}
+  shouldSpawnOnAwake: 0
 --- !u!1 &1662986158972169734
 GameObject:
   m_ObjectHideFlags: 0

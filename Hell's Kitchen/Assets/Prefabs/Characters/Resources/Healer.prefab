@@ -19934,6 +19934,8 @@ GameObject:
   - component: {fileID: 8080431647944246267}
   - component: {fileID: 8080431647944246266}
   - component: {fileID: 8080431647944246020}
+  - component: {fileID: -5929988532864737036}
+  - component: {fileID: 1323442650017528857}
   m_Layer: 10
   m_Name: Healer
   m_TagString: SousChef
@@ -20023,8 +20025,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ArrivalRadius: 0.5
-  time2target: 0.5
-  maxVelocity: 10
+  MidPointArrivalRadius: 0.5
+  TimeToTarget: 0.5
+  MaxVelocity: 2
   rigidbody: {fileID: 4251440629633350836}
   standStill: 0
 --- !u!114 &8080431647944246267
@@ -20082,6 +20085,44 @@ MonoBehaviour:
   healCircle: {fileID: 5276561292368440334}
   startTeleportPrefab: {fileID: 3920128736927035944, guid: d5069729335e8dc4d97f0df9563d30c1, type: 3}
   endTeleportPrefab: {fileID: 7510171513475766860, guid: 11cf5ce8d0a227b439f8b5c24386e30f, type: 3}
+--- !u!114 &-5929988532864737036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4017579666321907560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &1323442650017528857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4017579666321907560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &4047923600921991550
 GameObject:
   m_ObjectHideFlags: 0
