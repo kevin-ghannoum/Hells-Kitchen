@@ -1,3 +1,4 @@
+using Common.Enums;
 using UnityEngine;
 
 namespace Enemies
@@ -36,7 +37,7 @@ namespace Enemies
                     RaycastHit hit;
                     if (Physics.Raycast(transform.position, (player.transform.position - transform.position).normalized, out hit))
                     {
-                        if (hit.collider.gameObject.tag == "Player")
+                        if (hit.collider.gameObject.CompareTag(Tags.Player))
                         {
                             Debug.Log("Found");
                             chargeDirection = (player.transform.position - transform.position).normalized;
@@ -61,7 +62,7 @@ namespace Enemies
 
         void OnTriggeeerEnter(Collider col)
         {
-            if (col.tag == "Player")
+            if (col.CompareTag(Tags.Player))
             {
                 col.GetComponent<Player.PlayerHealth>().TakeDamage(10);
                 Debug.Log("Hit");

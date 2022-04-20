@@ -39,7 +39,7 @@ namespace Enemies
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position + Vector3.up * 0.5f, transform.forward, out hit))
                 {
-                    if (hit.collider.gameObject.tag == "Player")
+                    if (hit.collider.gameObject.CompareTag(Tags.Player))
                     {
                         if (audioController == 0)
                         {
