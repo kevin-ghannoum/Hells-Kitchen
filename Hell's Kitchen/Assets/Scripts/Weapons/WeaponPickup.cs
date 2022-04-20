@@ -32,7 +32,7 @@ namespace Weapons
         protected Animator playerAnimator;
         private bool _canBePickedUp = true;
 
-        private float _damage = 10.0f;
+        [SerializeField] private float _damage = 10.0f;
 
         protected PhotonView photonView;
 

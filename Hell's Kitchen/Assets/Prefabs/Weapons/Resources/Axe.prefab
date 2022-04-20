@@ -85,6 +85,7 @@ MonoBehaviour:
   throwSpeed: 35
   throwAngularSpeed: 180
   rigidbody: {fileID: 2318580042839194963}
+  _damage: 50
   weaponInstance: 4
   price: 10
   swordSlashSound: {fileID: 8300000, guid: 4a89d91da2b0fff4b96917e13071159d, type: 3}
