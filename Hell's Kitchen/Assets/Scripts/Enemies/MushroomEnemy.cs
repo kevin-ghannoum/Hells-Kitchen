@@ -3,6 +3,7 @@ using Common.Interfaces;
 using Enemies.Enums;
 using Player;
 using UnityEngine;
+using Photon.Pun;
 
 namespace Enemies
 {
@@ -10,28 +11,36 @@ namespace Enemies
     {
         [SerializeField] private float Speed;
         [SerializeField] private float attackRange;
-        private PlayerController target;
         [SerializeField] private GameObject bullet;
         [SerializeField] private Transform bulletPos;
+        [SerializeField] private Animator anime;
+        
         private float timeCounter = 2;
         private Vector3 direction;
-
-        [SerializeField] private Animator anime;
-
+        
         private void Start()
         {
-            target = GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>();
+            if (!photonView.IsMine)
+                return;
+
             anime = gameObject.GetComponent<Animator>();
             attackRange = 20;
         }
         public override void Update()
         {
+            if (!photonView.IsMine)
+                return;
+
+            var target = FindClosestPlayer();
+            if (target == null)
+                return;
+            
             timeCounter += Time.deltaTime;
-            agent.Target = target.transform.position;
             direction = target.transform.position - transform.position;
 
             if (direction.magnitude < attackRange)
             {
+                agent.Target = target.transform.position;
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 200f);
 
                 if (timeCounter > 2)
@@ -51,8 +60,11 @@ namespace Enemies
 
         private void shoot()
         {
+            if (!photonView.IsMine)
+                return;
+
             animator.SetTrigger(EnemyAnimator.Attack);
-            GameObject Bullet = GameObject.Instantiate(bullet, bulletPos.position, Quaternion.identity);
+            GameObject Bullet = PhotonNetwork.Instantiate(bullet.name, bulletPos.position, Quaternion.identity);
             Bullet.GetComponent<BulletControl>().direction = direction.normalized;
         }
     }

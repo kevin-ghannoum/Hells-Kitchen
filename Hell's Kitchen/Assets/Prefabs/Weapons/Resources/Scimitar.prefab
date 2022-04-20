@@ -87,7 +87,6 @@ MonoBehaviour:
   rigidbody: {fileID: 5515759068516445645}
   _damage: 40
   weaponInstance: 7
-  aimPoint: {x: 0, y: 0, z: 0}
   price: 0
   swordSlashSound: {fileID: 8300000, guid: 4a89d91da2b0fff4b96917e13071159d, type: 3}
 --- !u!114 &824413963528784320

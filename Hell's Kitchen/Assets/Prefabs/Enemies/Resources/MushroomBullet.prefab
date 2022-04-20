@@ -108,8 +108,11 @@ GameObject:
   - component: {fileID: 412630313441846656}
   - component: {fileID: 8957842587689493022}
   - component: {fileID: -5730953685819658247}
+  - component: {fileID: 7479063131267650139}
+  - component: {fileID: -1788814404614573515}
+  - component: {fileID: 6587699357511388025}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: MushroomBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -204,6 +207,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb93b12432b012a4eb34b2eb88bef8e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  animator: {fileID: 0}
+  hitPoints: 0
+  deathDelay: 0
+  dropObject: {fileID: 0}
+  maxDropsToSpawn: 3
+  multipleSpawnRate: 0.3
+  photonView: {fileID: 7479063131267650139}
   attackDamage: 10
   direction: {x: 0, y: 0, z: 0}
 --- !u!54 &8957842587689493022
@@ -235,3 +246,61 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.25, y: 0.25, z: 0.8}
   m_Center: {x: 0, y: 0, z: 0.5}
+--- !u!114 &7479063131267650139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7909279519910436684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 412630313441846656}
+  - {fileID: -1788814404614573515}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &-1788814404614573515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7909279519910436684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &6587699357511388025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7909279519910436684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6afd420c264afa84ba3237d0d7e6c837, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ArrivalRadius: 1
+  MidPointArrivalRadius: 0.5
+  TimeToTarget: 0.5
+  MaxVelocity: 2
+  rigidbody: {fileID: 8957842587689493022}
+  standStill: 0

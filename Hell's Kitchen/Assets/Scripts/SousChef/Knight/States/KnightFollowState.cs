@@ -11,6 +11,14 @@ public class KnightFollowState : KnightBaseState
 
     public override void UpdateState(KnightStateManager knight)
     {
+        // make sure the pick up animation ends before moving
+        if(knight.animator.GetCurrentAnimatorStateInfo(0).IsName("PickUp")){
+            knight.sc.agent.standStill = true;
+        }
+        else{
+            knight.sc.agent.standStill = false;
+        }
+
         if (knight.sc.targetEnemy == null && knight.sc.targetLoot == null)
         {
             // follow

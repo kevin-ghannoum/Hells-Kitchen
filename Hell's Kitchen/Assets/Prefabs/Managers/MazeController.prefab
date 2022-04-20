@@ -83,7 +83,11 @@ MonoBehaviour:
   - {fileID: 5502087388369685447, guid: 4a800b939cf10474fb1c43b364810f20, type: 3}
   - {fileID: 4960195001528040362, guid: 3c67dae0937f97f4aa36f8cb0fb1e2dc, type: 3}
   enemyPrefabs:
+  - {fileID: 8853326291045279623, guid: 67ae90e948d2c574eb123fe400f50401, type: 3}
   - {fileID: 7839222235967640288, guid: 4ac12db71e65fbd4ca9d0a92c4b5e5b1, type: 3}
+  - {fileID: 7317231139000338833, guid: 7fcea38998ae340478cccac527804185, type: 3}
+  - {fileID: 2832215523392890628, guid: 7ec358a1a42d81e499893f27759477cc, type: 3}
+  - {fileID: 1179882390037061755, guid: 494a9162512d10c4f8228635aa34b066, type: 3}
   - {fileID: 4794755069063066433, guid: 1d60d1758c970fb4cabcb56b300aa68a, type: 3}
   torchSpawnRate: 0.1
   windowSpawnRate: 0.4

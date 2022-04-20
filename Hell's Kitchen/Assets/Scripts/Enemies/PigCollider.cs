@@ -6,11 +6,11 @@ using UnityEngine;
 public class PigCollider : MonoBehaviour
 {
     [SerializeField]
-    private EnemyPig pig;
+    private PigEnemy pig;
 
     private void Reset()
     {
-        pig = GetComponentInParent<EnemyPig>();
+        pig = GetComponentInParent<PigEnemy>();
     }
 
     void OnTriggerEnter(Collider col)

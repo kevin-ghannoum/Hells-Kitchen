@@ -1,14 +1,12 @@
-using System;
 using Common.Enums;
 using Common.Interfaces;
 using Enemies.Enums;
 using Photon.Pun;
-using Player;
 using UnityEngine;
 
 namespace Enemies
 {
-    public class EnemyPig : Enemy
+    public class PigEnemy : Enemy
     {
         [Header("Parameters")]
         [SerializeField] private float attackRate = 0.5f;

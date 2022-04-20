@@ -35,8 +35,6 @@ public class HealerMoveToTargetState : HealerBaseState
                 //healer.sc.MoveToEnemy();
                 if (healer.sc.agent.Target != healer.sc.targetEnemy.transform.position)
                     healer.sc.agent.Target = healer.sc.targetEnemy.transform.position;
-
-
             }
             else if (healer.sc.GetDistanceToEnemy() < healer.sc.attackRange - 2)
             {
