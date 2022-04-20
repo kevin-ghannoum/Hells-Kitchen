@@ -27,8 +27,6 @@ public class HealerStateManager : MonoBehaviour
         sc = gameObject.GetComponent<SousChef>();
         currentState = followState;
         currentState.EnterState(this);
-        transform.position = sc.player.transform.position;
-
     }
 
 
@@ -86,7 +84,8 @@ public class HealerStateManager : MonoBehaviour
         currentState.UpdateState(this);
 
         _delayBetweenTeleports += Time.deltaTime;
-
+        Pathfinding.PathNode currentNode = null;
+        //return;
         if (canTeleport() && shouldTeleport())// && !beganTeleport)
         {
             beganTeleport = true;
@@ -118,38 +117,38 @@ public class HealerStateManager : MonoBehaviour
                             Debug.DrawLine(transform.position, intersectionPoints[0], Color.blue);
                             if (Vector3.Distance(p0, transform.position) < maxTeleportDistance && Vector3.Distance(p1, transform.position) > maxTeleportDistance)
                             {
-                                //maybe gotta make p1 be sc.agent.Target if dist diff
                                 pointOfIntersection = intersectionPoints[0];
+                                currentNode = node.Next;
+
+                                sc.agent.UpdatePath(node.Next);
                                 break;
+
                             }
                         }
                         node = node.Next;
                     }
                 }
                 Debug.DrawRay(pointOfIntersection, Vector3.up * 100f, Color.magenta, 0.25f);
-                //Debug.Log("le point of intersect:" + pointOfIntersection);
-                //Debug.Log("transform.position:" + transform.position);
+                /*Debug.Log("le point of intersect:" + pointOfIntersection);
+                Debug.Log("transform.position:" + transform.position);*/
                 //return;
             }
-            else {
+            else
+            {
                 if (node == null)
                 {
                     Debug.Log("1xD");
                     return;
                 }
-                else {
+                else
+                {
                     Debug.Log("2xD");
                     pointOfIntersection = transform.position + (node.Position - transform.position).normalized * maxTeleportDistance;
                 }
-                //pointOfIntersection = transform.position + (sc.agent.Target - transform.position).normalized * maxTeleportDistance;
             }
-            //return;
             float teleportDist = Mathf.Min(maxTeleportDistance, Vector3.Distance(pointOfIntersection, transform.position));
             Debug.DrawLine(transform.position, pointOfIntersection, Color.magenta, 3f);
-            //Vector3 teleportDir = (targetPoint - sourcePoint).normalized;
             NavMeshHit endPos;
-            //if (!NavMesh.SamplePosition(transform.position + (teleportDir * teleportDist), out endPos, 1, NavMesh.AllAreas))
-            
             if (!NavMesh.SamplePosition(pointOfIntersection, out endPos, 1, NavMesh.AllAreas))
             {
                 Debug.DrawRay(transform.position, Vector3.up * 100f, Color.blue, 20f);
@@ -157,6 +156,10 @@ public class HealerStateManager : MonoBehaviour
                 Debug.DrawLine(transform.position, pointOfIntersection, Color.cyan, 20f);
                 Debug.Log("oob, cancel tp xd");
                 return;
+            }
+            if (currentNode != null)
+            {
+                ///xddddd
             }
 
             Vector3 fxEndPos = endPos.position;//transform.position + (teleportDir * teleportDist);
@@ -170,10 +173,11 @@ public class HealerStateManager : MonoBehaviour
             //transform.position += teleportDir * teleportDist;
 
             _delayBetweenTeleports = 0f;
-        }        
+        }
     }
 
-    public void SwitchState(HealerBaseState state) {
+    public void SwitchState(HealerBaseState state)
+    {
         currentState = state;
         state.EnterState(this);
     }
