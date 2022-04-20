@@ -1,7 +1,6 @@
 using Common.Enums;
 using Common.Interfaces;
 using Enemies.Enums;
-using Player;
 using UnityEngine;
 using Photon.Pun;
 
@@ -9,15 +8,16 @@ namespace Enemies
 {
     public class AlienEnemy : Enemy
     {
+        [Header("Alien Properties")]
         [SerializeField] private float attackRange;
+        [SerializeField] private float attackDamage = 1;
+        [SerializeField] private GameObject photonLine;
+        
         private float timeCounter;
         private float damageTimeCounter;
         private float damageRate = 0.1f;
         private float distance;
-        [SerializeField] private GameObject electricLine;
-        private GameObject photonLine;
         private LineRenderer lr;
-        [SerializeField] private float attackDamage = 1;
         private AudioSource alienAudio;
         private AudioClip attack;
         private int audioController = 0;
@@ -28,10 +28,6 @@ namespace Enemies
                 return;
 
             attackRange = 12;
-
-            PhotonView view = gameObject.GetComponent<PhotonView>();
-            view.RPC("instantiateElectric", RpcTarget.All);
-            photonLine.transform.parent = gameObject.transform;
             alienAudio = gameObject.GetComponent<AudioSource>();
         }
 
@@ -45,7 +41,7 @@ namespace Enemies
             damageTimeCounter += Time.deltaTime;
             distance = Vector3.Distance(transform.position, target.transform.position);
 
-            if (distance < attackRange)
+            if (target != null && distance < attackRange)
             {
                 transform.LookAt(target.transform);
                 RaycastHit hit;
@@ -60,9 +56,8 @@ namespace Enemies
                         }
 
                         lr = photonLine.GetComponent<LineRenderer>();
-                        Vector3 startPos = new Vector3(transform.position.x, transform.position.y * 2, transform.position.z);
+                        photonLine.GetComponent<LineController>().targetPhotonViewID = target.GetComponent<PhotonView>().ViewID;
                         animator.SetTrigger(EnemyAnimator.Attack);
-                        setLinePosition(target);
 
                         if (damageTimeCounter > damageRate)
                         {
@@ -73,35 +68,19 @@ namespace Enemies
             }
             else
             {
-                if (lr != null)
-                    lr.positionCount = 0;
-
                 audioController = 0;
                 alienAudio.Stop();
+                photonLine.GetComponent<LineController>().targetPhotonViewID = 0;
             }
         }
 
         [PunRPC]
         private void playAttackSound()
         {
-            alienAudio.Play();
-        }
-
-        [PunRPC]
-        private void setLinePosition(GameObject target)
-        {
-            if (!photonView.IsMine)
-                return;
-
-            lr.positionCount = 2;
-            lr.SetPosition(0, transform.position + Vector3.up * 0.5f);
-            lr.SetPosition(1, target.transform.position + Vector3.up * 1.8f);
-        }
-
-        [PunRPC]
-        private void instantiateElectric()
-        {
-            photonLine = PhotonNetwork.Instantiate(electricLine.name, transform.position, Quaternion.identity);
+            if (alienAudio != null)
+            {
+                alienAudio.Play();
+            }
         }
     }
 }
