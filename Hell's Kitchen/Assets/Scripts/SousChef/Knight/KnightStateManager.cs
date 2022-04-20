@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class KnightStateManager : MonoBehaviour
@@ -28,8 +29,11 @@ public class KnightStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gameObject.GetComponent<Animator>().SetBool("isWalking", sc.agent.IsMoving);
-        gameObject.GetComponent<Animator>().SetBool("isRunning", sc.agent.IsMoving);
+        if (!GetComponent<PhotonView>().IsMine)
+            return;
+            
+        animator.SetBool("isWalking", sc.agent.IsMoving);
+        animator.SetBool("isRunning", sc.agent.IsMoving);
         currentState.UpdateState(this);
     }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -77,9 +78,12 @@ public class HealerStateManager : MonoBehaviour
     }
     private void Update()
     {
+        if (!GetComponent<PhotonView>().IsMine)
+            return;
+        
         _attackCooldown += Time.deltaTime;
-        gameObject.GetComponent<Animator>().SetBool("isWalking", sc.agent.IsMoving);
-        gameObject.GetComponent<Animator>().SetBool("isRunning", sc.agent.IsMoving);
+        animator.SetBool("isWalking", sc.agent.IsMoving);
+        animator.GetComponent<Animator>().SetBool("isRunning", sc.agent.IsMoving);
         currentState.UpdateState(this);
 
         _delayBetweenTeleports += Time.deltaTime;
