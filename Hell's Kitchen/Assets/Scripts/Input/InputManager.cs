@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 namespace Input
 {
@@ -19,6 +20,8 @@ namespace Input
         public bool interact;
         public bool openPauseMenu;
 
+        public ButtonControl testButton;
+
         [Header("References")]
         public PlayerInput reference;
 
@@ -26,22 +29,19 @@ namespace Input
 
         public static class Actions
         {
-            public static string Interact => "Interact";
+            public static InputAction PickUp => Instance.reference.actions["PickUp"];
+            public static InputAction Attack => Instance.reference.actions["Attack"];
+            public static InputAction Roll => Instance.reference.actions["Roll"];
+            public static InputAction DropItem => Instance.reference.actions["DropItem"];
+            public static InputAction ThrowItem => Instance.reference.actions["ThrowItem"];
+            public static InputAction Interact => Instance.reference.actions["Interact"];
+            public static InputAction OpenPauseMenu => Instance.reference.actions["OpenPauseMenu"];
         }
 
         private void Awake()
         {
             if (Instance == null)
                 Instance = this;
-
-            foreach (var action in reference.actions)
-            {
-                Type type = action.GetType();
-                var field = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).FirstOrDefault(f => f.Name.Equals("m_OnPerformed"));
-                var performed = field.GetValue(action);
-                var method = performed.GetType().GetMethods().FirstOrDefault(m => m.Name == "Clear");
-                method.Invoke(performed, new object[0]);
-            }
         }
 
         private void OnDestroy()

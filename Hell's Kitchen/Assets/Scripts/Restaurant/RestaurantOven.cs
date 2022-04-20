@@ -1,25 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Common;
 using Common.Enums;
 using Common.Enums.Items;
+using Dungeon_Generation;
 using Enums.Items;
 using Input;
 using Photon.Pun;
 using PlayerInventory.Cooking;
 using UI;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Restaurant
 {
-    public class RestaurantOven : MonoBehaviour
+    public class RestaurantOven : Interactable
     {
         [SerializeField] private AudioClip cookingSound;
-        private InputManager _input => InputManager.Instance;
-        private PhotonView photonView;
-
+        [SerializeField] private PhotonView photonView;
+        
         private void Start()
         {
             photonView = GetComponent<PhotonView>();
@@ -27,7 +25,7 @@ namespace Restaurant
             DebugAddInventoryAndOrders();
         }
 
-        private void AutoCraftOrderedRecipes(InputAction.CallbackContext context)
+        protected override void Interact()
         {
             var orderList = RestaurantManager.Instance.OrderList.Where(o => !o.Served);
             var player = GameObject.FindWithTag(Tags.Player);
@@ -76,22 +74,6 @@ namespace Restaurant
             GameStateManager.AddItemToInventory(ItemInstance.Honey, 20);
             GameStateManager.AddItemToInventory(ItemInstance.Mushroom, 20);
             GameStateManager.AddItemToInventory(ItemInstance.Meat, 20);
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag(Tags.Player) && other.GetComponent<PhotonView>().IsMine)
-            {
-                _input.reference.actions["Interact"].performed += AutoCraftOrderedRecipes;
-            }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.CompareTag(Tags.Player) && other.GetComponent<PhotonView>().IsMine)
-            {
-                _input.reference.actions["Interact"].performed -= AutoCraftOrderedRecipes;
-            }
         }
     }
 }

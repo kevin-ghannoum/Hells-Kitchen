@@ -2,6 +2,7 @@ using Common.Enums;
 using Common.Interfaces;
 using Enemies.Enums;
 using Photon.Pun;
+using PlayerInventory;
 using UI;
 using UnityEngine;
 
@@ -93,16 +94,9 @@ namespace Enemies
                 return;
             
             var spawnPosition = new Vector3(gameObject.transform.position.x, 0.2f, gameObject.transform.position.z);
-            var offset = new Vector3(1f, 0f, 0.5f);
-            
-            var shouldSpawnMore = Random.value < multipleSpawnRate;
-            var numSpawned = 0;
-
-            do {
-                numSpawned++;
-                PhotonNetwork.Instantiate(dropObject.name, spawnPosition, Quaternion.identity);
-                spawnPosition += offset;
-            } while (shouldSpawnMore && numSpawned < maxDropsToSpawn);
+            var item = PhotonNetwork.Instantiate(dropObject.name, spawnPosition, Quaternion.identity);
+            var itemDrop = item.GetComponentInChildren<ItemDrop>();
+            itemDrop.quantity = Random.Range(1, maxDropsToSpawn + 1);
         }
 
         private void Destroy()

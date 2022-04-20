@@ -34,7 +34,6 @@ namespace Weapons
 
         private void Fire()
         {
-            Debug.Log($"FIRE - IS MINE - {photonView.IsMine}");
             if (!photonView.IsMine)
                 return;
 

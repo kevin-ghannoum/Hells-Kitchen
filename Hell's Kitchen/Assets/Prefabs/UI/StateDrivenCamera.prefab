@@ -334,6 +334,7 @@ GameObject:
   - component: {fileID: 4881595731767503003}
   - component: {fileID: 4881595731767503002}
   - component: {fileID: 4881595731767503012}
+  - component: {fileID: 2993203368794287358}
   m_Layer: 0
   m_Name: StateDrivenCamera
   m_TagString: MainCamera
@@ -426,3 +427,11 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!81 &2993203368794287358
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4881595731767503001}
+  m_Enabled: 1

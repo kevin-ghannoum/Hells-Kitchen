@@ -13,31 +13,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 238747066, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.6153913
+      value: -11.217583
       objectReference: {fileID: 0}
     - target: {fileID: 238747066, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.08
+      value: 12.981682
       objectReference: {fileID: 0}
     - target: {fileID: 238747066, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.090163
+      value: 20.395206
       objectReference: {fileID: 0}
     - target: {fileID: 238747066, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7802275
+      value: 0.35708976
       objectReference: {fileID: 0}
     - target: {fileID: 238747066, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.4947712
+      value: 0.10573854
       objectReference: {fileID: 0}
     - target: {fileID: 238747066, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.32318085
+      value: 0.88987154
       objectReference: {fileID: 0}
     - target: {fileID: 238747066, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.20494094
+      value: -0.263505
       objectReference: {fileID: 0}
     - target: {fileID: 807330856, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_LocalPosition.x
@@ -83,6 +83,10 @@ PrefabInstance:
       propertyPath: _photonView
       value: 
       objectReference: {fileID: 7816089832805037480}
+    - target: {fileID: 201836285290825875, guid: ab126534be57d744eab097b38e421eda, type: 3}
+      propertyPath: playerHeight
+      value: -0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 1366883624018297259, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -146,10 +150,6 @@ PrefabInstance:
     - target: {fileID: 8141198540569047468, guid: ab126534be57d744eab097b38e421eda, type: 3}
       propertyPath: ObservedComponents.Array.data[2]
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 9212518410050988233, guid: ab126534be57d744eab097b38e421eda, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab126534be57d744eab097b38e421eda, type: 3}

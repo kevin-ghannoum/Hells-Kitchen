@@ -1,37 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using Common;
 using Common.Enums;
-using Input;
-using Photon.Pun;
+using Dungeon_Generation;
 using UI;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class SousChefSelector : MonoBehaviour
+namespace Shops
 {
-    InputManager _input =>InputManager.Instance;
-    [SerializeField] private SousChefType type;
+    public class SousChefSelector : Interactable
+    {
+        [SerializeField] private SousChefType type;
     
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag(Tags.Player) && other.GetComponent<PhotonView>().IsMine)
+        protected override void Interact()
         {
-            _input.reference.actions["Interact"].performed +=SelectSousChef;
+            GameStateManager.SetSousChef(type);
+            AdrenalinePointsUI.SpawnIngredientString(gameObject.transform.position, "Recruited Sous Chef");
         }
-    }
-        
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag(Tags.Player) && other.GetComponent<PhotonView>().IsMine)
-        {
-            _input.reference.actions["Interact"].performed -= SelectSousChef;
-        }
-    }
-
-    private void SelectSousChef(InputAction.CallbackContext context)
-    {
-        GameStateManager.SetSousChef(type);
-        AdrenalinePointsUI.SpawnIngredientString(gameObject.transform.position, "Recruited Sous Chef");
     }
 }

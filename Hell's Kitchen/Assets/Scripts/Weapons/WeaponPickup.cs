@@ -27,7 +27,6 @@ namespace Weapons
         [SerializeField]
         private new Rigidbody rigidbody;
         
-        private InputManager input => InputManager.Instance;
         protected PlayerController playerController;
         protected Animator playerAnimator;
         private bool _canBePickedUp = true;
@@ -142,41 +141,26 @@ namespace Weapons
 
         protected virtual void AddListeners()
         {
-            if (!input)
-                throw new MissingReferenceException("Input Not Found");
-            
-            input.reference.actions["Attack"].performed += Use;
-            input.reference.actions["DropItem"].performed += Drop;
-            input.reference.actions["ThrowItem"].performed += Throw;
-        }
-        
-        protected virtual void RemoveListeners()
-        {
-            input.reference.actions["Attack"].performed -= Use;
-            input.reference.actions["DropItem"].performed -= Drop;
-            input.reference.actions["ThrowItem"].performed -= Throw;
+            InputManager.Actions.Attack.performed += Use;
+            InputManager.Actions.DropItem.performed += Drop;
+            InputManager.Actions.ThrowItem.performed += Throw;
         }
 
-        private void OnTriggerEnter(Collider other)
+        protected virtual void RemoveListeners()
         {
-            if (other.CompareTag(Tags.Player) && _canBePickedUp && !GameStateData.IsCarryingWeapon)
-            {
-                var pv = other.GetComponent<PhotonView>();
-                if (pv != null && pv.IsMine)
-                {
-                    other.GetComponent<PlayerController>().OnPickupTriggerEnter(this);
-                }
-            }
+            InputManager.Actions.Attack.performed -= Use;
+            InputManager.Actions.DropItem.performed -= Drop;
+            InputManager.Actions.ThrowItem.performed -= Throw;
         }
-        
-        private void OnTriggerExit(Collider other)
+
+        private void OnTriggerStay(Collider other)
         {
             if (other.CompareTag(Tags.Player))
             {
                 var pv = other.GetComponent<PhotonView>();
                 if (pv != null && pv.IsMine)
                 {
-                    other.GetComponent<PlayerController>().OnPickupTriggerExit(this);
+                    other.GetComponent<PlayerController>().OnPickupTriggerStay(this);
                 }
             }
         }

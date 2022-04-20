@@ -2,37 +2,27 @@ using System;
 using System.Linq;
 using Common;
 using Common.Enums;
+using Dungeon_Generation;
 using Input;
 using Photon.Pun;
 using PlayerInventory.Cooking;
 using Restaurant;
 using Restaurant.Enums;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using Random = UnityEngine.Random;
 using SceneManager = Common.SceneManager;
 
-public class RestaurantDoor : MonoBehaviour
+public class RestaurantDoor : Interactable
 {
     [SerializeField] private float missedOrderPenalty = 10f;
     [SerializeField] private int debtCap = -10;
     
     [SerializeField] private Animator animator;
-    
-    private InputManager _input => InputManager.Instance;
-    private static IRecipe[] _availableRecipes;
 
     private int _numCustomers = 0;
 
-    private void Awake()
-    {
-        _availableRecipes = new IRecipe[] {new Recipes.Hamburger(), new Recipes.Salad(), new Recipes.Sushi()};
-    }
-
-    private void LeaveRestaurant(InputAction.CallbackContext obj)
+    protected override void Interact()
     {
         ImposeFine();
-        _input.reference.actions["Interact"].performed -= LeaveRestaurant;
         if (GameStateData.cashMoney < debtCap)
         {
             SceneManager.Instance.LoadGameOverScene();
@@ -48,15 +38,10 @@ public class RestaurantDoor : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
     }
 
-    private void Update()
+    public override void Update()
     {
+        base.Update();
         animator.SetBool(RestaurantDoorAnimator.Open, _numCustomers > 0);
-    }
-
-    private IRecipe GetRandomOrder()
-    {
-        int index = Random.Range(0, _availableRecipes.Length);
-        return _availableRecipes[index];
     }
 
     private void ImposeFine()
@@ -68,37 +53,22 @@ public class RestaurantDoor : MonoBehaviour
         }
     }
 
-    public void OnTriggerEnter(Collider other)
+    public override void OnTriggerEnter(Collider other)
     {
+        base.OnTriggerEnter(other);
         if (other.CompareTag(Tags.Customer))
         {
             _numCustomers++;
         }
-
-        if (other.gameObject.CompareTag(Tags.Player))
-        {
-            var pv = other.GetComponent<PhotonView>();
-            if (pv != null && pv.IsMine)
-            {
-                _input.reference.actions["Interact"].performed += LeaveRestaurant;
-            }
-        }
     }
 
-    public void OnTriggerExit(Collider other)
+    public override void OnTriggerExit(Collider other)
     {
+        base.OnTriggerExit(other);
         if (other.CompareTag(Tags.Customer))
         {
             _numCustomers--;
         }
-        
-        if (other.gameObject.CompareTag(Tags.Player))
-        {
-            var pv = other.GetComponent<PhotonView>();
-            if (pv != null && pv.IsMine)
-            {
-                _input.reference.actions["Interact"].performed -= LeaveRestaurant;
-            }
-        }
     }
+
 }

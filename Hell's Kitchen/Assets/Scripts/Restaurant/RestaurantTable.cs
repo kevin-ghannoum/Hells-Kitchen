@@ -3,17 +3,17 @@ using System.Linq;
 using Common;
 using Common.Enums;
 using Common.Enums.Items;
+using Dungeon_Generation;
 using Enums.Items;
 using Input;
 using Photon.Pun;
 using UI;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 namespace Restaurant
 {
-    public class RestaurantTable : MonoBehaviour, IPunObservable
+    public class RestaurantTable : Interactable, IPunObservable
     {
         [SerializeField]
         private RestaurantSeat[] seats;
@@ -33,7 +33,6 @@ namespace Restaurant
         [SerializeField]
         private AudioClip rawSound;
 
-        private InputManager _input => InputManager.Instance;
         public List<RestaurantOrder> OrderList = new List<RestaurantOrder>();
         private readonly Dictionary<int, RestaurantOrderItem> _orderUIObjects = new Dictionary<int, RestaurantOrderItem>();
 
@@ -43,36 +42,13 @@ namespace Restaurant
             photonView = GetComponent<PhotonView>();
         }
 
-        private void Update()
+        public override void Update()
         {
+            base.Update();
             restaurantUI.IsDisabled = !seats.Any(s => s.IsSitting);
             interactUI.IsDisabled = OrderList.All(o => o.Served);
         }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag(Tags.Player))
-            {
-                var pv = other.GetComponent<PhotonView>();
-                if (pv != null && pv.IsMine)
-                {
-                    _input.reference.actions["Interact"].performed += ServeOrders;
-                }
-            }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.gameObject.CompareTag(Tags.Player))
-            {
-                var pv = other.GetComponent<PhotonView>();
-                if (pv != null && pv.IsMine)
-                {
-                    _input.reference.actions["Interact"].performed -= ServeOrders;
-                }
-            }
-        }
-
+        
         public void OnCustomerSit()
         {
             if (photonView.IsMine)
@@ -143,7 +119,7 @@ namespace Restaurant
             RefreshOrderUI();
         }
 
-        private void ServeOrders(InputAction.CallbackContext context)
+        protected override void Interact()
         {
             photonView.RPC(nameof(ServeOrdersRPC), RpcTarget.All);
         }

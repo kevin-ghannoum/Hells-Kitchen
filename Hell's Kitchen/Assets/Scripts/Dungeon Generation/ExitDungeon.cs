@@ -5,20 +5,15 @@ using Common.Interfaces;
 using Input;
 using Photon.Pun;
 using Player;
-using UI;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Dungeon_Generation
 {
-    public class ExitDungeon : MonoBehaviour
+    public class ExitDungeon : Interactable
     {
-        private InputManager _input => InputManager.Instance;
-
-        private void Interact(InputAction.CallbackContext context)
+        protected override void Interact()
         {
             var gameController = FindObjectOfType<GameController>();
-            _input.reference.actions["Interact"].performed -= Interact;
             if (GameStateData.dungeonClock > 1.0f || !gameController)
             {
                 ReturnToRestaurant();
@@ -26,37 +21,6 @@ namespace Dungeon_Generation
             else
             {
                 SceneManager.Instance.LoadDungeonScene();
-            }
-        }
-
-        private void OnDestroy()
-        {
-            if (_input == null)
-                return;
-            _input.reference.actions["Interact"].performed -= Interact;
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag(Tags.Player))
-            {
-                var pv = other.GetComponent<PhotonView>();
-                if (pv != null && pv.IsMine)
-                {
-                    _input.reference.actions["Interact"].performed += Interact;
-                }
-            }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.gameObject.CompareTag(Tags.Player))
-            {
-                var pv = other.GetComponent<PhotonView>();
-                if (pv != null && pv.IsMine)
-                {
-                    _input.reference.actions["Interact"].performed -= Interact;
-                }
             }
         }
 

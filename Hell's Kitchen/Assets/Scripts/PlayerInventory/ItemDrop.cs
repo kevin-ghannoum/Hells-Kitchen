@@ -7,13 +7,13 @@ using UnityEngine;
 
 namespace PlayerInventory
 {
-    public class ItemDrop : MonoBehaviour
+    public class ItemDrop : MonoBehaviour, IPunObservable
     {
         [SerializeField]
-        private int quantity = 1;
-
+        public ItemInstance item;
+        
         [SerializeField]
-        private ItemInstance item;
+        public int quantity = 1;
 
         [SerializeField]
         private PhotonView photonView;
@@ -39,6 +39,20 @@ namespace PlayerInventory
             {
                 GameStateManager.AddItemToInventory(item, quantity);
                 PhotonNetwork.Destroy(gameObject);
+            }
+        }
+        
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if (stream.IsWriting)
+            {
+                stream.SendNext((int)item);
+                stream.SendNext(quantity);
+            }
+            else if (stream.IsReading)
+            {
+                item = (ItemInstance)stream.ReceiveNext();
+                quantity = (int)stream.ReceiveNext();
             }
         }
     }

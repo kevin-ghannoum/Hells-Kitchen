@@ -1,3 +1,4 @@
+using System.Linq;
 using Common;
 using Common.Enums;
 using Common.Interfaces;
@@ -45,23 +46,8 @@ namespace Player
             _photonView = GetComponent<PhotonView>();
             _animator = GetComponentInChildren<Animator>();
             _characterController = GetComponent<CharacterController>();
-
-            if (_photonView.IsMine && _input != null)
-            {
-                _input.reference.actions["Roll"].performed += Roll;
-                _input.reference.actions["PickUp"].performed += PickUp;
-            }
         }
-
-        private void OnDestroy()
-        {
-            if (_photonView.IsMine && _input != null)
-            {
-                _input.reference.actions["Roll"].performed -= Roll;
-                _input.reference.actions["PickUp"].performed -= PickUp;
-            }
-        }
-
+        
         private void Update()
         {
             if (!_photonView.IsMine) return;
@@ -86,25 +72,23 @@ namespace Player
                 _animator.SetFloat(PlayerAnimator.Speed, _speed / runSpeed);
             }
 
+            if (InputManager.Actions.Roll.triggered)
+                Roll();
+
+            if (InputManager.Actions.PickUp.triggered)
+                PickUp();
+
             UpdateStamina();
         }
 
-        public void OnPickupTriggerEnter(IPickup pickup)
+        public void OnPickupTriggerStay(IPickup pickup)
         {
             _currentPickup = pickup;
         }
 
-        public void OnPickupTriggerExit(IPickup pickup)
-        {
-            if (_currentPickup == pickup)
-            {
-                _currentPickup = null;
-            }
-        }
-
         #region PlayerActions
 
-        public void Roll(InputAction.CallbackContext callbackContext)
+        private void Roll()
         {
             if (GameStateData.playerCurrentStamina > staminaCostRoll)
             {
@@ -113,7 +97,7 @@ namespace Player
             }
         }
 
-        public void PickUp(InputAction.CallbackContext callbackContext)
+        private void PickUp()
         {
             _animator.SetTrigger(PlayerAnimator.PickUp);
         }
@@ -191,7 +175,8 @@ namespace Player
                 return;
             
             float damage = GetComponentInChildren<WeaponPickup>()?.Damage ?? 0.0f;
-            var colliders = Physics.OverlapSphere(DamagePosition.position, DamageRadius, ~(1 << Layers.Player));
+            var colliders = Physics.OverlapSphere(DamagePosition.position, DamageRadius, ~(1 << Layers.Player))
+                .Where(c => c.CompareTag(Tags.Enemy));
             foreach (var col in colliders)
             {
                 col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.All, damage);

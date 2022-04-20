@@ -37,7 +37,7 @@ namespace Enemies
             base.Update();
 
             var player = FindClosestPlayer();
-            if (Vector3.Distance(player.transform.position, transform.position) < aggroRadius)
+            if (player != null && Vector3.Distance(player.transform.position, transform.position) < aggroRadius)
             {
                 agent.Target = player.transform.position;
 

@@ -1,16 +1,14 @@
-﻿using System;
-using Common;
+﻿using Common;
 using Common.Enums;
 using Input;
 using Photon.Pun;
 using UI;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 namespace Dungeon_Generation
 {
-    public class Chest : MonoBehaviour
+    public class Chest : Interactable
     {
         [SerializeField] private int amountMinInclusive = 20;
         [SerializeField] private int amountMaxExclusive = 40;
@@ -19,8 +17,6 @@ namespace Dungeon_Generation
         [SerializeField] private AudioClip chestSound;
 
         private bool _isLooted = false;
-
-        private InputManager _input => InputManager.Instance;
         private Animator _animator;
 
         private void Awake()
@@ -33,31 +29,7 @@ namespace Dungeon_Generation
             return Random.Range(amountMinInclusive, amountMaxExclusive);
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag(Tags.Player))
-            {
-                var pv = other.gameObject.GetComponent<PhotonView>();
-                if (pv.IsMine)
-                {
-                    _input.reference.actions["Interact"].performed += LootChest;
-                }
-            }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.gameObject.CompareTag(Tags.Player))
-            {
-                var pv = other.gameObject.GetComponent<PhotonView>();
-                if (pv.IsMine)
-                {
-                    _input.reference.actions["Interact"].performed -= LootChest;
-                }
-            }
-        }
-
-        private void LootChest(InputAction.CallbackContext context)
+        protected override void Interact()
         {
             if (_isLooted)
                 return;
