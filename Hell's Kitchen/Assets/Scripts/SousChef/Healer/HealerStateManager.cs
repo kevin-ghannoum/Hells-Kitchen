@@ -37,11 +37,11 @@ public class HealerStateManager : MonoBehaviour
 
     float maxTeleportDistance = 10f;
     bool beganTeleport = false;
-    float delayBetweenTeleports = 0.75f;
+    float delayBetweenTeleports = 0.1f;
     float _delayBetweenTeleports = 0f;
     bool canTeleport() => _delayBetweenTeleports >= delayBetweenTeleports;
-    bool shouldTeleport() => !sc.agent.standStill && sc.agent.IsMoving() && sc.agent.Target != null && (Vector3.Distance(transform.position, sc.agent.Target) > 15);
-    //bool shouldTeleport() => !sc.agent.standStill && sc.agent.Target != null && (Vector3.Distance(transform.position, sc.agent.Target) > 15);
+    //bool shouldTeleport() => !sc.agent.standStill && sc.agent.IsMoving() && sc.agent.Target != null && (Vector3.Distance(transform.position, sc.agent.Target) > 15);
+    bool shouldTeleport() => !sc.agent.standStill && sc.agent.Target != null && (Vector3.Distance(transform.position, sc.agent.Target) > 15);
 
     //implemented from https://web.archive.org/web/20060909012810/http://local.wasp.uwa.edu.au/~pbourke/geometry/sphereline/
     public bool lineSphereIntesection(Vector3 p0, Vector3 p1, Vector3 center, float radius, out Vector3[] intersectionPoints)
@@ -84,7 +84,8 @@ public class HealerStateManager : MonoBehaviour
         currentState.UpdateState(this);
 
         _delayBetweenTeleports += Time.deltaTime;
-
+        Pathfinding.PathNode currentNode = null;
+        //return;
         if (canTeleport() && shouldTeleport())// && !beganTeleport)
         {
             beganTeleport = true;
@@ -113,20 +114,30 @@ public class HealerStateManager : MonoBehaviour
                         Vector3[] intersectionPoints;
                         if (lineSphereIntesection(p0, p1, transform.position, maxTeleportDistance, out intersectionPoints))
                         {
-                            Debug.DrawLine(transform.position, intersectionPoints[0], Color.blue);
+                            List<Vector3> intersections = new List<Vector3>(intersectionPoints);
+                            //intersections.Sort((x, y) => (Vector3.Distance(x, p1)).CompareTo((Vector3.Distance(y, p1))));
+                            Debug.DrawLine(transform.position, intersections[0], Color.blue);
+
                             if (Vector3.Distance(p0, transform.position) < maxTeleportDistance && Vector3.Distance(p1, transform.position) > maxTeleportDistance)
                             {
                                 //maybe gotta make p1 be sc.agent.Target if dist diff
-                                pointOfIntersection = intersectionPoints[0];
+                                pointOfIntersection = intersections[0];
+                                currentNode = node.Next;
+
+                                sc.agent.UpdatePath(node.Next);
                                 break;
+
+                            }
+                            else {
+                                Debug.Log("halooo");
                             }
                         }
                         node = node.Next;
                     }
                 }
                 Debug.DrawRay(pointOfIntersection, Vector3.up * 100f, Color.magenta, 0.25f);
-                //Debug.Log("le point of intersect:" + pointOfIntersection);
-                //Debug.Log("transform.position:" + transform.position);
+                Debug.Log("le point of intersect:" + pointOfIntersection);
+                Debug.Log("transform.position:" + transform.position);
                 //return;
             }
             else {
@@ -155,6 +166,9 @@ public class HealerStateManager : MonoBehaviour
                 Debug.DrawLine(transform.position, pointOfIntersection, Color.cyan, 20f);
                 Debug.Log("oob, cancel tp xd");
                 return;
+            }
+            if (currentNode != null) { 
+                ///xddddd
             }
 
             Vector3 fxEndPos = endPos.position;//transform.position + (teleportDir * teleportDist);

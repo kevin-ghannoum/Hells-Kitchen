@@ -94,4 +94,20 @@ public class PathfindingAgent : MonoBehaviour
 
     public Pathfinding.PathNode currentNode => _path; //using for teleport
 
+    private void OnDrawGizmos()
+    {
+        var nodes = _path;
+        while (nodes.Next != null) {
+            Debug.DrawLine(nodes.Position, nodes.Next.Position);
+            Gizmos.DrawCube(nodes.Position, Vector3.one);
+            nodes = nodes.Next;
+
+        }
+    }
+
+    public void UpdatePath(Pathfinding.PathNode node) {
+        _path = node;
+        
+    }
+
 }
