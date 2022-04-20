@@ -96,8 +96,8 @@ public class SousChef : MonoBehaviour, IKillable
         colliders = colliders.OrderBy(c => (transform.position - c.transform.position).sqrMagnitude).ToArray();
         if (colliders.Length != 0)
             targetEnemy = colliders[0].gameObject;
-        else
-            targetEnemy = null;
+        //else
+        //    targetEnemy = null;
 
         // enemy found, return true
         if (targetEnemy != null){
