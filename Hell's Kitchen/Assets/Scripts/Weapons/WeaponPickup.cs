@@ -184,7 +184,6 @@ namespace Weapons
         [PunRPC]
         public void DisableRigidbody()
         {
-            Debug.Log("DISABLE");
             rigidbody.detectCollisions = false;
             rigidbody.useGravity = false;
             rigidbody.isKinematic = true;
@@ -196,7 +195,6 @@ namespace Weapons
         [PunRPC]
         public void EnableRigidBody()
         {
-            Debug.Log("ENABLE");
             rigidbody.detectCollisions = true;
             rigidbody.useGravity = true;
             rigidbody.isKinematic = false;

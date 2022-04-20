@@ -34,7 +34,6 @@ namespace Input
             if (Instance == null)
                 Instance = this;
 
-            Debug.Log("INPUT MANAGER AWAKE");
             foreach (var action in reference.actions)
             {
                 Type type = action.GetType();

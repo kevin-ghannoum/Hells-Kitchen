@@ -45,11 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81b5c49913b52a146a2ccfaa8398dd93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHeightPosition: 0
   defaultWeapon: 7
-  clock: {fileID: 0}
   mazeStart: {fileID: 0}
   playerSpawner: {fileID: 0}
+  photonView: {fileID: 0}
 --- !u!114 &2752677855204124922
 MonoBehaviour:
   m_ObjectHideFlags: 0
