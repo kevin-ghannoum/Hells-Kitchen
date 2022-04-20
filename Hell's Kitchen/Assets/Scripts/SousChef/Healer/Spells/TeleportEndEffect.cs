@@ -17,11 +17,13 @@ public class TeleportEndEffect : MonoBehaviour
     bool startedNext = false;
     private void Update()
     {
-        if (finishedFirst && !startedNext) {
+        if (finishedFirst && !startedNext)
+        {
             StartCoroutine(ScaleOverTime(0.35f, sphere, new Vector3(0, 0, 0)));
             startedNext = true;
         }
-        if (startedNext) {
+        if (startedNext)
+        {
             pointLight.intensity -= 2 * Time.deltaTime;
         }
     }
@@ -32,8 +34,7 @@ public class TeleportEndEffect : MonoBehaviour
 
         float currentTime = 0.0f;
 
-        do
-        {
+        do {
             target.localScale = Vector3.Lerp(originalScale, destinationScale, currentTime / time);
             currentTime += Time.deltaTime;
             yield return null;

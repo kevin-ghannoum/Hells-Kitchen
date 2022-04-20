@@ -31,6 +31,7 @@ public class TeleportSpellEffects : MonoBehaviour
         sphereRateOfChange = 4 / timePerLifeCycle;
         StartCoroutine(ScaleOverTime(timePerLifeCycle*3.5f, sphere));
     }
+    
     IEnumerator ScaleOverTime(float time, Transform target)
     {
         Vector3 originalScale = target.localScale;
@@ -38,8 +39,7 @@ public class TeleportSpellEffects : MonoBehaviour
 
         float currentTime = 0.0f;
 
-        do
-        {
+        do {
             target.localScale = Vector3.Lerp(originalScale, destinationScale, currentTime / time);
             currentTime += Time.deltaTime;
             yield return null;
@@ -71,13 +71,10 @@ public class TeleportSpellEffects : MonoBehaviour
         }
         else 
         {//ded 
-
             /*flare1.brightness = startLightSize;
             flare2.brightness = startLightSize;
             _lifetime = 0f;*/
             Destroy(gameObject,3);
         }
-
-
     }
 }
