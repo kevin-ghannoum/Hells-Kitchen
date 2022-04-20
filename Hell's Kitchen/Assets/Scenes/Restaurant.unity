@@ -9049,6 +9049,7 @@ PrefabInstance:
     - {fileID: 8080431647944246020, guid: cf4e945f8780c4a468d5ba3246ec8224, type: 3}
     - {fileID: 8080431647944246267, guid: cf4e945f8780c4a468d5ba3246ec8224, type: 3}
     - {fileID: 8080431647944246264, guid: cf4e945f8780c4a468d5ba3246ec8224, type: 3}
+    - {fileID: 4251440629633350836, guid: cf4e945f8780c4a468d5ba3246ec8224, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cf4e945f8780c4a468d5ba3246ec8224, type: 3}
 --- !u!1 &1101305410 stripped
 GameObject:
@@ -10748,6 +10749,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 44
       objectReference: {fileID: 0}
+    - target: {fileID: 1129005320685730349, guid: 9fc348fdaf1694d41b5cb105dbbeb7e2, type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1399110425876079335, guid: 9fc348fdaf1694d41b5cb105dbbeb7e2, type: 3}
       propertyPath: m_Layer
       value: 11
@@ -10953,6 +10958,7 @@ PrefabInstance:
     - {fileID: 8046514949207215185, guid: 9fc348fdaf1694d41b5cb105dbbeb7e2, type: 3}
     - {fileID: 5153250386385897533, guid: 9fc348fdaf1694d41b5cb105dbbeb7e2, type: 3}
     - {fileID: -4428569699195467017, guid: 9fc348fdaf1694d41b5cb105dbbeb7e2, type: 3}
+    - {fileID: 3440339455808783361, guid: 9fc348fdaf1694d41b5cb105dbbeb7e2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9fc348fdaf1694d41b5cb105dbbeb7e2, type: 3}
 --- !u!1 &1410026105 stripped
 GameObject:
