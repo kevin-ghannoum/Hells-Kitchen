@@ -27,7 +27,7 @@ namespace Player
         public float HitPoints
         {
             get => GameStateData.playerCurrentHitPoints;
-            set => GameStateData.playerCurrentHitPoints = value;
+            set => GameStateData.playerCurrentHitPoints = Mathf.Clamp(value, 0, GameStateData.playerMaxHitPoints);
         }
 
         public PhotonView PhotonView => photonView;
