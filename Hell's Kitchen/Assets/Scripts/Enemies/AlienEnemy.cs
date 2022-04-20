@@ -10,7 +10,6 @@ namespace Enemies
     public class AlienEnemy : Enemy
     {
         [SerializeField] private float attackRange;
-        [SerializeField] private PlayerController target;
         private float timeCounter;
         private float damageTimeCounter;
         private float damageRate = 0.1f;
@@ -18,6 +17,7 @@ namespace Enemies
         private LineRenderer lr;
         [SerializeField] private float attackDamage = 1;
         private AudioSource audio;
+        private AudioClip attack;
         private int audioController = 0;
 
         private void Start()
@@ -26,9 +26,9 @@ namespace Enemies
                 return;
 
             attackRange = 12;
-            target = GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>();
             lr = gameObject.GetComponent<LineRenderer>();
             audio = gameObject.GetComponent<AudioSource>();
+            attack = audio.clip;
         }
 
         public override void Update()
@@ -36,6 +36,7 @@ namespace Enemies
             if (!photonView.IsMine)
                 return;
 
+            var target = FindClosestPlayer();
             timeCounter += Time.deltaTime;
             damageTimeCounter += Time.deltaTime;
             distance = Vector3.Distance(transform.position, target.transform.position);
@@ -63,7 +64,7 @@ namespace Enemies
 
                         if (damageTimeCounter > damageRate)
                         {
-                            target.gameObject.GetComponent<IKillable>().TakeDamage(attackDamage);
+                            target.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.All, attackDamage);
                         }
                     }
                 }
@@ -79,7 +80,7 @@ namespace Enemies
         [PunRPC]
         private void playAttackSound()
         {
-            audio.Play();
+            AudioSource.PlayClipAtPoint(attack, transform.position);
         }
     }
 

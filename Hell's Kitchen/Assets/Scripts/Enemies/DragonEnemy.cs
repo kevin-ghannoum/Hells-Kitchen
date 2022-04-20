@@ -27,6 +27,7 @@ namespace Enemies
                 return;
 
             dragonAudio = gameObject.GetComponent<AudioSource>();
+            attack = dragonAudio.clip;
         }
         public override void Update()
         {
@@ -47,6 +48,7 @@ namespace Enemies
                     particle.Play();
                     photonView.RPC(nameof(playAttackSound), RpcTarget.All);
                     animator.SetTrigger(EnemyAnimator.Attack);
+                    setCircle();
                     Invoke("Attack", 0.3f);
                     Invoke("resumeFollow", 1f);
                     timeCounter = 0;
@@ -56,6 +58,11 @@ namespace Enemies
             {
                 audioController = 0;
             }
+        }
+
+        private void setCircle()
+        {
+            GameObject spell = PhotonNetwork.Instantiate(particle.name, transform.position, Quaternion.identity);
         }
 
         private void Attack()
@@ -69,7 +76,7 @@ namespace Enemies
             {
                 if (col.gameObject.CompareTag(Tags.Player))
                 {
-                    col.gameObject.GetComponent<IKillable>().TakeDamage(attackDamage);
+                    col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.All, attackDamage);
                 }
             }
         }
@@ -82,7 +89,7 @@ namespace Enemies
         [PunRPC]
         private void playAttackSound()
         {
-            dragonAudio.Play();
+            AudioSource.PlayClipAtPoint(attack, transform.position);
         }
     }
 }

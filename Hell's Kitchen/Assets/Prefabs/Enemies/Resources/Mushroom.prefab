@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 453064751614375469}
   - component: {fileID: -2646342085232222148}
   - component: {fileID: -3890128589348726618}
+  - component: {fileID: 2254245643945551711}
   m_Layer: 7
   m_Name: Mushroom
   m_TagString: Enemy
@@ -202,6 +203,22 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &2254245643945551711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179882390037061755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters: []
+  m_SynchronizeLayers: []
 --- !u!1 &2062262810795065987
 GameObject:
   m_ObjectHideFlags: 0

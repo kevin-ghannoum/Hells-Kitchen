@@ -11,7 +11,6 @@ namespace Enemies
     {
         [SerializeField] private float Speed;
         [SerializeField] private float attackRange;
-        private PlayerController target;
         [SerializeField] private GameObject bullet;
         [SerializeField] private Transform bulletPos;
         private float timeCounter = 2;
@@ -24,7 +23,6 @@ namespace Enemies
             if (!photonView.IsMine)
                 return;
 
-            target = GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>();
             anime = gameObject.GetComponent<Animator>();
             attackRange = 20;
         }
@@ -33,6 +31,7 @@ namespace Enemies
             if (!photonView.IsMine)
                 return;
 
+            var target = FindClosestPlayer();
             timeCounter += Time.deltaTime;
             agent.Target = target.transform.position;
             direction = target.transform.position - transform.position;
@@ -62,7 +61,7 @@ namespace Enemies
                 return;
 
             animator.SetTrigger(EnemyAnimator.Attack);
-            GameObject Bullet = GameObject.Instantiate(bullet, bulletPos.position, Quaternion.identity);
+            GameObject Bullet = PhotonNetwork.Instantiate(bullet.name, bulletPos.position, Quaternion.identity);
             Bullet.GetComponent<BulletControl>().direction = direction.normalized;
         }
     }

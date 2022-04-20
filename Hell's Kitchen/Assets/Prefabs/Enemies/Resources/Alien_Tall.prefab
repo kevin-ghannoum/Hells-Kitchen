@@ -496,7 +496,6 @@ MonoBehaviour:
   multipleSpawnRate: 0.3
   photonView: {fileID: 4601147327963994098}
   attackRange: 0
-  target: {fileID: 0}
   attackDamage: 1
 --- !u!114 &8510743964434586322
 MonoBehaviour:
@@ -696,7 +695,7 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 2
+  observableSearch: 0
   ObservedComponents:
   - {fileID: 8510743964434586325}
   - {fileID: 5831527135491686534}

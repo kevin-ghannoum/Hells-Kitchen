@@ -11,7 +11,7 @@ namespace Enemies
     {
         private float Speed = 5;
         [SerializeField] private float attackRange;
-        private PlayerController target;
+        [SerializeField] private float attackDamage;
         private float timeCounter = 2;
         private float wanderTimeCounter;
         private float attackDur = 2;
@@ -19,7 +19,6 @@ namespace Enemies
         private Vector3 wanderPos;
         private float wanderRadius = 7f;
         private bool wanderCheck = true;
-        [SerializeField] private Animator anime;
         private GameObject[] hiveList;
         private GameObject targetHive;
         [SerializeField] private AudioClip attackSound;
@@ -29,9 +28,7 @@ namespace Enemies
             if (!photonView.IsMine)
                 return;
 
-            target = GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>();
             hiveList = GameObject.FindGameObjectsWithTag("Hive");
-            anime = gameObject.GetComponent<Animator>();
             attackRange = 10;
         }
 
@@ -40,11 +37,11 @@ namespace Enemies
             if (!photonView.IsMine)
                 return;
 
+            var target = FindClosestPlayer();
             hiveList = GameObject.FindGameObjectsWithTag("Hive");
             timeCounter += Time.deltaTime;
             if (hiveList.Length > 0)
             {
-                anime.SetBool("Attack", false);
                 targetHive = checkHive(hiveList);
 
                 if (Vector3.Distance(transform.position, target.transform.position) < attackRange)
@@ -86,21 +83,23 @@ namespace Enemies
 
         private void Attack()
         {
-            photonView.RPC(nameof(PlayAttackSoundRPC), RpcTarget.All);
             if (!photonView.IsMine)
                 return;
 
+            photonView.RPC(nameof(PlayAttackSoundRPC), RpcTarget.All);
+            
             var colliders = Physics.OverlapSphere(transform.position, 3);
 
             foreach (var col in colliders)
             {
                 if (col.gameObject.CompareTag(Tags.Player))
-                    col.gameObject.GetComponent<IKillable>().TakeDamage(5);
+                    col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.All, attackDamage);
             }
         }
 
         private GameObject checkHive(GameObject[] hiveList)
         {
+
             GameObject currentTarget = hiveList[0];
             foreach (GameObject hive in hiveList)
             {

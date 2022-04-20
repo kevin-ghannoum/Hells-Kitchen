@@ -537,10 +537,11 @@ GameObject:
   - component: {fileID: 8790827903391793718}
   - component: {fileID: 8790827903391793719}
   - component: {fileID: -875698226314182790}
-  - component: {fileID: 7556626888925966291}
   - component: {fileID: 4609337136092379524}
   - component: {fileID: 252648149756377770}
   - component: {fileID: -6145409256638899472}
+  - component: {fileID: -1602317439532284576}
+  - component: {fileID: -6431665584713940296}
   m_Layer: 7
   m_Name: Bee
   m_TagString: Enemy
@@ -593,7 +594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: -875698226314182790}
-  animator: {fileID: 7556626888925966291}
+  animator: {fileID: -6431665584713940296}
   hitPoints: 20
   deathDelay: 1
   dropObject: {fileID: 7868689882263519358, guid: bc2e15e3cc92b1d4aa3c387c0c311381, type: 3}
@@ -601,7 +602,7 @@ MonoBehaviour:
   multipleSpawnRate: 0.3
   photonView: {fileID: 252648149756377770}
   attackRange: 2
-  anime: {fileID: 7556626888925966291}
+  attackDamage: 5
   attackSound: {fileID: 8300000, guid: 65f3a77819f40924fb9c51d841bd82cf, type: 3}
 --- !u!114 &-875698226314182790
 MonoBehaviour:
@@ -621,25 +622,6 @@ MonoBehaviour:
   MaxVelocity: 5
   rigidbody: {fileID: 8790827903391793718}
   standStill: 0
---- !u!95 &7556626888925966291
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8448228120583304839}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 91543ecee4aba1441b53853cc348721c, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!135 &4609337136092379524
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -674,6 +656,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 8790827903391793719}
   - {fileID: -6145409256638899472}
+  - {fileID: -1602317439532284576}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -693,3 +676,38 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &-1602317439532284576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8448228120583304839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters: []
+  m_SynchronizeLayers: []
+--- !u!95 &-6431665584713940296
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8448228120583304839}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 91543ecee4aba1441b53853cc348721c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

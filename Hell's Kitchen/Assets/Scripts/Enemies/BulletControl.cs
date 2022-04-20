@@ -38,7 +38,7 @@ namespace Enemies
                 
             if (col.gameObject.CompareTag(Tags.Player))
             {
-                col.gameObject.GetComponent<IKillable>().TakeDamage(attackDamage);
+                col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.All, attackDamage);
                 Destroy(this.gameObject);
             }
         }
