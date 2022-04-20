@@ -238,6 +238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cookingSound: {fileID: 8300000, guid: 0e859261776e677479364af91d3cf980, type: 3}
+  insufficientSound: {fileID: 8300000, guid: 19923525fb8ad484aaaf85b54fac495d, type: 3}
   photonView: {fileID: 913347889220681397}
 --- !u!114 &2489670858785083864
 MonoBehaviour:

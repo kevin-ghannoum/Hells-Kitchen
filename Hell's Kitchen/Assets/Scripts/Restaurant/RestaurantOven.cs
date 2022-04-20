@@ -16,8 +16,9 @@ namespace Restaurant
     public class RestaurantOven : Interactable
     {
         [SerializeField] private AudioClip cookingSound;
+        [SerializeField] private AudioClip insufficientSound;
         [SerializeField] private PhotonView photonView;
-        
+
         private void Start()
         {
             photonView = GetComponent<PhotonView>();
@@ -59,6 +60,16 @@ namespace Restaurant
             {
                 photonView.RPC(nameof(PlayCookingSoundRPC), RpcTarget.All);
             }
+            else
+            {
+                photonView.RPC(nameof(PlayInsufficientSoundRPC), RpcTarget.All);
+            }
+        }
+
+        [PunRPC]
+        private void PlayInsufficientSoundRPC()
+        {
+            AudioSource.PlayClipAtPoint(insufficientSound, transform.position);
         }
 
         [PunRPC]
