@@ -14,9 +14,10 @@ namespace Enemies
         private float damageTimeCounter;
         private float damageRate = 0.1f;
         private float distance;
+        [SerializeField] private GameObject electricLine;
         private LineRenderer lr;
         [SerializeField] private float attackDamage = 1;
-        private AudioSource audio;
+        private AudioSource alienAudio;
         private AudioClip attack;
         private int audioController = 0;
 
@@ -26,9 +27,9 @@ namespace Enemies
                 return;
 
             attackRange = 12;
-            lr = gameObject.GetComponent<LineRenderer>();
-            audio = gameObject.GetComponent<AudioSource>();
-            attack = audio.clip;
+
+            lr = electricLine.GetComponent<LineRenderer>();
+            alienAudio = gameObject.GetComponent<AudioSource>();
         }
 
         public override void Update()
@@ -43,7 +44,7 @@ namespace Enemies
 
             if (distance < attackRange)
             {
-                transform.LookAt(new Vector3(target.transform.position.x, 0, target.transform.position.z));
+                transform.LookAt(target.transform);
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position + Vector3.up * 0.5f, transform.forward, out hit))
                 {
@@ -54,13 +55,12 @@ namespace Enemies
                             photonView.RPC(nameof(playAttackSound), RpcTarget.All);
                             audioController++;
                         }
-                        lr.positionCount = 2;
+
                         Vector3 startPos = new Vector3(transform.position.x, transform.position.y * 2, transform.position.z);
 
                         animator.SetTrigger(EnemyAnimator.Attack);
 
-                        lr.SetPosition(0, transform.position + Vector3.up * 0.5f);
-                        lr.SetPosition(1, target.transform.position + Vector3.up * 1.8f);
+                        setLinePosition(target);
 
                         if (damageTimeCounter > damageRate)
                         {
@@ -71,16 +71,27 @@ namespace Enemies
             }
             else
             {
-                lr.positionCount = 0;
+                lr.GetComponent<LineRenderer>().positionCount = 0;
                 audioController = 0;
-                audio.Stop();
+                alienAudio.Stop();
             }
         }
 
         [PunRPC]
         private void playAttackSound()
         {
-            AudioSource.PlayClipAtPoint(attack, transform.position);
+            alienAudio.Play();
+        }
+
+        [PunRPC]
+        private void setLinePosition(GameObject target)
+        {
+            if (!photonView.IsMine)
+                return;
+
+            lr.GetComponent<LineRenderer>().positionCount = 2;
+            lr.GetComponent<LineRenderer>().SetPosition(0, transform.position + Vector3.up * 0.5f);
+            lr.GetComponent<LineRenderer>().SetPosition(1, target.transform.position + Vector3.up * 1.8f);
         }
     }
 

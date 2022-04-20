@@ -20,7 +20,7 @@ namespace Enemies
             time = Time.time;
         }
 
-        private void Update()
+        public override void Update()
         {
             if (!photonView.IsMine)
                 return;
@@ -28,7 +28,7 @@ namespace Enemies
             transform.position += direction * speed * Time.deltaTime;
 
             if (Time.time - time > 5)
-                Destroy(this.gameObject);
+                PhotonView.Destroy(this.gameObject);
         }
 
         private void OnCollisionEnter(Collision col)
@@ -39,7 +39,7 @@ namespace Enemies
             if (col.gameObject.CompareTag(Tags.Player))
             {
                 col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.All, attackDamage);
-                Destroy(this.gameObject);
+                PhotonNetwork.Destroy(this.gameObject);
             }
         }
     }

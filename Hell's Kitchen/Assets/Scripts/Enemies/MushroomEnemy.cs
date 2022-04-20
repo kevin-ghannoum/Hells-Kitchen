@@ -33,11 +33,11 @@ namespace Enemies
 
             var target = FindClosestPlayer();
             timeCounter += Time.deltaTime;
-            agent.Target = target.transform.position;
             direction = target.transform.position - transform.position;
 
             if (direction.magnitude < attackRange)
             {
+                agent.Target = target.transform.position;
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 200f);
 
                 if (timeCounter > 2)

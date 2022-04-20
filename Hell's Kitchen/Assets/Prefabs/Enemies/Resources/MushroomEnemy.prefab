@@ -160,7 +160,7 @@ MonoBehaviour:
   ArrivalRadius: 0.5
   MidPointArrivalRadius: 0.5
   TimeToTarget: 0.5
-  MaxVelocity: 2
+  MaxVelocity: 0
   rigidbody: {fileID: 2951294671377517056}
   standStill: 0
 --- !u!114 &-2646342085232222148
@@ -218,8 +218,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeParameters:
+  - Type: 9
+    SynchronizeType: 1
+    Name: Attack
+  - Type: 9
+    SynchronizeType: 1
+    Name: Die
+  - Type: 9
+    SynchronizeType: 1
+    Name: TakeHit
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!1 &2062262810795065987
 GameObject:
   m_ObjectHideFlags: 0

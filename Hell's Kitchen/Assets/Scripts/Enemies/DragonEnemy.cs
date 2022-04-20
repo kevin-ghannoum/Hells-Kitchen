@@ -64,6 +64,7 @@ namespace Enemies
         {
             GameObject spell = PhotonNetwork.Instantiate(particle.name, transform.position, Quaternion.identity);
             spell.GetComponent<DragonParticleController>().parent = this.gameObject;
+            spell.transform.eulerAngles = new Vector3(-90f, 0f, 0f);
         }
 
         private void Attack()

@@ -512,7 +512,7 @@ MonoBehaviour:
   multipleSpawnRate: 0.3
   photonView: {fileID: -1082347791739856843}
   particle: {fileID: 8136406933248362589, guid: 763f8a086f5637c4c8ae054913ecd17a, type: 3}
-  attackRange: 3
+  attackRange: 4
   followRange: 15
   attackDamage: 20
   attackRate: 3
