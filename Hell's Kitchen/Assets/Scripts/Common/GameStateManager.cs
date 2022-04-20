@@ -42,5 +42,10 @@ namespace Common
             purchasedWeapons = new List<string>();
             dungeonTimeHasElapsed = true;
         }
+
+        public bool IsLowHP()
+        {
+            return ((playerCurrentHitPoints / playerMaxHitPoints) * 100) < 60;
+        }
     }
 }
