@@ -30,7 +30,7 @@ namespace Common
             PhotonPeer.RegisterType(typeof(RestaurantOrder), (byte)'O', RestaurantOrder.Serialize, RestaurantOrder.Deserialize);
         }
 
-        private void ResetDefaults()
+        public void ResetDefaults()
         {
             GameStateData.playerMaxHitPoints = 100f;
             GameStateData.playerCurrentHitPoints = GameStateData.playerMaxHitPoints;

@@ -18,6 +18,7 @@ namespace UI
         public void ReturnToMenu()
         {
             PhotonNetwork.LeaveRoom();
+            GameStateManager.Instance.ResetDefaults();
         }
 
         public override void OnLeftRoom()
