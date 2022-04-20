@@ -18,6 +18,7 @@ namespace Dungeon_Generation
         private void Interact(InputAction.CallbackContext context)
         {
             var gameController = FindObjectOfType<GameController>();
+            _input.reference.actions["Interact"].performed -= Interact;
             if (GameStateData.dungeonClock > 1.0f || !gameController)
             {
                 ReturnToRestaurant();
