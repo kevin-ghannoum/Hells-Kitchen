@@ -150,6 +150,8 @@ GameObject:
   - component: {fileID: 7236908271644965791}
   - component: {fileID: 8014930098142132551}
   - component: {fileID: 1182186924211719370}
+  - component: {fileID: 3254242285646836382}
+  - component: {fileID: 2973498868910338006}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -217,6 +219,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletHit: {fileID: 5865868290920950645, guid: 7db9188bbb1c6d24a840cbad90a00c8a, type: 3}
+--- !u!114 &3254242285646836382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449870570657687128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 2973498868910338006}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &2973498868910338006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449870570657687128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &1495649446871663853
 GameObject:
   m_ObjectHideFlags: 0
