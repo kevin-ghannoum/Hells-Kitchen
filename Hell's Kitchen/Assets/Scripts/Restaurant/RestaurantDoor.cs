@@ -33,7 +33,7 @@ public class RestaurantDoor : MonoBehaviour
     {
         ImposeFine();
         _input.reference.actions["Interact"].performed -= LeaveRestaurant;
-        SceneManager.Instance.LoadDungeonScene();
+        SceneManager.Instance.LoadDungeonScene(true);
     }
 
     private void Reset()

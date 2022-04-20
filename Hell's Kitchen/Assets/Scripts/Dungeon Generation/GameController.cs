@@ -13,9 +13,7 @@ namespace Dungeon_Generation
 
     public class GameController : MonoBehaviour
     {
-        [SerializeField] private float playerHeightPosition = 0f;
         [SerializeField] private WeaponInstance defaultWeapon = WeaponInstance.Scimitar;
-        [SerializeField] private ClockUI clock;
         [SerializeField] public Transform mazeStart;
         [SerializeField] private PlayerSpawner playerSpawner;
         [SerializeField] private PhotonView photonView;
@@ -31,7 +29,6 @@ namespace Dungeon_Generation
         {
             StartNewMaze();
             SpawnPlayers();
-            SetDungeonClock();
         }
         
         public void StartNewMaze()
@@ -74,15 +71,6 @@ namespace Dungeon_Generation
             var weapon = Weapons.Models.Weapons.GetItem(GameStateData.carriedWeapon);
             var weaponInstance = PhotonNetwork.Instantiate(weapon.WeaponModel.Prefab.name, Vector3.zero, Quaternion.identity);
             weaponInstance.GetComponent<IPickup>()?.PickUp();
-        }
-
-        private void SetDungeonClock()
-        {
-            if (!GameStateData.dungeonTimeHasElapsed) return;
-            
-            // if true we are coming from the restaurant, so reset timer
-            clock.ResetClock();
-            GameStateData.dungeonTimeHasElapsed = false;
         }
     }
 }

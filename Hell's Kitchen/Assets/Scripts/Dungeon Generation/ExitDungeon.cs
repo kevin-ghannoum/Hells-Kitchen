@@ -18,7 +18,7 @@ namespace Dungeon_Generation
         private void Interact(InputAction.CallbackContext context)
         {
             var gameController = FindObjectOfType<GameController>();
-            if (GameStateData.dungeonTimeHasElapsed || !gameController)
+            if (GameStateData.dungeonClock > 1.0f || !gameController)
             {
                 ReturnToRestaurant();
             }

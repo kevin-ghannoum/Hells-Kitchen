@@ -1,4 +1,6 @@
+using System;
 using Common;
+using Photon.Pun;
 using UnityEngine;
 
 namespace UI
@@ -8,25 +10,15 @@ namespace UI
         [SerializeField] private float realSecondsPerDay = 30f;
         [SerializeField] private RectTransform clockHandTransform;
         [SerializeField] private float clockHandOffset = 90f;
-        private float _day = 0f;
-
-        public void ResetClock()
-        {
-            _day = 0f;
-        }
 
         private void Update()
         {
-            _day += Time.deltaTime / realSecondsPerDay;
-
-            if (_day >= 1f)
+            if (PhotonNetwork.IsMasterClient && GameStateData.dungeonClock < 1.0f)
             {
-                // Time elapsed, stop clock and let player find exit
-                GameStateData.dungeonTimeHasElapsed = true;
-                return;
+                GameStateData.dungeonClock += Time.deltaTime / realSecondsPerDay;
             }
 
-            float dayNormalized = _day % 1f;
+            float dayNormalized = Mathf.Clamp(GameStateData.dungeonClock, 0.0f, 1.0f);
             float rotationDegreesPerDay = 180f;
             clockHandTransform.eulerAngles = new Vector3(0, 0, - dayNormalized * rotationDegreesPerDay + clockHandOffset);
         }

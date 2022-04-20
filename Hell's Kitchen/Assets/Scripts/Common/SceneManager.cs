@@ -49,9 +49,9 @@ namespace Common
             photonView.RPC(nameof(LoadRestaurantRPC), RpcTarget.MasterClient);
         }
 
-        public void LoadDungeonScene()
+        public void LoadDungeonScene(bool resetClock = false)
         {
-            photonView.RPC(nameof(LoadDungeonRPC), RpcTarget.MasterClient);
+            photonView.RPC(nameof(LoadDungeonRPC), RpcTarget.MasterClient, resetClock);
         }
         
         public void QuitGame()
@@ -73,8 +73,11 @@ namespace Common
         }
         
         [PunRPC]
-        private void LoadDungeonRPC()
+        private void LoadDungeonRPC(bool resetClock)
         {
+            if (resetClock)
+                GameStateData.dungeonClock = 0.0f;
+            
             photonView.RPC(nameof(DestroyPlayerRPC), RpcTarget.All);
             PhotonNetwork.DestroyAll();
             PhotonNetwork.LoadLevel(Scenes.Dungeon);

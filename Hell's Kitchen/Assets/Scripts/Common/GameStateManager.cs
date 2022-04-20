@@ -36,7 +36,7 @@ namespace Common
             GameStateData.playerCurrentStamina = GameStateData.playerMaxStamina;
             GameStateData.cashMoney = 0f;
             GameStateData.purchasedWeapons = new List<string>();
-            GameStateData.dungeonTimeHasElapsed = true;
+            GameStateData.dungeonClock = 0.0f;
         }
 
         #region PUNCallbacks
@@ -51,6 +51,7 @@ namespace Common
                         .ToDictionary(k => (int) k, k => inventoryItems[k]);
                 stream.SendNext(serializedInventoryItems);
                 stream.SendNext(GameStateData.cashMoney);
+                stream.SendNext(GameStateData.dungeonClock);
             }
             else if (stream.IsReading)
             {
@@ -61,6 +62,7 @@ namespace Common
                 GameStateData.inventory.SetInventoryItems(inventoryItems);
                 GameStateData.cashMoney = (float)stream.ReceiveNext();
                 inventoryUI.UpdateInventory(inventoryItems);
+                GameStateData.dungeonClock = (float)stream.ReceiveNext();
             }
         }
         
