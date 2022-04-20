@@ -87,7 +87,7 @@ MonoBehaviour:
   rigidbody: {fileID: -8043898493064958135}
   weaponInstance: 5
   price: 10
-  swordSlashSound: {fileID: 8300000, guid: 8659311743a719944ba2d8a0f9c7736a, type: 3}
+  swordSlashSound: {fileID: 8300000, guid: 4a89d91da2b0fff4b96917e13071159d, type: 3}
 --- !u!114 &6184519785293596476
 MonoBehaviour:
   m_ObjectHideFlags: 0

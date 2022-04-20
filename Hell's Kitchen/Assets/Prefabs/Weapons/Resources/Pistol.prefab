@@ -94,7 +94,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1449870570657687128, guid: d346a79e3bfb22a4b9e62452a046d611, type: 3}
   muzzlePrefab: {fileID: 5865868290920950645, guid: e4fc13f0b91963d40a44f5fca68df255, type: 3}
   shootPosition: {fileID: 3309744534898375491}
-  gunshotSound: {fileID: 8300000, guid: d0148cc6fb4318b46bc66aed6a9e21cf, type: 3}
+  gunshotSound: {fileID: 8300000, guid: 99635e55847407f4a9c421a001784c5e, type: 3}
   price: 10
 --- !u!114 &5816670607310056526
 MonoBehaviour:
