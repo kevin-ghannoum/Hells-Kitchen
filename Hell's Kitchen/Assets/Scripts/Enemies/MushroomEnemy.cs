@@ -3,6 +3,7 @@ using Common.Interfaces;
 using Enemies.Enums;
 using Player;
 using UnityEngine;
+using Photon.Pun;
 
 namespace Enemies
 {
@@ -20,12 +21,18 @@ namespace Enemies
 
         private void Start()
         {
+            if (!photonView.IsMine)
+                return;
+
             target = GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>();
             anime = gameObject.GetComponent<Animator>();
             attackRange = 20;
         }
         public override void Update()
         {
+            if (!photonView.IsMine)
+                return;
+
             timeCounter += Time.deltaTime;
             agent.Target = target.transform.position;
             direction = target.transform.position - transform.position;
@@ -51,6 +58,9 @@ namespace Enemies
 
         private void shoot()
         {
+            if (!photonView.IsMine)
+                return;
+
             animator.SetTrigger(EnemyAnimator.Attack);
             GameObject Bullet = GameObject.Instantiate(bullet, bulletPos.position, Quaternion.identity);
             Bullet.GetComponent<BulletControl>().direction = direction.normalized;

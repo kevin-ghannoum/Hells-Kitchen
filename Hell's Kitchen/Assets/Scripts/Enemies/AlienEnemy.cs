@@ -3,6 +3,7 @@ using Common.Interfaces;
 using Enemies.Enums;
 using Player;
 using UnityEngine;
+using Photon.Pun;
 
 namespace Enemies
 {
@@ -21,6 +22,9 @@ namespace Enemies
 
         private void Start()
         {
+            if (!photonView.IsMine)
+                return;
+
             attackRange = 12;
             target = GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>();
             lr = gameObject.GetComponent<LineRenderer>();
@@ -29,6 +33,9 @@ namespace Enemies
 
         public override void Update()
         {
+            if (!photonView.IsMine)
+                return;
+
             timeCounter += Time.deltaTime;
             damageTimeCounter += Time.deltaTime;
             distance = Vector3.Distance(transform.position, target.transform.position);
@@ -43,7 +50,7 @@ namespace Enemies
                     {
                         if (audioController == 0)
                         {
-                            audio.Play();
+                            photonView.RPC(nameof(playAttackSound), RpcTarget.All);
                             audioController++;
                         }
                         lr.positionCount = 2;
@@ -67,6 +74,12 @@ namespace Enemies
                 audioController = 0;
                 audio.Stop();
             }
+        }
+
+        [PunRPC]
+        private void playAttackSound()
+        {
+            audio.Play();
         }
     }
 

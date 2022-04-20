@@ -3,6 +3,7 @@ using UnityEngine;
 using Common.Interfaces;
 using Enemies.Enums;
 using Player;
+using Photon.Pun;
 
 namespace Enemies
 {
@@ -21,9 +22,13 @@ namespace Enemies
         [SerializeField] private Animator anime;
         private GameObject[] hiveList;
         private GameObject targetHive;
+        [SerializeField] private AudioClip attackSound;
 
         private void Start()
         {
+            if (!photonView.IsMine)
+                return;
+
             target = GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>();
             hiveList = GameObject.FindGameObjectsWithTag("Hive");
             anime = gameObject.GetComponent<Animator>();
@@ -32,6 +37,9 @@ namespace Enemies
 
         public override void Update()
         {
+            if (!photonView.IsMine)
+                return;
+
             hiveList = GameObject.FindGameObjectsWithTag("Hive");
             timeCounter += Time.deltaTime;
             if (hiveList.Length > 0)
@@ -78,6 +86,10 @@ namespace Enemies
 
         private void Attack()
         {
+            photonView.RPC(nameof(PlayAttackSoundRPC), RpcTarget.All);
+            if (!photonView.IsMine)
+                return;
+
             var colliders = Physics.OverlapSphere(transform.position, 3);
 
             foreach (var col in colliders)
@@ -98,6 +110,12 @@ namespace Enemies
                 }
             }
             return currentTarget;
+        }
+
+        [PunRPC]
+        private void PlayAttackSoundRPC()
+        {
+            AudioSource.PlayClipAtPoint(attackSound, transform.position);
         }
     }
 }

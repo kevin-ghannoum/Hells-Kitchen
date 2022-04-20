@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7713451183396953790}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8092218267236654594}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MonsterArmature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9038249030695340775}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mouth_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3621327711552881932}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mouth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 531319980652572735}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wing1.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1321845579565578770}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wing2.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,7 +194,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7390797835678918854}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wing2.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -224,7 +224,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8310973607970773994}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wing2.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -255,7 +255,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1983750337071053598}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,7 +287,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7660084122742882225}
   - component: {fileID: 1114332336154113601}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -378,7 +378,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8414329563443353150}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -411,7 +411,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5319345888609120647}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -442,7 +442,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1390021438418992691}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wing1.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -473,7 +473,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 544788440839220901}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head3_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -503,7 +503,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2255520350532481851}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wing2.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -539,9 +539,11 @@ GameObject:
   - component: {fileID: -875698226314182790}
   - component: {fileID: 7556626888925966291}
   - component: {fileID: 4609337136092379524}
-  m_Layer: 0
+  - component: {fileID: 252648149756377770}
+  - component: {fileID: -6145409256638899472}
+  m_Layer: 7
   m_Name: Bee
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -597,8 +599,10 @@ MonoBehaviour:
   dropObject: {fileID: 7868689882263519358, guid: bc2e15e3cc92b1d4aa3c387c0c311381, type: 3}
   maxDropsToSpawn: 3
   multipleSpawnRate: 0.3
+  photonView: {fileID: 252648149756377770}
   attackRange: 2
   anime: {fileID: 7556626888925966291}
+  attackSound: {fileID: 8300000, guid: 65f3a77819f40924fb9c51d841bd82cf, type: 3}
 --- !u!114 &-875698226314182790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -612,8 +616,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ArrivalRadius: 0.5
-  time2target: 0.5
-  maxVelocity: 5
+  MidPointArrivalRadius: 0.5
+  TimeToTarget: 0.5
+  MaxVelocity: 5
   rigidbody: {fileID: 8790827903391793718}
   standStill: 0
 --- !u!95 &7556626888925966291
@@ -648,3 +653,43 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.8
   m_Center: {x: 0, y: 0.8, z: 0}
+--- !u!114 &252648149756377770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8448228120583304839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 8790827903391793719}
+  - {fileID: -6145409256638899472}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &-6145409256638899472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8448228120583304839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1

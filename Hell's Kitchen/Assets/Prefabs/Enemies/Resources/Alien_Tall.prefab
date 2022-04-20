@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9200328808797130498}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MonsterArmature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7271300287103831998}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8254315773857192935}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mouth_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4441391115582002188}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mouth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1469516557923805726}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8368983629380258776}
   - component: {fileID: 430686425009032639}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Alien_Tall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,7 +252,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5057941550719246471}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,7 +283,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8873995370727720766}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,7 +314,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 606875299258433445}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head3_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,9 +352,11 @@ GameObject:
   - component: {fileID: 3457503393970991361}
   - component: {fileID: -3786184611205538402}
   - component: {fileID: 2972807466387419755}
-  m_Layer: 0
+  - component: {fileID: 4601147327963994098}
+  - component: {fileID: 5831527135491686534}
+  m_Layer: 7
   m_Name: Alien_Tall
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -489,9 +491,10 @@ MonoBehaviour:
   animator: {fileID: 2972807466387419755}
   hitPoints: 30
   deathDelay: 1
-  dropObject: {fileID: 5575247230749135019, guid: 00853119909c0ee498d31c19ec69d00d, type: 3}
+  dropObject: {fileID: 3399418843593267677, guid: c318a77ee518ee44291958de36dc315b, type: 3}
   maxDropsToSpawn: 3
   multipleSpawnRate: 0.3
+  photonView: {fileID: 4601147327963994098}
   attackRange: 0
   target: {fileID: 0}
   attackDamage: 1
@@ -556,8 +559,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ArrivalRadius: 0.5
-  time2target: 0.5
-  maxVelocity: 2
+  MidPointArrivalRadius: 0.5
+  TimeToTarget: 0.5
+  MaxVelocity: 2
   rigidbody: {fileID: 3248368676625981289}
   standStill: 0
 --- !u!82 &-3786184611205538402
@@ -675,3 +679,43 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4601147327963994098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8853326291045279623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 8510743964434586325}
+  - {fileID: 5831527135491686534}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &5831527135491686534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8853326291045279623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1

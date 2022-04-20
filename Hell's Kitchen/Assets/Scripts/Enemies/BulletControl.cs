@@ -1,32 +1,46 @@
 using UnityEngine;
 using Common.Enums;
 using Common.Interfaces;
+using Photon.Pun;
 
-public class BulletControl : MonoBehaviour
+namespace Enemies
 {
-    private float speed = 10f;
-    [SerializeField] private float attackDamage = 10;
-    private float time;
-    public Vector3 direction;
-
-    private void Start() {
-        time += Time.time;
-    }
-
-    private void Update()
+    public class BulletControl : Enemy
     {
-        transform.position += direction * speed * Time.deltaTime;
+        private float speed = 10f;
+        [SerializeField] private float attackDamage = 10;
+        private float time;
+        public Vector3 direction;
 
-        if(Time.time - time > 5)
-            Destroy(this.gameObject);
-    }
-
-    private void OnCollisionEnter(Collision col)
-    {
-        if (col.gameObject.CompareTag(Tags.Player))
+        private void Start()
         {
-            col.gameObject.GetComponent<IKillable>().TakeDamage(attackDamage);
-            Destroy(this.gameObject);
+            if (!photonView.IsMine)
+                return;
+
+            time = Time.time;
+        }
+
+        private void Update()
+        {
+            if (!photonView.IsMine)
+                return;
+
+            transform.position += direction * speed * Time.deltaTime;
+
+            if (Time.time - time > 5)
+                Destroy(this.gameObject);
+        }
+
+        private void OnCollisionEnter(Collision col)
+        {
+            if (!photonView.IsMine)
+                return;
+                
+            if (col.gameObject.CompareTag(Tags.Player))
+            {
+                col.gameObject.GetComponent<IKillable>().TakeDamage(attackDamage);
+                Destroy(this.gameObject);
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7128793916664805465}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head3_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,9 +44,11 @@ GameObject:
   - component: {fileID: -7822585900873194239}
   - component: {fileID: 2951294671377517056}
   - component: {fileID: 453064751614375469}
-  m_Layer: 0
+  - component: {fileID: -2646342085232222148}
+  - component: {fileID: -3890128589348726618}
+  m_Layer: 7
   m_Name: Mushroom
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84,9 +86,10 @@ MonoBehaviour:
   animator: {fileID: 3357963645044035683}
   hitPoints: 30
   deathDelay: 1
-  dropObject: {fileID: 0}
+  dropObject: {fileID: 1493679383233396486, guid: 77b5e100d52ab8c4493a7f0330165ac6, type: 3}
   maxDropsToSpawn: 3
   multipleSpawnRate: 0.3
+  photonView: {fileID: -2646342085232222148}
   Speed: 0
   attackRange: 0
   bullet: {fileID: 7909279519910436684, guid: 8e42300684f478147a67635629580caa, type: 3}
@@ -154,10 +157,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ArrivalRadius: 0.5
-  time2target: 0.5
-  maxVelocity: 2
+  MidPointArrivalRadius: 0.5
+  TimeToTarget: 0.5
+  MaxVelocity: 2
   rigidbody: {fileID: 2951294671377517056}
   standStill: 0
+--- !u!114 &-2646342085232222148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179882390037061755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 2062262810902439603}
+  - {fileID: -3890128589348726618}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &-3890128589348726618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179882390037061755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &2062262810795065987
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,7 +211,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2062262810795066108}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BulletPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +242,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1385809263671857766}
   - component: {fileID: 5113565077047512591}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mushroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,7 +329,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3221189292500690811}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -316,7 +360,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1271244724428816578}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -347,7 +391,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6278123582725018608}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mouth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -378,7 +422,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9144092938863570402}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -409,7 +453,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1038718000213100610}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -440,7 +484,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1525805329640704254}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MonsterArmature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -472,7 +516,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1733786780503497755}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mouth_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
