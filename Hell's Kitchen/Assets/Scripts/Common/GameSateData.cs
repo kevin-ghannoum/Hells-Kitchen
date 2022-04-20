@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Common.Enums;
 using PlayerInventory;
 using UnityEngine;
@@ -23,5 +24,7 @@ namespace Common
 
         public static GameObject player = null;
         public static GameObject sousChef = null;
+
+        public static SousChefType sousChefType = SousChefType.Healer;
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Common.Enums;
 using Enums.Items;
 using ExitGames.Client.Photon;
 using Photon.Pun;
@@ -110,6 +111,12 @@ namespace Common
             GameStateData.purchasedWeapons.Add(weaponName);
         }
 
+        [PunRPC]
+        public void SelectSousChef(SousChefType type)
+        {
+            GameStateData.sousChefType = type;
+        }
+
         #endregion
 
         public static void AddItemToInventory(ItemInstance itemInstance, int quantity)
@@ -135,6 +142,11 @@ namespace Common
         public bool IsLowHP()
         {
             return ((GameStateData.playerCurrentHitPoints / GameStateData.playerMaxHitPoints) * 100) < 60;
+        }
+
+        public static void SetSousChef(SousChefType type)
+        {
+            Instance.photonView.RPC(nameof(SelectSousChef), RpcTarget.All, type);
         }
     }
 }
