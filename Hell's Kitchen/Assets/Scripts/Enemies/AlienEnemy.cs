@@ -79,22 +79,5 @@ namespace Enemies
         {
             alienAudio.Play();
         }
-
-        [PunRPC]
-        private void setLinePosition(GameObject target)
-        {
-            if (!photonView.IsMine)
-                return;
-
-            lr.positionCount = 2;
-            lr.SetPosition(0, transform.position + Vector3.up * 0.5f);
-            lr.SetPosition(1, target.transform.position + Vector3.up * 1.8f);
-        }
-
-        [PunRPC]
-        private void instantiateElectric()
-        {
-            photonLine = PhotonNetwork.Instantiate(electricLine.name, transform.position, Quaternion.identity);
-        }
     }
 }
