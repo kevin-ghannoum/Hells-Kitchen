@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2536583312237978602}
   - component: {fileID: 4672266657061108603}
   - component: {fileID: 2621730353807203385}
+  - component: {fileID: 8127518491159379546}
   m_Layer: 3
   m_Name: PlayerCamera
   m_TagString: MainCamera
@@ -197,6 +198,14 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   priority: 0
+--- !u!124 &8127518491159379546
+Behaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238747065}
+  m_Enabled: 1
 --- !u!1 &807330855
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,6 +504,7 @@ MonoBehaviour:
   takeDamageSound: {fileID: 8300000, guid: 722bfe1a680d68a49b133308e897de2a, type: 3}
   lowHealthSound: {fileID: 8300000, guid: 3f551c312493b4647ab1bd4892e8831a, type: 3}
   deathSound: {fileID: 8300000, guid: 236fe2b344d071242bfdd14fbb3ca818, type: 3}
+  transitionToRestaurantTime: 4
 --- !u!1 &2112373015343845705
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,25 +1,34 @@
+using Common.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Events;
 
-[RequireComponent(typeof(Character))]
 [RequireComponent(typeof(PathfindingAgent))]
-public class SousChef : MonoBehaviour
+public class SousChef : MonoBehaviour, IKillable
 {
+    [SerializeField] public float maxHealth;
+
     [SerializeField] public float followDistance;
     [SerializeField] public float attackRange;
     [SerializeField] public float searchRange; // must be bigger than follow Distance and attackRange
-    [SerializeField] public GameObject player;
+    public GameObject player;
     [SerializeField] public PathfindingAgent agent;
-    public Character character { get; set; }
+    public float hitPoints;
+    public float HitPoints => hitPoints;
+    public UnityEvent Killed => throw new System.NotImplementedException();
+
     [SerializeField] public GameObject targetEnemy;
     // public Transform currentEnemyTarget { get; set; }
     [SerializeField] public GameObject targetLoot;
     // public Transform currentLootTarget { get; set; }
 
-    void Start()
+    GameObject gameStateManager;
+    void Awake()
     {
-        character = gameObject.GetComponent<Character>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        hitPoints = maxHealth;
         agent.Target = player.transform.position;
         agent.ArrivalRadius = followDistance;
         targetEnemy = null;
@@ -123,32 +132,60 @@ public class SousChef : MonoBehaviour
             return (targetEnemy.transform.position - transform.position).magnitude;
     }
 
-    public void MoveToEnemy()
+    public bool RandomPoint(Vector3 center, float range, out Vector3 result)
     {
-        transform.LookAt(targetEnemy.transform);
-        transform.position += transform.forward * character.speed * Time.deltaTime;
+        for (int i = 0; i < 30; i++)
+        {
+            Vector3 randomPoint = center + Random.insideUnitSphere * range;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomPoint, out hit, 1f, NavMesh.AllAreas))
+            {
+                result = hit.position;
+                Debug.Log("flee point = " + result);
+                return true;
+            }
+        }
+        result = Vector3.zero;
+        return false;
     }
 
+    public Vector3 fleePoint;
+    public bool foundFleePoint = false;
     public void Flee()
     {
-        /*
-         need flee() for:
-         1. sous chefs will want to flee when low HP or if skills are on cooldown
-         2. Healer, wants to go far before attacking (to lower chances of enemy interrupting spells)
-        
-        we can probably just make it run away from the closest enemy
-         */
-        transform.rotation = Quaternion.LookRotation(transform.position - targetEnemy.transform.position);
-        transform.position += transform.forward * character.speed * Time.deltaTime;
+        if (!foundFleePoint)
+        {
+            foundFleePoint = RandomPoint(transform.position, 90f, out fleePoint);
+        }
+        else if (foundFleePoint)
+        {
+            if ((transform.position - fleePoint).magnitude <= followDistance)
+            {
+                Debug.Log("reset flee point");
+                foundFleePoint = false;
+                return;
+            }
+            if (agent.Target != fleePoint)
+                agent.Target = fleePoint;
+            if (agent.ArrivalRadius != followDistance)
+            {
+                agent.ArrivalRadius = followDistance;
+            }
+        }
     }
 
     public void faceTargetEnemy() {
         if (targetEnemy != null)
             transform.rotation = Quaternion.LookRotation((targetEnemy.transform.position - transform.position).normalized);
-            //gameObject.GetComponent<Rigidbody>().MoveRotation(Quaternion.LookRotation((targetEnemy.transform.position - transform.position).normalized));
+    }
+
+    public void facePlayer()
+    {
+        if (player != null)
+            transform.rotation = Quaternion.LookRotation((player.transform.position - transform.position).normalized);
+        //gameObject.GetComponent<Rigidbody>().MoveRotation(Quaternion.LookRotation((targetEnemy.transform.position - transform.position).normalized));
         //transform.LookAt(targetEnemy.transform.position);
     }
-    //these are for healer mostly, to be at a 
     public float GetDistanceToPlayer()
     {
         return (player.transform.position - transform.position).magnitude;
@@ -162,5 +199,22 @@ public class SousChef : MonoBehaviour
          *  this could be used by Fighter and Assassin when their more powerful spells are on cooldown.
          *  we will see what fits better as the game evolves
         */
+    }
+
+    public bool isLowHP()
+    {
+        return ((hitPoints / maxHealth) * 100) < 60;
+    }
+    public void TakeDamage(float dmg)
+    {
+        Debug.Log("'" + gameObject.name + "' took " + dmg + " damage");
+        hitPoints -= dmg;
+        if (hitPoints < 0)
+            Die();
+    }
+    public void Die()
+    {
+        Debug.Log("'" + gameObject.name + "' got kilt");
+        Destroy(gameObject);
     }
 }

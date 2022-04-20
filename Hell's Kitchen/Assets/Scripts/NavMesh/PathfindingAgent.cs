@@ -92,4 +92,6 @@ public class PathfindingAgent : MonoBehaviour
 
     public bool PathIsNull() => _path == null;
 
+    public Pathfinding.PathNode currentNode => _path; //using for teleport
+
 }
