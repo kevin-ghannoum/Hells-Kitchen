@@ -292,10 +292,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afd420c264afa84ba3237d0d7e6c837, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ArrivalRadius: 0.5
+  ArrivalRadius: 1.5
   MidPointArrivalRadius: 0.5
   TimeToTarget: 0.5
-  MaxVelocity: 2
+  MaxVelocity: 5
   rigidbody: {fileID: 3440339455808783361}
   standStill: 0
 --- !u!114 &5153250386385897533
