@@ -15,7 +15,11 @@ public class RestaurantDoor : Interactable
 {
     [SerializeField] private float missedOrderPenalty = 10f;
     [SerializeField] private int debtCap = -10;
-    
+
+    [SerializeField] private AudioClip doorOpenSound;
+    [SerializeField] private AudioClip doorCloseSound;
+    private bool hadCustomer = false;
+
     [SerializeField] private Animator animator;
 
     private int _numCustomers = 0;
@@ -42,6 +46,14 @@ public class RestaurantDoor : Interactable
     {
         base.Update();
         animator.SetBool(RestaurantDoorAnimator.Open, _numCustomers > 0);
+        if (hadCustomer != _numCustomers > 0)
+        {
+            if (_numCustomers > 0)
+                AudioSource.PlayClipAtPoint(doorOpenSound, transform.position);
+            else
+                AudioSource.PlayClipAtPoint(doorCloseSound, transform.position);
+        }
+        hadCustomer = _numCustomers > 0;
     }
 
     private void ImposeFine()

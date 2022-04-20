@@ -46,21 +46,24 @@ namespace Restaurant
                     neededItems.Add(item.Key, -item.Value);
             }
 
+            var neededItemsCopy = neededItems.ToDictionary(e => e.Key, e => e.Value);
+
             foreach (var item in neededItems)
             {
                 if (item.Value > 0 && Cooking.CookRecipe(Cooking.GetItemRecipe(item.Key), item.Value))
                 {
                     AdrenalinePointsUI.SpawnIngredientString(player.transform.position, $"+{item.Value} {Items.GetItem(item.Key).Name}");
+                    neededItemsCopy[item.Key] = 0;
                 }
             }
 
-            if (photonView.IsMine && neededItems.Any(item => item.Value > 0))
-            {
-                photonView.RPC(nameof(PlayCookingSoundRPC), RpcTarget.All);
-            }
-            else
+            if (neededItemsCopy.Any(item => item.Value > 0))
             {
                 photonView.RPC(nameof(PlayInsufficientSoundRPC), RpcTarget.All);
+            }
+            else if (neededItems.Any(item => item.Value > 0))
+            {
+                photonView.RPC(nameof(PlayCookingSoundRPC), RpcTarget.All);
             }
         }
 

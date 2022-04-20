@@ -195,7 +195,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   missedOrderPenalty: 10
-  debtCap: -1000
+  debtCap: -100
+  doorOpenSound: {fileID: 8300000, guid: 2a394d27ec5e71848978e28167e845db, type: 3}
+  doorCloseSound: {fileID: 8300000, guid: fda3926bda9be3b4b9321e9b6401b014, type: 3}
   animator: {fileID: 7490721547737497181}
 --- !u!114 &8635916048967305915
 MonoBehaviour:

@@ -48,7 +48,7 @@ namespace Restaurant
             restaurantUI.IsDisabled = !seats.Any(s => s.IsSitting);
             interactUI.IsDisabled = OrderList.All(o => o.Served);
         }
-        
+
         public void OnCustomerSit()
         {
             if (photonView.IsMine)
@@ -97,7 +97,7 @@ namespace Restaurant
                 // Set served
                 order.Served = true;
             }
-            else
+            else if (!order.Served)
             {
                 photonView.RPC(nameof(PlayRawSoundRPC), RpcTarget.All);
             }
@@ -133,11 +133,11 @@ namespace Restaurant
             };
 
             var quantity = Random.Range(1, 3);
-            
+
             return new RestaurantOrder()
             {
                 Item = possibleValues[Random.Range(0, possibleValues.Length)],
-                Quantity = quantity, 
+                Quantity = quantity,
                 CashMoney = (Random.Range(RestaurantManager.Instance.MinOrderPrice, RestaurantManager.Instance.MaxOrderPrice) * quantity)
             };
         }
