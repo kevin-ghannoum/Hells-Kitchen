@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Common;
 using Common.Enums;
+using Player;
 using UnityEngine;
 
 public class HealSpell : MonoBehaviour
@@ -16,7 +17,7 @@ public class HealSpell : MonoBehaviour
         if (other.gameObject.CompareTag(Tags.Player))
         {
             Destroy(Instantiate(onHealAnimationPrefab, other.transform.position, Quaternion.identity), 2);
-            GameStateData.playerCurrentHitPoints += healthIncrement;
+            other.gameObject.GetComponent<PlayerHealth>().HitPoints += healthIncrement;
         }
         else if (other.gameObject.CompareTag(Tags.SousChef))
         {
@@ -43,7 +44,7 @@ public class HealSpell : MonoBehaviour
             if (playerRegenTick >= healTickDelay)
             {
                 Destroy(Instantiate(onHealAnimationPrefab, other.transform.position, Quaternion.identity), 2);
-                GameStateData.playerCurrentHitPoints += healthIncrement;
+                other.gameObject.GetComponent<PlayerHealth>().HitPoints += healthIncrement;
                 playerRegenTick = 0;
             }
         }
