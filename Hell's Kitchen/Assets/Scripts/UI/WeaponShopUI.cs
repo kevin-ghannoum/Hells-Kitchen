@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Common;
 using Common.Interfaces;
-using Enums;
 using Input;
 using TMPro;
 using UnityEngine;
@@ -11,7 +10,7 @@ namespace UI
 {
     public class WeaponShopUI : MonoBehaviour
     {
-        [SerializeField] private GameObject weaponSlotPrefab;
+        [SerializeField] private GameObject buttonPrefab;
         [SerializeField] private GridLayoutGroup gridLayout;
         [SerializeField] private TextMeshProUGUI errorText;
 
@@ -24,7 +23,7 @@ namespace UI
             gameObject.SetActive(true);
             errorText.text = string.Empty;
             _input.Deactivate();
-            CreateWeaponSlots();
+            CreateButtons();
         }
 
         public void Close()
@@ -53,21 +52,19 @@ namespace UI
             button.interactable = false;
         }
 
-        private void CreateWeaponSlots()
+        private void CreateButtons()
         {
-            foreach (GameObject weapon  in _weapons)
+            foreach (var weapon  in _weapons)
             {
-                GameObject weaponSlot = Instantiate(weaponSlotPrefab, gridLayout.transform);
-                weaponSlot.GetComponentInChildren<Image>().sprite = WeaponSprites.GetSprite(weapon.name); // sprite
-                
-                Button buttonComponent = weaponSlot.GetComponentInChildren<Button>(); // button
+                var button = Instantiate(buttonPrefab, gridLayout.transform);
+                var buttonComponent = button.GetComponent<Button>();
                 buttonComponent.onClick.AddListener(delegate { BuyWeapon(weapon, buttonComponent); });
 
                 if (GameStateManager.Instance.purchasedWeapons.Contains(weapon.name))
                     buttonComponent.interactable = false;
 
-                TextMeshProUGUI text = weaponSlot.GetComponentInChildren<Button>().GetComponentInChildren<TextMeshProUGUI>();
-                IWeapon weaponComponent = weapon.GetComponent<IWeapon>();
+                var text = button.GetComponentInChildren<TextMeshProUGUI>();
+                var weaponComponent = weapon.GetComponent<IWeapon>();
                 text.text = $"Buy {weapon.name} - {weaponComponent.Price}$";
             }
         }

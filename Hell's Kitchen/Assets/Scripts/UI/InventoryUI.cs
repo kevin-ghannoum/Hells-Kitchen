@@ -44,6 +44,37 @@ namespace UI
             }
         }
 
+        #region InventoryTabs
+        // public void DisplayFullInventory()
+        // {
+        //     UpdateInventory(_playerInventory);
+        // }
+        //
+        // public void DisplayInventoryIngredients()
+        // {
+        //     DisplayInventoryByType(ItemType.Ingredient);
+        // }
+        //
+        // public void DisplayInventoryRecipeResults()
+        // {
+        //     DisplayInventoryByType(ItemType.RecipeResult);
+        // }
+
+        // private void DisplayInventoryByType(ItemType itemType)
+        // {
+        //     Dictionary<Item, int> inventoryItems = new Dictionary<Item, int>();
+        //
+        //     foreach (var matchingItem in _playerInventory.Where(pair => pair.Key.ItemType.Equals(itemType)))
+        //     {
+        //         inventoryItems.Add(matchingItem.Key, matchingItem.Value);
+        //     }
+        //     
+        //     print(inventoryItems.Count);
+        //     
+        //     UpdateInventory(inventoryItems);
+        // }
+        #endregion InventoryTabs
+        
         private void ResetInventory()
         {
             Transform[] inventoryItems = inventoryContainer.GetComponentsInChildren<Transform>();

@@ -1,4 +1,3 @@
-using Common;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,13 +13,7 @@ public class HealerFollowState : HealerBaseState
     public override void UpdateState(HealerStateManager healer)
     {
         //Debug.Log("@followState_UpdateState");
-        if (healer.sc.isLowHP() || GameStateManager.Instance.IsLowHP())
-        {
-            // heal
-            healer.SwitchState(healer.healState);
-            return;
-        }
-        else if (healer.sc.targetEnemy == null && healer.sc.targetLoot == null)
+        if (healer.sc.targetEnemy == null && healer.sc.targetLoot == null)
         {
             // follow
             if (healer.sc.agent.Target != healer.sc.player.transform.position)
@@ -36,6 +29,12 @@ public class HealerFollowState : HealerBaseState
         {
             // enter move to target
             healer.SwitchState(healer.moveToTarget);
+            return;
+        }
+        else if (healer.sc.character.isLowHP() || healer.sc.player.GetComponent<Character>().isLowHP())
+        {
+            // heal
+            healer.SwitchState(healer.healState);
             return;
         }
         else if (healer.sc.targetLoot != null)

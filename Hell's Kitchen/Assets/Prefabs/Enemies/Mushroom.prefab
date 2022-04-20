@@ -82,11 +82,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 453064751614375469}
   animator: {fileID: 3357963645044035683}
-  hitPoints: 30
+  hitPoints: 100
   deathDelay: 1
-  dropObject: {fileID: 0}
-  maxDropsToSpawn: 3
-  multipleSpawnRate: 0.3
+  onKilled:
+    m_PersistentCalls:
+      m_Calls: []
   Speed: 0
   attackRange: 0
   bullet: {fileID: 7909279519910436684, guid: 8e42300684f478147a67635629580caa, type: 3}

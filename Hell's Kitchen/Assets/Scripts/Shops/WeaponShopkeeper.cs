@@ -19,7 +19,6 @@ namespace Shops
         private void Start()
         {
             interactText.SetActive(false);
-            shopUI.gameObject.SetActive(false);
             _weapons = GameObject.FindGameObjectsWithTag(Tags.Weapon).ToList();
             foreach (var weapon in _weapons)
             {

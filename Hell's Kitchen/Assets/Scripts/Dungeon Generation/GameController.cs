@@ -30,7 +30,6 @@ namespace Dungeon_Generation
             StartNewMaze();
             SetUpPlayerWeapon();
             MovePlayerToStart();
-            MoveSousChefToStart();
             SetDungeonClock();
         }
         
@@ -68,20 +67,12 @@ namespace Dungeon_Generation
 
         private void MovePlayerToStart()
         {
-            Vector3 playerPosition = new Vector3(mazeStart.position.x - 1, mazeStart.position.y, mazeStart.position.z);
             var player = GameObject.FindWithTag(Tags.Player);
             var characterController = player.GetComponent<CharacterController>();
             characterController.enabled = false;
             var playerTransform = player.transform;
-            playerTransform.transform.localPosition = playerPosition;
+            playerTransform.transform.localPosition = mazeStart.position;
             characterController.enabled = true;
-        }
-        private void MoveSousChefToStart() {
-            Vector3 sousChefPosition = new Vector3(mazeStart.position.x + 1, mazeStart.position.y, mazeStart.position.z);
-            var sousChefs = GameObject.FindGameObjectsWithTag("SousChef");
-            foreach (var ss in sousChefs) {
-                ss.transform.localPosition = sousChefPosition;
-            }
         }
 
         private void SetDungeonClock()
