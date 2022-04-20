@@ -3,6 +3,7 @@ using UnityEngine;
 using Common.Interfaces;
 using Enemies.Enums;
 using Player;
+using Photon.Pun;
 
 namespace Enemies
 {
@@ -10,7 +11,7 @@ namespace Enemies
     {
         private float Speed = 5;
         [SerializeField] private float attackRange;
-        private PlayerController target;
+        [SerializeField] private float attackDamage;
         private float timeCounter = 2;
         private float wanderTimeCounter;
         private float attackDur = 2;
@@ -18,25 +19,29 @@ namespace Enemies
         private Vector3 wanderPos;
         private float wanderRadius = 7f;
         private bool wanderCheck = true;
-        [SerializeField] private Animator anime;
         private GameObject[] hiveList;
         private GameObject targetHive;
+        [SerializeField] private AudioClip attackSound;
 
         private void Start()
         {
-            target = GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>();
+            if (!photonView.IsMine)
+                return;
+
             hiveList = GameObject.FindGameObjectsWithTag("Hive");
-            anime = gameObject.GetComponent<Animator>();
             attackRange = 10;
         }
 
         public override void Update()
         {
+            if (!photonView.IsMine)
+                return;
+
+            var target = FindClosestPlayer();
             hiveList = GameObject.FindGameObjectsWithTag("Hive");
             timeCounter += Time.deltaTime;
             if (hiveList.Length > 0)
             {
-                anime.SetBool("Attack", false);
                 targetHive = checkHive(hiveList);
 
                 if (Vector3.Distance(transform.position, target.transform.position) < attackRange)
@@ -68,7 +73,6 @@ namespace Enemies
 
                     if (Vector3.Distance(target.transform.position, transform.position) < 1.2 && timeCounter > 1)
                     {
-                        animator.SetTrigger(EnemyAnimator.Attack);
                         Attack();
                         timeCounter = 0;
                     }
@@ -78,17 +82,23 @@ namespace Enemies
 
         private void Attack()
         {
+            if (!photonView.IsMine)
+                return;
+
+            photonView.RPC(nameof(PlayAttackSoundRPC), RpcTarget.All);
+            animator.SetTrigger(EnemyAnimator.Attack);
             var colliders = Physics.OverlapSphere(transform.position, 3);
 
             foreach (var col in colliders)
             {
                 if (col.gameObject.CompareTag(Tags.Player))
-                    col.gameObject.GetComponent<IKillable>().TakeDamage(5);
+                    col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.All, attackDamage);
             }
         }
 
         private GameObject checkHive(GameObject[] hiveList)
         {
+
             GameObject currentTarget = hiveList[0];
             foreach (GameObject hive in hiveList)
             {
@@ -98,6 +108,12 @@ namespace Enemies
                 }
             }
             return currentTarget;
+        }
+
+        [PunRPC]
+        private void PlayAttackSoundRPC()
+        {
+            AudioSource.PlayClipAtPoint(attackSound, transform.position);
         }
     }
 }

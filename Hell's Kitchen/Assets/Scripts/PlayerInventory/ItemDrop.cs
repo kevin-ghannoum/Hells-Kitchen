@@ -4,6 +4,7 @@ using Enums.Items;
 using Photon.Pun;
 using UI;
 using UnityEngine;
+using System.Collections;
 
 namespace PlayerInventory
 {
@@ -21,13 +22,16 @@ namespace PlayerInventory
         private void OnTriggerEnter(Collider other)
         {
             // items can be picked up by both the chef (player) and sous-chef
-            if (other.CompareTag(Tags.Player) || other.CompareTag(Tags.SousChef))
+            if (other.CompareTag(Tags.Player))
             {
                 var pv = other.GetComponent<PhotonView>();
                 if (pv != null && pv.IsMine)
                 {
                     photonView.RPC(nameof(PickUp), RpcTarget.All);
                 }
+            }
+            else if(other.CompareTag(Tags.SousChef)){
+                StartCoroutine(PickUpBySousChef(other));
             }
         }
 
@@ -39,6 +43,16 @@ namespace PlayerInventory
             {
                 GameStateManager.AddItemToInventory(item, quantity);
                 PhotonNetwork.Destroy(gameObject);
+            }
+        }
+
+        IEnumerator PickUpBySousChef(Collider other){
+            // wait untill the sous chef pick up animation ends
+            yield return new WaitForSeconds(1.5f);
+            var pv = other.GetComponent<PhotonView>();
+            if (pv != null && pv.IsMine)
+            {
+                photonView.RPC(nameof(PickUp), RpcTarget.All);
             }
         }
         

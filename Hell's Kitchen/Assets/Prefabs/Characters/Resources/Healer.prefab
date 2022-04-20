@@ -20027,7 +20027,7 @@ MonoBehaviour:
   ArrivalRadius: 0.5
   MidPointArrivalRadius: 0.5
   TimeToTarget: 0.5
-  MaxVelocity: 5
+  MaxVelocity: 7
   rigidbody: {fileID: 4251440629633350836}
   standStill: 0
 --- !u!114 &8080431647944246267
@@ -20063,7 +20063,7 @@ MonoBehaviour:
   targetLoot: {fileID: 0}
   followDistance: 2
   attackRange: 15
-  searchRange: 17
+  searchRange: 25
   player: {fileID: 0}
   hitPoints: 0
   fleePoint: {x: 0, y: 0, z: 0}

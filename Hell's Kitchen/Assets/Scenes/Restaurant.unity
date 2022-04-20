@@ -15879,6 +15879,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 3688115462359256418, guid: c16ddb033759e7b42ac6002c8afff2c9, type: 3}
+      propertyPath: debtCap
+      value: -10000
+      objectReference: {fileID: 0}
     - target: {fileID: 3692426855130950416, guid: c16ddb033759e7b42ac6002c8afff2c9, type: 3}
       propertyPath: m_RootOrder
       value: 1
