@@ -30,6 +30,9 @@ namespace Restaurant
         [SerializeField]
         private PhotonView photonView;
 
+        [SerializeField]
+        private AudioClip rawSound;
+
         public List<RestaurantOrder> OrderList = new List<RestaurantOrder>();
         private readonly Dictionary<int, RestaurantOrderItem> _orderUIObjects = new Dictionary<int, RestaurantOrderItem>();
 
@@ -85,15 +88,25 @@ namespace Restaurant
                 // Remove items and give money
                 GameStateManager.RemoveItemFromInventory(order.Item, order.Quantity);
                 GameStateManager.SetCashMoney(GameStateData.cashMoney + order.CashMoney);
-                
+
                 // Spawn some adrenaline points
                 var position = transform.position + 2.0f * Vector3.up;
                 AdrenalinePointsUI.SpawnIngredientString(position, $"-{order.Quantity} {Items.GetItem(order.Item).Name}");
                 AdrenalinePointsUI.SpawnGoldNumbers(position, order.CashMoney);
-                
+
                 // Set served
                 order.Served = true;
             }
+            else
+            {
+                photonView.RPC(nameof(PlayRawSoundRPC), RpcTarget.All);
+            }
+        }
+
+        [PunRPC]
+        private void PlayRawSoundRPC()
+        {
+            AudioSource.PlayClipAtPoint(rawSound, transform.position);
         }
 
         [PunRPC]
@@ -118,23 +131,24 @@ namespace Restaurant
                 ItemInstance.Salad,
                 ItemInstance.Sushi
             };
-            
-            return new RestaurantOrder() {
+
+            return new RestaurantOrder()
+            {
                 Item = possibleValues[Random.Range(0, possibleValues.Length)],
                 Quantity = Random.Range(1, 4),
                 CashMoney = Random.Range(20, 40)
             };
         }
-        
+
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
             if (stream.IsWriting)
             {
                 stream.SendNext(OrderList.ToArray());
-            } 
+            }
             else if (stream.IsReading)
             {
-                OrderList = ((RestaurantOrder[]) stream.ReceiveNext()).ToList();
+                OrderList = ((RestaurantOrder[])stream.ReceiveNext()).ToList();
                 RefreshOrderUI();
             }
         }

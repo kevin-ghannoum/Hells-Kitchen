@@ -14347,6 +14347,7 @@ MonoBehaviour:
   restaurantUI: {fileID: 1927655800}
   orderItemPrefab: {fileID: 3202725611455143154, guid: b3afaf2dffaf2d24ab561b49aa7ca0a7, type: 3}
   photonView: {fileID: 1927655797}
+  rawSound: {fileID: 8300000, guid: 1d113c20e503c3e4eb51214cbfadda53, type: 3}
 --- !u!114 &1927655796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15775,7 +15776,7 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7505043}
     m_Modifications:
-    - target: {fileID: 913347889220681397, guid: a0ba49e858a8faf429041434758543ae, type: 3}
+    - target: {fileID: -3213513001610366134, guid: a0ba49e858a8faf429041434758543ae, type: 3}
       propertyPath: sceneViewId
       value: 44
       objectReference: {fileID: 0}

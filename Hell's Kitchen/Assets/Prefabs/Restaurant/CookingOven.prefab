@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 913347889220681397}
   - component: {fileID: 543019816075129812}
   - component: {fileID: 2489670858785083864}
-  - component: {fileID: 956856977253810688}
+  - component: {fileID: -3213513001610366134}
   m_Layer: 0
   m_Name: CookingOven
   m_TagString: Untagged
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Area: 0
   m_IgnoreFromBuild: 1
   m_AffectedAgents: ffffffff
---- !u!114 &956856977253810688
+--- !u!114 &-3213513001610366134
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -263,10 +263,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 2437096894043422585}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 984c4ec5e2b142a296f7bc5db68995d3, type: 3}
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggleGameObject: {fileID: 4865296941361313352}
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2437654441025294793
 GameObject:
   m_ObjectHideFlags: 0

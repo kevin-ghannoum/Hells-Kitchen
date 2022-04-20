@@ -20,6 +20,7 @@ namespace Restaurant
         
         private void Start()
         {
+            photonView = GetComponent<PhotonView>();
             // TODO Remove after feature complete
             DebugAddInventoryAndOrders();
         }
@@ -54,7 +55,7 @@ namespace Restaurant
                 }
             }
 
-            if (neededItems.Any(item => item.Value > 0))
+            if (photonView.IsMine && neededItems.Any(item => item.Value > 0))
             {
                 photonView.RPC(nameof(PlayCookingSoundRPC), RpcTarget.All);
             }

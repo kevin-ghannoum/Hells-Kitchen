@@ -86,6 +86,7 @@ MonoBehaviour:
   throwSpeed: 35
   throwAngularSpeed: 180
   rigidbody: {fileID: 4141016623778023213}
+  _damage: 10
   weaponInstance: 1
   bulletSpeed: 40
   bulletLifetime: 3
@@ -95,7 +96,7 @@ MonoBehaviour:
   muzzlePrefab: {fileID: 5865868290920950645, guid: e4fc13f0b91963d40a44f5fca68df255, type: 3}
   shootPosition: {fileID: 3309744534898375491}
   gunshotSound: {fileID: 8300000, guid: 99635e55847407f4a9c421a001784c5e, type: 3}
-  price: 10
+  price: 50
 --- !u!114 &5816670607310056526
 MonoBehaviour:
   m_ObjectHideFlags: 0
