@@ -122,7 +122,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 673239997781652639}
-        m_TargetAssemblyTypeName: UI.CoopMenuUI, Core
+        m_TargetAssemblyTypeName: UI.CoopMenu, Assembly-CSharp
         m_MethodName: CreateRoom
         m_Mode: 1
         m_Arguments:

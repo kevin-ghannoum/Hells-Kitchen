@@ -1,9 +1,10 @@
 ﻿using Common;
+using Photon.Pun;
 using UnityEngine;
 
 namespace UI
 {
-    public class MenuUI : MonoBehaviour
+    public abstract class MenuUI : MonoBehaviourPunCallbacks
     {
         public void LoadRestaurantScene()
         {
