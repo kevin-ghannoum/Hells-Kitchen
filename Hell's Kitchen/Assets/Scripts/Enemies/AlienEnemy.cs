@@ -15,6 +15,7 @@ namespace Enemies
         private float damageRate = 0.1f;
         private float distance;
         [SerializeField] private GameObject electricLine;
+        private GameObject photonLine;
         private LineRenderer lr;
         [SerializeField] private float attackDamage = 1;
         private AudioSource alienAudio;
@@ -28,7 +29,8 @@ namespace Enemies
 
             attackRange = 12;
 
-            lr = electricLine.GetComponent<LineRenderer>();
+            photonLine = PhotonNetwork.Instantiate(electricLine.name, transform.position, Quaternion.identity);
+            photonLine.transform.parent = gameObject.transform;
             alienAudio = gameObject.GetComponent<AudioSource>();
         }
 
@@ -56,10 +58,9 @@ namespace Enemies
                             audioController++;
                         }
 
+                        lr = photonLine.GetComponent<LineRenderer>();
                         Vector3 startPos = new Vector3(transform.position.x, transform.position.y * 2, transform.position.z);
-
                         animator.SetTrigger(EnemyAnimator.Attack);
-
                         setLinePosition(target);
 
                         if (damageTimeCounter > damageRate)
@@ -71,7 +72,9 @@ namespace Enemies
             }
             else
             {
-                lr.GetComponent<LineRenderer>().positionCount = 0;
+                if (lr != null)
+                    lr.positionCount = 0;
+
                 audioController = 0;
                 alienAudio.Stop();
             }
@@ -89,9 +92,9 @@ namespace Enemies
             if (!photonView.IsMine)
                 return;
 
-            lr.GetComponent<LineRenderer>().positionCount = 2;
-            lr.GetComponent<LineRenderer>().SetPosition(0, transform.position + Vector3.up * 0.5f);
-            lr.GetComponent<LineRenderer>().SetPosition(1, target.transform.position + Vector3.up * 1.8f);
+            lr.positionCount = 2;
+            lr.SetPosition(0, transform.position + Vector3.up * 0.5f);
+            lr.SetPosition(1, target.transform.position + Vector3.up * 1.8f);
         }
     }
 

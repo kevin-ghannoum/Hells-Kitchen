@@ -28,19 +28,27 @@ namespace Enemies
             transform.position += direction * speed * Time.deltaTime;
 
             if (Time.time - time > 5)
-                PhotonView.Destroy(this.gameObject);
+            {
+                deleteBullet(this.gameObject);
+            }
         }
 
         private void OnCollisionEnter(Collision col)
         {
             if (!photonView.IsMine)
                 return;
-                
+
             if (col.gameObject.CompareTag(Tags.Player))
             {
                 col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.All, attackDamage);
                 PhotonNetwork.Destroy(this.gameObject);
             }
+        }
+
+        [PunRPC]
+        private void deleteBullet(GameObject bullet)
+        {
+            PhotonView.Destroy(this.gameObject);
         }
     }
 }

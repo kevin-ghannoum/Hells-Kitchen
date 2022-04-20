@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3618060574707844929}
   - component: {fileID: 281704147054409873}
   - component: {fileID: 6999315966203658375}
-  - component: {fileID: 1344755708374467034}
+  - component: {fileID: 4325404134595375810}
   m_Layer: 0
   m_Name: electric
   m_TagString: Untagged
@@ -27,8 +27,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6418064093125226306}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 21.27812, y: -7.111553, z: 3.1144218}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -147,6 +147,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 593ce7ba11e2b1047bacaf4e45b04216, type: 3}
   - {fileID: 2800000, guid: 6a0a4e32cfc4ce0479dc3fe9a3559aae, type: 3}
   - {fileID: 2800000, guid: 71778c8b3dee79045b20c2da6b592034, type: 3}
+  photonView: {fileID: 6999315966203658375}
   changeRate: 0.08
 --- !u!114 &6999315966203658375
 MonoBehaviour:
@@ -167,11 +168,11 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 1344755708374467034}
+  - {fileID: 4325404134595375810}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &1344755708374467034
+--- !u!114 &4325404134595375810
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

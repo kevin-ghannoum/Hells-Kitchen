@@ -7,6 +7,7 @@ public class lineController : MonoBehaviour
 {
     private LineRenderer lr;
     [SerializeField] Texture[] texture;
+    [SerializeField] private PhotonView photonView;
 
     private float timeCounter;
     [SerializeField] private float changeRate = 0.1f;
