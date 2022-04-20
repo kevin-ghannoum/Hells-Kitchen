@@ -1,6 +1,7 @@
 using Common.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -71,7 +72,7 @@ public class SousChef : MonoBehaviour, IKillable
         //if no enemies within vision, set currentEnemyTarget = null;
 
         // cast rays around souschef to search for enemies
-        float distance = Mathf.Infinity;
+        /*float distance = Mathf.Infinity;
         int numOfRays = 20;
 
         for(float i = 0; i < 360; i += 2 * Mathf.PI / numOfRays ){
@@ -89,10 +90,17 @@ public class SousChef : MonoBehaviour, IKillable
                     }
                 }
             }
-        }
+        }*/
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, searchRange, 1 << 7);    //enemy layer mask
+        colliders = colliders.OrderBy(c => (transform.position - c.transform.position).sqrMagnitude).ToArray();
+        if (colliders.Length != 0)
+            targetEnemy = colliders[0].gameObject;
+        else
+            targetEnemy = null;
 
         // enemy found, return true
-        if(targetEnemy != null){
+        if (targetEnemy != null){
             return true;
         }
 
@@ -103,7 +111,7 @@ public class SousChef : MonoBehaviour, IKillable
         // currentLootTarget = exampleLoot;
 
         // cast rays around souschef to search for loots
-        float distance = Mathf.Infinity;
+        /*float distance = Mathf.Infinity;
         int numOfRays = 10;
 
         for(float i = 0; i < 360; i += Mathf.PI / numOfRays ){
@@ -121,7 +129,18 @@ public class SousChef : MonoBehaviour, IKillable
                     }
                 }
             }
+        }*/
+        Collider[] colliders = Physics.OverlapSphere(transform.position, searchRange, 1 << 9);    //collectibles layer mask
+        colliders = colliders.OrderBy(c => (transform.position - c.transform.position).sqrMagnitude).ToArray();
+        bool found = false;
+        foreach (Collider collider in colliders) {
+            if (collider.tag == "Item") {
+                targetLoot = collider.gameObject;
+                found = true;
+            }
         }
+        if (!found)
+            targetLoot = null;
     }
 
     public float GetDistanceToEnemy()

@@ -17,10 +17,11 @@ public class KnightLootState : KnightBaseState
     {
         if(knight.sc.targetLoot != null){
             // pathfinding with loot as target and arrival radius as 0.5f
-            if(Vector3.Distance(knight.transform.position, knight.sc.player.transform.position) > 0.6f){
+            if(Vector3.Distance(knight.transform.position, knight.sc.targetLoot.transform.position) > 0.6f){
                 // move to loot position
-                if(knight.sc.agent.Target != knight.sc.player.transform.position){
-                    knight.sc.agent.Target = knight.sc.player.transform.position;
+                if (knight.sc.agent.Target != knight.sc.targetLoot.transform.position)
+                {
+                    knight.sc.agent.Target = knight.sc.targetLoot.transform.position;
                 }
                 if(knight.sc.agent.ArrivalRadius != 0.5f){
                     knight.sc.agent.ArrivalRadius = 0.5f;
@@ -34,6 +35,8 @@ public class KnightLootState : KnightBaseState
                     // play animation once
                     Debug.Log("@PickUp picking up xD");
                     knight.animator.SetTrigger("PickUp");
+                    Debug.Log("(@knightLootState)need to implement looting functionality, replicate whatev player does when he loots here");
+                    Debug.Log("(@knightLootState)dont do with colliders, just kill targetItem directly n put in bag");
                 }
                 if(_pickUpTime >= pickUpTime){
                     knight.sc.agent.standStill = false;
