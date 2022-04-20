@@ -35,7 +35,8 @@ namespace Weapons
 
         protected PhotonView photonView;
 
-        public float Damage {
+        public float Damage
+        {
             get => _damage;
             set => _damage = value;
         }
@@ -129,7 +130,7 @@ namespace Weapons
             transform.SetParent(null);
             transform.localScale = new Vector3(1, 1, 1);
         }
-        
+
         private Vector3 GetGunHeightAimPoint(Ray mouseAim, RaycastHit hitInfo)
         {
             float gunHeight = playerController.ShootHeight;
@@ -153,12 +154,10 @@ namespace Weapons
         {
             Vector2 mouse = Mouse.current.position.ReadValue();
             Ray ray = Camera.main.ScreenPointToRay(mouse);
-            if (Physics.Raycast(ray, out RaycastHit hitInfo))
-            {
-                var aimPoint = GetGunHeightAimPoint(ray, hitInfo);
-                aimPoint.y = 0;
-                playerController.FaceTarget(aimPoint);
-            }
+            Physics.Raycast(ray, out RaycastHit hitInfo);
+            var aimPoint = GetGunHeightAimPoint(ray, hitInfo);
+            aimPoint.y = 0;
+            playerController.FaceTarget(aimPoint);
         }
 
         protected virtual void AddListeners()
