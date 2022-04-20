@@ -32,6 +32,7 @@ namespace Dungeon_Generation
             if (GameStateData.player == null)
             {
                 playerSpawner.SpawnPlayerInScene();
+                playerSpawner.AddSousChef();
             }
             else
             {

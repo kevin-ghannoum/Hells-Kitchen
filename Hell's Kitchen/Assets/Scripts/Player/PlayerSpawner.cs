@@ -9,7 +9,8 @@ namespace Player
     public class PlayerSpawner : MonoBehaviour
     {
         [SerializeField] private GameObject playerPrefab;
-        [SerializeField] private GameObject sousChefPrefab;
+        [SerializeField] private GameObject healerPrefab;
+        [SerializeField] private GameObject knightPrefab;
         [SerializeField] private Transform[] spawnPoints;
         public bool shouldSpawnOnAwake = false;
         
@@ -29,11 +30,16 @@ namespace Player
             player.GetComponentInChildren<Camera>().gameObject.tag = Tags.MainCamera;
             player.transform.Find("VirtualCamera").gameObject.SetActive(true);
             GameStateData.player = player;
+        }
 
+        [PunRPC]
+        public void AddSousChef()
+        {
             // only spawn sous-chef in dungeon
             if (SceneManager.GetActiveScene().name.Equals(Scenes.Dungeon))
             {
-                GameObject sousChef = PhotonNetwork.Instantiate(sousChefPrefab.name, spawnPoint.position - new Vector3(1f, 0, 1f), Quaternion.identity);
+                var prefab = GameStateData.sousChefType == SousChefType.Healer ? healerPrefab : knightPrefab;
+                GameObject sousChef = PhotonNetwork.Instantiate(prefab.name, spawnPoints[0].position - new Vector3(1f, 0, 1f), Quaternion.identity);
                 sousChef.tag = Tags.SousChef;
                 GameStateData.sousChef = sousChef;
             }
