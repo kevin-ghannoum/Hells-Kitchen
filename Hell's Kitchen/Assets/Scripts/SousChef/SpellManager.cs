@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
@@ -19,13 +16,14 @@ public class SpellManager : MonoBehaviour
 
     public void HealerSpell_Photon(GameObject target)
     {
-        _photonView.RPC(nameof(HealerSpell_Photon_RPC), RpcTarget.All, target);
+        _photonView.RPC(nameof(HealerSpell_Photon_RPC), RpcTarget.All, target.GetComponent<PhotonView>().ViewID);
     }
     
     [PunRPC]
-    public void HealerSpell_Photon_RPC(GameObject target)
+    public void HealerSpell_Photon_RPC(int viewId)
     {
-        var obj = Instantiate(photonSpellPrefab, target.transform.position, Quaternion.identity);
+        GameObject target = PhotonView.Find(viewId).gameObject;
+        var obj = PhotonNetwork.Instantiate(photonSpellPrefab.name, target.transform.position, Quaternion.identity);
         obj.GetComponent<PhotonSpell>().target = target;
     }
 
@@ -37,7 +35,7 @@ public class SpellManager : MonoBehaviour
     [PunRPC]
     internal void HealerSpell_Heal_RPC(Vector3 position)
     {
-        Instantiate(healSpellPrefab, position, Quaternion.identity);
+        PhotonNetwork.Instantiate(healSpellPrefab.name, position, Quaternion.identity);
     }
 
     public void KnightSkill()
@@ -48,7 +46,7 @@ public class SpellManager : MonoBehaviour
     [PunRPC]
     public void KnightSkill_RPC()
     {
-        GameObject slash = Instantiate(knightSkill, transform.position + Vector3.up, Quaternion.LookRotation(transform.forward));
+        GameObject slash = PhotonNetwork.Instantiate(knightSkill.name, transform.position + Vector3.up, Quaternion.LookRotation(transform.forward));
         slash.GetComponent<Slash>().rotation = transform.forward;
     }
 }

@@ -37,21 +37,22 @@ MonoBehaviour:
   - AddItemToInventoryRPC
   - AddPurchasedWeaponRPC
   - ClickRpc
-  - DeadRPC
   - DestroyPlayerRPC
   - DestroyRpc
   - DisableRigidbody
   - EnableRigidBody
   - GenerateMazeRPC
+  - HealerSpell_Heal_RPC
+  - HealerSpell_Photon_RPC
+  - KnightSkill_RPC
   - LoadDungeonRPC
   - LoadGameOverRPC
   - LoadRestaurantRPC
   - RemoveItemFromInventoryRPC
+  - ReparentObjectToPlayerHand
   - ServeOrdersRPC
   - SetCashMoneyRPC
   - SetGameObjectActiveByNameRPC
-  - TakeHitRPC
-  - ReparentObjectToPlayerHand
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
