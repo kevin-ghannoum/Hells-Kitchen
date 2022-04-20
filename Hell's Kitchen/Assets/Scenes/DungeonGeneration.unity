@@ -276,6 +276,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1139929206}
     - target: {fileID: 1662986158024480343, guid: da75bf6655a0bc644b6062334d584eff, type: 3}
+      propertyPath: healerPrefab
+      value: 
+      objectReference: {fileID: 4017579666321907560, guid: cf4e945f8780c4a468d5ba3246ec8224, type: 3}
+    - target: {fileID: 1662986158024480343, guid: da75bf6655a0bc644b6062334d584eff, type: 3}
+      propertyPath: knightPrefab
+      value: 
+      objectReference: {fileID: 2558013046334156685, guid: 9fc348fdaf1694d41b5cb105dbbeb7e2, type: 3}
+    - target: {fileID: 1662986158024480343, guid: da75bf6655a0bc644b6062334d584eff, type: 3}
       propertyPath: playerPrefab
       value: 
       objectReference: {fileID: 1852094099853187857, guid: ab126534be57d744eab097b38e421eda, type: 3}

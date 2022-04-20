@@ -29,7 +29,6 @@ namespace Dungeon_Generation
         {
             StartNewMaze();
             SpawnPlayers();
-            MoveSousChefToStart();
         }
         
         public void StartNewMaze()
@@ -49,6 +48,10 @@ namespace Dungeon_Generation
         public void SpawnLocalPlayer()
         {
             playerSpawner.SpawnPlayerInScene();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                playerSpawner.SpawnSousChefInScene();
+            }
             SetUpPlayerWeapon();
         }
 
@@ -73,13 +76,7 @@ namespace Dungeon_Generation
             var weaponInstance = PhotonNetwork.Instantiate(weapon.WeaponModel.Prefab.name, Vector3.zero, Quaternion.identity);
             weaponInstance.GetComponent<IPickup>()?.PickUp();
         }
-        private void MoveSousChefToStart() {
-            Vector3 sousChefPosition = new Vector3(mazeStart.position.x + 1, mazeStart.position.y, mazeStart.position.z);
-            var sousChefs = GameObject.FindGameObjectsWithTag("SousChef");
-            foreach (var ss in sousChefs) {
-                ss.transform.localPosition = sousChefPosition;
-            }
-        }
+
     }
 }
 

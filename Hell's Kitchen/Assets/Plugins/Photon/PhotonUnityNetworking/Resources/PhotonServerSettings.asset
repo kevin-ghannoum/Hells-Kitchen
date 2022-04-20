@@ -48,18 +48,9 @@ MonoBehaviour:
   - LoadDungeonRPC
   - LoadGameOverRPC
   - LoadRestaurantRPC
-  - LootChest
+  - LootChestRPC
   - PickUp
   - PickUpRPC
-  - RemoveItemFromInventoryRPC
-  - ReparentObjectToPlayerHandRPC
-  - ReturnToRestaurantRPC
-  - ServeOrdersRPC
-  - SetCashMoneyRPC
-  - SetGameObjectActiveByNameRPC
-  - TakeDamage
-  - RemoveObjectParentRPC
-  - LootChestRPC
   - PlayAttackSoundRPC
   - PlayChestSoundRPC
   - PlayDeathSoundRPC
@@ -68,8 +59,16 @@ MonoBehaviour:
   - PlayLowHealthSoundRPC
   - PlaySWordSlashSoundRPC
   - PlayTakeDamageSoundRPC
+  - RemoveItemFromInventoryRPC
+  - RemoveObjectParentRPC
+  - ReparentObjectToPlayerHandRPC
+  - ReturnToRestaurantRPC
+  - SelectSousChef
+  - ServeOrdersRPC
+  - SetCashMoneyRPC
+  - SetGameObjectActiveByNameRPC
   - SpawnLocalPlayer
-  - SpawnPlayerInScene
+  - TakeDamage
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

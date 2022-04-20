@@ -30,6 +30,8 @@ namespace Dungeon_Generation
 
         private void OnDestroy()
         {
+            if (_input == null)
+                return;
             _input.reference.actions["Interact"].performed -= Interact;
         }
 

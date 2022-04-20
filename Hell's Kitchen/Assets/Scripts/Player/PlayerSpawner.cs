@@ -12,8 +12,7 @@ namespace Player
         [SerializeField] private GameObject healerPrefab;
         [SerializeField] private GameObject knightPrefab;
         [SerializeField] private Transform[] spawnPoints;
-        [SerializeField] public PhotonView photonView;
-        public bool shouldSpawnOnAwake = false;
+        [SerializeField] private bool shouldSpawnOnAwake = false;
         
         private void Awake()
         {
@@ -23,7 +22,6 @@ namespace Player
             SpawnPlayerInScene();
         }
 
-        [PunRPC]
         public void SpawnPlayerInScene()
         {
             int numPlayers = PhotonNetwork.PlayerList.Length - 1;
@@ -34,8 +32,7 @@ namespace Player
             GameStateData.player = player;
         }
 
-        [PunRPC]
-        public void AddSousChef()
+        public void SpawnSousChefInScene()
         {
             // only spawn sous-chef in dungeon
             if (SceneManager.GetActiveScene().name.Equals(Scenes.Dungeon))
@@ -43,7 +40,6 @@ namespace Player
                 var prefab = GameStateData.sousChefType == SousChefType.Healer ? healerPrefab : knightPrefab;
                 GameObject sousChef = PhotonNetwork.Instantiate(prefab.name, spawnPoints[0].position - new Vector3(1f, 0, 1f), Quaternion.identity);
                 sousChef.tag = Tags.SousChef;
-                GameStateData.sousChef = sousChef;
             }
         }
     }

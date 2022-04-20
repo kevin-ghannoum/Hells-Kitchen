@@ -21,6 +21,8 @@ namespace UI
         {
             // return to game before leaving to resume timescale and return to defaults
             ResumeGame();
+            if (_input == null)
+                return;
             _input.reference.actions["OpenPauseMenu"].performed -= OpenPauseMenu;
         }
 

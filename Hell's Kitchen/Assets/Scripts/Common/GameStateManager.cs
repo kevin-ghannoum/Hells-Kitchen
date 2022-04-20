@@ -55,6 +55,7 @@ namespace Common
                 stream.SendNext(serializedInventoryItems);
                 stream.SendNext(GameStateData.cashMoney);
                 stream.SendNext(GameStateData.dungeonClock);
+                stream.SendNext((int)GameStateData.sousChefType);
             }
             else if (stream.IsReading)
             {
@@ -66,6 +67,7 @@ namespace Common
                 GameStateData.cashMoney = (float)stream.ReceiveNext();
                 inventoryUI.UpdateInventory(inventoryItems);
                 GameStateData.dungeonClock = (float)stream.ReceiveNext();
+                GameStateData.sousChefType = (SousChefType)stream.ReceiveNext();
             }
         }
 

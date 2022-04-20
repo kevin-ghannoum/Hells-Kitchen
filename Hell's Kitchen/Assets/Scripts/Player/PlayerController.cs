@@ -46,7 +46,7 @@ namespace Player
             _animator = GetComponentInChildren<Animator>();
             _characterController = GetComponent<CharacterController>();
 
-            if (_photonView.IsMine)
+            if (_photonView.IsMine && _input != null)
             {
                 _input.reference.actions["Roll"].performed += Roll;
                 _input.reference.actions["PickUp"].performed += PickUp;
@@ -55,7 +55,7 @@ namespace Player
 
         private void OnDestroy()
         {
-            if (_photonView.IsMine)
+            if (_photonView.IsMine && _input != null)
             {
                 _input.reference.actions["Roll"].performed -= Roll;
                 _input.reference.actions["PickUp"].performed -= PickUp;
