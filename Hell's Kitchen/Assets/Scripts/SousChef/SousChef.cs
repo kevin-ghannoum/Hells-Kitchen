@@ -203,17 +203,23 @@ public class SousChef : MonoBehaviour, IKillable
     {
         return ((hitPoints / maxHealth) * 100) < 60;
     }
+    
+    [PunRPC]
     public void TakeDamage(float dmg)
     {
         Debug.Log("'" + gameObject.name + "' took " + dmg + " damage");
         hitPoints -= dmg;
-        if (hitPoints < 0)
-            Die();
+        if (_photonView.IsMine)
+        {
+            if (hitPoints < 0)
+                Die();
+        }
     }
+    
     public void Die()
     {
         Debug.Log("'" + gameObject.name + "' got kilt");
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
     }
     
     public GameObject FindClosestPlayer()

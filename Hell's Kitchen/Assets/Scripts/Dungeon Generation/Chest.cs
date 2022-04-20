@@ -33,31 +33,19 @@ namespace Dungeon_Generation
             return Random.Range(amountMinInclusive, amountMaxExclusive);
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerStay(Collider other)
         {
-            if (other.gameObject.CompareTag(Tags.Player))
+            if (InputManager.Actions.Interact.triggered && other.gameObject.CompareTag(Tags.Player))
             {
                 var pv = other.gameObject.GetComponent<PhotonView>();
-                if (pv.IsMine)
+                if (pv != null && pv.IsMine)
                 {
-                    _input.reference.actions["Interact"].performed += LootChest;
+                    LootChest();
                 }
             }
         }
 
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.gameObject.CompareTag(Tags.Player))
-            {
-                var pv = other.gameObject.GetComponent<PhotonView>();
-                if (pv.IsMine)
-                {
-                    _input.reference.actions["Interact"].performed -= LootChest;
-                }
-            }
-        }
-
-        private void LootChest(InputAction.CallbackContext context)
+        private void LootChest()
         {
             if (_isLooted)
                 return;

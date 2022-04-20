@@ -46,26 +46,14 @@ namespace Restaurant
             interactUI.IsDisabled = OrderList.All(o => o.Served);
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerStay(Collider other)
         {
-            if (other.gameObject.CompareTag(Tags.Player))
+            if (InputManager.Actions.Interact.triggered && other.gameObject.CompareTag(Tags.Player))
             {
                 var pv = other.GetComponent<PhotonView>();
                 if (pv != null && pv.IsMine)
                 {
-                    _input.reference.actions["Interact"].performed += ServeOrders;
-                }
-            }
-        }
-        
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.gameObject.CompareTag(Tags.Player))
-            {
-                var pv = other.GetComponent<PhotonView>();
-                if (pv != null && pv.IsMine)
-                {
-                    _input.reference.actions["Interact"].performed -= ServeOrders;
+                    ServeOrders();
                 }
             }
         }        
@@ -130,7 +118,7 @@ namespace Restaurant
             RefreshOrderUI();
         }
 
-        private void ServeOrders(InputAction.CallbackContext context)
+        private void ServeOrders()
         {
             photonView.RPC(nameof(ServeOrdersRPC), RpcTarget.All);
         }

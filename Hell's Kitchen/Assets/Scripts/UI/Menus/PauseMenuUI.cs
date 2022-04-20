@@ -1,41 +1,38 @@
-﻿using System;
-using Input;
+﻿using Input;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-namespace UI
+namespace UI.Menus
 {
     public class PauseMenuUI : MenuUI
     {
         [SerializeField] private GameObject content;
         
-        private InputManager _input => InputManager.Instance;
-        private bool isUIActive = false;
+        private bool _isUIActive = false;
         
-        private void Awake()
-        {
-            _input.reference.actions["OpenPauseMenu"].performed += OpenPauseMenu;
-        }
-
         private void OnDestroy()
         {
             // return to game before leaving to resume timescale and return to defaults
             ResumeGame();
-            if (_input == null)
-                return;
-            _input.reference.actions["OpenPauseMenu"].performed -= OpenPauseMenu;
         }
 
-        public void OpenPauseMenu(InputAction.CallbackContext callbackContext)
+        private void OpenPauseMenu()
         {
-            isUIActive = !isUIActive;
-            content.SetActive(isUIActive);
+            _isUIActive = !_isUIActive;
+            content.SetActive(_isUIActive);
         }
 
         public void ResumeGame()
         {
-            isUIActive = !isUIActive;
-            content.SetActive(isUIActive);
+            _isUIActive = false;
+            content.SetActive(_isUIActive);
+        }
+
+        private void Update()
+        {
+            if (InputManager.Actions.OpenPauseMenu.triggered)
+            {
+                OpenPauseMenu();
+            }
         }
     }
 }

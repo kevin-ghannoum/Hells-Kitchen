@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Common;
 using Common.Enums;
@@ -10,22 +9,21 @@ using Photon.Pun;
 using PlayerInventory.Cooking;
 using UI;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Restaurant
 {
     public class RestaurantOven : MonoBehaviour
     {
         [SerializeField] private AudioClip cookingSound;
-        private InputManager _input => InputManager.Instance;
-
+        [SerializeField] private PhotonView photonView;
+        
         private void Start()
         {
             // TODO Remove after feature complete
             DebugAddInventoryAndOrders();
         }
 
-        private void AutoCraftOrderedRecipes(InputAction.CallbackContext context)
+        private void AutoCraftOrderedRecipes()
         {
             var orderList = RestaurantManager.Instance.OrderList.Where(o => !o.Served);
             var player = GameObject.FindWithTag(Tags.Player);
@@ -57,7 +55,7 @@ namespace Restaurant
 
             if (neededItems.Any(item => item.Value > 0))
             {
-                PlayCookingSoundRPC();
+                photonView.RPC(nameof(PlayCookingSoundRPC), RpcTarget.All);
             }
         }
 
@@ -75,20 +73,16 @@ namespace Restaurant
             GameStateManager.AddItemToInventory(ItemInstance.Mushroom, 20);
             GameStateManager.AddItemToInventory(ItemInstance.Meat, 20);
         }
-
-        private void OnTriggerEnter(Collider other)
+        
+        private void OnTriggerStay(Collider other)
         {
-            if (other.CompareTag(Tags.Player) && other.GetComponent<PhotonView>().IsMine)
+            if (InputManager.Actions.Interact.triggered && other.CompareTag(Tags.Player))
             {
-                _input.reference.actions["Interact"].performed += AutoCraftOrderedRecipes;
-            }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.CompareTag(Tags.Player) && other.GetComponent<PhotonView>().IsMine)
-            {
-                _input.reference.actions["Interact"].performed -= AutoCraftOrderedRecipes;
+                var pv = other.GetComponent<PhotonView>();
+                if (pv != null && pv.IsMine)
+                {
+                    AutoCraftOrderedRecipes();
+                }
             }
         }
     }

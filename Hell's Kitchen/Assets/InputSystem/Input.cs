@@ -98,7 +98,7 @@ namespace InputSystem
                     ""id"": ""f4e55406-7dba-4539-a31a-1ffc02464442"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {

@@ -10,26 +10,21 @@ using UnityEngine.InputSystem;
 
 public class SousChefSelector : MonoBehaviour
 {
-    InputManager _input =>InputManager.Instance;
     [SerializeField] private SousChefType type;
     
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag(Tags.Player) && other.GetComponent<PhotonView>().IsMine)
+        if (InputManager.Actions.Interact.triggered && other.CompareTag(Tags.Player))
         {
-            _input.reference.actions["Interact"].performed +=SelectSousChef;
-        }
-    }
-        
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag(Tags.Player) && other.GetComponent<PhotonView>().IsMine)
-        {
-            _input.reference.actions["Interact"].performed -= SelectSousChef;
+            var pv = other.GetComponent<PhotonView>();
+            if (pv != null && pv.IsMine)
+            {
+                SelectSousChef();
+            }
         }
     }
 
-    private void SelectSousChef(InputAction.CallbackContext context)
+    private void SelectSousChef()
     {
         GameStateManager.SetSousChef(type);
         AdrenalinePointsUI.SpawnIngredientString(gameObject.transform.position, "Recruited Sous Chef");

@@ -8,8 +8,6 @@ using PlayerInventory.Cooking;
 using Restaurant;
 using Restaurant.Enums;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using Random = UnityEngine.Random;
 using SceneManager = Common.SceneManager;
 
 public class RestaurantDoor : MonoBehaviour
@@ -29,10 +27,9 @@ public class RestaurantDoor : MonoBehaviour
         _availableRecipes = new IRecipe[] {new Recipes.Hamburger(), new Recipes.Salad(), new Recipes.Sushi()};
     }
 
-    private void LeaveRestaurant(InputAction.CallbackContext obj)
+    private void LeaveRestaurant()
     {
         ImposeFine();
-        _input.reference.actions["Interact"].performed -= LeaveRestaurant;
         if (GameStateData.cashMoney < debtCap)
         {
             SceneManager.Instance.LoadGameOverScene();
@@ -53,12 +50,6 @@ public class RestaurantDoor : MonoBehaviour
         animator.SetBool(RestaurantDoorAnimator.Open, _numCustomers > 0);
     }
 
-    private IRecipe GetRandomOrder()
-    {
-        int index = Random.Range(0, _availableRecipes.Length);
-        return _availableRecipes[index];
-    }
-
     private void ImposeFine()
     {
         var missedOrders = RestaurantManager.Instance.OrderList.Where(o => !o.Served);
@@ -74,15 +65,6 @@ public class RestaurantDoor : MonoBehaviour
         {
             _numCustomers++;
         }
-
-        if (other.gameObject.CompareTag(Tags.Player))
-        {
-            var pv = other.GetComponent<PhotonView>();
-            if (pv != null && pv.IsMine)
-            {
-                _input.reference.actions["Interact"].performed += LeaveRestaurant;
-            }
-        }
     }
 
     public void OnTriggerExit(Collider other)
@@ -91,13 +73,16 @@ public class RestaurantDoor : MonoBehaviour
         {
             _numCustomers--;
         }
-        
-        if (other.gameObject.CompareTag(Tags.Player))
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (InputManager.Actions.Interact.triggered && other.gameObject.CompareTag(Tags.Player))
         {
             var pv = other.GetComponent<PhotonView>();
             if (pv != null && pv.IsMine)
             {
-                _input.reference.actions["Interact"].performed -= LeaveRestaurant;
+                LeaveRestaurant();
             }
         }
     }
