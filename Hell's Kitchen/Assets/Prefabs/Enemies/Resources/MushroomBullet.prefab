@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: -1788814404614573515}
   - component: {fileID: 6587699357511388025}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: MushroomBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

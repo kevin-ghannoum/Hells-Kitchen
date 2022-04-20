@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: -3890128589348726618}
   - component: {fileID: 2254245643945551711}
   m_Layer: 7
-  m_Name: Mushroom
+  m_Name: MushroomEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -184,6 +184,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 2062262810902439603}
   - {fileID: -3890128589348726618}
+  - {fileID: 2254245643945551711}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
