@@ -179,7 +179,13 @@ public class HealerStateManager : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(transform.position, maxTeleportDistance);
+        try {
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawWireSphere(transform.position, maxTeleportDistance);
+        }
+        catch (Exception e) { }
     }
 
     [PunRPC]
