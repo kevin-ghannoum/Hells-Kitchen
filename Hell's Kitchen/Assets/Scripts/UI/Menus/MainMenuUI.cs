@@ -13,6 +13,7 @@ namespace UI
         [SerializeField] private GameObject connectingToServer;
         [SerializeField] private GameObject mainMenu;
         [SerializeField] private GameObject coopMenu;
+        [SerializeField] private GameObject joiningRoom;
 
         private void Awake()
         {
@@ -57,6 +58,7 @@ namespace UI
             connectingToServer.SetActive(true);
             mainMenu.SetActive(false);
             coopMenu.SetActive(false);
+            joiningRoom.SetActive(false);
         }
 
         public void ShowMainMenu()
@@ -64,6 +66,7 @@ namespace UI
             connectingToServer.SetActive(false);
             mainMenu.SetActive(true);
             coopMenu.SetActive(false);
+            joiningRoom.SetActive(false);
         }
 
         public void ShowCoopMenu()
@@ -71,6 +74,15 @@ namespace UI
             connectingToServer.SetActive(false);
             mainMenu.SetActive(false);
             coopMenu.SetActive(true);
+            joiningRoom.SetActive(false);
+        }
+
+        public void ShowJoiningRoomMessage()
+        {
+            connectingToServer.SetActive(false);
+            mainMenu.SetActive(false);
+            coopMenu.SetActive(false);
+            joiningRoom.SetActive(true);
         }
     }
 }
