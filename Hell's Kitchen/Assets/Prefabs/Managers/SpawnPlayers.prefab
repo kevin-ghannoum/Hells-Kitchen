@@ -46,11 +46,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 374073095347085077, guid: 8ba524383f54e644d857ee2e16e3c773, type: 3}
-  sousChefPrefab: {fileID: 4017579666321907560, guid: cf4e945f8780c4a468d5ba3246ec8224, type: 3}
+  healerPrefab: {fileID: 0}
+  knightPrefab: {fileID: 0}
   spawnPoints:
   - {fileID: 1662986158972169735}
   - {fileID: 1662986159553052096}
-  shouldSpawnOnAwake: 0
+  shouldSpawnOnAwake: 1
 --- !u!1 &1662986158972169734
 GameObject:
   m_ObjectHideFlags: 0
@@ -63,7 +64,7 @@ GameObject:
   m_Layer: 0
   m_Name: PlayerSpawnPoint1
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -75,7 +76,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1662986158972169734}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.37, y: 0, z: -6.99}
+  m_LocalPosition: {x: 2.75, y: -0.2, z: -7.84}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1662986158024480336}
@@ -93,7 +94,7 @@ GameObject:
   m_Layer: 0
   m_Name: PlayerSpawnPoint2
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -105,7 +106,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1662986159553052103}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.25, y: 0, z: -7.7227683}
+  m_LocalPosition: {x: -1.11, y: -0.2, z: -7.7227683}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1662986158024480336}
