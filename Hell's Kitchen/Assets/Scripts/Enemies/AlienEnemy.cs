@@ -31,7 +31,6 @@ namespace Enemies
 
             PhotonView view = gameObject.GetComponent<PhotonView>();
             view.RPC("instantiateElectric", RpcTarget.All);
-            photonLine.transform.parent = gameObject.transform;
             alienAudio = gameObject.GetComponent<AudioSource>();
         }
 
@@ -60,9 +59,9 @@ namespace Enemies
                         }
 
                         lr = photonLine.GetComponent<LineRenderer>();
+                        setLinePosition(target.transform.position);
                         Vector3 startPos = new Vector3(transform.position.x, transform.position.y * 2, transform.position.z);
                         animator.SetTrigger(EnemyAnimator.Attack);
-                        setLinePosition(target);
 
                         if (damageTimeCounter > damageRate)
                         {
@@ -84,24 +83,23 @@ namespace Enemies
         [PunRPC]
         private void playAttackSound()
         {
-            alienAudio.Play();
+            if (alienAudio != null)
+                alienAudio.Play();
         }
 
         [PunRPC]
-        private void setLinePosition(GameObject target)
+        private void setLinePosition(Vector3 target)
         {
-            if (!photonView.IsMine)
-                return;
-
             lr.positionCount = 2;
             lr.SetPosition(0, transform.position + Vector3.up * 0.5f);
-            lr.SetPosition(1, target.transform.position + Vector3.up * 1.8f);
+            lr.SetPosition(1, target + Vector3.up * 1.8f);
         }
 
         [PunRPC]
         private void instantiateElectric()
         {
             photonLine = PhotonNetwork.Instantiate(electricLine.name, transform.position, Quaternion.identity);
+            photonLine.transform.parent = gameObject.transform;
         }
     }
 }
