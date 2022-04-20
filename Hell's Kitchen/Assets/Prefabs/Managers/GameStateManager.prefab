@@ -46,8 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   photonView: {fileID: 0}
   inventoryUI: {fileID: 0}
-  kachingSound: {fileID: 8300000, guid: a093368cd1b4ac547aca572e9f783f09, type: 3}
-  cookingSound: {fileID: 8300000, guid: 0e859261776e677479364af91d3cf980, type: 3}
+  kachingSound: {fileID: 8300000, guid: 29973dc3a8543f2408fbbcbfb0ce90aa, type: 3}
 --- !u!114 &5885182959194592805
 MonoBehaviour:
   m_ObjectHideFlags: 0

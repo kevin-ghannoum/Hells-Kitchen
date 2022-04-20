@@ -16,6 +16,7 @@ namespace Restaurant
 {
     public class RestaurantOven : MonoBehaviour
     {
+        [SerializeField] private AudioClip cookingSound;
         private InputManager _input => InputManager.Instance;
 
         private void Start()
@@ -34,18 +35,18 @@ namespace Restaurant
             {
                 if (neededItems.ContainsKey(order.Item))
                     neededItems[order.Item] += order.Quantity;
-                else 
+                else
                     neededItems.Add(order.Item, order.Quantity);
             }
-            
+
             foreach (var item in GameStateData.inventory.GetInventoryItems())
             {
                 if (neededItems.ContainsKey(item.Key))
                     neededItems[item.Key] -= item.Value;
-                else 
+                else
                     neededItems.Add(item.Key, -item.Value);
             }
-            
+
             foreach (var item in neededItems)
             {
                 if (item.Value > 0 && Cooking.CookRecipe(Cooking.GetItemRecipe(item.Key), item.Value))
@@ -53,6 +54,17 @@ namespace Restaurant
                     AdrenalinePointsUI.SpawnIngredientString(player.transform.position, $"+{item.Value} {Items.GetItem(item.Key).Name}");
                 }
             }
+
+            if (neededItems.Any(item => item.Value > 0))
+            {
+                PlayCookingSoundRPC();
+            }
+        }
+
+        [PunRPC]
+        private void PlayCookingSoundRPC()
+        {
+            AudioSource.PlayClipAtPoint(cookingSound, transform.position);
         }
 
         private void DebugAddInventoryAndOrders()
@@ -71,7 +83,7 @@ namespace Restaurant
                 _input.reference.actions["Interact"].performed += AutoCraftOrderedRecipes;
             }
         }
-        
+
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag(Tags.Player) && other.GetComponent<PhotonView>().IsMine)
