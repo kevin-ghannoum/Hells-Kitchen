@@ -38,13 +38,13 @@ namespace Enemies
                 return;
 
             var target = FindClosestPlayer();
-            hiveList = GameObject.FindGameObjectsWithTag("Hive");
+            hiveList = GameObject.FindGameObjectsWithTag(Tags.Hive);
             timeCounter += Time.deltaTime;
             if (hiveList.Length > 0)
             {
                 targetHive = checkHive(hiveList);
 
-                if (Vector3.Distance(transform.position, target.transform.position) < attackRange)
+                if (target != null && Vector3.Distance(transform.position, target.transform.position) < attackRange)
                 {
                     agent.enabled = true;
                     agent.Target = target.transform.position;
@@ -67,7 +67,7 @@ namespace Enemies
             }
             else
             {
-                if (Vector3.Distance(transform.position, target.transform.position) < attackRange)
+                if (target != null && Vector3.Distance(transform.position, target.transform.position) < attackRange)
                 {
                     agent.Target = target.transform.position;
 

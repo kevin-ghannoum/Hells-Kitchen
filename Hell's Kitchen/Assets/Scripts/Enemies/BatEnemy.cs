@@ -1,14 +1,12 @@
-﻿using System;
-using Common.Enums;
+﻿using Common.Enums;
 using Common.Interfaces;
 using Enemies.Enums;
 using Photon.Pun;
-using Player;
 using UnityEngine;
 
 namespace Enemies
 {
-    public class EnemyBat : Enemy
+    public class BatEnemy : Enemy
     {
         [Header("General")]
         [SerializeField] private float aggroRadius = 20.0f;

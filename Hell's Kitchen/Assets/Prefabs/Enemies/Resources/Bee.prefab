@@ -55,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1038899815215437495}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children:
   - {fileID: 5319345888609120647}
@@ -537,7 +537,7 @@ GameObject:
   - component: {fileID: 8790827903391793718}
   - component: {fileID: 8790827903391793719}
   - component: {fileID: -875698226314182790}
-  - component: {fileID: 4609337136092379524}
+  - component: {fileID: 667553928399116545}
   - component: {fileID: -6431665584713940296}
   - component: {fileID: 252648149756377770}
   - component: {fileID: -6145409256638899472}
@@ -616,14 +616,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afd420c264afa84ba3237d0d7e6c837, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ArrivalRadius: 0.5
+  ArrivalRadius: 1
   MidPointArrivalRadius: 0.5
   TimeToTarget: 0.5
   MaxVelocity: 5
   rigidbody: {fileID: 8790827903391793718}
   standStill: 0
---- !u!135 &4609337136092379524
-SphereCollider:
+--- !u!136 &667553928399116545
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -632,9 +632,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
   m_Radius: 0.8
-  m_Center: {x: 0, y: 0.8, z: 0}
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!95 &-6431665584713940296
 Animator:
   serializedVersion: 3

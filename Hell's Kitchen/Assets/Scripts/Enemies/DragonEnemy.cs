@@ -15,11 +15,11 @@ namespace Enemies
         [SerializeField] private float followRange;
         [SerializeField] private float attackDamage;
         [SerializeField] private float attackRate;
+        
         private float distance;
         private float timeCounter = 5;
         private AudioClip attack;
         private AudioSource dragonAudio;
-        private int audioController = 0;
 
         private void Start()
         {
@@ -35,6 +35,9 @@ namespace Enemies
                 return;
 
             var target = FindClosestPlayer();
+            if (target == null)
+                return;
+            
             timeCounter += Time.deltaTime;
             distance = Vector3.Distance(transform.position, target.transform.position);
 
@@ -53,10 +56,6 @@ namespace Enemies
                     Invoke("resumeFollow", 1f);
                     timeCounter = 0;
                 }
-            }
-            else
-            {
-                audioController = 0;
             }
         }
 

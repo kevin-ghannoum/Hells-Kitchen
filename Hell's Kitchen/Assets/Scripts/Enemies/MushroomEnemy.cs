@@ -13,11 +13,11 @@ namespace Enemies
         [SerializeField] private float attackRange;
         [SerializeField] private GameObject bullet;
         [SerializeField] private Transform bulletPos;
+        [SerializeField] private Animator anime;
+        
         private float timeCounter = 2;
         private Vector3 direction;
-
-        [SerializeField] private Animator anime;
-
+        
         private void Start()
         {
             if (!photonView.IsMine)
@@ -32,6 +32,9 @@ namespace Enemies
                 return;
 
             var target = FindClosestPlayer();
+            if (target == null)
+                return;
+            
             timeCounter += Time.deltaTime;
             direction = target.transform.position - transform.position;
 

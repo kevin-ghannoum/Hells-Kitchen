@@ -37,11 +37,13 @@ namespace Enemies
                 return;
 
             var target = FindClosestPlayer();
+            if (target == null)
+                return;
+            
             timeCounter += Time.deltaTime;
             damageTimeCounter += Time.deltaTime;
             distance = Vector3.Distance(transform.position, target.transform.position);
-
-            if (target != null && distance < attackRange)
+            if (distance < attackRange)
             {
                 transform.LookAt(target.transform);
                 RaycastHit hit;
