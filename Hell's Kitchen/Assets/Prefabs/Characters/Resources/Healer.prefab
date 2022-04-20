@@ -20064,6 +20064,7 @@ MonoBehaviour:
   followDistance: 2
   attackRange: 15
   searchRange: 17
+  deathSound: {fileID: 8300000, guid: b5d3dbae8b145da43919908236e9f922, type: 3}
   player: {fileID: 0}
   hitPoints: 0
   fleePoint: {x: 0, y: 0, z: 0}

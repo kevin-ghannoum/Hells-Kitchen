@@ -15,17 +15,19 @@ public class SousChef : MonoBehaviour, IKillable
     [SerializeField] public float maxHealth;
     [SerializeField] public GameObject targetEnemy;
     [SerializeField] public GameObject targetLoot;
-    
+
     [SerializeField] public float followDistance;
     [SerializeField] public float attackRange;
     [SerializeField] public float searchRange; // must be bigger than follow Distance and attackRange
-    
+
+    [SerializeField] AudioClip deathSound;
+
     public GameObject player;
     public float hitPoints;
     public float HitPoints => hitPoints;
 
     private PhotonView _photonView;
-    
+
     public PhotonView PhotonView { get => _photonView; }
 
     GameObject gameStateManager;
@@ -46,20 +48,20 @@ public class SousChef : MonoBehaviour, IKillable
         bool enemyFound = false;
 
         // find new enemy target if none or out of range
-        if(targetEnemy == null || (targetEnemy != null && Vector3.Distance(targetEnemy.transform.position, transform.position) > searchRange))
+        if (targetEnemy == null || (targetEnemy != null && Vector3.Distance(targetEnemy.transform.position, transform.position) > searchRange))
         {
             enemyFound = FindEnemy();
         }
 
         // if no ememy found around, find a new loot target
         // makes sure to deal with enemies nearby first
-        if(!enemyFound)
+        if (!enemyFound)
         {
             print("looking for loot...");
-            if(targetLoot == null || (targetLoot != null && Vector3.Distance(targetLoot.transform.position, transform.position) > searchRange))
+            if (targetLoot == null || (targetLoot != null && Vector3.Distance(targetLoot.transform.position, transform.position) > searchRange))
             {
                 FindLoot();
-            }          
+            }
         }
     }
 
@@ -74,19 +76,23 @@ public class SousChef : MonoBehaviour, IKillable
         //    targetEnemy = null;
 
         // enemy found, return true
-        if (targetEnemy != null){
+        if (targetEnemy != null)
+        {
             return true;
         }
 
         return false;
     }
 
-    public void FindLoot() {
+    public void FindLoot()
+    {
         Collider[] colliders = Physics.OverlapSphere(transform.position, searchRange, 1 << 9);    //collectibles layer mask
         colliders = colliders.OrderBy(c => (transform.position - c.transform.position).sqrMagnitude).ToArray();
         bool found = false;
-        foreach (Collider collider in colliders) {
-            if (collider.tag == "Item") {
+        foreach (Collider collider in colliders)
+        {
+            if (collider.tag == "Item")
+            {
                 targetLoot = collider.gameObject;
                 found = true;
             }
@@ -177,7 +183,7 @@ public class SousChef : MonoBehaviour, IKillable
     {
         return ((hitPoints / maxHealth) * 100) < 60;
     }
-    
+
     [PunRPC]
     public void TakeDamage(float dmg)
     {
@@ -189,13 +195,20 @@ public class SousChef : MonoBehaviour, IKillable
                 Die();
         }
     }
-    
+
     public void Die()
     {
         Debug.Log("'" + gameObject.name + "' got kilt");
+        _photonView.RPC(nameof(PlayDeathSoundRPC), RpcTarget.All);
         PhotonNetwork.Destroy(gameObject);
     }
-    
+
+    [PunRPC]
+    private void PlayDeathSoundRPC()
+    {
+        AudioSource.PlayClipAtPoint(deathSound, transform.position);
+    }
+
     public GameObject FindClosestPlayer()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag(Tags.Player);
