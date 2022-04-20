@@ -61,7 +61,7 @@ namespace Restaurant
         private int CalculateNumCustomers()
         {
             if (GameStateData.hiddenLevel == 0)
-                return 2;
+                return 0;
 
             int randomVariation = Mathf.FloorToInt(GameStateData.hiddenLevel * 1.5f) + Random.Range(0, 2);
             return Mathf.Clamp(randomVariation, 0, maxCustomers);

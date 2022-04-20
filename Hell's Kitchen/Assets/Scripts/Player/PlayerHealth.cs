@@ -107,21 +107,14 @@ namespace Player
             Invoke(nameof(ReturnToRestaurant), transitionToRestaurantTime);
         }
 
-        private void ReturnToRestaurant()
-        {
-            photonView.RPC(nameof(ReturnToRestaurantRPC), RpcTarget.All);
-        }
-
         [PunRPC]
-        private void PlayDeathSoundRPC()
+        public void PlayDeathSoundRPC()
         {
             AudioSource.PlayClipAtPoint(deathSound, transform.position);
         }
-
-        [PunRPC]
-        private void ReturnToRestaurantRPC()
+        
+        private void ReturnToRestaurant()
         {
-            Debug.Log("ReturnToRestaurantRPC");
             var playerController = gameObject.GetComponent<PlayerController>();
             if (playerController)
             {
@@ -132,10 +125,8 @@ namespace Player
                     heldWeapon.RemoveFromPlayer();
                 }
             }
-
-            GameStateData.playerCurrentHitPoints = GameStateData.playerMaxHitPoints;
+            
             SceneManager.Instance.LoadRestaurantScene();
         }
-
     }
 }

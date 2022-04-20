@@ -37,8 +37,7 @@ namespace Dungeon_Generation
                     heldWeapon.RemoveFromPlayer();
                 }
             }
-
-            GameStateData.playerCurrentHitPoints = GameStateData.playerMaxHitPoints;
+            
             SceneManager.Instance.LoadRestaurantScene(true);
         }
     }
