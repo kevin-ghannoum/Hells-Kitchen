@@ -1,3 +1,4 @@
+using Common.Enums;
 using Common.Interfaces;
 using UnityEngine;
 using UnityEngine.AI;
@@ -23,7 +24,7 @@ public class SousChef : MonoBehaviour, IKillable
     GameObject gameStateManager;
     void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = FindClosestPlayer();
         hitPoints = maxHealth;
         agent.Target = player.transform.position;
         agent.ArrivalRadius = followDistance;
@@ -33,6 +34,7 @@ public class SousChef : MonoBehaviour, IKillable
 
     void Update()
     {
+        player = FindClosestPlayer();
         bool enemyFound = false;
 
         // find new enemy target if none or out of range
@@ -203,5 +205,22 @@ public class SousChef : MonoBehaviour, IKillable
     {
         Debug.Log("'" + gameObject.name + "' got kilt");
         Destroy(gameObject);
+    }
+    
+    public GameObject FindClosestPlayer()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag(Tags.Player);
+        float closestDist = float.MaxValue;
+        GameObject closestPlayer = null;
+        foreach (var player in players)
+        {
+            float dist = Vector3.Distance(transform.position, player.transform.position);
+            if (dist < closestDist)
+            {
+                closestDist = dist;
+                closestPlayer = player;
+            }
+        }
+        return closestPlayer;
     }
 }
