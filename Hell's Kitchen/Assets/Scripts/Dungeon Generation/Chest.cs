@@ -61,25 +61,24 @@ namespace Dungeon_Generation
         {
             if (_isLooted)
                 return;
-
-            _animator.SetTrigger(ObjectAnimator.OpenChest);
+            
             var amount = GetRandomAmountInRange();
             photonView.RPC(nameof(LootChestRPC), RpcTarget.All, amount);
-            photonView.RPC(nameof(PlayChestSoundRPC), RpcTarget.All);
         }
-
-        [PunRPC]
-        private void PlayChestSoundRPC()
-        {
-            AudioSource.PlayClipAtPoint(chestSound, transform.position);
-        }
-
+        
         [PunRPC]
         private void LootChestRPC(int amount)
         {
             _isLooted = true;
             toggleUI.IsDisabled = true;
+            
             AdrenalinePointsUI.SpawnGoldNumbers(transform.position + 2.0f * Vector3.up, amount);
+            AudioSource.PlayClipAtPoint(chestSound, transform.position);
+            
+            if (photonView.IsMine)
+            {
+                _animator.SetTrigger(ObjectAnimator.OpenChest);
+            }
             if (PhotonNetwork.IsMasterClient)
             {
                 GameStateManager.SetCashMoney(GameStateData.cashMoney + amount);
