@@ -1,5 +1,4 @@
 ﻿using Common;
-using Common.Enums;
 using Input;
 using Photon.Pun;
 using Photon.Realtime;
