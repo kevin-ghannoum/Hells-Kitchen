@@ -94,7 +94,7 @@ public class PathfindingAgent : MonoBehaviour
 
     public Pathfinding.PathNode currentNode => _path; //using for teleport
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         var nodes = _path;
         while (nodes.Next != null) {
@@ -103,11 +103,10 @@ public class PathfindingAgent : MonoBehaviour
             nodes = nodes.Next;
 
         }
-    }
+    }*/
 
-    public void UpdatePath(Pathfinding.PathNode node) {
+    public void UpdatePath(Pathfinding.PathNode node) { //using for teleport
         _path = node;
-        
     }
 
 }

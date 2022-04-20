@@ -191,8 +191,36 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1737616103}
     - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
+      propertyPath: maxMazeSize
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
+      propertyPath: minMazeSize
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
+      propertyPath: rockSpawnRate
+      value: 0.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
+      propertyPath: chestSpawnRate
+      value: 0.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
       propertyPath: enemySpawnRate
-      value: 0.308
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
+      propertyPath: torchSpawnRate
+      value: 0.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
+      propertyPath: debrisSpawnRate
+      value: 0.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
+      propertyPath: windowSpawnRate
+      value: 0.21
       objectReference: {fileID: 0}
     - target: {fileID: 2752677855204124927, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
       propertyPath: m_Name
@@ -663,6 +691,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BGM
       objectReference: {fileID: 0}
+    - target: {fileID: 800718221488657217, guid: 8d13a85c2f2860c42ae4c8d90b00b7d3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 800718221488657219, guid: 8d13a85c2f2860c42ae4c8d90b00b7d3, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -767,6 +799,10 @@ PrefabInstance:
     - target: {fileID: 4362474867069765074, guid: cf4e945f8780c4a468d5ba3246ec8224, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8080431647944246264, guid: cf4e945f8780c4a468d5ba3246ec8224, type: 3}
+      propertyPath: maxVelocity
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf4e945f8780c4a468d5ba3246ec8224, type: 3}
