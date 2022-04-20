@@ -111,8 +111,10 @@ public class SousChef : MonoBehaviour, IKillable
             Vector3 direction = new Vector3 (Mathf.Cos (i), 0, Mathf.Sin (i)).normalized * searchRange;
 
             //Debug.DrawRay(transform.position + Vector3.up / 2, direction, Color.yellow);
-            if(Physics.Raycast(transform.position + Vector3.up / 2, direction, out hit, searchRange)){
-                if(hit.transform.gameObject.layer == LayerMask.NameToLayer("Loot")){
+            if(Physics.Raycast(transform.position + Vector3.up / 2, direction, out hit, searchRange))
+            {
+                if(hit.transform.gameObject.layer == LayerMask.NameToLayer("Collectibles"))
+                {
                     float currentDistance = (hit.transform.position - this.transform.position).magnitude;
                     if(currentDistance < distance){
                         // find the enemy with closest distance

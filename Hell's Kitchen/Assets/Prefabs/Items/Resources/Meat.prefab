@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 545065956}
   - component: {fileID: 7412162126803564479}
   - component: {fileID: 4683577242371194373}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Meat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,6 +155,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f80713d164bbe584498c18810815a95e, type: 3}
       propertyPath: m_Name
       value: Steak
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f80713d164bbe584498c18810815a95e, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f80713d164bbe584498c18810815a95e, type: 3}

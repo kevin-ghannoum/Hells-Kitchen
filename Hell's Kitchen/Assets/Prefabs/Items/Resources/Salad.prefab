@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4639125277387994433}
   - component: {fileID: 4053595660078315509}
   - component: {fileID: 7925288004716065456}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Lettuce_Whole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 663317544760428540}
   - component: {fileID: 3421540210328960449}
   - component: {fileID: 6815042394789012180}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Salad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 9036770475120454189}
   - component: {fileID: 4215552866325214624}
   - component: {fileID: 908411724918545306}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CookingPot2_Soup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -277,7 +277,7 @@ GameObject:
   - component: {fileID: 2248627524118154741}
   - component: {fileID: 4909120207524099479}
   - component: {fileID: 860947641816896255}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Tomato_Slice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
