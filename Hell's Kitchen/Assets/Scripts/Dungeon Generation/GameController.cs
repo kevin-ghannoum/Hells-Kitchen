@@ -18,6 +18,7 @@ namespace Dungeon_Generation
         [SerializeField] private ClockUI clock;
         [SerializeField] public Transform mazeStart;
         [SerializeField] private PlayerSpawner playerSpawner;
+        [SerializeField] private PhotonView photonView;
 
         private MazeConstructor _generator;
 
@@ -29,23 +30,28 @@ namespace Dungeon_Generation
         public void StartNewGame()
         {
             StartNewMaze();
-            if (GameStateData.player == null)
-            {
-                playerSpawner.SpawnPlayerInScene();
-            }
-            else
-            {
-                Debug.Log(mazeStart.position);
-                GameStateData.player.transform.position = mazeStart.position;
-                GameStateData.player.transform.rotation = mazeStart.rotation;
-            }
-            SetUpPlayerWeapon();
+            SpawnPlayers();
             SetDungeonClock();
         }
         
         public void StartNewMaze()
         {
             _generator.GenerateNewMaze();
+        }
+
+        public void SpawnPlayers()
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                photonView.RPC(nameof(SpawnLocalPlayer), RpcTarget.All);
+            }
+        }
+
+        [PunRPC]
+        public void SpawnLocalPlayer()
+        {
+            playerSpawner.SpawnPlayerInScene();
+            SetUpPlayerWeapon();
         }
 
         private void SetUpPlayerWeapon()
@@ -69,16 +75,6 @@ namespace Dungeon_Generation
             var weaponInstance = PhotonNetwork.Instantiate(weapon.WeaponModel.Prefab.name, Vector3.zero, Quaternion.identity);
             weaponInstance.GetComponent<IPickup>()?.PickUp();
         }
-
-        // private void MovePlayerToStart()
-        // {
-        //     var player = GameObject.FindWithTag(Tags.Player);
-        //     var characterController = player.GetComponent<CharacterController>();
-        //     characterController.enabled = false;
-        //     var playerTransform = player.transform;
-        //     playerTransform.transform.localPosition = mazeStart.position;
-        //     characterController.enabled = true;
-        // }
 
         private void SetDungeonClock()
         {

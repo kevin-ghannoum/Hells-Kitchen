@@ -76,6 +76,7 @@ namespace Common
         private void LoadDungeonRPC()
         {
             photonView.RPC(nameof(DestroyPlayerRPC), RpcTarget.All);
+            PhotonNetwork.DestroyAll();
             PhotonNetwork.LoadLevel(Scenes.Dungeon);
         }
 
@@ -83,6 +84,7 @@ namespace Common
         private void LoadGameOverRPC()
         {
             photonView.RPC(nameof(DestroyPlayerRPC), RpcTarget.All);
+            PhotonNetwork.DestroyAll();
             PhotonNetwork.LoadLevel(Scenes.GameOver);
         }
         

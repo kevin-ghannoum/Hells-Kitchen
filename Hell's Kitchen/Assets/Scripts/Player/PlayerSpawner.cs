@@ -9,16 +9,18 @@ namespace Player
     {
         [SerializeField] private GameObject playerPrefab;
         [SerializeField] private Transform[] spawnPoints;
+        [SerializeField] public PhotonView photonView;
         public bool shouldSpawnOnAwake = false;
         
         private void Awake()
         {
-            if(!shouldSpawnOnAwake)
+            if (!shouldSpawnOnAwake)
                 return;
             
             SpawnPlayerInScene();
         }
 
+        [PunRPC]
         public void SpawnPlayerInScene()
         {
             int numPlayers = PhotonNetwork.PlayerList.Length - 1;

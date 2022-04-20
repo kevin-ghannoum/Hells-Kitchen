@@ -36,10 +36,13 @@ namespace Enemies
                 return;
             
             var player = FindClosestPlayer();
-            if (Vector3.Distance(player.transform.position, transform.position) < aggroRadius)
+            if (player != null)
             {
-                agent.Target = player.transform.position;
-                PerformAttack(player);
+                if (Vector3.Distance(player.transform.position, transform.position) < aggroRadius)
+                {
+                    agent.Target = player.transform.position;
+                    PerformAttack(player);
+                }
             }
         }
 

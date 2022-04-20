@@ -1,9 +1,11 @@
-﻿using Common;
+﻿using System;
+using Common;
 using Common.Enums;
 using Input;
 using Photon.Pun;
 using UI;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 namespace Dungeon_Generation
@@ -30,24 +32,42 @@ namespace Dungeon_Generation
             return Random.Range(amountMinInclusive, amountMaxExclusive);
         }
 
-        private void OnTriggerStay(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
-            if (!_isLooted && other.gameObject.CompareTag(Tags.Player))
+            if (other.gameObject.CompareTag(Tags.Player))
             {
                 var pv = other.gameObject.GetComponent<PhotonView>();
-                if (pv.IsMine && _input.interact)
+                if (pv.IsMine)
                 {
-                    _isLooted = true;
-                    _animator.SetTrigger(ObjectAnimator.OpenChest);
-                    
-                    var amount = GetRandomAmountInRange();
-                    photonView.RPC(nameof(LootChest), RpcTarget.All, amount);
+                    _input.reference.actions["Interact"].performed += LootChest;
+                }
+            }
+        }
+        
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject.CompareTag(Tags.Player))
+            {
+                var pv = other.gameObject.GetComponent<PhotonView>();
+                if (pv.IsMine)
+                {
+                    _input.reference.actions["Interact"].performed -= LootChest;
                 }
             }
         }
 
+        private void LootChest(InputAction.CallbackContext context)
+        {
+            if (_isLooted)
+                return;
+            
+            _animator.SetTrigger(ObjectAnimator.OpenChest);
+            var amount = GetRandomAmountInRange();
+            photonView.RPC(nameof(LootChestRPC), RpcTarget.All, amount);
+        }
+
         [PunRPC]
-        private void LootChest(int amount)
+        private void LootChestRPC(int amount)
         {
             _isLooted = true;
             toggleUI.IsDisabled = true;

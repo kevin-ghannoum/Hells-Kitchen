@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,6 +33,16 @@ namespace Input
         {
             if (Instance == null)
                 Instance = this;
+
+            Debug.Log("INPUT MANAGER AWAKE");
+            foreach (var action in reference.actions)
+            {
+                Type type = action.GetType();
+                var field = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).FirstOrDefault(f => f.Name.Equals("m_OnPerformed"));
+                var performed = field.GetValue(action);
+                var method = performed.GetType().GetMethods().FirstOrDefault(m => m.Name == "Clear");
+                method.Invoke(performed, new object[0]);
+            }
         }
 
         private void OnDestroy()

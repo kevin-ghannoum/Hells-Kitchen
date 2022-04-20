@@ -20,12 +20,7 @@ namespace UI
         private void OnDestroy()
         {
             // return to game before leaving to resume timescale and return to defaults
-            ResumeGame(); 
-            
-            if (!_input)
-                return;
-
-            Debug.Log("Destroy PAUSE MENU");
+            ResumeGame();
             _input.reference.actions["OpenPauseMenu"].performed -= OpenPauseMenu;
         }
 

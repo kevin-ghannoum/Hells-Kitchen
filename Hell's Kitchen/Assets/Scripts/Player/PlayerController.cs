@@ -56,7 +56,7 @@ namespace Player
 
         private void OnDestroy()
         {
-            if (_photonView.IsMine && _input)
+            if (_photonView.IsMine)
             {
                 _input.reference.actions["Roll"].performed -= Roll;
                 _input.reference.actions["PickUp"].performed -= PickUp;

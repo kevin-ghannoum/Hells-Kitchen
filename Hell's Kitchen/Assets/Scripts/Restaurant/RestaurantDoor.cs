@@ -23,31 +23,16 @@ public class RestaurantDoor : MonoBehaviour
     private static IRecipe[] _availableRecipes;
 
     private int _numCustomers = 0;
-    private bool _isInTrigger;
 
     private void Awake()
     {
         _availableRecipes = new IRecipe[] {new Recipes.Hamburger(), new Recipes.Salad(), new Recipes.Sushi()};
-        if (!_input)
-            return;
-
-        _input.reference.actions["Interact"].performed += LeaveRestaurant;
-    }
-
-    private void OnDestroy()
-    {
-        if (!_input)
-            return;
-        
-        _input.reference.actions["Interact"].performed -= LeaveRestaurant;
     }
 
     private void LeaveRestaurant(InputAction.CallbackContext obj)
     {
-        if (!_isInTrigger)
-            return;
-        
         ImposeFine();
+        _input.reference.actions["Interact"].performed -= LeaveRestaurant;
         SceneManager.Instance.LoadDungeonScene();
     }
 
@@ -80,13 +65,16 @@ public class RestaurantDoor : MonoBehaviour
     {
         if (other.CompareTag(Tags.Customer))
         {
-           
             _numCustomers++;
         }
 
         if (other.gameObject.CompareTag(Tags.Player))
         {
-            _isInTrigger = true;
+            var pv = other.GetComponent<PhotonView>();
+            if (pv != null && pv.IsMine)
+            {
+                _input.reference.actions["Interact"].performed += LeaveRestaurant;
+            }
         }
     }
 
@@ -94,13 +82,16 @@ public class RestaurantDoor : MonoBehaviour
     {
         if (other.CompareTag(Tags.Customer))
         {
-            _isInTrigger = false;
             _numCustomers--;
         }
         
         if (other.gameObject.CompareTag(Tags.Player))
         {
-            _isInTrigger = false;
+            var pv = other.GetComponent<PhotonView>();
+            if (pv != null && pv.IsMine)
+            {
+                _input.reference.actions["Interact"].performed -= LeaveRestaurant;
+            }
         }
     }
 }
