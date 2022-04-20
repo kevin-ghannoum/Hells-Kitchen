@@ -20,8 +20,11 @@ public class PathfindingAgent : MonoBehaviour
     [Header("References")]
     [SerializeField]
     private new Rigidbody rigidbody;
-    
+
+    public bool standStill = false;
     public bool IsArrived => _path == null;
+    public bool IsMoving => Velocity.magnitude > 0.1f;
+    public Pathfinding.PathNode CurrentNode => _path;
 
     private Pathfinding.PathNode _path;
     private Vector3 _target;

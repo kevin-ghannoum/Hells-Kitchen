@@ -84,6 +84,7 @@ MonoBehaviour:
   TimeToTarget: 0.2
   MaxVelocity: 4
   rigidbody: {fileID: 8745474263421561122}
+  standStill: 0
 --- !u!114 &5040629191358546222
 MonoBehaviour:
   m_ObjectHideFlags: 0

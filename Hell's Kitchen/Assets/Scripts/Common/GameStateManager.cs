@@ -140,7 +140,7 @@ namespace Common
 
         public bool IsLowHP()
         {
-            return ((playerCurrentHitPoints / playerMaxHitPoints) * 100) < 60;
+            return ((GameStateData.playerCurrentHitPoints / GameStateData.playerMaxHitPoints) * 100) < 60;
         }
     }
 }

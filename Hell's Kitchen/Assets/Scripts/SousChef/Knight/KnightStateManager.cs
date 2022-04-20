@@ -28,8 +28,8 @@ public class KnightStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gameObject.GetComponent<Animator>().SetBool("isWalking", sc.agent.IsMoving());
-        gameObject.GetComponent<Animator>().SetBool("isRunning", sc.agent.IsMoving());
+        gameObject.GetComponent<Animator>().SetBool("isWalking", sc.agent.IsMoving);
+        gameObject.GetComponent<Animator>().SetBool("isRunning", sc.agent.IsMoving);
         currentState.UpdateState(this);
     }
 

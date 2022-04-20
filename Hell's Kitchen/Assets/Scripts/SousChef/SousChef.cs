@@ -1,6 +1,7 @@
 using Common.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -22,6 +23,8 @@ public class SousChef : MonoBehaviour, IKillable
     [SerializeField] public GameObject targetEnemy;
     // public Transform currentEnemyTarget { get; set; }
     [SerializeField] public GameObject targetLoot;
+
+    public PhotonView PhotonView => null;
     // public Transform currentLootTarget { get; set; }
 
     GameObject gameStateManager;
@@ -52,16 +55,6 @@ public class SousChef : MonoBehaviour, IKillable
                 FindLoot();
             }          
         }
-    }
-
-
-
-    public void Search()
-    {
-    }
-
-    public void PickUp()
-    {
     }
 
     public bool FindEnemy()

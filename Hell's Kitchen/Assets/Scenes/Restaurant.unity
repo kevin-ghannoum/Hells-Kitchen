@@ -259,7 +259,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponSlotPrefab: {fileID: 5702623046459068291, guid: baeec416b3dfa5448b83bc9d4a659fd1, type: 3}
-  buttonPrefab: {fileID: 8602964161585771657, guid: 7e24a9948e73d73428146012df3846b4, type: 3}
   gridLayout: {fileID: 1525817435}
   errorText: {fileID: 1646715774}
 --- !u!4 &19397220 stripped
@@ -1927,7 +1926,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3562675154134291896, guid: 9ada5b05506059547a13c4326c596216, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.27169037
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3562675154134291896, guid: 9ada5b05506059547a13c4326c596216, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8201,7 +8200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4771682811075462, guid: b57f0cfd728a07b42b9c41c96ebadbfc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -13.08
+      value: -13.24
       objectReference: {fileID: 0}
     - target: {fileID: 4771682811075462, guid: b57f0cfd728a07b42b9c41c96ebadbfc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -13921,7 +13920,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4148398408250564, guid: 649674c99c61c444b979b7b5cd82232d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -13.07
+      value: -13.24
       objectReference: {fileID: 0}
     - target: {fileID: 4148398408250564, guid: 649674c99c61c444b979b7b5cd82232d, type: 3}
       propertyPath: m_LocalPosition.z

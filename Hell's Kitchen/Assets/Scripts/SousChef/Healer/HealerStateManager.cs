@@ -40,7 +40,7 @@ public class HealerStateManager : MonoBehaviour
     float delayBetweenTeleports = 0.75f;
     float _delayBetweenTeleports = 0f;
     bool canTeleport() => _delayBetweenTeleports >= delayBetweenTeleports;
-    bool shouldTeleport() => !sc.agent.standStill && sc.agent.IsMoving() && sc.agent.Target != null && (Vector3.Distance(transform.position, sc.agent.Target) > 15);
+    bool shouldTeleport() => !sc.agent.standStill && sc.agent.IsMoving && sc.agent.Target != null && (Vector3.Distance(transform.position, sc.agent.Target) > 15);
     //bool shouldTeleport() => !sc.agent.standStill && sc.agent.Target != null && (Vector3.Distance(transform.position, sc.agent.Target) > 15);
 
     //implemented from https://web.archive.org/web/20060909012810/http://local.wasp.uwa.edu.au/~pbourke/geometry/sphereline/
@@ -79,8 +79,8 @@ public class HealerStateManager : MonoBehaviour
 
 
         _attackCooldown += Time.deltaTime;
-        gameObject.GetComponent<Animator>().SetBool("isWalking", sc.agent.IsMoving());
-        gameObject.GetComponent<Animator>().SetBool("isRunning", sc.agent.IsMoving());
+        gameObject.GetComponent<Animator>().SetBool("isWalking", sc.agent.IsMoving);
+        gameObject.GetComponent<Animator>().SetBool("isRunning", sc.agent.IsMoving);
         currentState.UpdateState(this);
 
         _delayBetweenTeleports += Time.deltaTime;
@@ -88,7 +88,7 @@ public class HealerStateManager : MonoBehaviour
         if (canTeleport() && shouldTeleport())// && !beganTeleport)
         {
             beganTeleport = true;
-            var node = sc.agent.currentNode;
+            var node = sc.agent.CurrentNode;
             Vector3 fxSpawnPos = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
             Vector3 pointOfIntersection = Vector3.zero;
             if (Vector3.Distance(transform.position, sc.agent.Target) < maxTeleportDistance)
