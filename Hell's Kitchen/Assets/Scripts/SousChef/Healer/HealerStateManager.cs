@@ -78,12 +78,13 @@ public class HealerStateManager : MonoBehaviour
     }
     private void Update()
     {
-        if (!GetComponent<PhotonView>().IsMine)
+        var photonView = GetComponent<PhotonView>();
+        if (!photonView.IsMine)
             return;
         
         _attackCooldown += Time.deltaTime;
         animator.SetBool("isWalking", sc.agent.IsMoving);
-        animator.GetComponent<Animator>().SetBool("isRunning", sc.agent.IsMoving);
+        animator.SetBool("isRunning", sc.agent.IsMoving);
         currentState.UpdateState(this);
 
         _delayBetweenTeleports += Time.deltaTime;
@@ -166,7 +167,8 @@ public class HealerStateManager : MonoBehaviour
             Vector3 endSpawnPos = new Vector3(endPos.position.x, transform.position.y, endPos.position.z);
             transform.position = endSpawnPos;//+= teleportDir * teleportDist;
             _delayBetweenTeleports = 0f;
-            Instantiate(endTeleportPrefab, fxEndPos, Quaternion.identity);
+        
+            photonView.RPC(nameof(SpawnTeleportMagic), RpcTarget.All, fxEndPos);
 
             //transform.position += teleportDir * teleportDist;
 
@@ -182,5 +184,11 @@ public class HealerStateManager : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, maxTeleportDistance);
+    }
+
+    [PunRPC]
+    public void SpawnTeleportMagic(Vector3 position)
+    {
+        Instantiate(endTeleportPrefab, position, Quaternion.identity);
     }
 }
