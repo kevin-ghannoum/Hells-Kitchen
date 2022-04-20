@@ -18,7 +18,8 @@ namespace PlayerInventory
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(Tags.Player))
+            // items can be picked up by both the chef (player) and sous-chef
+            if (other.CompareTag(Tags.Player) || other.CompareTag(Tags.SousChef))
             {
                 PlayerController player = other.gameObject.GetComponent<PlayerController>();
                 GameStateManager.AddItemToInventory(item, quantity);
