@@ -226,6 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 604817f80ea14ff3b392a6a9a0912625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cookingSound: {fileID: 8300000, guid: 0e859261776e677479364af91d3cf980, type: 3}
 --- !u!114 &2489670858785083864
 MonoBehaviour:
   m_ObjectHideFlags: 0

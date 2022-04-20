@@ -1,4 +1,5 @@
 ﻿using Input;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace UI
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private GameObject canvas;
         [SerializeField] private Animator animator;
+        [SerializeField] private GameObject connectingToServer;
         [SerializeField] private GameObject mainMenu;
         [SerializeField] private GameObject coopMenu;
 
@@ -18,6 +20,18 @@ namespace UI
             title.outlineColor = Color.black;
             animator.Play("MenuCamera");
             InputManager.Instance.Deactivate();
+        }
+
+        private void Start()
+        {
+            if (!PhotonNetwork.IsConnected)
+            {
+                ShowConnectionMessage();
+            }
+            else
+            {
+                ShowMainMenu();
+            }
         }
 
         public void OnPlay()
@@ -30,14 +44,33 @@ namespace UI
 
         public void CoopMode()
         {
-            mainMenu.SetActive(false);
-            coopMenu.SetActive(true);
+            ShowCoopMenu();
         }
 
         public void Back()
         {
+            ShowMainMenu();
+        }
+
+        public void ShowConnectionMessage()
+        {
+            connectingToServer.SetActive(true);
+            mainMenu.SetActive(false);
+            coopMenu.SetActive(false);
+        }
+
+        public void ShowMainMenu()
+        {
+            connectingToServer.SetActive(false);
             mainMenu.SetActive(true);
             coopMenu.SetActive(false);
+        }
+
+        public void ShowCoopMenu()
+        {
+            connectingToServer.SetActive(false);
+            mainMenu.SetActive(false);
+            coopMenu.SetActive(true);
         }
     }
 }

@@ -13,6 +13,7 @@ TagManager:
   - Customer
   - Enemy
   - SharedDecoration
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -26,9 +27,7 @@ TagManager:
   - Collectibles
   - Characters
   - SousChef
-  - 
-  - 
-  - 
+  - Projectiles
   - 
   - 
   - 

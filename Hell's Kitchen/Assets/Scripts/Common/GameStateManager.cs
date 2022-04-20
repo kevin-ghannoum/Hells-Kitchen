@@ -18,7 +18,6 @@ namespace Common
         [SerializeField] public PhotonView photonView;
         [SerializeField] public InventoryUI inventoryUI;
         [SerializeField] private AudioClip kachingSound;
-        [SerializeField] private AudioClip cookingSound;
 
         private void Awake()
         {
@@ -103,7 +102,6 @@ namespace Common
         {
             GameStateData.inventory.RemoveItemFromInventory(itemInstance, quantity);
             inventoryUI.UpdateInventory(GameStateData.inventory.GetInventoryItems());
-            AudioSource.PlayClipAtPoint(cookingSound, transform.position);
         }
 
         [PunRPC]
