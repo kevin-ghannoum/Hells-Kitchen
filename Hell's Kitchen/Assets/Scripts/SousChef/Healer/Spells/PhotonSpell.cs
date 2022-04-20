@@ -65,7 +65,7 @@ public class PhotonSpell : MonoBehaviour
             aoeDmgDelayAfterExplosion -= Time.deltaTime;
             if (aoeDmgDelayAfterExplosion < 0)
             {
-                if (!hitList.Contains(target) && target.TryGetComponent(out IKillable killable) && !target.CompareTag(Tags.Player) && !target.CompareTag(Tags.SousChef))
+                if (target != null && !hitList.Contains(target) && target.TryGetComponent(out IKillable killable) && !target.CompareTag(Tags.Player) && !target.CompareTag(Tags.SousChef))
                 {
                     hitList.Add(target);
                     killable.TakeDamage(singleTargetDamage);
@@ -82,7 +82,7 @@ public class PhotonSpell : MonoBehaviour
             Destroy(gameObject);
 
       //  if (!stopFollowing)
-            transform.Rotate(new Vector3(0, 5, 0));
+        transform.Rotate(new Vector3(0, 5, 0));
     }
 
     IEnumerator ExecuteAfterTime(float time, GameObject objToRemove)
