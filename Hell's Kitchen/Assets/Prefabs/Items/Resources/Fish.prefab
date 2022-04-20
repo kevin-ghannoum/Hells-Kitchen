@@ -60,8 +60,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3047fd0677ab902469c2c8c6787b4458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quantity: 1
   item: 2
+  quantity: 1
   photonView: {fileID: 8226906815721106678}
 --- !u!114 &8226906815721106678
 MonoBehaviour:

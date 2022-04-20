@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DragonParticleController : MonoBehaviour
@@ -11,8 +9,11 @@ public class DragonParticleController : MonoBehaviour
     }
 
     private void Update() {
-        transform.position = new Vector3(parent.transform.position.x, 
-                                         parent.transform.position.y + 1f,
-                                         parent.transform.position.z);
+        if (parent != null)
+        {
+            transform.position = new Vector3(parent.transform.position.x,
+                parent.transform.position.y + 1f,
+                parent.transform.position.z);
+        }
     }
 }
