@@ -22,11 +22,11 @@ namespace Weapons
         [Header("Throwing")]
         [SerializeField] private float throwSpeed = 35.0f;
         [SerializeField] private float throwAngularSpeed = 180.0f;
-        
+
         [Header("References")]
         [SerializeField]
         private new Rigidbody rigidbody;
-        
+
         protected PlayerController playerController;
         protected Animator playerAnimator;
         private bool _canBePickedUp = true;
@@ -35,8 +35,7 @@ namespace Weapons
 
         protected PhotonView photonView;
 
-        public float Damage
-        {
+        public float Damage {
             get => _damage;
             set => _damage = value;
         }
@@ -60,7 +59,7 @@ namespace Weapons
         {
             GetComponentsFromLocalPlayer();
             _canBePickedUp = false;
-            
+
             TransferOwnership();
             photonView.RPC(nameof(PickUpRPC), RpcTarget.All, true);
             photonView.RPC(nameof(ReparentObjectToPlayerHandRPC), RpcTarget.All, NetworkHelper.GetLocalPlayerPhotonView().ViewID);
@@ -77,7 +76,7 @@ namespace Weapons
         public void RemoveFromPlayer()
         {
             RemoveListeners();
-            
+
             photonView.RPC(nameof(PickUpRPC), RpcTarget.All, false);
             photonView.RPC(nameof(RemoveObjectParentRPC), RpcTarget.All);
             photonView.RPC(nameof(EnableRigidBody), RpcTarget.All);
@@ -90,12 +89,12 @@ namespace Weapons
             transform.rotation = playerController.transform.rotation;
             rigidbody.velocity = playerController.transform.forward * throwSpeed;
             rigidbody.angularVelocity = new Vector3(
-                Random.Range(-throwAngularSpeed, throwAngularSpeed), 
-                Random.Range(-throwAngularSpeed, throwAngularSpeed), 
+                Random.Range(-throwAngularSpeed, throwAngularSpeed),
+                Random.Range(-throwAngularSpeed, throwAngularSpeed),
                 Random.Range(-throwAngularSpeed, throwAngularSpeed)
             );
             RemoveListeners();
-            
+
             photonView.RPC(nameof(PickUpRPC), RpcTarget.All, false);
             photonView.RPC(nameof(RemoveObjectParentRPC), RpcTarget.All);
             photonView.RPC(nameof(EnableRigidBody), RpcTarget.All);
@@ -123,20 +122,17 @@ namespace Weapons
             gameObject.transform.localPosition = position;
             gameObject.transform.localRotation = rotation;
         }
-        
+
         [PunRPC]
         public void RemoveObjectParentRPC()
         {
             transform.SetParent(null);
             transform.localScale = new Vector3(1, 1, 1);
         }
-
-
         
         private Vector3 GetGunHeightAimPoint(Ray mouseAim, RaycastHit hitInfo)
         {
-
-            float gunHeight = playerController.shootHeight.position.y;
+            float gunHeight = playerController.ShootHeight;
             if (hitInfo.collider != null && hitInfo.point.y > gunHeight)
             {
                 Vector3 heightAdjusted = hitInfo.point;
@@ -149,19 +145,17 @@ namespace Weapons
             {
                 return mouseAim.GetPoint(distance);
             }
-            else
-            {
-                return Vector3.zero;
-            }
+
+            return Vector3.zero;
         }
-        public Vector3 aimPoint = Vector3.zero;
+
         public virtual void Use(InputAction.CallbackContext callbackContext)
         {
             Vector2 mouse = Mouse.current.position.ReadValue();
             Ray ray = Camera.main.ScreenPointToRay(mouse);
             if (Physics.Raycast(ray, out RaycastHit hitInfo))
             {
-                aimPoint = GetGunHeightAimPoint(ray, hitInfo);
+                var aimPoint = GetGunHeightAimPoint(ray, hitInfo);
                 aimPoint.y = 0;
                 playerController.FaceTarget(aimPoint);
             }
@@ -183,7 +177,7 @@ namespace Weapons
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.CompareTag(Tags.Player))
+            if (_canBePickedUp && other.CompareTag(Tags.Player))
             {
                 var pv = other.GetComponent<PhotonView>();
                 if (pv != null && pv.IsMine)
@@ -212,7 +206,7 @@ namespace Weapons
             rigidbody.isKinematic = false;
             SetOutline(true);
         }
-        
+
         [PunRPC]
         public void PickUpRPC(bool pickedUp)
         {
@@ -232,7 +226,7 @@ namespace Weapons
             var outline = GetComponent<Outline>();
             if (!outline)
                 return;
-            
+
             outline.enabled = isEnabled;
         }
     }

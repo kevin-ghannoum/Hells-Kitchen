@@ -194,8 +194,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c66aba0752295f04cb5f9915099ffa9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfOrders: 5
   missedOrderPenalty: 10
+  debtCap: -1000
   animator: {fileID: 7490721547737497181}
 --- !u!114 &8635916048967305915
 MonoBehaviour:

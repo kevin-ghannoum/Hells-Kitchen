@@ -82,7 +82,7 @@ public class PathfindingAgent : MonoBehaviour
         }
     }
 
-    private void RecalculatePath()
+    public void RecalculatePath()
     {
         if (Pathfinding.Instance != null && Vector3.Distance(transform.position, Target) > ArrivalRadius)
         {

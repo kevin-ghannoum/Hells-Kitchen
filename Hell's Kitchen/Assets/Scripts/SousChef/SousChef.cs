@@ -23,8 +23,6 @@ public class SousChef : MonoBehaviour, IKillable
     public GameObject player;
     public float hitPoints;
     public float HitPoints => hitPoints;
-    
-    public UnityEvent Killed => throw new System.NotImplementedException();
 
     private PhotonView _photonView;
     

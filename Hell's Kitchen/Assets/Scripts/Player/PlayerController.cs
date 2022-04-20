@@ -20,15 +20,15 @@ namespace Player
         [SerializeField] private float turnSmoothVelocity = 10f;
         [SerializeField] private float speedSmoothVelocity = 10f;
         [SerializeField] private AnimationCurve rollSpeedCurve;
+        [SerializeField] public float ShootHeight = 1.7f;
 
         [Header("Stamina")]
         [SerializeField] private float staminaCostRun = 1.0f;
         [SerializeField] private float staminaCostRoll = 1.0f;
         [SerializeField] private float staminaRegenRate = 1.0f;
 
-        [Header("Hand")]
+        [Header("Transform References")]
         [SerializeField] public Transform CharacterHand;
-        [SerializeField] public Transform shootHeight;
 
         [Header("Melee Attack")]
         [SerializeField] public Transform DamagePosition;
@@ -42,13 +42,15 @@ namespace Player
         private float _speed = 0f;
         private IPickup _currentPickup;
 
+        public Vector3 AimPoint { get; set; }
+
         private void Awake()
         {
             _photonView = GetComponent<PhotonView>();
             _animator = GetComponentInChildren<Animator>();
             _characterController = GetComponent<CharacterController>();
         }
-        
+
         private void Update()
         {
             if (!_photonView.IsMine) return;
@@ -56,23 +58,13 @@ namespace Player
             var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             if (animatorStateInfo.IsName(PlayerAnimator.Move))
             {
-                rollStartup = true;
                 MovePlayer();
-                RotatePlayer();
-            }
-            else if (animatorStateInfo.IsName(PlayerAnimator.Shoot)) {
                 RotatePlayer();
             }
             else if (animatorStateInfo.IsName(PlayerAnimator.Roll))
             {
-                if (rollStartup)
-                    transform.rotation = Quaternion.LookRotation(new Vector3(_input.move.x, 0, _input.move.y));
-                else
-                    RotatePlayer();
-                rollStartup = false;
                 float rollSpeed = rollSpeedCurve.Evaluate(animatorStateInfo.normalizedTime) * (runSpeed - walkSpeed) + walkSpeed;
                 Vector3 movement = Vector3.forward * rollSpeed * Time.deltaTime;
-                movement = Vector3.forward * rollSpeed * Time.deltaTime;
                 _characterController.Move(transform.TransformDirection(movement));
                 _animator.SetFloat(PlayerAnimator.Speed, _speed / runSpeed);
             }
@@ -112,7 +104,7 @@ namespace Player
         {
             _animator.SetTrigger(PlayerAnimator.PickUp);
         }
-        
+
         #endregion
 
         #region PlayerMovement
@@ -129,15 +121,11 @@ namespace Player
 
         private void RotatePlayer()
         {
-            float turnSmoothV = turnSmoothVelocity;
             Vector3 targetDirection = new Vector3(_input.move.x, 0f, _input.move.y);
-            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimator.Shoot)) {
-                targetDirection = clickTarget - transform.position;
-                turnSmoothV*= 1.5f;
+            if (targetDirection != Vector3.zero)
+            {
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirection), turnSmoothVelocity * Time.deltaTime);
             }
-            else if (targetDirection == Vector3.zero)
-                return;
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirection), turnSmoothV * Time.deltaTime);
         }
 
         private float GetMovementSpeed()
@@ -173,18 +161,16 @@ namespace Player
 
         #region PlayerSpaceActions
 
-        Vector3 clickTarget = Vector3.zero;
         public void FaceTarget(Vector3 target)
         {
             if (!_animator)
                 return;
 
-            clickTarget = target;
             var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-            //if (!animatorStateInfo.IsName(PlayerAnimator.Roll) && (animatorStateInfo.IsName(PlayerAnimator.Move) || animatorStateInfo.normalizedTime > 0.5f))
-            if (!animatorStateInfo.IsName(PlayerAnimator.Roll))
+            if (!animatorStateInfo.IsName(PlayerAnimator.Roll) && (animatorStateInfo.IsName(PlayerAnimator.Move) || animatorStateInfo.normalizedTime > 0.5f))
             {
-                //transform.rotation = Quaternion.LookRotation(target - transform.position);
+                AimPoint = target;
+                transform.rotation = Quaternion.LookRotation(target - transform.position);
             }
         }
 
@@ -192,7 +178,7 @@ namespace Player
         {
             if (!_photonView.IsMine)
                 return;
-            
+
             float damage = GetComponentInChildren<WeaponPickup>()?.Damage ?? 0.0f;
             var colliders = Physics.OverlapSphere(DamagePosition.position, DamageRadius, ~(1 << Layers.Player))
                 .Where(c => c.CompareTag(Tags.Enemy));

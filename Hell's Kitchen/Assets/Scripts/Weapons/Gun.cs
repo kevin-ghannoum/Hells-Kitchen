@@ -38,7 +38,7 @@ namespace Weapons
                 return;
 
             photonView.RPC(nameof(PlayGunshotSoundRPC), RpcTarget.All);
-            ShootBullet(playerController.transform.right, playerController.transform.rotation);
+            ShootBullet();
         }
 
         [PunRPC]
@@ -47,21 +47,25 @@ namespace Weapons
             AudioSource.PlayClipAtPoint(gunshotSound, transform.position);
         }
 
-        private void ShootBullet(Vector3 playerRightTransform, Quaternion playerRotation)
+        private void ShootBullet()
         {
-            var direction = base.aimPoint - shootPosition.position;
-            direction.y = 0;
             var position = shootPosition.position;
-            var rotation = playerController.transform.rotation;
-            Vector3 initialPosition = shootPosition.position;
-            initialPosition.y = playerController.shootHeight.position.y;
+            var direction = playerController.AimPoint - position;
+            direction.y = 0;
+            var playerTransform = playerController.transform;
+            var rotation = playerTransform.rotation;
+            position.y = playerController.ShootHeight + playerTransform.position.y;
             
             // Bullets
             for (int i = -bulletCount / 2; i <= bulletCount / 2; i++)
             {
-                var bullet = PhotonNetwork.Instantiate(bulletPrefab.name, position + playerRightTransform * 0.5f * i, rotation * Quaternion.Euler(0, i * bulletSpread, 0));
+                var bullet = PhotonNetwork.Instantiate(
+                    bulletPrefab.name, 
+                    position +  0.5f * i * playerTransform.right, 
+                    rotation * Quaternion.Euler(0, i * bulletSpread, 0)
+                );
                 bullet.GetComponent<Bullet>().Damage = Damage;
-                bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletSpeed;
+                bullet.GetComponent<Rigidbody>().velocity = direction.normalized * bulletSpeed;
                 StartCoroutine(nameof(DestroyBullet), bullet);
             }
 

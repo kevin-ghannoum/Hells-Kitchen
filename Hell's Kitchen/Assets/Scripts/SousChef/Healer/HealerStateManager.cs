@@ -13,13 +13,13 @@ public class HealerStateManager : MonoBehaviour
     public HealerFollowState followState = new HealerFollowState();
     public HealerLootState lootState = new HealerLootState();
     public HealerHealState healState = new HealerHealState();
-    
+
     public Animator animator;
     public Transform magicCircle;
     public Transform healCircle;
     public GameObject startTeleportPrefab;
     public GameObject endTeleportPrefab;
-    
+
     public SousChef sc { get; set; }
     public SpellManager spells { get; set; }
 
@@ -42,7 +42,8 @@ public class HealerStateManager : MonoBehaviour
     float delayBetweenTeleports = 0.75f;
     float _delayBetweenTeleports = 0f;
     bool canTeleport() => _delayBetweenTeleports >= delayBetweenTeleports;
-    bool shouldTeleport() => !sc.agent.standStill && sc.agent.IsMoving && sc.agent.Target != null && (Vector3.Distance(transform.position, sc.agent.Target) > 15);
+    bool shouldTeleport() => !sc.agent.standStill && sc.agent.IsMoving && sc.agent.Target != null &&
+                             (Vector3.Distance(transform.position, sc.agent.Target) > 15);
     //bool shouldTeleport() => !sc.agent.standStill && sc.agent.Target != null && (Vector3.Distance(transform.position, sc.agent.Target) > 15);
 
     //implemented from https://web.archive.org/web/20060909012810/http://local.wasp.uwa.edu.au/~pbourke/geometry/sphereline/
@@ -66,7 +67,7 @@ public class HealerStateManager : MonoBehaviour
         float quadraticSqrtPart = Mathf.Pow(y, 2) - 4 * x * z;
         if (quadraticSqrtPart < 0 || Mathf.Abs(x) < float.Epsilon)
         {
-            intersectionPoints = new Vector3[] { Vector3.zero, Vector3.zero };
+            intersectionPoints = new Vector3[] {Vector3.zero, Vector3.zero};
             return false;
         }
         float u0 = (-y + Mathf.Sqrt(quadraticSqrtPart)) / (2 * x);
@@ -81,7 +82,7 @@ public class HealerStateManager : MonoBehaviour
         var photonView = GetComponent<PhotonView>();
         if (!photonView.IsMine)
             return;
-        
+
         _attackCooldown += Time.deltaTime;
         animator.SetBool("isWalking", sc.agent.IsMoving);
         animator.SetBool("isRunning", sc.agent.IsMoving);
@@ -90,7 +91,7 @@ public class HealerStateManager : MonoBehaviour
         _delayBetweenTeleports += Time.deltaTime;
         Pathfinding.PathNode currentNode = null;
         //return;
-        if (canTeleport() && shouldTeleport())// && !beganTeleport)
+        if (canTeleport() && shouldTeleport()) // && !beganTeleport)
         {
             beganTeleport = true;
             var node = sc.agent.CurrentNode;
@@ -119,12 +120,13 @@ public class HealerStateManager : MonoBehaviour
                         if (lineSphereIntesection(p0, p1, transform.position, maxTeleportDistance, out intersectionPoints))
                         {
                             Debug.DrawLine(transform.position, intersectionPoints[0], Color.blue);
-                            if (Vector3.Distance(p0, transform.position) < maxTeleportDistance && Vector3.Distance(p1, transform.position) > maxTeleportDistance)
+                            if (Vector3.Distance(p0, transform.position) < maxTeleportDistance &&
+                                Vector3.Distance(p1, transform.position) > maxTeleportDistance)
                             {
                                 pointOfIntersection = intersectionPoints[0];
                                 currentNode = node.Next;
 
-                                sc.agent.UpdatePath(node.Next);
+                                sc.agent.RecalculatePath();
                                 break;
 
                             }
@@ -166,13 +168,13 @@ public class HealerStateManager : MonoBehaviour
                 ///xddddd
             }
 
-            Vector3 fxEndPos = endPos.position;//transform.position + (teleportDir * teleportDist);
+            Vector3 fxEndPos = endPos.position; //transform.position + (teleportDir * teleportDist);
             fxEndPos = new Vector3(fxEndPos.x, fxEndPos.y + 2, fxEndPos.z);
             Instantiate(startTeleportPrefab, fxSpawnPos, Quaternion.identity);
             Vector3 endSpawnPos = new Vector3(endPos.position.x, transform.position.y, endPos.position.z);
-            transform.position = endSpawnPos;//+= teleportDir * teleportDist;
+            transform.position = endSpawnPos; //+= teleportDir * teleportDist;
             _delayBetweenTeleports = 0f;
-        
+
             photonView.RPC(nameof(SpawnTeleportMagic), RpcTarget.All, fxEndPos);
 
             //transform.position += teleportDir * teleportDist;
@@ -189,10 +191,10 @@ public class HealerStateManager : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-       /* Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position, maxTeleportDistance);
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawWireSphere(transform.position, sc.searchRange);*/
+        /* Gizmos.color = Color.white;
+         Gizmos.DrawWireSphere(transform.position, maxTeleportDistance);
+         Gizmos.color = Color.magenta;
+         Gizmos.DrawWireSphere(transform.position, sc.searchRange);*/
     }
 
     [PunRPC]
