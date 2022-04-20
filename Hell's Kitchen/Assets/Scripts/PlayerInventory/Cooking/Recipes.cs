@@ -53,7 +53,7 @@ namespace PlayerInventory.Cooking
             public List<(Item item, int quantity)> GetIngredientList()
             {
                 return new List<(Item item, int quantity)>(){
-                    (Items.Fish, 1)
+                    (Items.Fish, 2)
                 };
             }
 

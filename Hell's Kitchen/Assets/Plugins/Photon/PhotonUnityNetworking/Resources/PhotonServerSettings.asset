@@ -56,7 +56,9 @@ MonoBehaviour:
   - PlayDeathSoundRPC
   - PlayGunshotSoundRPC
   - PlayIdleSoundRPC
+  - PlayInsufficientSoundRPC
   - PlayLowHealthSoundRPC
+  - PlayRawSoundRPC
   - PlaySWordSlashSoundRPC
   - PlayTakeDamageSoundRPC
   - RemoveItemFromInventoryRPC
@@ -70,8 +72,6 @@ MonoBehaviour:
   - SpawnLocalPlayer
   - SpawnTeleportMagic
   - TakeDamage
-  - PlayCookingSoundRPC
-  - PlayRawSoundRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

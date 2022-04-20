@@ -12,32 +12,13 @@ namespace PlayerInventory.Cooking
             var inventory = GameStateManager.Instance.GetPlayerInventory();
             if (inventory.GetInventoryItems().Count == 0)
                 return false;
-        
-            Dictionary<Item, bool> ingredientCheckList = new Dictionary<Item, bool>();
             
             foreach (var (item, quantity) in ingredientList)
             {
-                if (inventory.GetInventoryItems().ContainsKey(item.ItemInstance)) // if ingredient in inventory
-                {
-                    if (inventory.GetInventoryItems()[item.ItemInstance] >= quantity * count) // if ingredient qt sufficient
-                    {
-                        ingredientCheckList[item] = true;
-                    }
-                    else
-                    {
-                        ingredientCheckList[item] = false;
-                    }
-                }
-            }
-
-            foreach (var isQtSufficient in ingredientCheckList.Values)
-            {
-                if (!isQtSufficient)
-                {
+                if (!inventory.GetInventoryItems().ContainsKey(item.ItemInstance) || inventory.GetInventoryItems()[item.ItemInstance] < quantity * count )
                     return false;
-                }
-            }                
-        
+            }
+            
             return true;
         }
 
@@ -64,22 +45,5 @@ namespace PlayerInventory.Cooking
         {
             return (IRecipe)Activator.CreateInstance(Type.GetType($"PlayerInventory.Cooking.Recipes+{item}"));
         }
-        
-        #region CookingRecipes
-        public static void CookBurger()
-        {
-            CookRecipe(new Recipes.Hamburger());
-        }
-
-        public static void CookSalad()
-        {
-            CookRecipe(new Recipes.Salad());
-        }
-
-        public static void CookSushi()
-        {
-            CookRecipe(new Recipes.Sushi());
-        }
-        #endregion CookingRecipes
     }
 }
