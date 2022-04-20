@@ -63,6 +63,7 @@ namespace Enemies
         private void setCircle()
         {
             GameObject spell = PhotonNetwork.Instantiate(particle.name, transform.position, Quaternion.identity);
+            spell.GetComponent<DragonParticleController>().parent = this.gameObject;
         }
 
         private void Attack()
