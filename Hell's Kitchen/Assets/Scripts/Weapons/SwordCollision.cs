@@ -12,7 +12,7 @@ namespace Weapons
         {
             var animator = GameObject.FindWithTag(Tags.Player).GetComponentInChildren<Animator>();
             var isSwordAttack = animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimator.SwordAttack);
-            if ( isSwordAttack && collision.gameObject.TryGetComponent(out IKillable killable))
+            if (isSwordAttack && collision.gameObject.TryGetComponent(out IKillable killable) && !collision.gameObject.CompareTag((Tags.SousChef)))
             {
                 killable.TakeDamage(damage);
             }

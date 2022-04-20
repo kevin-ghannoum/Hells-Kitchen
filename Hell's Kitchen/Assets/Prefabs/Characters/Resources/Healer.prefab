@@ -20027,7 +20027,7 @@ MonoBehaviour:
   ArrivalRadius: 0.5
   MidPointArrivalRadius: 0.5
   TimeToTarget: 0.5
-  MaxVelocity: 2
+  MaxVelocity: 5
   rigidbody: {fileID: 4251440629633350836}
   standStill: 0
 --- !u!114 &8080431647944246267
@@ -20057,15 +20057,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3196c66767eea9c4b9a8b7c248c5cdad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 8080431647944246264}
   maxHealth: 100
+  targetEnemy: {fileID: 0}
+  targetLoot: {fileID: 0}
   followDistance: 2
   attackRange: 15
   searchRange: 17
   player: {fileID: 0}
-  agent: {fileID: 8080431647944246264}
   hitPoints: 0
-  targetEnemy: {fileID: 0}
-  targetLoot: {fileID: 0}
   fleePoint: {x: 0, y: 0, z: 0}
   foundFleePoint: 0
 --- !u!114 &8080431647944246020
@@ -20103,7 +20103,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 1323442650017528857}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
