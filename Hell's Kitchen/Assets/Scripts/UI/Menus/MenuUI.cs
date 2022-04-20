@@ -1,4 +1,5 @@
 ﻿using Common;
+using Photon.Pun;
 using UnityEngine;
 
 namespace UI
@@ -14,9 +15,10 @@ namespace UI
         {
             SceneManager.Instance.QuitGame();
         }
-        
+
         public void ReturnToMenu()
         {
+            PhotonNetwork.LeaveRoom();
             SceneManager.Instance.LoadMainMenu();
         }
     }
