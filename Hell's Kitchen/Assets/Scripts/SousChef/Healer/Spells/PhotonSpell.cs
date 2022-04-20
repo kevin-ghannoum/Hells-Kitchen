@@ -2,6 +2,7 @@ using Common.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Common.Enums;
 using UnityEngine;
 
 public class PhotonSpell : MonoBehaviour
@@ -30,7 +31,6 @@ public class PhotonSpell : MonoBehaviour
     private void Start()
     {
         transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
-
     }
 
     bool stopFollowing = false;
@@ -39,8 +39,11 @@ public class PhotonSpell : MonoBehaviour
     {
         if (target != null && !stopFollowing)
             transform.position = target.transform.position;
+        
         spinStartDelay -= Time.deltaTime;
-        if (spinStartDelay < 0 && spinners != null) {
+        
+        if (spinStartDelay < 0 && spinners != null)
+        {
             spinners.gameObject.SetActive(true);
             foreach (Transform chile in spinners)
                 if ((transform.position - chile.position).magnitude > arriveRadius)
@@ -48,19 +51,21 @@ public class PhotonSpell : MonoBehaviour
         }
 
         explosionDelay -= Time.deltaTime;
-        if (explosionDelay < 0) {
+        if (explosionDelay < 0)
+        {
             explosions.gameObject.SetActive(true);
             spinners.gameObject.SetActive(false);
         }
 
         bigExplosionDelay -= Time.deltaTime;
-        if (bigExplosionDelay < 0 && !stopFollowing) {
+        if (bigExplosionDelay < 0 && !stopFollowing)
+        {
             AoE.gameObject.SetActive(true);
             lights.gameObject.SetActive(false);
             aoeDmgDelayAfterExplosion -= Time.deltaTime;
             if (aoeDmgDelayAfterExplosion < 0)
             {
-                if (!hitList.Contains(target) && target.TryGetComponent(out IKillable killable) && target.tag != "Player" && target.tag != "SousChef")
+                if (!hitList.Contains(target) && target.TryGetComponent(out IKillable killable) && !target.CompareTag(Tags.Player) && !target.CompareTag(Tags.SousChef))
                 {
                     hitList.Add(target);
                     killable.TakeDamage(singleTargetDamage);
@@ -86,25 +91,21 @@ public class PhotonSpell : MonoBehaviour
         try
         {
             hitList.Remove(objToRemove);
-            Debug.Log("remove'd");
         }
-        catch (Exception ex) {
-            Debug.Log("xD");
+        catch (Exception e) {
+            Debug.LogError(e.StackTrace);
         }
-        
-        
     }
 
     List<GameObject> hitList = new List<GameObject> ();
     private void OnTriggerStay(Collider other)
     {
         Debug.Log("collided with" + other.name);
-        if (!hitList.Contains(other.gameObject) && other.gameObject.TryGetComponent(out IKillable killable) && other.tag != "Player" && other.tag != "SousChef") {
+        if (!hitList.Contains(other.gameObject) && other.gameObject.TryGetComponent(out IKillable killable) && !other.CompareTag(Tags.Player) && !other.CompareTag(Tags.SousChef)) {
             Destroy(Instantiate(bulletExplosion, other.transform.position, Quaternion.identity), 2);
             hitList.Add(other.gameObject);
             killable.TakeDamage(aoeDamage);
             StartCoroutine(ExecuteAfterTime(AoE_delayBetweenTicks, other.gameObject));
         }
     }
-
 }

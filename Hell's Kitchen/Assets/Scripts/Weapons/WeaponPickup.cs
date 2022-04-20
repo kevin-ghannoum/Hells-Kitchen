@@ -65,7 +65,7 @@ namespace Weapons
             _canBePickedUp = false;
             GameStateData.carriedWeapon = WeaponInstance;
             _photonView.RPC(nameof(ReparentObjectToPlayerHand), RpcTarget.All, viewId);
-           // ReparentObjectToPlayerHand(viewId);
+           ReparentObjectToPlayerHand(viewId);
             _photonView.RPC(nameof(DisableRigidbody), RpcTarget.All);
             AddListeners();
         }

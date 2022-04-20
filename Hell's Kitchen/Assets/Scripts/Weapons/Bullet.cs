@@ -14,7 +14,7 @@ namespace Weapons
         private void OnCollisionEnter(Collision collision)
         {
             var obj = collision.gameObject; // TODO Disable friendly fire with sous-chef
-            if (!obj.CompareTag(Tags.Player))
+            if (!obj.CompareTag(Tags.Player) && !obj.CompareTag(Tags.SousChef))
             {
                 obj.GetComponent<IKillable>()?.TakeDamage(Damage);
                 PhotonNetwork.Destroy(gameObject);

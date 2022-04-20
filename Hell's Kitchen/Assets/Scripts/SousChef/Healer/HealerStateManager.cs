@@ -12,11 +12,13 @@ public class HealerStateManager : MonoBehaviour
     public HealerFollowState followState = new HealerFollowState();
     public HealerLootState lootState = new HealerLootState();
     public HealerHealState healState = new HealerHealState();
+    
     public Animator animator;
     public Transform magicCircle;
     public Transform healCircle;
     public GameObject startTeleportPrefab;
     public GameObject endTeleportPrefab;
+    
     public SousChef sc { get; set; }
     public SpellManager spells { get; set; }
 
@@ -28,7 +30,6 @@ public class HealerStateManager : MonoBehaviour
         currentState = followState;
         currentState.EnterState(this);
     }
-
 
     float attackCooldown = 1.5f;
     float _attackCooldown = 0f;
@@ -76,8 +77,6 @@ public class HealerStateManager : MonoBehaviour
     }
     private void Update()
     {
-
-
         _attackCooldown += Time.deltaTime;
         gameObject.GetComponent<Animator>().SetBool("isWalking", sc.agent.IsMoving());
         gameObject.GetComponent<Animator>().SetBool("isRunning", sc.agent.IsMoving());
