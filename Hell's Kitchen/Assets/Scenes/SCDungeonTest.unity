@@ -192,7 +192,11 @@ PrefabInstance:
       objectReference: {fileID: 1737616103}
     - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
       propertyPath: enemySpawnRate
-      value: 0.308
+      value: 0.029
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752677855204124922, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
+      propertyPath: torchSpawnRate
+      value: 0.554
       objectReference: {fileID: 0}
     - target: {fileID: 2752677855204124927, guid: 1249d4067c8ec1645a54c0229b6b1321, type: 3}
       propertyPath: m_Name

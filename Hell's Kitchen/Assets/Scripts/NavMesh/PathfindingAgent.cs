@@ -77,7 +77,7 @@ public class PathfindingAgent : MonoBehaviour
         if (Vector3.Distance(transform.position, _path.Position) < (_path.Next == null ? ArrivalRadius : 0.5f))
         {
             _path = _path.Next;
-        } 
+        }
     }
 
     private void RecalculatePath()
@@ -93,5 +93,21 @@ public class PathfindingAgent : MonoBehaviour
     public bool PathIsNull() => _path == null;
 
     public Pathfinding.PathNode currentNode => _path; //using for teleport
+
+    /*private void OnDrawGizmos()
+    {
+        var nodes = _path;
+        while (nodes.Next != null) {
+            Debug.DrawLine(nodes.Position, nodes.Next.Position);
+            Gizmos.DrawCube(nodes.Position, Vector3.one);
+            nodes = nodes.Next;
+
+        }
+    }*/
+
+    public void UpdatePath(Pathfinding.PathNode node)
+    { //using for teleport
+        _path = node;
+    }
 
 }

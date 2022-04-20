@@ -113,12 +113,40 @@ namespace Weapons
             gameObject.transform.localRotation = rotation;
         }
 
+
+        
+        private Vector3 GetGunHeightAimPoint(Ray mouseAim, RaycastHit hitInfo)
+        {
+
+            float gunHeight = playerController.shootHeight.position.y;
+            if (hitInfo.collider != null && hitInfo.point.y > gunHeight)
+            {
+                Vector3 heightAdjusted = hitInfo.point;
+                heightAdjusted.y = gunHeight;
+                return heightAdjusted;
+            }
+
+            Plane aimPlane = new Plane(Vector3.up, Vector3.up * gunHeight);
+            if (aimPlane.Raycast(mouseAim, out float distance))
+            {
+                return mouseAim.GetPoint(distance);
+            }
+            else
+            {
+                return Vector3.zero;
+            }
+        }
+        public Vector3 aimPoint = Vector3.zero;
         public virtual void Use(InputAction.CallbackContext callbackContext)
         {
-            Ray mouseRay = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-            Plane floor = new Plane(Vector3.up, 0);
-            floor.Raycast(mouseRay, out float dist);
-            playerController.FaceTarget(mouseRay.GetPoint(dist));
+            Vector2 mouse = Mouse.current.position.ReadValue();
+            Ray ray = Camera.main.ScreenPointToRay(mouse);
+            if (Physics.Raycast(ray, out RaycastHit hitInfo))
+            {
+                aimPoint = GetGunHeightAimPoint(ray, hitInfo);
+                aimPoint.y = 0;
+                playerController.FaceTarget(aimPoint);
+            }
         }
 
         protected virtual void AddListeners()
