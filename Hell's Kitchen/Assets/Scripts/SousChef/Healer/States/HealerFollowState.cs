@@ -13,15 +13,17 @@ public class HealerFollowState : HealerBaseState
 
     public override void UpdateState(HealerStateManager healer)
     {
-        //Debug.Log("@followState_UpdateState");
+        Debug.Log("@followState_UpdateState");
         if (healer.sc.isLowHP() || GameStateManager.Instance.IsLowHP())
         {
+            Debug.Log("@followState_1");
             // heal
             healer.SwitchState(healer.healState);
             return;
         }
         else if (healer.sc.targetEnemy == null && healer.sc.targetLoot == null)
         {
+            Debug.Log("@followState_2");
             // follow
             if (healer.sc.agent.Target != healer.sc.player.transform.position)
             {
@@ -34,12 +36,14 @@ public class HealerFollowState : HealerBaseState
         }
         else if (healer.sc.targetEnemy != null)
         {
+            Debug.Log("@followState_3");
             // enter move to target
             healer.SwitchState(healer.moveToTarget);
             return;
         }
         else if (healer.sc.targetLoot != null)
         {
+            Debug.Log("@followState_4");
             // enter loot state
             healer.SwitchState(healer.lootState);
             return;

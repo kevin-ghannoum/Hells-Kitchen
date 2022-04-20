@@ -79,7 +79,7 @@ public class PathfindingAgent : MonoBehaviour
         if (Vector3.Distance(transform.position, _path.Position) < (_path.Next == null ? ArrivalRadius : MidPointArrivalRadius))
         {
             _path = _path.Next;
-        } 
+        }
     }
 
     private void RecalculatePath()
@@ -89,5 +89,4 @@ public class PathfindingAgent : MonoBehaviour
             _path = Pathfinding.Instance.FindPath(transform.position, Target)?.Next;
         }
     }
-
 }

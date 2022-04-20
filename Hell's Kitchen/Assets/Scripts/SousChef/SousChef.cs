@@ -2,6 +2,7 @@ using Common.Enums;
 using Common.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
@@ -67,58 +68,33 @@ public class SousChef : MonoBehaviour, IKillable
     // find closest enemy in range
     public bool FindEnemy()
     {
-        // cast rays around souschef to search for enemies
-        float distance = Mathf.Infinity;
-        int numOfRays = 20;
+        Collider[] colliders = Physics.OverlapSphere(transform.position, searchRange, 1 << 7);    //enemy layer mask
+        colliders = colliders.OrderBy(c => (transform.position - c.transform.position).sqrMagnitude).ToArray();
+        if (colliders.Length != 0)
+            targetEnemy = colliders[0].gameObject;
+        //else
+        //    targetEnemy = null;
 
-        for(float i = 0; i < 360; i += 2 * Mathf.PI / numOfRays)
-        {
-            RaycastHit hit;
-            Vector3 direction = new Vector3 (Mathf.Cos (i), 0, Mathf.Sin (i)).normalized;
-
-            //Debug.DrawRay(transform.position + Vector3.up / 2, direction * searchRange, Color.green);
-            if(Physics.Raycast(transform.position + Vector3.up / 2, direction, out hit, searchRange))
-            {
-                if(hit.transform.gameObject.layer == Layers.Enemies)
-                {
-                    float currentDistance = (hit.transform.position - this.transform.position).magnitude;
-                    if(currentDistance < distance) // closets enemy
-                    {
-                        targetEnemy = hit.transform.gameObject;
-                        distance = currentDistance;
-                    }
-                }
-            }
+        // enemy found, return true
+        if (targetEnemy != null){
+            return true;
         }
 
-        return (targetEnemy != null); // TRUE if found
+        return false;
     }
 
-    public void FindLoot()
-    {
-        // cast rays around souschef to search for loot
-        float distance = Mathf.Infinity;
-        int numOfRays = 10;
-
-        for(float i = 0; i < 360; i += Mathf.PI / numOfRays )
-        {
-            RaycastHit hit;
-            Vector3 direction = new Vector3 (Mathf.Cos (i), 0, Mathf.Sin (i)).normalized * searchRange;
-
-            //Debug.DrawRay(transform.position + Vector3.up / 2, direction, Color.yellow);
-            if(Physics.Raycast(transform.position + Vector3.up / 2, direction, out hit, searchRange))
-            {
-                if(hit.transform.gameObject.CompareTag(Tags.Item))
-                {
-                    float currentDistance = (hit.transform.position - this.transform.position).magnitude;
-                    if(currentDistance < distance) // closest loot
-                    {
-                        targetLoot = hit.transform.gameObject;
-                        distance = currentDistance;
-                    }
-                }
+    public void FindLoot() {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, searchRange, 1 << 9);    //collectibles layer mask
+        colliders = colliders.OrderBy(c => (transform.position - c.transform.position).sqrMagnitude).ToArray();
+        bool found = false;
+        foreach (Collider collider in colliders) {
+            if (collider.tag == "Item") {
+                targetLoot = collider.gameObject;
+                found = true;
             }
         }
+        if (!found)
+            targetLoot = null;
     }
 
     public float GetDistanceToEnemy()

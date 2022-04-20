@@ -49,9 +49,13 @@ namespace Weapons
 
         private void ShootBullet(Vector3 playerRightTransform, Quaternion playerRotation)
         {
+            var direction = base.aimPoint - shootPosition.position;
+            direction.y = 0;
             var position = shootPosition.position;
-            var rotation = playerRotation;
-
+            var rotation = playerController.transform.rotation;
+            Vector3 initialPosition = shootPosition.position;
+            initialPosition.y = playerController.shootHeight.position.y;
+            
             // Bullets
             for (int i = -bulletCount / 2; i <= bulletCount / 2; i++)
             {

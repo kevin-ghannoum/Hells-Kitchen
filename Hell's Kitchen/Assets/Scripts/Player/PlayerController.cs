@@ -28,6 +28,7 @@ namespace Player
 
         [Header("Hand")]
         [SerializeField] public Transform CharacterHand;
+        [SerializeField] public Transform shootHeight;
 
         [Header("Melee Attack")]
         [SerializeField] public Transform DamagePosition;
@@ -55,13 +56,23 @@ namespace Player
             var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             if (animatorStateInfo.IsName(PlayerAnimator.Move))
             {
+                rollStartup = true;
                 MovePlayer();
+                RotatePlayer();
+            }
+            else if (animatorStateInfo.IsName(PlayerAnimator.Shoot)) {
                 RotatePlayer();
             }
             else if (animatorStateInfo.IsName(PlayerAnimator.Roll))
             {
+                if (rollStartup)
+                    transform.rotation = Quaternion.LookRotation(new Vector3(_input.move.x, 0, _input.move.y));
+                else
+                    RotatePlayer();
+                rollStartup = false;
                 float rollSpeed = rollSpeedCurve.Evaluate(animatorStateInfo.normalizedTime) * (runSpeed - walkSpeed) + walkSpeed;
                 Vector3 movement = Vector3.forward * rollSpeed * Time.deltaTime;
+                movement = Vector3.forward * rollSpeed * Time.deltaTime;
                 _characterController.Move(transform.TransformDirection(movement));
                 _animator.SetFloat(PlayerAnimator.Speed, _speed / runSpeed);
             }
@@ -113,14 +124,20 @@ namespace Player
             Vector3 movement = Vector3.forward * _speed * Time.deltaTime;
             _characterController.Move(transform.TransformDirection(movement));
             _animator.SetFloat(PlayerAnimator.Speed, _speed / runSpeed);
+            _animator.SetFloat(PlayerAnimator.Speed, _speed / runSpeed);
         }
 
         private void RotatePlayer()
         {
+            float turnSmoothV = turnSmoothVelocity;
             Vector3 targetDirection = new Vector3(_input.move.x, 0f, _input.move.y);
-            if (targetDirection == Vector3.zero)
+            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimator.Shoot)) {
+                targetDirection = clickTarget - transform.position;
+                turnSmoothV*= 1.5f;
+            }
+            else if (targetDirection == Vector3.zero)
                 return;
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirection), turnSmoothVelocity * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirection), turnSmoothV * Time.deltaTime);
         }
 
         private float GetMovementSpeed()
@@ -156,16 +173,18 @@ namespace Player
 
         #region PlayerSpaceActions
 
+        Vector3 clickTarget = Vector3.zero;
         public void FaceTarget(Vector3 target)
         {
             if (!_animator)
                 return;
 
+            clickTarget = target;
             var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-            if (!animatorStateInfo.IsName(PlayerAnimator.Roll) &&
-                (animatorStateInfo.IsName(PlayerAnimator.Move) || animatorStateInfo.normalizedTime > 0.5f))
+            //if (!animatorStateInfo.IsName(PlayerAnimator.Roll) && (animatorStateInfo.IsName(PlayerAnimator.Move) || animatorStateInfo.normalizedTime > 0.5f))
+            if (!animatorStateInfo.IsName(PlayerAnimator.Roll))
             {
-                transform.rotation = Quaternion.LookRotation(target - transform.position);
+                //transform.rotation = Quaternion.LookRotation(target - transform.position);
             }
         }
 
