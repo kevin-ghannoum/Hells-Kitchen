@@ -37,7 +37,6 @@ namespace Player
         private Animator _animator;
         private CharacterController _characterController;
 
-
         private float _speed = 0f;
         private IPickup _currentPickup;
 

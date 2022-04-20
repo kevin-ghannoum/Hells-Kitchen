@@ -1,3 +1,4 @@
+using Common.Enums;
 using Common.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,21 +9,19 @@ using UnityEngine.Events;
 [RequireComponent(typeof(PathfindingAgent))]
 public class SousChef : MonoBehaviour, IKillable
 {
+    [SerializeField] public PathfindingAgent agent;
     [SerializeField] public float maxHealth;
-
+    [SerializeField] public GameObject targetEnemy;
+    [SerializeField] public GameObject targetLoot;
+    
     [SerializeField] public float followDistance;
     [SerializeField] public float attackRange;
     [SerializeField] public float searchRange; // must be bigger than follow Distance and attackRange
+    
     public GameObject player;
-    [SerializeField] public PathfindingAgent agent;
     public float hitPoints;
     public float HitPoints => hitPoints;
     public UnityEvent Killed => throw new System.NotImplementedException();
-
-    [SerializeField] public GameObject targetEnemy;
-    // public Transform currentEnemyTarget { get; set; }
-    [SerializeField] public GameObject targetLoot;
-    // public Transform currentLootTarget { get; set; }
 
     GameObject gameStateManager;
     void Awake()
@@ -35,55 +34,48 @@ public class SousChef : MonoBehaviour, IKillable
         targetLoot = null;
     }
 
-    void Update(){
+    void Update()
+    {
         bool enemyFound = false;
 
-        // if the souschef does not have an enemy target or if the former target is out of search range
-        // find a new enemy target
-        if(targetEnemy == null || (targetEnemy != null && Vector3.Distance(targetEnemy.transform.position, transform.position) > searchRange)){
+        // find new enemy target if none or out of range
+        if(targetEnemy == null || (targetEnemy != null && Vector3.Distance(targetEnemy.transform.position, transform.position) > searchRange))
+        {
             enemyFound = FindEnemy();
         }
 
         // if no ememy found around, find a new loot target
         // makes sure to deal with enemies nearby first
-        if(!enemyFound){
-            if(targetLoot == null || (targetLoot != null && Vector3.Distance(targetLoot.transform.position, transform.position) > searchRange)){
-                //update loot target
+        if(!enemyFound)
+        {
+            print("looking for loot...");
+            if(targetLoot == null || (targetLoot != null && Vector3.Distance(targetLoot.transform.position, transform.position) > searchRange))
+            {
                 FindLoot();
             }          
         }
     }
 
-
-
-    public void Search()
-    {
-    }
-
-    public void PickUp()
-    {
-    }
-
+    // find closest enemy in range
     public bool FindEnemy()
     {
-        //code to loop through enemies within vision and find closest 1
-        // currentEnemyTarget = exampleEnemy;
-        //if no enemies within vision, set currentEnemyTarget = null;
-
         // cast rays around souschef to search for enemies
         float distance = Mathf.Infinity;
         int numOfRays = 20;
 
-        for(float i = 0; i < 360; i += 2 * Mathf.PI / numOfRays ){
+        for(float i = 0; i < 360; i += 2 * Mathf.PI / numOfRays)
+        {
             RaycastHit hit;
             Vector3 direction = new Vector3 (Mathf.Cos (i), 0, Mathf.Sin (i)).normalized;
 
             //Debug.DrawRay(transform.position + Vector3.up / 2, direction * searchRange, Color.green);
-            if(Physics.Raycast(transform.position + Vector3.up / 2, direction, out hit, searchRange)){
-                if(hit.transform.gameObject.layer == LayerMask.NameToLayer("Enemies")){
+            if(Physics.Raycast(transform.position + Vector3.up / 2, direction, out hit, searchRange))
+            {
+                if(hit.transform.gameObject.layer == LayerMask.NameToLayer("Enemies"))
+                {
                     float currentDistance = (hit.transform.position - this.transform.position).magnitude;
-                    if(currentDistance < distance){
-                        // find the enemy with closest distance
+                    if(currentDistance < distance) // closets enemy
+                    {
                         targetEnemy = hit.transform.gameObject;
                         distance = currentDistance;
                     }
@@ -91,22 +83,17 @@ public class SousChef : MonoBehaviour, IKillable
             }
         }
 
-        // enemy found, return true
-        if(targetEnemy != null){
-            return true;
-        }
-
-        return false;
+        return (targetEnemy != null); // TRUE if found
     }
 
-    public void FindLoot() {
-        // currentLootTarget = exampleLoot;
-
-        // cast rays around souschef to search for loots
+    public void FindLoot()
+    {
+        // cast rays around souschef to search for loot
         float distance = Mathf.Infinity;
         int numOfRays = 10;
 
-        for(float i = 0; i < 360; i += Mathf.PI / numOfRays ){
+        for(float i = 0; i < 360; i += Mathf.PI / numOfRays )
+        {
             RaycastHit hit;
             Vector3 direction = new Vector3 (Mathf.Cos (i), 0, Mathf.Sin (i)).normalized * searchRange;
 
@@ -116,8 +103,8 @@ public class SousChef : MonoBehaviour, IKillable
                 if(hit.transform.gameObject.layer == LayerMask.NameToLayer("Collectibles"))
                 {
                     float currentDistance = (hit.transform.position - this.transform.position).magnitude;
-                    if(currentDistance < distance){
-                        // find the enemy with closest distance
+                    if(currentDistance < distance) // closest loot
+                    {
                         targetLoot = hit.transform.gameObject;
                         distance = currentDistance;
                     }
@@ -176,7 +163,8 @@ public class SousChef : MonoBehaviour, IKillable
         }
     }
 
-    public void faceTargetEnemy() {
+    public void faceTargetEnemy()
+    {
         if (targetEnemy != null)
             transform.rotation = Quaternion.LookRotation((targetEnemy.transform.position - transform.position).normalized);
     }

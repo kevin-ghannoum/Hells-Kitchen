@@ -6,29 +6,18 @@ using UnityEngine;
 
 namespace Enemies
 {
-    
     [RequireComponent(typeof(PathfindingAgent))]
     public class Enemy : MonoBehaviour, IKillable, IPunObservable
     {
         [Header("References")]
-        [SerializeField]
-        protected PathfindingAgent agent;
-
-        [SerializeField]
-        protected Animator animator;
+        [SerializeField] protected PathfindingAgent agent;
+        [SerializeField] protected Animator animator;
 
         [Header("Parameters")]
-        [SerializeField]
-        protected float hitPoints;
-
-        [SerializeField]
-        private float deathDelay;
-
-        [SerializeField]
-        protected GameObject dropObject;
-
+        [SerializeField] protected float hitPoints;
+        [SerializeField] private float deathDelay;
+        [SerializeField] protected GameObject dropObject;
         [SerializeField] protected int maxDropsToSpawn = 3;
-        
         [SerializeField][Range(0f, 1f)] private float multipleSpawnRate = 0.3f;
 
         [SerializeField] protected PhotonView photonView;
@@ -131,5 +120,4 @@ namespace Enemies
             }
         }
     }
-
 }
