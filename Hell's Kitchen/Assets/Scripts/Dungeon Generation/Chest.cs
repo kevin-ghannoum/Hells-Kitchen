@@ -71,12 +71,14 @@ namespace Dungeon_Generation
         {
             _isLooted = true;
             toggleUI.IsDisabled = true;
+            
+            AdrenalinePointsUI.SpawnGoldNumbers(transform.position + 2.0f * Vector3.up, amount);
+            AudioSource.PlayClipAtPoint(chestSound, transform.position);
+            
             if (photonView.IsMine)
             {
                 _animator.SetTrigger(ObjectAnimator.OpenChest);
             }
-            AdrenalinePointsUI.SpawnGoldNumbers(transform.position + 2.0f * Vector3.up, amount);
-            AudioSource.PlayClipAtPoint(chestSound, transform.position);
             if (PhotonNetwork.IsMasterClient)
             {
                 GameStateManager.SetCashMoney(GameStateData.cashMoney + amount);
