@@ -445,7 +445,9 @@ GameObject:
   - component: {fileID: 8717405591280451424}
   - component: {fileID: 9168925068428523083}
   - component: {fileID: 2419174837082785474}
-  - component: {fileID: 7705083090932105672}
+  - component: {fileID: 7911465028742612811}
+  - component: {fileID: -1082347791739856843}
+  - component: {fileID: -886756466649380753}
   m_Layer: 0
   m_Name: Dragon
   m_TagString: Untagged
@@ -508,10 +510,10 @@ MonoBehaviour:
   dropObject: {fileID: 0}
   maxDropsToSpawn: 5
   multipleSpawnRate: 0.3
+  photonView: {fileID: -1082347791739856843}
   particle: {fileID: 3138838321479631500}
   attackRange: 3
   followRange: 15
-  target: {fileID: 0}
   attackDamage: 20
   attackRate: 3
 --- !u!114 &8717405591280451424
@@ -527,8 +529,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ArrivalRadius: 0.5
-  time2target: 0.5
-  maxVelocity: 7
+  MidPointArrivalRadius: 0.5
+  TimeToTarget: 0.5
+  MaxVelocity: 5
   rigidbody: {fileID: 9168925068428523083}
   standStill: 0
 --- !u!54 &9168925068428523083
@@ -561,7 +564,47 @@ CapsuleCollider:
   m_Height: 2.135615
   m_Direction: 1
   m_Center: {x: 0.008332074, y: 1.7986857, z: 0}
---- !u!82 &7705083090932105672
+--- !u!114 &7911465028742612811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2832215523392890628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &-1082347791739856843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2832215523392890628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 2832215523392890629}
+  - {fileID: 7911465028742612811}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!82 &-886756466649380753
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -573,7 +616,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f7ed810332ff69a498df8d1f8aa08812, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.541
+  m_Volume: 0.15
   m_Pitch: 1
   Loop: 0
   Mute: 0

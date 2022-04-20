@@ -3,6 +3,7 @@ using Common.Interfaces;
 using Enemies.Enums;
 using Player;
 using UnityEngine;
+using Photon.Pun;
 
 namespace Enemies
 {
@@ -12,21 +13,27 @@ namespace Enemies
         [SerializeField] private ParticleSystem particle;
         [SerializeField] private float attackRange;
         [SerializeField] private float followRange;
-        [SerializeField] private PlayerController target;
         [SerializeField] private float attackDamage;
         [SerializeField] private float attackRate;
         private float distance;
         private float timeCounter = 5;
-        private AudioSource audio;
+        private AudioClip attack;
+        private AudioSource dragonAudio;
         private int audioController = 0;
 
-        private void Awake()
+        private void Start()
         {
-            target = GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>();
-            audio = gameObject.GetComponent<AudioSource>();
+            if (!photonView.IsMine)
+                return;
+
+            dragonAudio = gameObject.GetComponent<AudioSource>();
         }
         public override void Update()
         {
+            if (!photonView.IsMine)
+                return;
+
+            var target = FindClosestPlayer();
             timeCounter += Time.deltaTime;
             distance = Vector3.Distance(transform.position, target.transform.position);
 
@@ -38,7 +45,7 @@ namespace Enemies
                 {
                     agent.enabled = false;
                     particle.Play();
-                    audio.Play();
+                    photonView.RPC(nameof(playAttackSound), RpcTarget.All);
                     animator.SetTrigger(EnemyAnimator.Attack);
                     Invoke("Attack", 0.3f);
                     Invoke("resumeFollow", 1f);
@@ -53,6 +60,9 @@ namespace Enemies
 
         private void Attack()
         {
+            if (!photonView.IsMine)
+                return;
+            
             var colliders = Physics.OverlapSphere(transform.position, 3);
 
             foreach (var col in colliders)
@@ -67,6 +77,12 @@ namespace Enemies
         private void resumeFollow()
         {
             agent.enabled = true;
+        }
+
+        [PunRPC]
+        private void playAttackSound()
+        {
+            dragonAudio.Play();
         }
     }
 }
