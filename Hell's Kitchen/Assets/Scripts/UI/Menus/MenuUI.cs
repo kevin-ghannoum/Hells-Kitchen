@@ -1,10 +1,9 @@
 ﻿using Common;
 using Photon.Pun;
-using UnityEngine;
 
 namespace UI
 {
-    public class MenuUI : MonoBehaviour
+    public class MenuUI : MonoBehaviourPunCallbacks
     {
         public void LoadRestaurantScene()
         {
@@ -19,6 +18,11 @@ namespace UI
         public void ReturnToMenu()
         {
             PhotonNetwork.LeaveRoom();
+        }
+
+        public override void OnLeftRoom()
+        {
+            base.OnLeftRoom();
             SceneManager.Instance.LoadMainMenu();
         }
     }
