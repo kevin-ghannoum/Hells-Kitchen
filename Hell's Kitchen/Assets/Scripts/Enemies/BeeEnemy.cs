@@ -19,31 +19,59 @@ namespace Enemies
         private float wanderRadius = 7f;
         private bool wanderCheck = true;
         [SerializeField] private Animator anime;
+        private GameObject[] hiveList;
+        private GameObject targetHive;
 
         private void Start()
         {
             target = GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>();
-            // Hive = GameObject.Find("Hive");
+            hiveList = GameObject.FindGameObjectsWithTag("Hive");
             anime = gameObject.GetComponent<Animator>();
             attackRange = 10;
         }
 
         public override void Update()
         {
-            anime.SetBool("walking", true);
-            anime.SetBool("attacking", false);
+            hiveList = GameObject.FindGameObjectsWithTag("Hive");
             timeCounter += Time.deltaTime;
-
-            if (Vector3.Distance(target.transform.position, transform.position) < attackRange)
+            if (hiveList.Length > 0)
             {
-                agent.Target = target.transform.position;
+                anime.SetBool("Attack", false);
+                targetHive = checkHive(hiveList);
 
-                if (Vector3.Distance(target.transform.position, transform.position) < 1.2 && timeCounter > 1)
+                if (Vector3.Distance(transform.position, target.transform.position) < attackRange)
                 {
-                    anime.SetBool("walking", false);
-                    anime.SetBool("attacking", true);
-                    Attack();
-                    timeCounter = 0;
+                    agent.enabled = true;
+                    agent.Target = target.transform.position;
+                    if (Vector3.Distance(target.transform.position, transform.position) < 2 && timeCounter > 2)
+                    {
+                        animator.SetTrigger(EnemyAnimator.Attack);
+                        Attack();
+                        timeCounter = 0;
+                    }
+                }
+                else if (Vector3.Distance(transform.position, targetHive.transform.position) > 7)
+                {
+                    agent.enabled = true;
+                    agent.Target = targetHive.transform.position;
+                }
+                else
+                {
+                    agent.enabled = false;
+                }
+            }
+            else
+            {
+                if (Vector3.Distance(transform.position, target.transform.position) < attackRange)
+                {
+                    agent.Target = target.transform.position;
+
+                    if (Vector3.Distance(target.transform.position, transform.position) < 1.2 && timeCounter > 1)
+                    {
+                        animator.SetTrigger(EnemyAnimator.Attack);
+                        Attack();
+                        timeCounter = 0;
+                    }
                 }
             }
         }
@@ -57,6 +85,19 @@ namespace Enemies
                 if (col.gameObject.CompareTag(Tags.Player))
                     col.gameObject.GetComponent<IKillable>().TakeDamage(5);
             }
+        }
+
+        private GameObject checkHive(GameObject[] hiveList)
+        {
+            GameObject currentTarget = hiveList[0];
+            foreach (GameObject hive in hiveList)
+            {
+                if (Vector3.Distance(transform.position, hive.transform.position) < Vector3.Distance(transform.position, currentTarget.transform.position))
+                {
+                    currentTarget = hive;
+                }
+            }
+            return currentTarget;
         }
     }
 }

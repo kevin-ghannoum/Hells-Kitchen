@@ -137,5 +137,10 @@ namespace Common
         {
             Instance.photonView.RPC(nameof(AddPurchasedWeaponRPC), RpcTarget.All, weaponName);
         }
+
+        public bool IsLowHP()
+        {
+            return ((playerCurrentHitPoints / playerMaxHitPoints) * 100) < 60;
+        }
     }
 }

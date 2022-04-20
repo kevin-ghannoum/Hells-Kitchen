@@ -8,6 +8,8 @@ TagManager:
   - Pathfinding
   - Weapon
   - MazeStart
+  - SousChef
+  - Hive
   - Customer
   - Enemy
   - SharedDecoration
@@ -23,6 +25,7 @@ TagManager:
   - Collider
   - Collectibles
   - Characters
+  - SousChef
   - 
   - 
   - 

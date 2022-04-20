@@ -136,5 +136,7 @@ namespace Player
             GameStateData.playerCurrentHitPoints = GameStateData.playerMaxHitPoints;
             SceneManager.Instance.LoadRestaurantScene();
         }
+
+
     }
 }

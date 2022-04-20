@@ -28,7 +28,8 @@ public class PathfindingAgent : MonoBehaviour
     
     public Vector3 Target {
         get => _target;
-        set {
+        set
+        {
             if (_target != value)
             {
                 _target = value;
@@ -47,7 +48,7 @@ public class PathfindingAgent : MonoBehaviour
     private void Update()
     {
         // Arrived
-        if (_path == null)
+        if (_path == null || standStill)
         {
             rigidbody.velocity = Vector3.zero;
             return;
