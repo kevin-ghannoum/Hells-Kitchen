@@ -2,6 +2,7 @@ using Common.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Common.Enums;
 using UnityEngine;
 
 public class PhotonSpell : MonoBehaviour
@@ -99,7 +100,7 @@ public class PhotonSpell : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         Debug.Log("collided with" + other.name);
-        if (!hitList.Contains(other.gameObject) && other.gameObject.TryGetComponent(out IKillable killable) && other.tag != "Player" && other.tag != "SousChef") {
+        if (!hitList.Contains(other.gameObject) && other.gameObject.TryGetComponent(out IKillable killable) && !other.CompareTag(Tags.Player) && !other.CompareTag(Tags.SousChef)) {
             Destroy(Instantiate(bulletExplosion, other.transform.position, Quaternion.identity), 2);
             hitList.Add(other.gameObject);
             killable.TakeDamage(aoeDamage);

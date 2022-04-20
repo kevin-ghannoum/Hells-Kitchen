@@ -11,7 +11,6 @@ public class HealSpell : MonoBehaviour
     [SerializeField] float AoEDuration;
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.gameObject.CompareTag(Tags.Player))
         {
             Destroy(Instantiate(onHealAnimationPrefab, other.transform.position, Quaternion.identity), 2);
