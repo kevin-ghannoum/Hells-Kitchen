@@ -15,6 +15,7 @@ namespace Weapons
             var obj = collision.gameObject; // TODO Disable friendly fire with sous-chef
             if (!obj.CompareTag(Tags.Player))
             {
+                Common.GameStateManager.Instance.playerCurrentStamina += 0.5f;
                 obj.GetComponent<IKillable>()?.TakeDamage(Damage);
                 Destroy(gameObject);
                 var hitFx = Instantiate(bulletHit, collision.contacts[0].point, Quaternion.identity);

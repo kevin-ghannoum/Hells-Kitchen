@@ -206,6 +206,36 @@ Behaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 238747065}
   m_Enabled: 1
+--- !u!1 &264068641
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 264068642}
+  m_Layer: 3
+  m_Name: ShootHeight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &264068642
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 264068641}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.1368, y: 2.741, z: 1.674}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1366883624018297259}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &807330855
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,6 +434,7 @@ Transform:
   - {fileID: 807330856}
   - {fileID: 630587982745602112}
   - {fileID: 4458461509696778761}
+  - {fileID: 264068642}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -455,7 +486,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runSpeed: 14
   walkSpeed: 8
-  turnSmoothVelocity: 10
+  turnSmoothVelocity: 20
   speedSmoothVelocity: 5
   rollSpeedCurve:
     serializedVersion: 2
@@ -482,10 +513,11 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _inventoryUI: {fileID: 0}
-  staminaCostRun: 1
-  staminaCostRoll: 1
-  staminaRegenRate: 1
+  staminaCostRun: 0.5
+  staminaCostRoll: 0.75
+  staminaRegenRate: 2
   CharacterHand: {fileID: 5702439285158563841}
+  shootHeight: {fileID: 264068642}
   DamagePosition: {fileID: 4458461509696778761}
   DamageRadius: 1.5
 --- !u!114 &8088586115401309953
