@@ -39,6 +39,7 @@ namespace Common
             GameStateData.cashMoney = 0f;
             GameStateData.purchasedWeapons = new List<string>();
             GameStateData.dungeonClock = 0.0f;
+            GameStateData.hiddenLevel = 0;
         }
 
         #region PUNCallbacks
@@ -55,6 +56,7 @@ namespace Common
                 stream.SendNext(GameStateData.cashMoney);
                 stream.SendNext(GameStateData.dungeonClock);
                 stream.SendNext((int)GameStateData.sousChefType);
+                stream.SendNext(GameStateData.hiddenLevel);
             }
             else if (stream.IsReading)
             {
@@ -67,6 +69,7 @@ namespace Common
                 inventoryUI.UpdateInventory(inventoryItems);
                 GameStateData.dungeonClock = (float)stream.ReceiveNext();
                 GameStateData.sousChefType = (SousChefType)stream.ReceiveNext();
+                GameStateData.hiddenLevel = (int) stream.ReceiveNext();
             }
         }
 

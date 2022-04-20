@@ -24,5 +24,7 @@ namespace Common
         public static GameObject player = null;
 
         public static SousChefType sousChefType = SousChefType.Healer;
+
+        public static int hiddenLevel = 0;
     }
 }

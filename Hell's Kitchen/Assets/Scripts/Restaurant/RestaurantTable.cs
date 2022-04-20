@@ -132,11 +132,13 @@ namespace Restaurant
                 ItemInstance.Sushi
             };
 
+            var quantity = Random.Range(1, 3);
+            
             return new RestaurantOrder()
             {
                 Item = possibleValues[Random.Range(0, possibleValues.Length)],
-                Quantity = Random.Range(1, 4),
-                CashMoney = Random.Range(20, 40)
+                Quantity = quantity, 
+                CashMoney = (Random.Range(RestaurantManager.Instance.MinOrderPrice, RestaurantManager.Instance.MaxOrderPrice) * quantity)
             };
         }
 

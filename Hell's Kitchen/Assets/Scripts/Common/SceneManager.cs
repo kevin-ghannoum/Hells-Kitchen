@@ -44,9 +44,9 @@ namespace Common
             photonView.RPC(nameof(LoadGameOverRPC), RpcTarget.MasterClient);
         }
 
-        public void LoadRestaurantScene()
+        public void LoadRestaurantScene(bool shouldIncrementLevel = false)
         {
-            photonView.RPC(nameof(LoadRestaurantRPC), RpcTarget.MasterClient);
+            photonView.RPC(nameof(LoadRestaurantRPC), RpcTarget.MasterClient, shouldIncrementLevel);
         }
 
         public void LoadDungeonScene(bool resetClock = false)
@@ -63,11 +63,14 @@ namespace Common
 #endif
         }
 
-        #region PUNCallabacks
+        #region PUNCallbacks
 
         [PunRPC]
-        private void LoadRestaurantRPC()
+        private void LoadRestaurantRPC(bool shouldIncrementLevel)
         {
+            if(shouldIncrementLevel)
+                GameStateData.hiddenLevel++;
+            
             photonView.RPC(nameof(DestroyPlayerRPC), RpcTarget.All);
             PhotonNetwork.LoadLevel(Scenes.Restaurant);
         }

@@ -15,6 +15,13 @@ namespace Restaurant
         [SerializeField]
         public RestaurantTable[] Tables;
         
+        [SerializeField, Range(10,20)] private int minOrderPrice = 20;
+        [SerializeField, Range(20,30)] private int maxOrderPrice = 25;
+
+        public int MaxOrderPrice { get => maxOrderPrice; }
+
+        public int MinOrderPrice { get => minOrderPrice; }
+
         public List<RestaurantOrder> OrderList => Instance.Tables.Aggregate(
             new List<RestaurantOrder>(), 
             (acc, t) => {

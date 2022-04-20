@@ -16,13 +16,12 @@ namespace Restaurant
     public class RestaurantOven : Interactable
     {
         [SerializeField] private AudioClip cookingSound;
+        [SerializeField] private AudioClip insufficientSound;
         [SerializeField] private PhotonView photonView;
-        
+
         private void Start()
         {
             photonView = GetComponent<PhotonView>();
-            // TODO Remove after feature complete
-            DebugAddInventoryAndOrders();
         }
 
         protected override void Interact()
@@ -59,21 +58,22 @@ namespace Restaurant
             {
                 photonView.RPC(nameof(PlayCookingSoundRPC), RpcTarget.All);
             }
+            else
+            {
+                photonView.RPC(nameof(PlayInsufficientSoundRPC), RpcTarget.All);
+            }
+        }
+
+        [PunRPC]
+        private void PlayInsufficientSoundRPC()
+        {
+            AudioSource.PlayClipAtPoint(insufficientSound, transform.position);
         }
 
         [PunRPC]
         private void PlayCookingSoundRPC()
         {
             AudioSource.PlayClipAtPoint(cookingSound, transform.position);
-        }
-
-        private void DebugAddInventoryAndOrders()
-        {
-            // TODO Remove After Testing
-            GameStateManager.AddItemToInventory(ItemInstance.Fish, 20);
-            GameStateManager.AddItemToInventory(ItemInstance.Honey, 20);
-            GameStateManager.AddItemToInventory(ItemInstance.Mushroom, 20);
-            GameStateManager.AddItemToInventory(ItemInstance.Meat, 20);
         }
     }
 }
