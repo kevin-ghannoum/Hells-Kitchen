@@ -18,9 +18,11 @@ namespace Restaurant
     {
         [SerializeField] private AudioClip cookingSound;
         private InputManager _input => InputManager.Instance;
+        private PhotonView photonView;
 
         private void Start()
         {
+            photonView = GetComponent<PhotonView>();
             // TODO Remove after feature complete
             DebugAddInventoryAndOrders();
         }
@@ -55,9 +57,9 @@ namespace Restaurant
                 }
             }
 
-            if (neededItems.Any(item => item.Value > 0))
+            if (photonView.IsMine && neededItems.Any(item => item.Value > 0))
             {
-                PlayCookingSoundRPC();
+                photonView.RPC(nameof(PlayCookingSoundRPC), RpcTarget.All);
             }
         }
 

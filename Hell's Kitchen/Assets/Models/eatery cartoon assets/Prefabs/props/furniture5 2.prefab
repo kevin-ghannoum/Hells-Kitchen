@@ -167,6 +167,7 @@ MonoBehaviour:
   restaurantUI: {fileID: 84578108050428633}
   orderItemPrefab: {fileID: 3202725611455143154, guid: b3afaf2dffaf2d24ab561b49aa7ca0a7, type: 3}
   photonView: {fileID: 8026735349904548596}
+  rawSound: {fileID: 8300000, guid: 1d113c20e503c3e4eb51214cbfadda53, type: 3}
 --- !u!114 &8026735349904548596
 MonoBehaviour:
   m_ObjectHideFlags: 0
