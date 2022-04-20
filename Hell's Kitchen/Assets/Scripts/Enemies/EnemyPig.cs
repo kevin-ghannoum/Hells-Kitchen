@@ -98,15 +98,21 @@ namespace Enemies
         [PunRPC]
         private void PlayIdleSoundRPC()
         {
-            _as.clip = idleSound;
-            _as.Play();
+            if (_as != null)
+            {
+                _as.clip = idleSound;
+                _as.Play();
+            }
         }
 
         [PunRPC]
         private void PlayAttackSoundRPC()
         {
-            _as.clip = attackSound;
-            _as.Play();
+            if (_as != null)
+            {
+                _as.clip = attackSound;
+                _as.Play();
+            }
         }
 
         [PunRPC]
