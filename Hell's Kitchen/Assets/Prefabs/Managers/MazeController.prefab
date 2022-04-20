@@ -48,7 +48,7 @@ MonoBehaviour:
   defaultWeapon: 7
   mazeStart: {fileID: 0}
   playerSpawner: {fileID: 0}
-  photonView: {fileID: 0}
+  photonView: {fileID: 6978460921469491496}
 --- !u!114 &2752677855204124922
 MonoBehaviour:
   m_ObjectHideFlags: 0

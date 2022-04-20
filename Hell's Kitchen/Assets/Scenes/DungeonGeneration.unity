@@ -288,6 +288,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1852094099853187857, guid: ab126534be57d744eab097b38e421eda, type: 3}
     - target: {fileID: 1662986158024480343, guid: da75bf6655a0bc644b6062334d584eff, type: 3}
+      propertyPath: shouldSpawnOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662986158024480343, guid: da75bf6655a0bc644b6062334d584eff, type: 3}
       propertyPath: spawnPoints.Array.size
       value: 1
       objectReference: {fileID: 0}
