@@ -73,7 +73,6 @@ namespace Enemies
 
                     if (Vector3.Distance(target.transform.position, transform.position) < 1.2 && timeCounter > 1)
                     {
-                        animator.SetTrigger(EnemyAnimator.Attack);
                         Attack();
                         timeCounter = 0;
                     }
@@ -87,7 +86,7 @@ namespace Enemies
                 return;
 
             photonView.RPC(nameof(PlayAttackSoundRPC), RpcTarget.All);
-            
+            animator.SetTrigger(EnemyAnimator.Attack);
             var colliders = Physics.OverlapSphere(transform.position, 3);
 
             foreach (var col in colliders)
