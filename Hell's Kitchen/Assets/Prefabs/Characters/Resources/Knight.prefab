@@ -204,6 +204,9 @@ GameObject:
   - component: {fileID: 5153250386385897533}
   - component: {fileID: 8387685582881986134}
   - component: {fileID: 8046514949207215185}
+  - component: {fileID: 1129005320685730349}
+  - component: {fileID: 7000999846575971655}
+  - component: {fileID: 887444339020630113}
   m_Layer: 10
   m_Name: Knight
   m_TagString: SousChef
@@ -291,8 +294,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ArrivalRadius: 0.5
-  time2target: 0.5
-  maxVelocity: 14
+  MidPointArrivalRadius: 0.5
+  TimeToTarget: 0.5
+  MaxVelocity: 2
   rigidbody: {fileID: 3440339455808783361}
   standStill: 0
 --- !u!114 &5153250386385897533
@@ -307,15 +311,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3196c66767eea9c4b9a8b7c248c5cdad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: -4428569699195467017}
   maxHealth: 200
+  targetEnemy: {fileID: 0}
+  targetLoot: {fileID: 0}
   followDistance: 2
   attackRange: 2
   searchRange: 10
   player: {fileID: 0}
-  agent: {fileID: -4428569699195467017}
   hitPoints: 0
-  targetEnemy: {fileID: 0}
-  targetLoot: {fileID: 0}
   fleePoint: {x: 0, y: 0, z: 0}
   foundFleePoint: 0
 --- !u!114 &8387685582881986134
@@ -347,6 +351,62 @@ MonoBehaviour:
   photonSpellPrefab: {fileID: 0}
   healSpellPrefab: {fileID: 0}
   knightSkill: {fileID: 1148084856424270041, guid: 02728e0325a87e949b2fcda6c9ea4d28, type: 3}
+--- !u!114 &1129005320685730349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2558013046334156685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 7000999846575971655}
+  - {fileID: 887444339020630113}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &7000999846575971655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2558013046334156685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &887444339020630113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2558013046334156685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &2841597346964944564
 GameObject:
   m_ObjectHideFlags: 0
