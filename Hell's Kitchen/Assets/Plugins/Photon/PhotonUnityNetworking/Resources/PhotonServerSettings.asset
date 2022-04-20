@@ -52,7 +52,7 @@ MonoBehaviour:
   - PickUp
   - PickUpRPC
   - PlayAttackSoundRPC
-  - PlayChestSoundRPC
+  - PlayCookingSoundRPC
   - PlayDeathSoundRPC
   - PlayGunshotSoundRPC
   - PlayIdleSoundRPC
@@ -68,8 +68,8 @@ MonoBehaviour:
   - SetCashMoneyRPC
   - SetGameObjectActiveByNameRPC
   - SpawnLocalPlayer
-  - TakeDamage
   - SpawnTeleportMagic
+  - TakeDamage
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
