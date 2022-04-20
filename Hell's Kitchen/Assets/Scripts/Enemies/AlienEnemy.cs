@@ -29,7 +29,8 @@ namespace Enemies
 
             attackRange = 12;
 
-            photonLine = PhotonNetwork.Instantiate(electricLine.name, transform.position, Quaternion.identity);
+            PhotonView view = gameObject.GetComponent<PhotonView>();
+            view.RPC("instantiateElectric", RpcTarget.All);
             photonLine.transform.parent = gameObject.transform;
             alienAudio = gameObject.GetComponent<AudioSource>();
         }
@@ -96,6 +97,11 @@ namespace Enemies
             lr.SetPosition(0, transform.position + Vector3.up * 0.5f);
             lr.SetPosition(1, target.transform.position + Vector3.up * 1.8f);
         }
-    }
 
+        [PunRPC]
+        private void instantiateElectric()
+        {
+            photonLine = PhotonNetwork.Instantiate(electricLine.name, transform.position, Quaternion.identity);
+        }
+    }
 }

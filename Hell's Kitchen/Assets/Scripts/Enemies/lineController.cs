@@ -33,6 +33,4 @@ public class lineController : MonoBehaviour
             timeCounter = 0;
         }
     }
-
-
 }
