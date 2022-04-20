@@ -23,6 +23,9 @@ public class SpellManager : MonoBehaviour
     public void HealerSpell_Photon_RPC(int viewId)
     {
         GameObject target = PhotonView.Find(viewId).gameObject;
+        if (!target)
+            return;
+        
         var obj = PhotonNetwork.Instantiate(photonSpellPrefab.name, target.transform.position, Quaternion.identity);
         obj.GetComponent<PhotonSpell>().target = target;
     }
