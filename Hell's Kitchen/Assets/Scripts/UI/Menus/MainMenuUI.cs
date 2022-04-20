@@ -1,7 +1,4 @@
-﻿using Common;
-using Input;
-using Photon.Pun;
-using Photon.Realtime;
+﻿using Input;
 using TMPro;
 using UnityEngine;
 
@@ -10,6 +7,7 @@ namespace UI
     public class MainMenuUI : MenuUI
     {
         [SerializeField] private TextMeshProUGUI title;
+        [SerializeField] private GameObject canvas;
         [SerializeField] private Animator animator;
         [SerializeField] private GameObject mainMenu;
         [SerializeField] private GameObject coopMenu;
@@ -24,16 +22,10 @@ namespace UI
 
         public void OnPlay()
         {
-            if (PhotonNetwork.IsConnected)
-            {
-                RoomOptions roomOptions = new RoomOptions();
-                roomOptions.MaxPlayers = 1;
-                PhotonNetwork.CreateRoom(Random.Range(0, int.MaxValue).ToString(), roomOptions);
-            }
-            else
-            {
-                Debug.LogError("You must connect to a server first, before creating a room.");
-            }
+            canvas.SetActive(false); // disable menu UI canvas
+            animator.Play("PlayerCamera"); // camera transition
+            Invoke(nameof(LoadRestaurantScene), .5f); // scene change
+            InputManager.Instance.Activate();
         }
 
         public void CoopMode()
@@ -46,12 +38,6 @@ namespace UI
         {
             mainMenu.SetActive(true);
             coopMenu.SetActive(false);
-        }
-        
-        public override void OnJoinedRoom()
-        {
-            SceneManager.Instance.LoadRestaurantScene();
-            InputManager.Instance.Activate();
         }
     }
 }

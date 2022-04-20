@@ -1,4 +1,5 @@
 ﻿using Common;
+using Common.Enums;
 using Input;
 using Photon.Pun;
 using Photon.Realtime;
@@ -16,6 +17,7 @@ namespace UI
             if (PhotonNetwork.IsConnected)
             {
                 RoomOptions roomOptions = new RoomOptions();
+                roomOptions.PlayerTtl = 10000;
                 roomOptions.MaxPlayers = 2;
                 PhotonNetwork.CreateRoom(gameRoomInput.text, roomOptions);
             }
