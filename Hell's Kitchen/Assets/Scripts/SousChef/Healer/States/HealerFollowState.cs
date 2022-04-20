@@ -13,6 +13,14 @@ public class HealerFollowState : HealerBaseState
 
     public override void UpdateState(HealerStateManager healer)
     {
+        // make sure the pick up animation ends before movings
+        if(healer.animator.GetCurrentAnimatorStateInfo(0).IsName("PickUp")){
+            healer.sc.agent.standStill = true;
+        }
+        else{
+            healer.sc.agent.standStill = false;
+        }
+        
         //Debug.Log("@followState_UpdateState");
         if (healer.sc.isLowHP() || GameStateManager.Instance.IsLowHP())
         {
