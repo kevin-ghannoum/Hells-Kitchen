@@ -56,7 +56,7 @@ namespace Enemies
                         }
 
                         lr = photonLine.GetComponent<LineRenderer>();
-                        Vector3 startPos = new Vector3(transform.position.x, transform.position.y * 2, transform.position.z);
+                        photonLine.GetComponent<LineController>().targetPhotonViewID = target.GetComponent<PhotonView>().ViewID;
                         animator.SetTrigger(EnemyAnimator.Attack);
 
                         if (damageTimeCounter > damageRate)
