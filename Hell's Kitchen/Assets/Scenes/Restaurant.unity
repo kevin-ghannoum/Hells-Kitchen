@@ -15828,7 +15828,7 @@ PrefabInstance:
       value: CookingOven
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 4794934134354926048, guid: a0ba49e858a8faf429041434758543ae, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: a0ba49e858a8faf429041434758543ae, type: 3}
 --- !u!4 &2760597056753236504 stripped
 Transform:

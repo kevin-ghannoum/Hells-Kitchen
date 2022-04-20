@@ -9,9 +9,9 @@ using UnityEngine;
 
 namespace Dungeon_Generation
 {
-    public class ExitDungeon : MonoBehaviour
+    public class ExitDungeon : Interactable
     {
-        private void Interact()
+        protected override void Interact()
         {
             var gameController = FindObjectOfType<GameController>();
             if (GameStateData.dungeonClock > 1.0f || !gameController)
@@ -21,18 +21,6 @@ namespace Dungeon_Generation
             else
             {
                 SceneManager.Instance.LoadDungeonScene();
-            }
-        }
-
-        private void OnTriggerStay(Collider other)
-        {
-            if (InputManager.Actions.Interact.triggered && other.gameObject.CompareTag(Tags.Player))
-            {
-                var pv = other.GetComponent<PhotonView>();
-                if (pv != null && pv.IsMine)
-                {
-                    Interact();
-                }
             }
         }
 

@@ -20,7 +20,6 @@ namespace Player
         [SerializeField] private float turnSmoothVelocity = 10f;
         [SerializeField] private float speedSmoothVelocity = 10f;
         [SerializeField] private AnimationCurve rollSpeedCurve;
-        [SerializeField] private float playerHeight = 0.0f;
 
         [Header("Stamina")]
         [SerializeField] private float staminaCostRun = 1.0f;
@@ -112,11 +111,6 @@ namespace Player
             float targetSpeed = _input.move.normalized.magnitude * GetMovementSpeed();
             _speed = Mathf.Lerp(_speed, targetSpeed, speedSmoothVelocity * Time.deltaTime);
             Vector3 movement = Vector3.forward * _speed * Time.deltaTime;
-            _characterController.enabled = false;
-            var position = transform.position;
-            position.y = playerHeight;
-            transform.position = position;
-            _characterController.enabled = true;
             _characterController.Move(transform.TransformDirection(movement));
             _animator.SetFloat(PlayerAnimator.Speed, _speed / runSpeed);
         }

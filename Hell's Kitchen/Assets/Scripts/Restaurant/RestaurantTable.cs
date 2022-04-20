@@ -3,17 +3,17 @@ using System.Linq;
 using Common;
 using Common.Enums;
 using Common.Enums.Items;
+using Dungeon_Generation;
 using Enums.Items;
 using Input;
 using Photon.Pun;
 using UI;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 namespace Restaurant
 {
-    public class RestaurantTable : MonoBehaviour, IPunObservable
+    public class RestaurantTable : Interactable, IPunObservable
     {
         [SerializeField]
         private RestaurantSeat[] seats;
@@ -30,7 +30,6 @@ namespace Restaurant
         [SerializeField]
         private PhotonView photonView;
 
-        private InputManager _input => InputManager.Instance;
         public List<RestaurantOrder> OrderList = new List<RestaurantOrder>();
         private readonly Dictionary<int, RestaurantOrderItem> _orderUIObjects = new Dictionary<int, RestaurantOrderItem>();
 
@@ -40,23 +39,12 @@ namespace Restaurant
             photonView = GetComponent<PhotonView>();
         }
 
-        private void Update()
+        public override void Update()
         {
+            base.Update();
             restaurantUI.IsDisabled = !seats.Any(s => s.IsSitting);
             interactUI.IsDisabled = OrderList.All(o => o.Served);
         }
-
-        private void OnTriggerStay(Collider other)
-        {
-            if (InputManager.Actions.Interact.triggered && other.gameObject.CompareTag(Tags.Player))
-            {
-                var pv = other.GetComponent<PhotonView>();
-                if (pv != null && pv.IsMine)
-                {
-                    ServeOrders();
-                }
-            }
-        }        
         
         public void OnCustomerSit()
         {
@@ -118,7 +106,7 @@ namespace Restaurant
             RefreshOrderUI();
         }
 
-        private void ServeOrders()
+        protected override void Interact()
         {
             photonView.RPC(nameof(ServeOrdersRPC), RpcTarget.All);
         }

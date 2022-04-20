@@ -2,18 +2,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Common;
 using Common.Enums;
-using Input;
-using Photon.Pun;
+using Dungeon_Generation;
 using UI;
 using UnityEngine;
 
 namespace Shops
 {
-    public class WeaponShopkeeper : MonoBehaviour
+    public class WeaponShopkeeper : Interactable
     {
         [SerializeField] private WeaponShopUI shopUI;
 
-        private InputManager _input => InputManager.Instance;
         private List<GameObject> _weapons;
 
         private void Start()
@@ -27,16 +25,9 @@ namespace Shops
             }
         }
 
-        private void OnTriggerStay(Collider other)
+        protected override void Interact()
         {
-            if (other.gameObject.CompareTag(Tags.Player))
-            {
-                var pv = other.GetComponent<PhotonView>();
-                if (pv != null && pv.IsMine && _input.interact)
-                {
-                    shopUI.Initialize(_weapons);
-                }
-            }
+            shopUI.Initialize(_weapons);
         }
     }
 }

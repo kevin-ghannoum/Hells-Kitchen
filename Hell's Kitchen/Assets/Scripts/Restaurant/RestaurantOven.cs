@@ -3,6 +3,7 @@ using System.Linq;
 using Common;
 using Common.Enums;
 using Common.Enums.Items;
+using Dungeon_Generation;
 using Enums.Items;
 using Input;
 using Photon.Pun;
@@ -12,7 +13,7 @@ using UnityEngine;
 
 namespace Restaurant
 {
-    public class RestaurantOven : MonoBehaviour
+    public class RestaurantOven : Interactable
     {
         [SerializeField] private AudioClip cookingSound;
         [SerializeField] private PhotonView photonView;
@@ -23,7 +24,7 @@ namespace Restaurant
             DebugAddInventoryAndOrders();
         }
 
-        private void AutoCraftOrderedRecipes()
+        protected override void Interact()
         {
             var orderList = RestaurantManager.Instance.OrderList.Where(o => !o.Served);
             var player = GameObject.FindWithTag(Tags.Player);
@@ -72,18 +73,6 @@ namespace Restaurant
             GameStateManager.AddItemToInventory(ItemInstance.Honey, 20);
             GameStateManager.AddItemToInventory(ItemInstance.Mushroom, 20);
             GameStateManager.AddItemToInventory(ItemInstance.Meat, 20);
-        }
-        
-        private void OnTriggerStay(Collider other)
-        {
-            if (InputManager.Actions.Interact.triggered && other.CompareTag(Tags.Player))
-            {
-                var pv = other.GetComponent<PhotonView>();
-                if (pv != null && pv.IsMine)
-                {
-                    AutoCraftOrderedRecipes();
-                }
-            }
         }
     }
 }

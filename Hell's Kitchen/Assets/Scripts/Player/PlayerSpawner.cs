@@ -29,6 +29,10 @@ namespace Player
             var player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, Quaternion.identity);
             player.GetComponentInChildren<Camera>().gameObject.tag = Tags.MainCamera;
             player.transform.Find("VirtualCamera").gameObject.SetActive(true);
+            if (SceneManager.GetActiveScene().name.Equals(Scenes.Dungeon))
+            {
+                player.transform.Find("Lights").gameObject.SetActive(true);
+            }
             GameStateData.player = player;
         }
 
@@ -38,7 +42,7 @@ namespace Player
             if (SceneManager.GetActiveScene().name.Equals(Scenes.Dungeon))
             {
                 var prefab = GameStateData.sousChefType == SousChefType.Healer ? healerPrefab : knightPrefab;
-                GameObject sousChef = PhotonNetwork.Instantiate(prefab.name, spawnPoints[0].position - new Vector3(1f, 0, 1f), Quaternion.identity);
+                GameObject sousChef = PhotonNetwork.Instantiate(prefab.name, spawnPoints[0].position - new Vector3(2f, 0, 2f), Quaternion.identity);
                 sousChef.tag = Tags.SousChef;
             }
         }
