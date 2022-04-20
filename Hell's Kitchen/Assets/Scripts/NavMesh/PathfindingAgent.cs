@@ -90,4 +90,8 @@ public class PathfindingAgent : MonoBehaviour
         }
     }
 
+    public void UpdatePath(Pathfinding.PathNode node) //using for teleport
+    { 
+        _path = node;
+    }
 }
