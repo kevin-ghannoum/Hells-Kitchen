@@ -12,5 +12,6 @@ namespace Common.Enums
         public static string MainCamera => "MainCamera";
         public static string Enemy => "Enemy";
         public static string SharedDecoration => "SharedDecoration";
+        public static string Item = "Item";
     }
 }

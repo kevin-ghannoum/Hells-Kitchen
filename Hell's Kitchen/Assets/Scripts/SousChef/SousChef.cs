@@ -22,9 +22,12 @@ public class SousChef : MonoBehaviour, IKillable
     public GameObject player;
     public float hitPoints;
     public float HitPoints => hitPoints;
+    
     public UnityEvent Killed => throw new System.NotImplementedException();
 
-    public PhotonView PhotonView => null;
+    private PhotonView _photonView;
+    
+    public PhotonView PhotonView { get => _photonView; }
 
     GameObject gameStateManager;
     void Awake()
@@ -35,6 +38,7 @@ public class SousChef : MonoBehaviour, IKillable
         agent.ArrivalRadius = followDistance;
         targetEnemy = null;
         targetLoot = null;
+        _photonView = GetComponent<PhotonView>();
     }
 
     void Update()
@@ -75,7 +79,7 @@ public class SousChef : MonoBehaviour, IKillable
             //Debug.DrawRay(transform.position + Vector3.up / 2, direction * searchRange, Color.green);
             if(Physics.Raycast(transform.position + Vector3.up / 2, direction, out hit, searchRange))
             {
-                if(hit.transform.gameObject.layer == LayerMask.NameToLayer("Enemies"))
+                if(hit.transform.gameObject.layer == Layers.Enemies)
                 {
                     float currentDistance = (hit.transform.position - this.transform.position).magnitude;
                     if(currentDistance < distance) // closets enemy
@@ -104,7 +108,7 @@ public class SousChef : MonoBehaviour, IKillable
             //Debug.DrawRay(transform.position + Vector3.up / 2, direction, Color.yellow);
             if(Physics.Raycast(transform.position + Vector3.up / 2, direction, out hit, searchRange))
             {
-                if(hit.transform.gameObject.layer == LayerMask.NameToLayer("Collectibles"))
+                if(hit.transform.gameObject.CompareTag(Tags.Item))
                 {
                     float currentDistance = (hit.transform.position - this.transform.position).magnitude;
                     if(currentDistance < distance) // closest loot
