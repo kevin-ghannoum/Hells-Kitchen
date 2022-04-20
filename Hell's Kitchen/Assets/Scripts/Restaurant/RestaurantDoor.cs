@@ -16,6 +16,7 @@ public class RestaurantDoor : MonoBehaviour
 {
     [SerializeField] private int numberOfOrders = 5;
     [SerializeField] private float missedOrderPenalty = 10f;
+    [SerializeField] private int debtCap = 5;
     
     [SerializeField] private Animator animator;
     
@@ -34,6 +35,15 @@ public class RestaurantDoor : MonoBehaviour
         ImposeFine();
         _input.reference.actions["Interact"].performed -= LeaveRestaurant;
         SceneManager.Instance.LoadDungeonScene(true);
+        
+        if (GameStateData.cashMoney < debtCap)
+        {
+            SceneManager.Instance.LoadGameOverScene();
+        }
+        else
+        {
+            SceneManager.Instance.LoadDungeonScene(true);
+        }
     }
 
     private void Reset()
