@@ -7103,7 +7103,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4771682811075462, guid: b57f0cfd728a07b42b9c41c96ebadbfc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -13.08
+      value: -13.24
       objectReference: {fileID: 0}
     - target: {fileID: 4771682811075462, guid: b57f0cfd728a07b42b9c41c96ebadbfc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9482,7 +9482,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh235338
+  m_Name: pb_Mesh2573072
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -11198,6 +11198,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4318900774605376, guid: 6e3fe51b87e46cc4288922e1268feca3, type: 3}
   m_PrefabInstance: {fileID: 1807538316}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1810658321
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 800718221488657217, guid: 965ac626ad8ed13418d687edcd753ec1, type: 3}
+      propertyPath: m_Name
+      value: BGM Restaurant
+      objectReference: {fileID: 0}
+    - target: {fileID: 800718221488657219, guid: 965ac626ad8ed13418d687edcd753ec1, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 800718221488657219, guid: 965ac626ad8ed13418d687edcd753ec1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 18.869125
+      objectReference: {fileID: 0}
+    - target: {fileID: 800718221488657219, guid: 965ac626ad8ed13418d687edcd753ec1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.5684981
+      objectReference: {fileID: 0}
+    - target: {fileID: 800718221488657219, guid: 965ac626ad8ed13418d687edcd753ec1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.6345997
+      objectReference: {fileID: 0}
+    - target: {fileID: 800718221488657219, guid: 965ac626ad8ed13418d687edcd753ec1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 800718221488657219, guid: 965ac626ad8ed13418d687edcd753ec1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 800718221488657219, guid: 965ac626ad8ed13418d687edcd753ec1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 800718221488657219, guid: 965ac626ad8ed13418d687edcd753ec1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 800718221488657219, guid: 965ac626ad8ed13418d687edcd753ec1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 800718221488657219, guid: 965ac626ad8ed13418d687edcd753ec1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 800718221488657219, guid: 965ac626ad8ed13418d687edcd753ec1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 965ac626ad8ed13418d687edcd753ec1, type: 3}
 --- !u!1001 &1824571277
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12182,7 +12239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4148398408250564, guid: 649674c99c61c444b979b7b5cd82232d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -13.07
+      value: -13.24
       objectReference: {fileID: 0}
     - target: {fileID: 4148398408250564, guid: 649674c99c61c444b979b7b5cd82232d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -12298,7 +12355,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh234152
+  m_Name: pb_Mesh2572932
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

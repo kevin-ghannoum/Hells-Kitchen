@@ -13,11 +13,10 @@ namespace Dungeon_Generation
 
     public class GameController : MonoBehaviour
     {
-        [SerializeField] private float playerHeightPosition = 0f;
         [SerializeField] private WeaponInstance defaultWeapon = WeaponInstance.Scimitar;
-        [SerializeField] private ClockUI clock;
         [SerializeField] public Transform mazeStart;
         [SerializeField] private PlayerSpawner playerSpawner;
+        [SerializeField] private PhotonView photonView;
 
         private MazeConstructor _generator;
 
@@ -29,25 +28,28 @@ namespace Dungeon_Generation
         public void StartNewGame()
         {
             StartNewMaze();
-            if (GameStateData.player == null)
-            {
-                playerSpawner.SpawnPlayerInScene();
-                playerSpawner.AddSousChef();
-            }
-            else
-            {
-                Debug.Log(mazeStart.position);
-                GameStateData.player.transform.position = mazeStart.position;
-                GameStateData.player.transform.rotation = mazeStart.rotation;
-            }
-            SetUpPlayerWeapon();
+            SpawnPlayers();
             MoveSousChefToStart();
-            SetDungeonClock();
         }
         
         public void StartNewMaze()
         {
             _generator.GenerateNewMaze();
+        }
+
+        public void SpawnPlayers()
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                photonView.RPC(nameof(SpawnLocalPlayer), RpcTarget.All);
+            }
+        }
+
+        [PunRPC]
+        public void SpawnLocalPlayer()
+        {
+            playerSpawner.SpawnPlayerInScene();
+            SetUpPlayerWeapon();
         }
 
         private void SetUpPlayerWeapon()
@@ -71,22 +73,12 @@ namespace Dungeon_Generation
             var weaponInstance = PhotonNetwork.Instantiate(weapon.WeaponModel.Prefab.name, Vector3.zero, Quaternion.identity);
             weaponInstance.GetComponent<IPickup>()?.PickUp();
         }
-
         private void MoveSousChefToStart() {
             Vector3 sousChefPosition = new Vector3(mazeStart.position.x + 1, mazeStart.position.y, mazeStart.position.z);
             var sousChefs = GameObject.FindGameObjectsWithTag("SousChef");
             foreach (var ss in sousChefs) {
                 ss.transform.localPosition = sousChefPosition;
             }
-        }
-
-        private void SetDungeonClock()
-        {
-            if (!GameStateData.dungeonTimeHasElapsed) return;
-            
-            // if true we are coming from the restaurant, so reset timer
-            clock.ResetClock();
-            GameStateData.dungeonTimeHasElapsed = false;
         }
     }
 }

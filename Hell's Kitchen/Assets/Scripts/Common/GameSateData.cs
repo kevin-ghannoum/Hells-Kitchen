@@ -18,7 +18,7 @@ namespace Common
         public static List<string> purchasedWeapons =  new List<string>();
 
         public static float cashMoney = 0f;
-        public static bool dungeonTimeHasElapsed = true;
+        public static float dungeonClock = 0;
 
         public static Inventory inventory = new Inventory();
 

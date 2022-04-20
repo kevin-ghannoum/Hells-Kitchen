@@ -2,6 +2,7 @@ using System;
 using Common.Enums;
 using Common.Interfaces;
 using Enemies.Enums;
+using Photon.Pun;
 using Player;
 using UnityEngine;
 
@@ -18,8 +19,11 @@ namespace Enemies
         [SerializeField] private float chargeSpeed = 10;
         [SerializeField] private float chargeTime = 3;
         [SerializeField] private float chargeRange = 10.0f;
+        [SerializeField] private AudioClip idleSound;
+        [SerializeField] private AudioClip attackSound;
+        [SerializeField] private AudioClip deathSound;
 
-        private PlayerController _player;
+        private AudioSource _as;
         private float _currentChargeTime;
         private float _lastAttack;
         private Vector3 _chargeDirection;
@@ -27,36 +31,49 @@ namespace Enemies
 
         private void Start()
         {
-            _player = GameObject.FindWithTag(Tags.Player).GetComponent<PlayerController>();
+            if (!photonView.IsMine)
+                return;
+
             _rb = GetComponent<Rigidbody>();
+            _as = GetComponent<AudioSource>();
+            _as.loop = true;
+            photonView.RPC(nameof(PlayIdleSoundRPC), RpcTarget.All);
         }
 
         public override void Update()
         {
-            if (Vector3.Distance(_player.transform.position, transform.position) < aggroRadius)
+            if (!photonView.IsMine)
+                return;
+
+            var player = FindClosestPlayer();
+            if (player != null)
             {
-                agent.Target = _player.transform.position;
-                PerformAttack();
+                if (Vector3.Distance(player.transform.position, transform.position) < aggroRadius)
+                {
+                    agent.Target = player.transform.position;
+                    PerformAttack(player);
+                }
             }
         }
 
-        private void PerformAttack()
+        private void PerformAttack(GameObject player)
         {
             if (_currentChargeTime >= chargeTime && Time.time - _lastAttack > (1 / attackRate))
             {
                 animator.SetBool(EnemyAnimator.Attack, false);
                 _rb.velocity = Vector3.zero;
-                if (Physics.Raycast(transform.position + Vector3.up * 0.5f, (_player.transform.position - transform.position).normalized, out var hit,
+                if (Physics.Raycast(transform.position + Vector3.up * 0.5f, (player.transform.position - transform.position).normalized, out var hit,
                     chargeRange))
                 {
                     if (hit.collider.CompareTag(Tags.Player))
                     {
                         agent.enabled = false;
-                        _chargeDirection = (_player.transform.position - transform.position).normalized;
+                        _chargeDirection = (player.transform.position - transform.position).normalized;
                         _currentChargeTime = -1;
                         _lastAttack = Time.time;
                         animator.SetBool(EnemyAnimator.Attack, true);
                         transform.rotation = Quaternion.LookRotation(_chargeDirection);
+                        photonView.RPC(nameof(PlayAttackSoundRPC), RpcTarget.All);
                     }
                 }
             }
@@ -70,30 +87,46 @@ namespace Enemies
                 else
                 {
                     agent.enabled = true;
+                    if (_as.clip == attackSound)
+                    {
+                        photonView.RPC(nameof(PlayIdleSoundRPC), RpcTarget.All);
+                    }
                 }
             }
         }
 
+        [PunRPC]
+        private void PlayIdleSoundRPC()
+        {
+            _as.clip = idleSound;
+            _as.Play();
+        }
+
+        [PunRPC]
+        private void PlayAttackSoundRPC()
+        {
+            _as.clip = attackSound;
+            _as.Play();
+        }
+
+        [PunRPC]
+        private void PlayDeathSoundRPC()
+        {
+            AudioSource.PlayClipAtPoint(deathSound, transform.position);
+        }
+
         protected override void Die()
         {
+            photonView.RPC(nameof(PlayDeathSoundRPC), RpcTarget.All);
             base.Die();
             Destroy(GetComponentInChildren<PigCollider>());
         }
 
         public void OnPigTrigger(Collider col)
         {
-            if (!photonView.IsMine)
-                return;
-            
-            if (_currentChargeTime < 0)
+            if (photonView.IsMine && !col.CompareTag(Tags.Enemy) && _currentChargeTime >= 0)
             {
-                if (!col.CompareTag(Tags.Enemy))
-                    col.GetComponent<IKillable>()?.TakeDamage(chargeDamage);
-            }
-            else
-            {
-                if (!col.CompareTag(Tags.Enemy))
-                    col.GetComponent<IKillable>()?.TakeDamage(attackDamage);
+                col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.All, attackDamage);
             }
         }
 
@@ -101,7 +134,7 @@ namespace Enemies
         {
             if (photonView.IsMine && !col.CompareTag(Tags.Enemy) && _currentChargeTime < 0)
             {
-                col.GetComponent<IKillable>()?.TakeDamage(chargeDamage);
+                col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.All, chargeDamage);
             }
         }
     }

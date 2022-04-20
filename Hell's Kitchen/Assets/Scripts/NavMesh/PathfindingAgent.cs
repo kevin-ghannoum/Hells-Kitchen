@@ -20,8 +20,11 @@ public class PathfindingAgent : MonoBehaviour
     [Header("References")]
     [SerializeField]
     private new Rigidbody rigidbody;
-    
+
+    public bool standStill = false;
     public bool IsArrived => _path == null;
+    public bool IsMoving => Velocity.magnitude > 0.1f;
+    public Pathfinding.PathNode CurrentNode => _path;
 
     private Pathfinding.PathNode _path;
     private Vector3 _target;
@@ -87,11 +90,5 @@ public class PathfindingAgent : MonoBehaviour
             _path = Pathfinding.Instance.FindPath(transform.position, Target)?.Next;
         }
     }
-
-    public bool IsMoving() => rigidbody.velocity != Vector3.zero;
-
-    public bool PathIsNull() => _path == null;
-
-    public Pathfinding.PathNode currentNode => _path; //using for teleport
 
 }

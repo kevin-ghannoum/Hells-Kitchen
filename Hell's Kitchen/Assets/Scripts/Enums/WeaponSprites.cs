@@ -6,31 +6,31 @@ namespace Enums
 {
     public static class WeaponSprites
     {
-        public static Sprite Gun1 = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/weapons/freepik_2872527.png"); // glock
-        public static Sprite Gun2 = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/weapons/freepik_448314.png"); // revolver
-        public static Sprite Gun3 = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/weapons/freepik_5322070.png"); // shotgun
-        public static Sprite Axe = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/weapons/freepik_3755031.png"); // axe
-        public static Sprite Sword1 = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/weapons/freepik_2929708.png"); // scimitar
-        public static Sprite Sword2 = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/weapons/freepik_4155897.png"); // longsword
-        public static Sprite Sword3 = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/weapons/freepik_4666542.png") ; // golden sword
+        public static Sprite Gun1 = Resources.Load<Sprite>("Pistol");
+        public static Sprite Gun2 = Resources.Load<Sprite>("Revolver");
+        public static Sprite Gun3 = Resources.Load<Sprite>("Shotgun");
+        public static Sprite Axe = Resources.Load<Sprite>("Axe");
+        public static Sprite Sword1 = Resources.Load<Sprite>("Scimitar");
+        public static Sprite Sword2 = Resources.Load<Sprite>("LongSword");
+        public static Sprite Sword3 = Resources.Load<Sprite>("GreatSword");
         
         public static Sprite GetSprite(string weaponName)
         {
             switch (weaponName)
             {
-                case("Gun1"):
+                case("Pistol"):
                     return Gun1;
-                case("Gun2"):
+                case("Revolver"):
                     return Gun2;
-                case("Gun3"):
+                case("Shotgun"):
                     return Gun3;   
                 case("Axe"):
                     return Axe;
-                case("Sword1"):
+                case("Scimitar"):
                     return Sword1;
-                case("Sword2"):
+                case("LongSword"):
                     return Sword2;
-                case("Sword3"):
+                case("GreatSword"):
                     return Sword3;
             }
             // default

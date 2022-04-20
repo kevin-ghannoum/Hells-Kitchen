@@ -30,6 +30,8 @@ namespace Player
             set => GameStateData.playerCurrentHitPoints = value;
         }
 
+        public PhotonView PhotonView => photonView;
+
         void Start()
         {
             photonView = GetComponent<PhotonView>();
@@ -43,6 +45,7 @@ namespace Player
             }
         }
 
+        [PunRPC]
         public void TakeDamage(float damage)
         {
             // Invulnerability while rolling
@@ -54,40 +57,71 @@ namespace Player
             if (_invulnerabilityTimer < _invulnerabilityTime)
                 return;
 
-            // HP calculation and animation
-            HitPoints -= damage;
             _invulnerabilityTimer = 0;
+
+            // HP calculation and animation
+            if (photonView.IsMine)
+            {
+                animator.SetTrigger(PlayerAnimator.TakeHit);
+                HitPoints -= damage;
+
+                // If the player's hp is at 0 or lower, they die
+                if (HitPoints <= 0)
+                {
+                    HitPoints = 0;
+                    Die();
+                    return;
+                }
+
+                if (HitPoints > 25)
+                {
+                    photonView.RPC(nameof(PlayTakeDamageSoundRPC), RpcTarget.All);
+                }
+                else
+                {
+                    photonView.RPC(nameof(PlayLowHealthSoundRPC), RpcTarget.All);
+                }
+            }
 
             // Damage numbers
             AdrenalinePointsUI.SpawnDamageNumbers(transform.position + 2.0f * Vector3.up, -damage);
+        }
 
-            // If the player's hp is at 0 or lower, they die
-            if (HitPoints <= 0)
-            {
-                HitPoints = 0;
-                Die();
-                return;
-            }
+        [PunRPC]
+        private void PlayTakeDamageSoundRPC()
+        {
+            AudioSource.PlayClipAtPoint(takeDamageSound, transform.position);
+        }
 
-            if (HitPoints > 25)
-            {
-                AudioSource.PlayClipAtPoint(takeDamageSound, transform.position);
-            }
-            else
-            {
-                AudioSource.PlayClipAtPoint(lowHealthSound, transform.position);
-            }
+        [PunRPC]
+        private void PlayLowHealthSoundRPC()
+        {
+            AudioSource.PlayClipAtPoint(lowHealthSound, transform.position);
         }
 
         private void Die()
         {
-            AudioSource.PlayClipAtPoint(deathSound, transform.position);
+            photonView.RPC(nameof(PlayDeathSoundRPC), RpcTarget.All);
             Killed.Invoke();
+            animator.SetTrigger(PlayerAnimator.Dead);
             Invoke(nameof(ReturnToRestaurant), transitionToRestaurantTime);
         }
 
         private void ReturnToRestaurant()
         {
+            photonView.RPC(nameof(ReturnToRestaurantRPC), RpcTarget.All);
+        }
+
+        [PunRPC]
+        private void PlayDeathSoundRPC()
+        {
+            AudioSource.PlayClipAtPoint(deathSound, transform.position);
+        }
+
+        [PunRPC]
+        private void ReturnToRestaurantRPC()
+        {
+            Debug.Log("ReturnToRestaurantRPC");
             var playerController = gameObject.GetComponent<PlayerController>();
             if (playerController)
             {
@@ -102,5 +136,6 @@ namespace Player
             GameStateData.playerCurrentHitPoints = GameStateData.playerMaxHitPoints;
             SceneManager.Instance.LoadRestaurantScene();
         }
+
     }
 }

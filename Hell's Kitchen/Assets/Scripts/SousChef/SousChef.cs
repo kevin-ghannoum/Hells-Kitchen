@@ -1,5 +1,8 @@
 using Common.Enums;
 using Common.Interfaces;
+using System.Collections;
+using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -20,6 +23,8 @@ public class SousChef : MonoBehaviour, IKillable
     public float hitPoints;
     public float HitPoints => hitPoints;
     public UnityEvent Killed => throw new System.NotImplementedException();
+
+    public PhotonView PhotonView => null;
 
     GameObject gameStateManager;
     void Awake()

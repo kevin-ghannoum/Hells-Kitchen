@@ -55,7 +55,7 @@ namespace Player
 
         private void OnDestroy()
         {
-            if (_photonView.IsMine && _input)
+            if (_photonView.IsMine)
             {
                 _input.reference.actions["Roll"].performed -= Roll;
                 _input.reference.actions["PickUp"].performed -= PickUp;
@@ -187,11 +187,14 @@ namespace Player
 
         public void InflictMeleeDamage()
         {
+            if (!_photonView.IsMine)
+                return;
+            
             float damage = GetComponentInChildren<WeaponPickup>()?.Damage ?? 0.0f;
             var colliders = Physics.OverlapSphere(DamagePosition.position, DamageRadius, ~(1 << Layers.Player));
             foreach (var col in colliders)
             {
-                col.gameObject.GetComponent<IKillable>()?.TakeDamage(damage);
+                col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.All, damage);
             }
         }
 

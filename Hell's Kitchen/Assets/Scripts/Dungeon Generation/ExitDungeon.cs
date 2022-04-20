@@ -1,10 +1,13 @@
+using System;
 using Common;
 using Common.Enums;
 using Common.Interfaces;
 using Input;
 using Photon.Pun;
 using Player;
+using UI;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Dungeon_Generation
 {
@@ -12,20 +15,51 @@ namespace Dungeon_Generation
     {
         private InputManager _input => InputManager.Instance;
 
-        private void OnTriggerStay(Collider other)
+        private void Interact(InputAction.CallbackContext context)
         {
-            if(other.gameObject.CompareTag(Tags.Player) && _input.interact)
+            var gameController = FindObjectOfType<GameController>();
+            if (GameStateData.dungeonClock > 1.0f || !gameController)
             {
-                var gameController = GameObject.FindObjectOfType<GameController>();
-                if (GameStateData.dungeonTimeHasElapsed || !gameController)
-                    ReturnToRestaurant(other.gameObject);
-                else
-                    gameController.StartNewGame();
+                ReturnToRestaurant();
+            }
+            else
+            {
+                SceneManager.Instance.LoadDungeonScene();
             }
         }
 
-        private void ReturnToRestaurant(GameObject player)
+        private void OnDestroy()
         {
+            _input.reference.actions["Interact"].performed -= Interact;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag(Tags.Player))
+            {
+                var pv = other.GetComponent<PhotonView>();
+                if (pv != null && pv.IsMine)
+                {
+                    _input.reference.actions["Interact"].performed += Interact;
+                }
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject.CompareTag(Tags.Player))
+            {
+                var pv = other.GetComponent<PhotonView>();
+                if (pv != null && pv.IsMine)
+                {
+                    _input.reference.actions["Interact"].performed -= Interact;
+                }
+            }
+        }
+
+        private void ReturnToRestaurant()
+        {
+            var player = NetworkHelper.GetLocalPlayerObject();
             var playerController = player.GetComponent<PlayerController>();
             if (playerController)
             {

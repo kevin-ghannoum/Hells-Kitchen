@@ -63,6 +63,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quantity: 1
   item: 0
+  photonView: {fileID: 3437614559628502413}
 --- !u!114 &3437614559628502413
 MonoBehaviour:
   m_ObjectHideFlags: 0

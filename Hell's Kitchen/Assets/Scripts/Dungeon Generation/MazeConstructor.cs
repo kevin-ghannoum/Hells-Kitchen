@@ -121,7 +121,8 @@ namespace Dungeon_Generation
                         // Spawn shared game objects
                         if (PhotonNetwork.IsMasterClient)
                         {
-                            SpawnEnemy(floorPosition);
+                            if (i != 0 && j != 0) 
+                                SpawnEnemy(floorPosition);
                             if (!SpawnChest(floorPosition))
                                 SpawnDebris(floorPosition);
                         }

@@ -44,14 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 638c7fd8a89869045b7666e67c40d012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMaxHitPoints: 100
-  playerCurrentHitPoints: 100
-  playerMaxStamina: 5
-  playerCurrentStamina: 5
-  carriedWeapon: 0
-  cashMoney: 0
-  dungeonTimeHasElapsed: 1
-  purchasedWeapons: []
+  photonView: {fileID: 0}
+  inventoryUI: {fileID: 0}
+  kachingSound: {fileID: 8300000, guid: a093368cd1b4ac547aca572e9f783f09, type: 3}
+  cookingSound: {fileID: 8300000, guid: 0e859261776e677479364af91d3cf980, type: 3}
 --- !u!114 &5885182959194592805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,7 +66,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 7471086848112553623}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

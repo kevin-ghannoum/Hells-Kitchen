@@ -20,11 +20,7 @@ namespace UI
         private void OnDestroy()
         {
             // return to game before leaving to resume timescale and return to defaults
-            ResumeGame(); 
-            
-            if (!_input)
-                return;
-            
+            ResumeGame();
             _input.reference.actions["OpenPauseMenu"].performed -= OpenPauseMenu;
         }
 
@@ -32,14 +28,12 @@ namespace UI
         {
             isUIActive = !isUIActive;
             content.SetActive(isUIActive);
-            Time.timeScale = isUIActive ? 0f : 1f;
         }
 
         public void ResumeGame()
         {
             isUIActive = !isUIActive;
             content.SetActive(isUIActive);
-            Time.timeScale = 1f;
         }
     }
 }

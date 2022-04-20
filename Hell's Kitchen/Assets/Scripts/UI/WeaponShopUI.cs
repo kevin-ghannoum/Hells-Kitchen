@@ -48,7 +48,7 @@ namespace UI
                 return;
             }
 
-            PerformTransaction(weapon.name,weaponCost);
+            PerformTransaction(weapon.name, weaponCost);
             GameStateManager.Instance.photonView.RPC(nameof(GameStateManager.SetGameObjectActiveByNameRPC), RpcTarget.All, weapon.name);
             errorText.text = string.Empty;
             button.interactable = false;
@@ -56,7 +56,7 @@ namespace UI
 
         private void CreateWeaponSlots()
         {
-            foreach (GameObject weapon  in _weapons)
+            foreach (var weapon in _weapons)
             {
                 GameObject weaponSlot = Instantiate(weaponSlotPrefab, gridLayout.transform);
                 weaponSlot.GetComponentInChildren<Image>().sprite = WeaponSprites.GetSprite(weapon.name); // sprite

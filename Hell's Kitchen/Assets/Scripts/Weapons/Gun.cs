@@ -19,6 +19,7 @@ namespace Weapons
         [SerializeField] private GameObject muzzlePrefab;
         [SerializeField] private Transform shootPosition;
 
+        [SerializeField] private AudioClip gunshotSound;
         [SerializeField] private float price = 10f;
         public override float Price { get => price; }
 
@@ -33,13 +34,20 @@ namespace Weapons
 
         private void Fire()
         {
-            var photonView = GetComponent<PhotonView>();
-            if (!photonView || !photonView.IsMine)
+            Debug.Log($"FIRE - IS MINE - {photonView.IsMine}");
+            if (!photonView.IsMine)
                 return;
 
-            ShootBullet(playerController.transform.right,  playerController.transform.rotation);
+            photonView.RPC(nameof(PlayGunshotSoundRPC), RpcTarget.All);
+            ShootBullet(playerController.transform.right, playerController.transform.rotation);
         }
-        
+
+        [PunRPC]
+        private void PlayGunshotSoundRPC()
+        {
+            AudioSource.PlayClipAtPoint(gunshotSound, transform.position);
+        }
+
         private void ShootBullet(Vector3 playerRightTransform, Quaternion playerRotation)
         {
             var position = shootPosition.position;
@@ -73,10 +81,13 @@ namespace Weapons
             animationEvents.fireGun.RemoveListener(Fire);
         }
 
-        IEnumerator  DestroyBullet(GameObject bullet)
+        IEnumerator DestroyBullet(GameObject bullet)
         {
             yield return new WaitForSeconds(bulletLifetime);
-            PhotonNetwork.Destroy(bullet);
+            if (bullet != null)
+            {
+                PhotonNetwork.Destroy(bullet);
+            }
         }
     }
 }

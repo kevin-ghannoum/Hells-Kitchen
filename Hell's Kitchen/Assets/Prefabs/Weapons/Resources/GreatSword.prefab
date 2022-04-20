@@ -87,6 +87,7 @@ MonoBehaviour:
   rigidbody: {fileID: -8043898493064958135}
   weaponInstance: 5
   price: 10
+  swordSlashSound: {fileID: 8300000, guid: 8659311743a719944ba2d8a0f9c7736a, type: 3}
 --- !u!114 &6184519785293596476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,7 +122,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
   - {fileID: 8731790847074379828}

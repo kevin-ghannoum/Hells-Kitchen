@@ -13,18 +13,17 @@ namespace Shops
     {
         [SerializeField] private GameObject interactText;
         [SerializeField] private WeaponShopUI shopUI;
-        
+
         private InputManager _input => InputManager.Instance;
         private List<GameObject> _weapons;
 
         private void Start()
         {
-            interactText.SetActive(false);
-            shopUI.gameObject.SetActive(false);
+            shopUI.Close();
             _weapons = GameObject.FindGameObjectsWithTag(Tags.Weapon).ToList();
             foreach (var weapon in _weapons)
             {
-                if(!GameStateData.purchasedWeapons.Contains(weapon.name))
+                if (!GameStateData.purchasedWeapons.Contains(weapon.name))
                     weapon.SetActive(false);
             }
         }
