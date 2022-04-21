@@ -35442,6 +35442,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MagicCircle
       objectReference: {fileID: 0}
+    - target: {fileID: 5688288541245001670, guid: 70e75db412a3d834faa5c6677f0c05de, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7593034187011999241, guid: 70e75db412a3d834faa5c6677f0c05de, type: 3}
       propertyPath: m_RootOrder
       value: 2
