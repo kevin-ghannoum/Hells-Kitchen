@@ -59,13 +59,9 @@ namespace Weapons
             // Bullets
             for (int i = -bulletCount / 2; i <= bulletCount / 2; i++)
             {
-                var bullet = PhotonNetwork.Instantiate(
-                    bulletPrefab.name, 
-                    position +  0.5f * i * playerTransform.right, 
-                    rotation * Quaternion.Euler(0, i * bulletSpread, 0)
-                );
+                var bullet = PhotonNetwork.Instantiate(bulletPrefab.name, position +  0.5f * i * playerTransform.right, rotation);
                 bullet.GetComponent<Bullet>().Damage = Damage;
-                bullet.GetComponent<Rigidbody>().velocity = direction.normalized * bulletSpeed;
+                bullet.GetComponent<Rigidbody>().velocity = Quaternion.Euler(0, i * bulletSpread, 0) * direction.normalized * bulletSpeed;
                 StartCoroutine(nameof(DestroyBullet), bullet);
             }
 
