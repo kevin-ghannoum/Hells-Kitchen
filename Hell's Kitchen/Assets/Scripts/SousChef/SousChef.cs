@@ -42,6 +42,8 @@ public class SousChef : MonoBehaviour, IKillable
         _photonView = GetComponent<PhotonView>();
     }
 
+    float takeDamageDelay = 1f;
+    float _takeDamageDelay = 0f;
     void Update()
     {
         player = FindClosestPlayer();
@@ -62,6 +64,10 @@ public class SousChef : MonoBehaviour, IKillable
             {
                 FindLoot();
             }
+        }
+        if (_takeDamageDelay < takeDamageDelay)
+        {
+            _takeDamageDelay += Time.deltaTime;
         }
     }
 
@@ -187,6 +193,11 @@ public class SousChef : MonoBehaviour, IKillable
     [PunRPC]
     public void TakeDamage(float dmg)
     {
+        // Invulnerability after getting hit
+        if (_takeDamageDelay < takeDamageDelay)
+            return;
+
+        _takeDamageDelay = 0;
         Debug.Log("'" + gameObject.name + "' took " + dmg + " damage");
         hitPoints -= dmg;
         if (_photonView.IsMine)
