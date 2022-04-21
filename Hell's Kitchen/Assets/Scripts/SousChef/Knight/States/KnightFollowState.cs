@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class KnightFollowState : KnightBaseState
@@ -12,10 +10,12 @@ public class KnightFollowState : KnightBaseState
     public override void UpdateState(KnightStateManager knight)
     {
         // make sure the pick up animation ends before moving
-        if(knight.animator.GetCurrentAnimatorStateInfo(0).IsName("PickUp")){
+        if(knight.animator.GetCurrentAnimatorStateInfo(0).IsName("PickUp"))
+        {
             knight.sc.agent.standStill = true;
         }
-        else{
+        else
+        {
             knight.sc.agent.standStill = false;
         }
 
@@ -35,13 +35,11 @@ public class KnightFollowState : KnightBaseState
         {
             // enter move to target
             knight.SwitchState(knight.moveToTarget);
-            return;
         }
         else if (knight.sc.targetLoot != null)
         {
             // enter loot state
             knight.SwitchState(knight.lootState);
-            return;
         }
     }
 }

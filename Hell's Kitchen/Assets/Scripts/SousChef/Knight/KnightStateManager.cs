@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
@@ -38,12 +36,14 @@ public class KnightStateManager : MonoBehaviour
         currentState.UpdateState(this);
     }
 
-     public void SwitchState(KnightBaseState state) {
+     public void SwitchState(KnightBaseState state)
+     {
         currentState = state;
         state.EnterState(this);
     }
 
-    public bool IsInLootState(){
+    public bool IsInLootState()
+    {
         return currentState == lootState;
     }
 }

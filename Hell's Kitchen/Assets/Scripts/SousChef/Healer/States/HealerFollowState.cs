@@ -1,8 +1,4 @@
-using Common;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class HealerFollowState : HealerBaseState
 {
@@ -14,19 +10,19 @@ public class HealerFollowState : HealerBaseState
     public override void UpdateState(HealerStateManager healer)
     {
         // make sure the pick up animation ends before movings
-        if(healer.animator.GetCurrentAnimatorStateInfo(0).IsName("PickUp")){
+        if(healer.animator.GetCurrentAnimatorStateInfo(0).IsName("PickUp"))
+        {
             healer.sc.agent.standStill = true;
         }
-        else{
+        else
+        {
             healer.sc.agent.standStill = false;
         }
         
-        //Debug.Log("@followState_UpdateState");
         if (healer.sc.isLowHP() || healer.sc.IsPlayerLowHP())
         {
             // heal
             healer.SwitchState(healer.healState);
-            return;
         }
         else if (healer.sc.targetEnemy == null && healer.sc.targetLoot == null)
         {
@@ -44,13 +40,11 @@ public class HealerFollowState : HealerBaseState
         {
             // enter move to target
             healer.SwitchState(healer.moveToTarget);
-            return;
         }
         else if (healer.sc.targetLoot != null)
         {
             // enter loot state
             healer.SwitchState(healer.lootState);
-            return;
         }
     }
 }

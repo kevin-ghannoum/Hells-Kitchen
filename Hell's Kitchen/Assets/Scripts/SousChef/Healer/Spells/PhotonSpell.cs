@@ -81,7 +81,6 @@ public class PhotonSpell : MonoBehaviour
         if (selfDestructTimer <= 0)
             Destroy(gameObject);
 
-      //  if (!stopFollowing)
         transform.Rotate(new Vector3(0, 5, 0));
     }
 
@@ -92,7 +91,8 @@ public class PhotonSpell : MonoBehaviour
         {
             hitList.Remove(objToRemove);
         }
-        catch (Exception e) {
+        catch (Exception e)
+        {
             Debug.LogError(e.StackTrace);
         }
     }
@@ -100,8 +100,8 @@ public class PhotonSpell : MonoBehaviour
     List<GameObject> hitList = new List<GameObject> ();
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log("collided with" + other.name);
-        if (!hitList.Contains(other.gameObject) && other.gameObject.TryGetComponent(out IKillable killable) && !other.CompareTag(Tags.Player) && !other.CompareTag(Tags.SousChef)) {
+        if (!hitList.Contains(other.gameObject) && other.gameObject.TryGetComponent(out IKillable killable) && !other.CompareTag(Tags.Player) && !other.CompareTag(Tags.SousChef))
+        {
             Destroy(Instantiate(bulletExplosion, other.transform.position, Quaternion.identity), 2);
             hitList.Add(other.gameObject);
             killable.TakeDamage(aoeDamage);

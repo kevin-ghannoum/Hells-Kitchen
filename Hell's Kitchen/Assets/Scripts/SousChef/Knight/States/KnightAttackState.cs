@@ -31,21 +31,24 @@ public class KnightAttackState : KnightBaseState
 
     public override void UpdateState(KnightStateManager knight)
     {
-        if(knight.sc.targetEnemy == null){
+        if(knight.sc.targetEnemy == null)
+        {
             knight.sc.agent.standStill = false;
             knight.SwitchState(knight.followState);
         }
         else{
             knight.sc.faceTargetEnemy();
 
-            if(isUsingSkill){
+            if(isUsingSkill)
+            {
                 //is using kill
                 _skillTime += Time.deltaTime;
                 _attackTime += Time.deltaTime;
                 _skillAnimationTime -= Time.deltaTime;
                 knight.sc.agent.standStill = true;
 
-                if(_skillAnimationTime <= 0){
+                if(_skillAnimationTime <= 0)
+                {
                     //skill ends
                     knight.spells.KnightSkill();
                     isUsingSkill = false;
@@ -56,14 +59,16 @@ public class KnightAttackState : KnightBaseState
                 return;
             }
 
-            if(isAttacking){
+            if(isAttacking)
+            {
                 //is using basic attack
                 _skillTime += Time.deltaTime;
                 _attackTime += Time.deltaTime;
                 _attackAnimationTime -= Time.deltaTime;
                 knight.sc.agent.standStill = true;
 
-                if(_attackAnimationTime <= 0){
+                if(_attackAnimationTime <= 0)
+                {
                     //basic attack ends
                     isAttacking = false;
                     knight.sc.agent.standStill = false;
@@ -74,10 +79,13 @@ public class KnightAttackState : KnightBaseState
                 return;
             }
 
-            if(knight.sc.GetDistanceToEnemy() < knight.sc.attackRange){
+            if(knight.sc.GetDistanceToEnemy() < knight.sc.attackRange)
+            {
                 // target enemy within attack range, attack
-                if(!isAttacking & !isUsingSkill){
-                    if(_skillTime >= skillTime){
+                if(!isAttacking & !isUsingSkill)
+                {
+                    if(_skillTime >= skillTime)
+                    {
                         //skill available, use skill
                         isUsingSkill = true;
                         _skillTime = 0;
@@ -85,9 +93,11 @@ public class KnightAttackState : KnightBaseState
                         knight.sc.agent.standStill = true;
                         _skillAnimationTime = skillAnimationTime;
                     }
-                    else{
+                    else
+                    {
                         //skill not available
-                        if(_attackTime >= attackTime){
+                        if(_attackTime >= attackTime)
+                        {
                             //basic attack available, use basic attack
                             isAttacking = true;
                             attackTime = 0;
@@ -96,7 +106,8 @@ public class KnightAttackState : KnightBaseState
                             _attackAnimationTime = attackAnimationTime;
                             knight.weapon.GetComponent<Collider>().enabled = true;
                         }
-                        else{
+                        else
+                        {
                             //neither basic attack nor skill available, approach
                             knight.sc.agent.standStill = false;
                             knight.sc.agent.Target = knight.sc.targetEnemy.transform.position;
@@ -104,12 +115,14 @@ public class KnightAttackState : KnightBaseState
                     }
                 }
             }
-            else if(knight.sc.GetDistanceToEnemy() > knight.sc.searchRange){
+            else if(knight.sc.GetDistanceToEnemy() > knight.sc.searchRange)
+            {
                 //target enemy out of search range, return to follow state
                 knight.sc.targetEnemy = null;
                 knight.SwitchState(knight.followState);
             }
-            else{
+            else
+            {
                 //target enemy not in attack range, approach
                 knight.sc.agent.standStill = false;
                 knight.sc.agent.Target = knight.sc.targetEnemy.transform.position;

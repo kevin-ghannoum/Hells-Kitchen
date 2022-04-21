@@ -44,8 +44,9 @@ MonoBehaviour:
   - GenerateMazeRPC
   - HealerSpell_Heal_RPC
   - HealerSpell_Photon_RPC
-  - KnightSkill_RPC
+  - IncreaseMyHP
   - LoadDungeonRPC
+  - KnightSkill_RPC
   - LoadGameOverRPC
   - LoadRestaurantRPC
   - LootChestRPC
@@ -64,6 +65,8 @@ MonoBehaviour:
   - RemoveObjectParentRPC
   - RemoveWeapon
   - ReparentObjectToPlayerHandRPC
+  - RPC_AttackMagicCircleVisuals
+  - RPC_HealMagicCircleVisuals
   - SelectSousChef
   - ServeOrdersRPC
   - SetCashMoneyRPC
@@ -72,9 +75,6 @@ MonoBehaviour:
   - SpawnLocalPlayer
   - SpawnTeleportMagic
   - TakeDamage
-  - IncreaseMyHP
-  - RPC_AttackMagicCircleVisuals
-  - RPC_HealMagicCircleVisuals
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

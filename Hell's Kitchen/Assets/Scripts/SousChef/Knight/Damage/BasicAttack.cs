@@ -1,6 +1,5 @@
+using Common.Enums;
 using Common.Interfaces;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BasicAttack : MonoBehaviour
@@ -14,7 +13,8 @@ public class BasicAttack : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other){
-        if(other.gameObject.TryGetComponent(out IKillable killable) && other.transform.tag != "Player" && other.transform.tag != "SousChef"){
+        if(other.gameObject.TryGetComponent(out IKillable killable) && !other.transform.CompareTag(Tags.Player) && !other.transform.CompareTag(Tags.SousChef))
+        {
             Destroy(Instantiate(spark, other.transform.position + Vector3.up, Quaternion.identity), 1);
             killable.TakeDamage(damage);
         }

@@ -1,6 +1,6 @@
 using Common.Interfaces;
-using System.Collections;
 using System.Collections.Generic;
+using Common.Enums;
 using UnityEngine;
 
 public class Slash : MonoBehaviour
@@ -10,18 +10,11 @@ public class Slash : MonoBehaviour
     float time = 0f;
     [SerializeField] private float damage = 25f;
     public Vector3 rotation;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {   
         time += Time.deltaTime;
-        if(time >= destroyTime){
+        if(time >= destroyTime)
+        {
             Destroy(this.gameObject);
         }
         transform.position += rotation * Time.deltaTime * speed;
@@ -32,7 +25,8 @@ public class Slash : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         Debug.Log("collided with" + other.name);
-        if (!hitList.Contains(other.gameObject) && other.gameObject.TryGetComponent(out IKillable killable) && other.tag != "Player" && other.tag != "SousChef") {
+        if (!hitList.Contains(other.gameObject) && other.gameObject.TryGetComponent(out IKillable killable) && !other.transform.CompareTag(Tags.Player) && !other.transform.CompareTag(Tags.SousChef))
+        {
             hitList.Add(other.gameObject);
             killable.TakeDamage(damage);
         }
