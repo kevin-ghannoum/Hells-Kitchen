@@ -59,10 +59,10 @@ namespace Enemies
             // HP calculation and animation
             hitPoints -= damage;
             animator.SetTrigger(EnemyAnimator.TakeHit);
-            
+
             // Damage numbers
             AdrenalinePointsUI.SpawnDamageNumbers(transform.position + 2.0f * Vector3.up, -damage);
-            
+
             // Death
             if (hitPoints <= 0)
             {
@@ -77,6 +77,7 @@ namespace Enemies
 
         protected virtual void Die()
         {
+            GetComponent<Collider>().enabled = false;
             animator.SetTrigger(EnemyAnimator.Die);
             Invoke(nameof(Destroy), deathDelay);
             agent.enabled = false;
@@ -92,7 +93,7 @@ namespace Enemies
         {
             if (isKilled)
                 return;
-            
+
             var spawnPosition = new Vector3(gameObject.transform.position.x, 0.2f, gameObject.transform.position.z);
             var item = PhotonNetwork.Instantiate(dropObject.name, spawnPosition, Quaternion.identity);
             var itemDrop = item.GetComponentInChildren<ItemDrop>();
@@ -106,7 +107,7 @@ namespace Enemies
                 PhotonNetwork.Destroy(gameObject);
             }
         }
-        
+
         #endregion
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

@@ -1,5 +1,7 @@
 ﻿using Common.Enums;
+using Common.Interfaces;
 using Photon.Pun;
+using Player;
 using UnityEngine;
 
 namespace Common
@@ -46,6 +48,7 @@ namespace Common
 
         public void LoadRestaurantScene(bool shouldIncrementLevel = false)
         {
+            photonView.RPC(nameof(RemoveWeapon), RpcTarget.All);
             photonView.RPC(nameof(LoadRestaurantRPC), RpcTarget.MasterClient, shouldIncrementLevel);
         }
 
@@ -93,7 +96,23 @@ namespace Common
             PhotonNetwork.DestroyAll();
             PhotonNetwork.LoadLevel(Scenes.GameOver);
         }
-        
+
+        [PunRPC]
+        private void RemoveWeapon()
+        {
+            var player = NetworkHelper.GetLocalPlayerObject();
+            if (!player) return;
+
+            var playerController = player.GetComponent<PlayerController>();
+            if (!playerController) return;
+            
+            var heldWeapon = playerController.GetComponentInChildren<IPickup>();
+            if (heldWeapon != null)
+            {
+                GameStateData.carriedWeapon = WeaponInstance.None;
+                heldWeapon.RemoveFromPlayer();
+            }
+        }
         #endregion
         
     }

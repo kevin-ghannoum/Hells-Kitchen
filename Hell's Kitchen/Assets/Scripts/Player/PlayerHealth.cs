@@ -115,17 +115,6 @@ namespace Player
         
         private void ReturnToRestaurant()
         {
-            var playerController = gameObject.GetComponent<PlayerController>();
-            if (playerController)
-            {
-                var heldWeapon = playerController.GetComponentInChildren<IPickup>();
-                if (heldWeapon != null)
-                {
-                    GameStateData.carriedWeapon = WeaponInstance.None;
-                    heldWeapon.RemoveFromPlayer();
-                }
-            }
-            
             SceneManager.Instance.LoadRestaurantScene();
         }
     }
