@@ -49,12 +49,18 @@ namespace PlayerInventory
         [PunRPC]
         private void PickUpRPC()
         {
-            AdrenalinePointsUI.SpawnIngredientString(transform.position + 2.0f * Vector3.up, "+ " + quantity + " " + item);
             if (photonView.IsMine)
             {
+                photonView.RPC(nameof(SpawnIngredientTextRPC), RpcTarget.All);
                 GameStateManager.AddItemToInventory(item, quantity);
                 PhotonNetwork.Destroy(gameObject);
             }
+        }
+
+        [PunRPC]
+        private void SpawnIngredientTextRPC()
+        {
+            AdrenalinePointsUI.SpawnIngredientString(transform.position + 2.0f * Vector3.up, "+ " + quantity + " " + item);
         }
 
         IEnumerator PickUpBySousChef(Collider other)
