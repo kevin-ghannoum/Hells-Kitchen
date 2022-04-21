@@ -69,6 +69,7 @@ MonoBehaviour:
   - ServeOrdersRPC
   - SetCashMoneyRPC
   - SetGameObjectActiveByNameRPC
+  - SetHiddenLevelRPC
   - SpawnLocalPlayer
   - SpawnTeleportMagic
   - TakeDamage

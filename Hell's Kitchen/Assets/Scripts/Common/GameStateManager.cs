@@ -117,7 +117,7 @@ namespace Common
         [PunRPC]
         public void SetHiddenLevelRPC(int hiddenLevel)
         {
-            GameStateData.cashMoney = hiddenLevel;
+            GameStateData.hiddenLevel = hiddenLevel;
         }
 
         [PunRPC]
