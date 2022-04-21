@@ -8,7 +8,7 @@ namespace Common
     public static class GameStateData
     {
         public static float playerMaxHitPoints = 100f;
-        public static float playerCurrentHitPoints = 100f;
+        public static float playerCurrentHitPoints;// = 100f;
         public static float playerMaxStamina = 5f;
         public static float playerCurrentStamina = 5f;
         

@@ -12,7 +12,7 @@ namespace Player
     public class PlayerHealth : MonoBehaviour, IKillable
     {
         [SerializeField] private Animator animator;
-        [SerializeField] private PhotonView photonView;
+        [SerializeField] public PhotonView photonView;
         [SerializeField] private AudioClip takeDamageSound;
         [SerializeField] private AudioClip lowHealthSound;
         [SerializeField] private AudioClip deathSound;
@@ -29,7 +29,12 @@ namespace Player
             //get => GameStateData.playerCurrentHitPoints;
             //set => GameStateData.playerCurrentHitPoints = Mathf.Clamp(value, 0, GameStateData.playerMaxHitPoints);
             get => internalHealth;
-            set => internalHealth = Mathf.Clamp(value, 0, GameStateData.playerMaxHitPoints);
+            set {
+                Debug.Log("set internal health to ["+ value +"], method name:" + (new System.Diagnostics.StackTrace()).GetFrame(1).GetMethod().Name);
+                internalHealth = Mathf.Clamp(value, 0, GameStateData.playerMaxHitPoints);
+                if (photonView.IsMine)
+                    GameStateManager.networkHealth[photonView.Owner.ActorNumber] = internalHealth;
+            }
         }
 
         public PhotonView PhotonView => photonView;
@@ -43,6 +48,8 @@ namespace Player
 
         void Update()
         {
+            foreach (var x in GameStateManager.networkHealth)
+                Debug.Log("player#" +x.Key + ":" + x.Value);
             //if (PhotonView.IsMine)
             //    internalHealth = GameStateData.playerCurrentHitPoints;
             if (_invulnerabilityTimer < _invulnerabilityTime)

@@ -18,7 +18,7 @@ namespace Common
         [SerializeField] public PhotonView photonView;
         [SerializeField] public InventoryUI inventoryUI;
         [SerializeField] private AudioClip kachingSound;
-
+        public static Dictionary<int, float> networkHealth = new Dictionary<int, float>();
         private void Awake()
         {
             if (Instance == null)
