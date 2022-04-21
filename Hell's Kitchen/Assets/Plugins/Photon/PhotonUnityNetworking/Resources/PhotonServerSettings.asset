@@ -65,6 +65,7 @@ MonoBehaviour:
   - PlayTakeDamageSoundRPC
   - RemoveItemFromInventoryRPC
   - RemoveObjectParentRPC
+  - RemoveWeapon
   - ReparentObjectToPlayerHandRPC
   - SelectSousChef
   - ServeOrdersRPC
