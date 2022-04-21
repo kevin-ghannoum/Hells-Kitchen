@@ -88,7 +88,7 @@ MonoBehaviour:
   animator: {fileID: 3357963645044035683}
   deathSound: {fileID: 8300000, guid: af8fa5a7462962a4ba816f8f3e48ecac, type: 3}
   smokeParticle: {fileID: 4736385885712022117, guid: 0d3b47f0fe249d34583b9438c5799bee, type: 3}
-  hitPoints: 30
+  hitPoints: 80
   deathDelay: 1
   dropObject: {fileID: 1493679383233396486, guid: 77b5e100d52ab8c4493a7f0330165ac6, type: 3}
   maxDropsToSpawn: 3
