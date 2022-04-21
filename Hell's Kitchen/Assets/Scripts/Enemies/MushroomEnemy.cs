@@ -14,10 +14,10 @@ namespace Enemies
         [SerializeField] private GameObject bullet;
         [SerializeField] private Transform bulletPos;
         [SerializeField] private Animator anime;
-        
+
         private float timeCounter = 2;
         private Vector3 direction;
-        
+
         private void Start()
         {
             if (!photonView.IsMine)
@@ -34,7 +34,7 @@ namespace Enemies
             var target = FindClosestPlayer();
             if (target == null)
                 return;
-            
+
             timeCounter += Time.deltaTime;
             direction = target.transform.position - transform.position;
 
@@ -50,7 +50,8 @@ namespace Enemies
                     {
                         if (hit.collider.gameObject.CompareTag(Tags.Player))
                         {
-                            Invoke("shoot", 0.5f);
+                            animator.SetTrigger(EnemyAnimator.Attack);
+                            Shoot();
                             timeCounter = 0;
                         }
                     }
@@ -58,12 +59,11 @@ namespace Enemies
             }
         }
 
-        private void shoot()
+        private void Shoot()
         {
             if (!photonView.IsMine)
                 return;
 
-            animator.SetTrigger(EnemyAnimator.Attack);
             GameObject Bullet = PhotonNetwork.Instantiate(bullet.name, bulletPos.position, Quaternion.identity);
             Bullet.GetComponent<BulletControl>().direction = direction.normalized;
         }
