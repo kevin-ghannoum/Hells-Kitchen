@@ -2,6 +2,7 @@
 
 using System.Linq;
 using Common.Enums;
+using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
 using Server;
 using UnityEngine;
@@ -23,6 +24,10 @@ namespace Dungeon_Generation
         [SerializeField] private GameObject[] debrisPrefabs;
         [SerializeField] private GameObject[] enemyPrefabs;
 
+        [Header("Beehive Spawning")]
+        [SerializeField] private GameObject beehivePrefab;
+        [SerializeField] private GameObject beehiveEnemyPrefab;
+        
         [Header("Spawn Rates")]
         [SerializeField][Range(0f, 1f)] private float torchSpawnRate = 0.1f;
         [SerializeField][Range(0f, 1f)] private float windowSpawnRate = 0.01f;
@@ -30,6 +35,7 @@ namespace Dungeon_Generation
         [SerializeField][Range(0f, 1f)] private float chestSpawnRate = 0.01f;
         [SerializeField][Range(0f, 1f)] private float rockSpawnRate = 0.05f;
         [SerializeField][Range(0f, 1f)] private float debrisSpawnRate = 0.1f;
+        [SerializeField][Range(0f, 1f)] private float hiveSpawnRate = 0.3f;
 
         [Header("Generation Settings")]
         [SerializeField][Range(0f, 1f)] private float placementThreshold = 0.1f;
@@ -50,9 +56,6 @@ namespace Dungeon_Generation
         private MazeDataGenerator _dataGenerator;
 
         private bool _startPlaced;
-
-        public readonly int StartRow = 0;
-        public readonly int StartCol = 0;
 
         public int[,] Data { get; private set; }
 
@@ -109,10 +112,6 @@ namespace Dungeon_Generation
                         Vector3 floorPosition = new Vector3(i * hallwayWidth - (hallwayWidth / 2), 0, j * hallwayWidth - (hallwayWidth / 2));
                         lastfloorPosition = floorPosition;
 
-                        // Place Start Point 
-                        if (!_startPlaced)
-                            PlaceStartPosition(parent.transform, floorPosition);
-
                         // Spawn everything
                         SpawnFloor(parent.transform, floorPosition);
                         SpawnRocks(parent.transform, floorPosition);
@@ -121,11 +120,15 @@ namespace Dungeon_Generation
                         // Spawn shared game objects
                         if (PhotonNetwork.IsMasterClient)
                         {
-                            if (i != 0 && j != 0) 
+                            if (_startPlaced) 
                                 SpawnEnemy(floorPosition);
                             if (!SpawnChest(floorPosition))
                                 SpawnDebris(floorPosition);
                         }
+                        
+                        // Place Start Point 
+                        if (!_startPlaced)
+                            PlaceStartPosition(parent.transform, floorPosition);
                     }
                 }
             }
@@ -133,6 +136,7 @@ namespace Dungeon_Generation
             // End portal
             if (PhotonNetwork.IsMasterClient)
             {
+                SpawnBeehives();
                 PlaceGoal(lastfloorPosition);
             }
 
@@ -171,7 +175,7 @@ namespace Dungeon_Generation
             gameController.mazeStart.localPosition = position;
         }
 
-        public void DisposeOldMaze()
+        private void DisposeOldMaze()
         {
             _startPlaced = false;
             GameObject[] objects = GameObject.FindGameObjectsWithTag(Tags.Generated);
@@ -338,6 +342,40 @@ namespace Dungeon_Generation
                 GameObject torch = Instantiate(windowPrefab, wall);
                 torch.transform.localPosition = new Vector3(0, windowHeight, Random.Range(-0.1f, 0.1f));
                 torch.transform.localScale = new Vector3(1, 1 / hallwayHeight, 1 / hallwayWidth);
+            }
+        }
+
+        private void SpawnBeehives()
+        {
+            for (int i = 0; i < Data.GetLength(0) - 2; i++)
+            {
+                for (int j = 0; j < Data.GetLength(1) - 2; j++)
+                { 
+                    int[,] offsets = {
+                        {0, 0}, {0, 1}, {0, 2},
+                        {1, 0}, {1, 1}, {1, 2},
+                        {2, 0}, {2, 1}, {2, 2}
+                    };
+                    bool canSpawnHive = Enumerable.Range(0, offsets.GetLength(0))
+                        .Select(index => Data[i + offsets[index, 0], j + offsets[index, 1]])
+                        .All(d => d == 0);
+                    if (canSpawnHive && Random.value < hiveSpawnRate)
+                    {
+                        Debug.Log($"PLACING HIVE {i} {j}");
+                        var center = new Vector3(i * hallwayWidth + hallwayWidth / 2, 0, j * hallwayWidth + hallwayWidth / 2);
+                        PhotonNetwork.Instantiate(beehivePrefab.name, center + RandomTileOffset(), Quaternion.identity);
+                        var numBees = Random.Range(2, 5);
+                        for (var b = 0; b < numBees; b++)
+                        {
+                            var offsetIndex = Random.Range(0, offsets.GetLength(0));
+                            PhotonNetwork.Instantiate(beehiveEnemyPrefab.name, 
+                                new Vector3(
+                                    (i + offsets[offsetIndex, 0]) * hallwayWidth + hallwayWidth / 2, 0,
+                                    (j + offsets[offsetIndex, 1]) * hallwayWidth + hallwayWidth / 2) + RandomTileOffset(), 
+                                RandomRotation());
+                        }
+                    }
+                }
             }
         }
 

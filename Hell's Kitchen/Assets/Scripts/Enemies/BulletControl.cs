@@ -5,10 +5,12 @@ using Photon.Pun;
 
 namespace Enemies
 {
-    public class BulletControl : Enemy
+    public class BulletControl : MonoBehaviour
     {
-        private float speed = 10f;
+        [SerializeField] private PhotonView photonView;
+        [SerializeField] private float speed = 30f;
         [SerializeField] private float attackDamage = 10;
+        
         private float time;
         public Vector3 direction;
 
@@ -17,19 +19,18 @@ namespace Enemies
             if (!photonView.IsMine)
                 return;
 
+            GetComponent<Rigidbody>().velocity = speed * direction;
             time = Time.time;
         }
 
-        public override void Update()
+        private void Update()
         {
             if (!photonView.IsMine)
                 return;
-
-            transform.position += direction * speed * Time.deltaTime;
-
+            
             if (Time.time - time > 5)
             {
-                deleteBullet(this.gameObject);
+                PhotonNetwork.Destroy(gameObject);
             }
         }
 
@@ -41,14 +42,9 @@ namespace Enemies
             if (col.gameObject.CompareTag(Tags.Player))
             {
                 col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.All, attackDamage);
-                PhotonNetwork.Destroy(this.gameObject);
             }
-        }
-
-        [PunRPC]
-        private void deleteBullet(GameObject bullet)
-        {
-            PhotonView.Destroy(this.gameObject);
+            
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 }
