@@ -311,7 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: -4428569699195467017}
-  maxHealth: 200
+  maxHealth: 300
   targetEnemy: {fileID: 0}
   targetLoot: {fileID: 0}
   followDistance: 2
