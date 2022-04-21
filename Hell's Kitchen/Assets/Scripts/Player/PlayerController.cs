@@ -189,7 +189,7 @@ namespace Player
 
             float damage = GetComponentInChildren<WeaponPickup>()?.Damage ?? 0.0f;
             var colliders = Physics.OverlapSphere(DamagePosition.position, DamageRadius, ~(1 << Layers.Player))
-                .Where(c => c.CompareTag(Tags.Enemy));
+                .Where(c => c.CompareTag(Tags.Enemy) || c.CompareTag(Tags.Hive));
             foreach (var col in colliders)
             {
                 col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.All, damage);

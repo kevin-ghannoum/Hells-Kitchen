@@ -21,16 +21,13 @@ namespace Player
         private float _invulnerabilityTimer = 1;
         private UnityEvent _killed;
 
-        public float internalHealth = GameStateData.playerMaxHitPoints; //need this local variable, HitPoints can't be used becos it's a scene obj Xd
+        public float internalHealth = GameStateData.playerMaxHitPoints; //need this local variable, HitPoints can't be used becos it's a scene obj
         public UnityEvent Killed => _killed ??= new UnityEvent();
 
         public float HitPoints
         {
-            //get => GameStateData.playerCurrentHitPoints;
-            //set => GameStateData.playerCurrentHitPoints = Mathf.Clamp(value, 0, GameStateData.playerMaxHitPoints);
             get => internalHealth;
             set {
-                Debug.Log("set internal health to ["+ value +"], method name:" + (new System.Diagnostics.StackTrace()).GetFrame(1).GetMethod().Name);
                 internalHealth = Mathf.Clamp(value, 0, GameStateData.playerMaxHitPoints);
                 if (photonView.IsMine)
                     GameStateManager.networkHealth[photonView.Owner.ActorNumber] = internalHealth;
@@ -42,16 +39,10 @@ namespace Player
         void Start()
         {
             photonView = GetComponent<PhotonView>();
-            //if (PhotonView.IsMine)
-            //    internalHealth = GameStateData.playerCurrentHitPoints;
         }
 
         void Update()
         {
-            foreach (var x in GameStateManager.networkHealth)
-                Debug.Log("player#" +x.Key + ":" + x.Value);
-            //if (PhotonView.IsMine)
-            //    internalHealth = GameStateData.playerCurrentHitPoints;
             if (_invulnerabilityTimer < _invulnerabilityTime)
             {
                 _invulnerabilityTimer += Time.deltaTime;
@@ -105,15 +96,14 @@ namespace Player
         [PunRPC]
         public void IncreaseMyHP(float amount)
         {
-            //we wanna increase hp on all players, for the player that got heal'd xd
-            //internalHealth = Mathf.Clamp(internalHealth + amount, 0, GameStateData.playerMaxHitPoints);
+            //we wanna increase hp on all players, for the player that got healed
             //if (photonView.IsMine)
             {
                 HitPoints = Mathf.Clamp(HitPoints + amount, 0, GameStateData.playerMaxHitPoints);
             }
 
             // Damage numbers
-            AdrenalinePointsUI.SpawnDamageNumbers(transform.position + 2.0f * Vector3.up, +amount);
+            AdrenalinePointsUI.SpawnHealNumbers(transform.position + 2.0f * Vector3.up, +amount);
         }
 
         [PunRPC]

@@ -35,19 +35,15 @@ namespace Player
             
             if (SceneManager.GetActiveScene().name.Equals(Scenes.Dungeon))
             {
-                Debug.Log("here111");
                 player.transform.Find("Lights").gameObject.SetActive(true);
                 if (GameStateData.player != null)
                 {
                     if (player.GetPhotonView().IsMine)
                         GameStateData.player.GetComponent<Player.PlayerHealth>().internalHealth = GameStateManager.networkHealth[player.GetPhotonView().OwnerActorNr];
-                    Debug.Log("@gamestatemgr spawn:" + GameStateManager.networkHealth[player.GetPhotonView().OwnerActorNr]);
                 }
             }
             else
             {
-                Debug.Log("here222");
-                //GameStateData.playerCurrentHitPoints = GameStateData.playerMaxHitPoints;
                 GameStateManager.networkHealth[player.GetPhotonView().OwnerActorNr] = GameStateData.playerMaxHitPoints;
                 GameStateData.player.GetComponent<Player.PlayerHealth>().internalHealth = GameStateData.playerMaxHitPoints;
             }

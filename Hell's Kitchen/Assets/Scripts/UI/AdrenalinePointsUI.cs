@@ -73,6 +73,11 @@ namespace UI
             SpawnAdrenalineText(worldPosition, value, 70, Color.grey);
         }
 
+        public static void SpawnHealNumbers(Vector3 worldPosition, float value)
+        {
+            SpawnAdrenalineNumbers(worldPosition, value, 70, new Color(0.0941176470f, 0.3803921568f, 0.0941176470f));
+        }
+
         private static void SpawnAdrenalineNumbers(Vector3 worldPosition, float value, float offsetY, Color color)
         {
             var prefab = Resources.Load<GameObject>("AdrenalinePointsUI");

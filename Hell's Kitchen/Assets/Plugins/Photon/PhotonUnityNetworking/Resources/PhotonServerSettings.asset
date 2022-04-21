@@ -45,8 +45,8 @@ MonoBehaviour:
   - HealerSpell_Heal_RPC
   - HealerSpell_Photon_RPC
   - IncreaseMyHP
-  - LoadDungeonRPC
   - KnightSkill_RPC
+  - LoadDungeonRPC
   - LoadGameOverRPC
   - LoadRestaurantRPC
   - LootChestRPC

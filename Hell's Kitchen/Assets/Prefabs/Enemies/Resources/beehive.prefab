@@ -148,7 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 1368198132102035673}
   animator: {fileID: -5467536929955882981}
-  deathSound: {fileID: 0}
+  deathSound: {fileID: 8300000, guid: 12021983470471f46a3eb13a15a7507e, type: 3}
   smokeParticle: {fileID: 4736385885712022117, guid: 0d3b47f0fe249d34583b9438c5799bee, type: 3}
   hitPoints: 10
   deathDelay: 1

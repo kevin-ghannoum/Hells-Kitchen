@@ -14,9 +14,7 @@ public class TeleportSpellEffects : MonoBehaviour
     float lifetime = 0.35f;
     float _lifetime = 0f;
     float rateOfChange;
-    /*
-     x0.25
-     */
+
     float timePerLifeCycle;
     float sphereRateOfChange;
     private void Start()
