@@ -371,8 +371,8 @@ namespace Dungeon_Generation
                             var offsetIndex = Random.Range(0, offsets.GetLength(0));
                             PhotonNetwork.Instantiate(beehiveEnemyPrefab.name, 
                                 new Vector3(
-                                    (i + offsets[offsetIndex, 0]) * hallwayWidth + hallwayWidth / 2, 0,
-                                    (j + offsets[offsetIndex, 1]) * hallwayWidth + hallwayWidth / 2) + RandomTileOffset(), 
+                                    (i + offsets[offsetIndex, 0]) * hallwayWidth - hallwayWidth / 2, 0,
+                                    (j + offsets[offsetIndex, 1]) * hallwayWidth - hallwayWidth / 2) + RandomTileOffset(), 
                                 RandomRotation());
                         }
                     }
