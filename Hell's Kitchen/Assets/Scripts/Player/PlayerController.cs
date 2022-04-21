@@ -65,10 +65,9 @@ namespace Player
             else if (animatorStateInfo.IsName(PlayerAnimator.Roll))
             {
                 //this line allows to roll backwards or sideways instantly without having to turn first, good for kiting
-                if (rollStartup)    //(pls keep, is just 2 lines XD)
+                if (rollStartup)   
                     transform.rotation = Quaternion.LookRotation(new Vector3(_input.move.x, 0, _input.move.y));
-                //else
-                //    RotatePlayer();   (uncomment the else if u wanna rotate while rolling)
+           
                 rollStartup = false;
                 float rollSpeed = rollSpeedCurve.Evaluate(animatorStateInfo.normalizedTime) * (runSpeed - walkSpeed) + walkSpeed;
                 Vector3 movement = Vector3.forward * rollSpeed * Time.deltaTime;

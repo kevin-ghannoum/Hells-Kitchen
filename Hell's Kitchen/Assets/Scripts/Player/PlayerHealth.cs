@@ -98,15 +98,7 @@ namespace Player
         [PunRPC]
         public void IncreaseMyHP(float amount)
         {
-            //we wanna increase hp on all players, for the player that got heal'd xd
-            //internalHealth = Mathf.Clamp(internalHealth + amount, 0, GameStateData.playerMaxHitPoints);
-            //if (photonView.IsMine)
-            {
-                HitPoints = Mathf.Clamp(HitPoints + amount, 0, GameStateData.playerMaxHitPoints);
-            }
-
-            // Damage numbers
-            AdrenalinePointsUI.SpawnDamageNumbers(transform.position + 2.0f * Vector3.up, +amount);
+            HitPoints = Mathf.Clamp(HitPoints + amount, 0, GameStateData.playerMaxHitPoints);
         }
 
         [PunRPC]

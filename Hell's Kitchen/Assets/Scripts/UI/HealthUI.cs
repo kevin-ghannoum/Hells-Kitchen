@@ -18,11 +18,12 @@ namespace UI
 
         private void Update()
         {
-            //healthValue.text = $"{GameStateData.playerCurrentHitPoints} / {GameStateData.playerMaxHitPoints}";
-            //healthSlider.value = GameStateData.playerCurrentHitPoints;
-            healthValue.text = $"{GameStateData.player.GetComponent<Player.PlayerHealth>().internalHealth} / {GameStateData.playerMaxHitPoints}";
-            healthSlider.value = GameStateData.player.GetComponent<Player.PlayerHealth>().internalHealth;
-
+            var playerHealth = GameStateData.player.GetComponent<Player.PlayerHealth>();
+            if (!playerHealth)
+                return;
+            
+            healthValue.text = $"{playerHealth.internalHealth} / {GameStateData.playerMaxHitPoints}";
+            healthSlider.value = playerHealth.internalHealth;
         }
     }
 }
