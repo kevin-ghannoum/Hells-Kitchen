@@ -71,8 +71,8 @@ namespace Common
         [PunRPC]
         private void LoadRestaurantRPC(bool shouldIncrementLevel)
         {
-            if(shouldIncrementLevel)
-                GameStateData.hiddenLevel++;
+            if (shouldIncrementLevel)
+                GameStateManager.SetHiddenLevel(GameStateData.hiddenLevel + 1);
             
             photonView.RPC(nameof(DestroyPlayerRPC), RpcTarget.All);
             PhotonNetwork.LoadLevel(Scenes.Restaurant);

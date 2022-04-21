@@ -363,7 +363,6 @@ namespace Dungeon_Generation
                         .All(d => d == 0);
                     if (canSpawnHive && Random.value < hiveSpawnRate)
                     {
-                        Debug.Log($"PLACING HIVE {i} {j}");
                         var center = new Vector3(i * hallwayWidth + hallwayWidth / 2, 0, j * hallwayWidth + hallwayWidth / 2);
                         PhotonNetwork.Instantiate(beehivePrefab.name, center + RandomTileOffset(), Quaternion.identity);
                         var numBees = Random.Range(2, 5);

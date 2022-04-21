@@ -37,7 +37,6 @@ MonoBehaviour:
   - AddItemToInventoryRPC
   - AddPurchasedWeaponRPC
   - ClickRpc
-  - deleteBullet
   - DestroyPlayerRPC
   - DestroyRpc
   - DisableRigidbody
@@ -52,7 +51,6 @@ MonoBehaviour:
   - LootChestRPC
   - PickUp
   - PickUpRPC
-  - playAttackSound
   - PlayAttackSoundRPC
   - PlayCookingSoundRPC
   - PlayDeathSoundRPC

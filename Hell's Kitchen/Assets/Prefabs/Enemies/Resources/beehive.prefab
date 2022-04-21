@@ -130,10 +130,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1
-  m_Height: 1000
+  m_Radius: 500
+  m_Height: 2000
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 1000, z: 0}
 --- !u!114 &3101461929203838807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,6 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 1368198132102035673}
   animator: {fileID: -5467536929955882981}
+  deathSound: {fileID: 0}
   hitPoints: 10
   deathDelay: 1
   dropObject: {fileID: 7868689882263519358, guid: bc2e15e3cc92b1d4aa3c387c0c311381, type: 3}

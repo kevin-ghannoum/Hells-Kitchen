@@ -113,6 +113,12 @@ namespace Common
             GameStateData.cashMoney = value;
             AudioSource.PlayClipAtPoint(kachingSound, transform.position);
         }
+        
+        [PunRPC]
+        public void SetHiddenLevelRPC(int hiddenLevel)
+        {
+            GameStateData.cashMoney = hiddenLevel;
+        }
 
         [PunRPC]
         public void AddPurchasedWeaponRPC(string weaponName)
@@ -141,6 +147,11 @@ namespace Common
         public static void SetCashMoney(float value)
         {
             Instance.photonView.RPC(nameof(SetCashMoneyRPC), RpcTarget.All, value);
+        }
+
+        public static void SetHiddenLevel(int hiddenLevel)
+        {
+            Instance.photonView.RPC(nameof(SetHiddenLevelRPC), RpcTarget.All, hiddenLevel);
         }
 
         public static void AddPurchasedWeapon(string weaponName)
