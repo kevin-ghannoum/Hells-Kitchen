@@ -31,7 +31,17 @@ namespace PlayerInventory
                 }
             }
             else if(other.CompareTag(Tags.SousChef)){
-                StartCoroutine(PickUpBySousChef(other));
+                // check if the sous chef is in loot state and makes sure sous chef is picking up this item
+                if(other.TryGetComponent<HealerStateManager>(out HealerStateManager healerStateManager)){
+                    if(healerStateManager.IsInLootState() && other.GetComponent<SousChef>().agent.Target == transform.position){
+                        StartCoroutine(PickUpBySousChef(other));
+                    }
+                }
+                else if(other.TryGetComponent<KnightStateManager>(out KnightStateManager knightStateManager)){
+                    if(knightStateManager.IsInLootState() && other.GetComponent<SousChef>().agent.Target == transform.position){
+                        StartCoroutine(PickUpBySousChef(other));
+                    }
+                }
             }
         }
 

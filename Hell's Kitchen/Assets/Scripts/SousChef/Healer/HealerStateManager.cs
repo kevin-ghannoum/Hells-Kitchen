@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 public class HealerStateManager : MonoBehaviour
 {
-    HealerBaseState currentState;
+    public HealerBaseState currentState;
     public HealerAttackState attackState = new HealerAttackState();
     public HealerMoveToTargetState moveToTarget = new HealerMoveToTargetState();
     public HealerFollowState followState = new HealerFollowState();
@@ -201,5 +201,9 @@ public class HealerStateManager : MonoBehaviour
     public void SpawnTeleportMagic(Vector3 position)
     {
         Instantiate(endTeleportPrefab, position, Quaternion.identity);
+    }
+
+    public bool IsInLootState(){
+        return currentState == lootState;
     }
 }
