@@ -34,7 +34,7 @@ namespace Enemies
             }
         }
 
-        private void OnCollisionEnter(Collision col)
+        private void OnTriggerEnter(Collider col)
         {
             if (!photonView.IsMine)
                 return;
