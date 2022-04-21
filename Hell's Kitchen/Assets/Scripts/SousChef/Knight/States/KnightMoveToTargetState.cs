@@ -23,6 +23,7 @@ public class KnightMoveToTargetState : KnightBaseState
                 knight.SwitchState(knight.followState);
             }
             else{
+                knight.weapon.GetComponent<Collider>().enabled = false;
                 knight.SwitchState(knight.attackState);
             }
         }

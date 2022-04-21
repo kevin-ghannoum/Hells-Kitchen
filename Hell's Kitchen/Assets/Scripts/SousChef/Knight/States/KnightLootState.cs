@@ -25,8 +25,8 @@ public class KnightLootState : KnightBaseState
             if (Vector3.Distance(knight.transform.position, knight.sc.targetLoot.transform.position) > 0.6f)
             {
                 // move to loot position
-                Debug.Log("@PickUp moving to loot");
-                Debug.Log("@PickUp distance to loot: " + Vector3.Distance(knight.transform.position, knight.sc.targetLoot.transform.position));
+                // Debug.Log("@PickUp moving to loot");
+                // Debug.Log("@PickUp distance to loot: " + Vector3.Distance(knight.transform.position, knight.sc.targetLoot.transform.position));
                 knight.sc.agent.standStill = false;
                 knight.sc.agent.ArrivalRadius = 0.1f;
                 knight.sc.agent.Target = knight.sc.targetLoot.transform.position;

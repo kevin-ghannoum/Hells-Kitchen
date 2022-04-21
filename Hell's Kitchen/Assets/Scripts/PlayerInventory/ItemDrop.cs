@@ -32,7 +32,6 @@ namespace PlayerInventory
             }
             else if(other.CompareTag(Tags.SousChef)){
                 // check if the sous chef is in loot state and makes sure sous chef is picking up this item
-                Debug.Log("souschef");
                 if(other.TryGetComponent<HealerStateManager>(out HealerStateManager healerStateManager)){
                     if(healerStateManager.IsInLootState() && GameObject.ReferenceEquals(other.GetComponent<SousChef>().targetLoot.gameObject, gameObject)){
                         StartCoroutine(PickUpBySousChef(other));
