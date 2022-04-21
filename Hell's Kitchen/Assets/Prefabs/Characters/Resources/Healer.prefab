@@ -20084,8 +20084,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 4251440629633350833}
-  magicCircle: {fileID: 9004799340963464726}
-  healCircle: {fileID: 5276561292368440334}
   startTeleportPrefab: {fileID: 3920128736927035944, guid: d5069729335e8dc4d97f0df9563d30c1, type: 3}
   endTeleportPrefab: {fileID: 7510171513475766860, guid: 11cf5ce8d0a227b439f8b5c24386e30f, type: 3}
 --- !u!114 &-5929988532864737036

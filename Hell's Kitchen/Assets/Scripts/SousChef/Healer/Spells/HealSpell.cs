@@ -44,7 +44,7 @@ public class HealSpell : MonoBehaviour
             if (playerRegenTick >= healTickDelay)
             {
                 Destroy(Instantiate(onHealAnimationPrefab, other.transform.position, Quaternion.identity), 2);
-                other.gameObject.GetComponent<PlayerHealth>().PhotonView.RPC(nameof(PlayerHealth.IncreaseMyHP), Photon.Pun.RpcTarget.All, healthIncrement);
+                other.gameObject.GetComponent<PlayerHealth>().PhotonView.RPC(nameof(PlayerHealth.IncreaseMyHP), Photon.Pun.RpcTarget.AllBufferedViaServer, healthIncrement);
                 playerRegenTick = 0;
             }
         }
