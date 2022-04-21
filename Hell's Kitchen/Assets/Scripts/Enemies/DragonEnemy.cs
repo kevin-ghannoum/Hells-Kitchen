@@ -15,20 +15,12 @@ namespace Enemies
         [SerializeField] private float followRange;
         [SerializeField] private float attackDamage;
         [SerializeField] private float attackRate;
-        
+
+        [SerializeField] private AudioClip attackSound;
+
         private float distance;
         private float timeCounter = 5;
-        private AudioClip attack;
-        private AudioSource dragonAudio;
 
-        private void Start()
-        {
-            if (!photonView.IsMine)
-                return;
-
-            dragonAudio = gameObject.GetComponent<AudioSource>();
-            attack = dragonAudio.clip;
-        }
         public override void Update()
         {
             if (!photonView.IsMine)
@@ -37,7 +29,7 @@ namespace Enemies
             var target = FindClosestPlayer();
             if (target == null)
                 return;
-            
+
             timeCounter += Time.deltaTime;
             distance = Vector3.Distance(transform.position, target.transform.position);
 
@@ -49,7 +41,7 @@ namespace Enemies
                 {
                     agent.enabled = false;
                     particle.Play();
-                    photonView.RPC(nameof(playAttackSound), RpcTarget.All);
+                    photonView.RPC(nameof(PlayAttackSoundRPC), RpcTarget.All);
                     animator.SetTrigger(EnemyAnimator.Attack);
                     setCircle();
                     Invoke("Attack", 0.3f);
@@ -70,7 +62,7 @@ namespace Enemies
         {
             if (!photonView.IsMine)
                 return;
-            
+
             var colliders = Physics.OverlapSphere(transform.position, 3);
 
             foreach (var col in colliders)
@@ -88,9 +80,9 @@ namespace Enemies
         }
 
         [PunRPC]
-        private void playAttackSound()
+        private void PlayAttackSoundRPC()
         {
-            AudioSource.PlayClipAtPoint(attack, transform.position);
+            AudioSource.PlayClipAtPoint(attackSound, transform.position);
         }
     }
 }

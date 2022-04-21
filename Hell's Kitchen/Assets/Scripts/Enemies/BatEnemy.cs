@@ -17,7 +17,6 @@ namespace Enemies
         [SerializeField] private float attackDamageRadius = 2f;
         [SerializeField] private Transform attackPosition;
         [SerializeField] private AudioClip attackSound;
-        [SerializeField] private AudioClip deathSound;
 
         private float _lastAttack;
 
@@ -66,22 +65,10 @@ namespace Enemies
             }
         }
 
-        protected override void Die()
-        {
-            photonView.RPC(nameof(PlayDeathSoundRPC), RpcTarget.All);
-            base.Die();
-        }
-
         [PunRPC]
         private void PlayAttackSoundRPC()
         {
             AudioSource.PlayClipAtPoint(attackSound, transform.position);
-        }
-
-        [PunRPC]
-        private void PlayDeathSoundRPC()
-        {
-            AudioSource.PlayClipAtPoint(deathSound, transform.position);
         }
     }
 }

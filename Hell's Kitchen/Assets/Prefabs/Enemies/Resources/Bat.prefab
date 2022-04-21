@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 5846106093173850358}
   animator: {fileID: 1652066377872060580}
+  deathSound: {fileID: 8300000, guid: 389b03001cc85664ea35ea57e7e35ee6, type: 3}
   hitPoints: 50
   deathDelay: 1
   dropObject: {fileID: 1493679383233396486, guid: 77b5e100d52ab8c4493a7f0330165ac6, type: 3}

@@ -390,6 +390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 3457503393970991361}
   animator: {fileID: 2972807466387419755}
+  deathSound: {fileID: 8300000, guid: 16f02b4db630ee4459c7561a7f3a4f22, type: 3}
   hitPoints: 30
   deathDelay: 1
   dropObject: {fileID: 3400997741467888655, guid: 0e76d722a831c624e97a75f1c26e9844, type: 3}
@@ -399,6 +400,7 @@ MonoBehaviour:
   attackRange: 0
   attackDamage: 2
   photonLine: {fileID: 3352350055703909941}
+  attackSound: {fileID: 8300000, guid: e43e55cb1b9a24b48819cc92a334d355, type: 3}
 --- !u!136 &2641827312824658550
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -457,9 +459,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e43e55cb1b9a24b48819cc92a334d355, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.261
+  m_audioClip: {fileID: 8300000, guid: 777e9e2438bf67d40800238de3195a6d, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.25
   m_Pitch: -0.75
   Loop: 1
   Mute: 0
@@ -467,8 +469,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 5
+  MaxDistance: 10
   Pan2D: -0.41
   rolloffMode: 0
   BypassEffects: 0
@@ -503,7 +505,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -579,7 +581,7 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 0
+  observableSearch: 2
   ObservedComponents:
   - {fileID: 8510743964434586325}
   - {fileID: 5831527135491686534}

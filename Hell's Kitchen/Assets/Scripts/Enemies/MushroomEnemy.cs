@@ -15,6 +15,8 @@ namespace Enemies
         [SerializeField] private Transform bulletPos;
         [SerializeField] private Animator anime;
 
+        [SerializeField] private AudioClip attackSound;
+
         private float timeCounter = 2;
         private Vector3 direction;
 
@@ -64,8 +66,15 @@ namespace Enemies
             if (!photonView.IsMine)
                 return;
 
+            photonView.RPC(nameof(PlayAttackSoundRPC), RpcTarget.All);
             GameObject Bullet = PhotonNetwork.Instantiate(bullet.name, bulletPos.position, Quaternion.identity);
             Bullet.GetComponent<BulletControl>().direction = direction.normalized;
+        }
+
+        [PunRPC]
+        private void PlayAttackSoundRPC()
+        {
+            AudioSource.PlayClipAtPoint(attackSound, transform.position);
         }
     }
 }

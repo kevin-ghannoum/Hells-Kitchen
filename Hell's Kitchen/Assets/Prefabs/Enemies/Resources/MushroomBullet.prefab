@@ -221,6 +221,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb93b12432b012a4eb34b2eb88bef8e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  animator: {fileID: 0}
+  deathSound: {fileID: 0}
+  hitPoints: 0
+  deathDelay: 0
+  dropObject: {fileID: 0}
+  maxDropsToSpawn: 3
+  multipleSpawnRate: 0.3
   photonView: {fileID: 7479063131267650139}
   speed: 30
   attackDamage: 10

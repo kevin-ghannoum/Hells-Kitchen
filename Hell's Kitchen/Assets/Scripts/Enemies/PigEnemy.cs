@@ -19,7 +19,6 @@ namespace Enemies
         [SerializeField] private float chargeRange = 10.0f;
         [SerializeField] private AudioClip idleSound;
         [SerializeField] private AudioClip attackSound;
-        [SerializeField] private AudioClip deathSound;
 
         private AudioSource _as;
         private float _currentChargeTime;
@@ -113,17 +112,10 @@ namespace Enemies
             }
         }
 
-        [PunRPC]
-        private void PlayDeathSoundRPC()
-        {
-            AudioSource.PlayClipAtPoint(deathSound, transform.position);
-        }
-
         protected override void Die()
         {
-            photonView.RPC(nameof(PlayDeathSoundRPC), RpcTarget.All);
-            base.Die();
             Destroy(GetComponentInChildren<PigCollider>());
+            base.Die();
         }
 
         public void OnPigTrigger(Collider col)

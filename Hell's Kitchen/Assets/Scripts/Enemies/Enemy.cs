@@ -14,6 +14,7 @@ namespace Enemies
         [Header("References")]
         [SerializeField] protected PathfindingAgent agent;
         [SerializeField] protected Animator animator;
+        [SerializeField] private AudioClip deathSound;
 
         [Header("Parameters")]
         [SerializeField] protected float hitPoints;
@@ -84,9 +85,16 @@ namespace Enemies
             enabled = false;
             if (photonView.IsMine)
             {
+                photonView.RPC(nameof(PlayDeathSoundRPC), RpcTarget.All);
                 ItemDropOnDeath();
             }
             isKilled = true;
+        }
+
+        [PunRPC]
+        protected void PlayDeathSoundRPC()
+        {
+            AudioSource.PlayClipAtPoint(deathSound, transform.position);
         }
 
         private void ItemDropOnDeath()

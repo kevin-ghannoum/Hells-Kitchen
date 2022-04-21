@@ -12,14 +12,13 @@ namespace Enemies
         [SerializeField] private float attackRange;
         [SerializeField] private float attackDamage = 1;
         [SerializeField] private GameObject photonLine;
-        
+        [SerializeField] private AudioClip attackSound;
+
         private float timeCounter;
         private float damageTimeCounter;
         private float damageRate = 0.1f;
         private float distance;
         private LineRenderer lr;
-        private AudioSource alienAudio;
-        private AudioClip attack;
         private int audioController = 0;
 
         private void Start()
@@ -28,7 +27,6 @@ namespace Enemies
                 return;
 
             attackRange = 12;
-            alienAudio = gameObject.GetComponent<AudioSource>();
         }
 
         public override void Update()
@@ -39,7 +37,7 @@ namespace Enemies
             var target = FindClosestPlayer();
             if (target == null)
                 return;
-            
+
             timeCounter += Time.deltaTime;
             damageTimeCounter += Time.deltaTime;
             distance = Vector3.Distance(transform.position, target.transform.position);
@@ -53,7 +51,7 @@ namespace Enemies
                     {
                         if (audioController == 0)
                         {
-                            photonView.RPC(nameof(playAttackSound), RpcTarget.All);
+                            photonView.RPC(nameof(PlayAttackSoundRPC), RpcTarget.All);
                             audioController++;
                         }
 
@@ -71,15 +69,14 @@ namespace Enemies
             else
             {
                 audioController = 0;
-                alienAudio.Stop();
                 photonLine.GetComponent<LineController>().targetPhotonViewID = 0;
             }
         }
 
         [PunRPC]
-        private void playAttackSound()
+        private void PlayAttackSoundRPC()
         {
-            alienAudio.Play();
+            AudioSource.PlayClipAtPoint(attackSound, transform.position);
         }
     }
 }
