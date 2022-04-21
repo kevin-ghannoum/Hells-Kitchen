@@ -20045,6 +20045,8 @@ MonoBehaviour:
   photonSpellPrefab: {fileID: 5270656981695236906, guid: 85fa0efa2fbbe6142a2560c2efff9347, type: 3}
   healSpellPrefab: {fileID: 1948045767030177048, guid: 6576206d6ec678c4694e9e890961dfc7, type: 3}
   knightSkill: {fileID: 0}
+  magicCircle_Heal: {fileID: 1766234573805092656}
+  magicCircle_Attack: {fileID: 6582087124678774745}
 --- !u!114 &8080431647944246266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20086,7 +20088,6 @@ MonoBehaviour:
   healCircle: {fileID: 5276561292368440334}
   startTeleportPrefab: {fileID: 3920128736927035944, guid: d5069729335e8dc4d97f0df9563d30c1, type: 3}
   endTeleportPrefab: {fileID: 7510171513475766860, guid: 11cf5ce8d0a227b439f8b5c24386e30f, type: 3}
-  shouldShowMagicCircle: 0
 --- !u!114 &-5929988532864737036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20106,7 +20107,6 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 8080431647944246020}
   - {fileID: 1323442650017528857}
   - {fileID: 4731735477715605578}
   sceneViewId: 0
@@ -35494,6 +35494,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70e75db412a3d834faa5c6677f0c05de, type: 3}
+--- !u!1 &6582087124678774745 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5688288541245001670, guid: 70e75db412a3d834faa5c6677f0c05de, type: 3}
+  m_PrefabInstance: {fileID: 1560665597295181855}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9004799340963464726 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7593034187011999241, guid: 70e75db412a3d834faa5c6677f0c05de, type: 3}

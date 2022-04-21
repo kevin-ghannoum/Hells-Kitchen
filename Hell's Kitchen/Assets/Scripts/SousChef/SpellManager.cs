@@ -16,7 +16,7 @@ public class SpellManager : MonoBehaviour
 
     public void HealerSpell_Photon(GameObject target)
     {
-        _photonView.RPC(nameof(HealerSpell_Photon_RPC), RpcTarget.AllBufferedViaServer, target.GetComponent<PhotonView>().ViewID);
+        _photonView.RPC(nameof(HealerSpell_Photon_RPC), RpcTarget.AllViaServer, target.GetComponent<PhotonView>().ViewID);
     }
     
     [PunRPC]
@@ -34,7 +34,7 @@ public class SpellManager : MonoBehaviour
 
     internal void HealerSpell_Heal(Vector3 position)
     {
-        _photonView.RPC(nameof(HealerSpell_Heal_RPC), RpcTarget.All, position);
+        _photonView.RPC(nameof(HealerSpell_Heal_RPC), RpcTarget.AllViaServer, position);
     }
     
     [PunRPC]
@@ -55,5 +55,27 @@ public class SpellManager : MonoBehaviour
     {
         GameObject slash = PhotonNetwork.Instantiate(knightSkill.name, transform.position + Vector3.up, Quaternion.LookRotation(transform.forward));
         slash.GetComponent<Slash>().rotation = transform.forward;
+    }
+
+    [SerializeField] GameObject magicCircle_Heal;
+    [SerializeField] GameObject magicCircle_Attack;
+    public void HealMagicCircleVisuals(bool toggle)
+    {
+        _photonView.RPC("RPC_HealMagicCircleVisuals", RpcTarget.All, toggle);
+    }
+    [PunRPC]
+    public void RPC_HealMagicCircleVisuals(bool toggle)
+    {
+        magicCircle_Heal.SetActive(toggle);
+    }
+
+    public void AttackMagicCircleVisuals(bool toggle)
+    {
+        _photonView.RPC("RPC_AttackMagicCircleVisuals", RpcTarget.All, toggle);
+    }
+    [PunRPC]
+    public void RPC_AttackMagicCircleVisuals(bool toggle)
+    {
+        magicCircle_Attack.SetActive(toggle);
     }
 }

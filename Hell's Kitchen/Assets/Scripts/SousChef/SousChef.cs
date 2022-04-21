@@ -248,7 +248,9 @@ public class SousChef : MonoBehaviour, IKillable
     public GameObject FindLowHealthPlayer() {
         GameObject[] players = GameObject.FindGameObjectsWithTag(Tags.Player);
         players = players.OrderBy(p => p.GetComponent<Player.PlayerHealth>().internalHealth).ToArray();
-        Debug.Log("lowesthp:" + players[0].GetComponent<Player.PlayerHealth>().internalHealth + ", other: " + players[1].GetComponent<Player.PlayerHealth>().internalHealth);
+        if (players.Length == 0)
+            return null;
+        //Debug.Log("lowesthp:" + players[0].GetComponent<Player.PlayerHealth>().internalHealth + ", other: " + players[1].GetComponent<Player.PlayerHealth>().internalHealth);
         if ((players[0].GetComponent<Player.PlayerHealth>().internalHealth / Common.GameStateData.playerMaxHitPoints *100) >= 60)
             return null;
         return players[0];

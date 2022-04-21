@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Transform))]
-public class HealerStateManager : MonoBehaviour, IPunObservable
+public class HealerStateManager : MonoBehaviour
 {
     public HealerBaseState currentState;
     public HealerAttackState attackState = new HealerAttackState();
@@ -18,7 +18,7 @@ public class HealerStateManager : MonoBehaviour, IPunObservable
     public GameObject startTeleportPrefab;
     public GameObject endTeleportPrefab;
 
-    public bool shouldShowMagicCircle = false;
+    //public bool shouldShowMagicCircle = false;
 
     public SousChef sc { get; set; }
     public SpellManager spells { get; set; }
@@ -38,7 +38,6 @@ public class HealerStateManager : MonoBehaviour, IPunObservable
     public void resetAttackCD() => _attackCooldown = 0f;
 
     float maxTeleportDistance = 10f;
-    bool beganTeleport = false;
     float delayBetweenTeleports = 0.75f;
     float _delayBetweenTeleports = 0f;
     bool canTeleport() => _delayBetweenTeleports >= delayBetweenTeleports;
@@ -77,9 +76,11 @@ public class HealerStateManager : MonoBehaviour, IPunObservable
         intersectionPoints[1] = new Vector3(p0.x + u1 * (p1.x - p0.x), 0, p0.z + u1 * (p1.z - p0.z));
         return true;
     }
+
+
     private void Update()
     {
-        magicCircle.gameObject.SetActive(shouldShowMagicCircle);
+        //magicCircle.gameObject.SetActive(shouldShowMagicCircle);
 
         var lowhpPlayer = sc.FindLowHealthPlayer();
         if (lowhpPlayer != null)
@@ -101,7 +102,6 @@ public class HealerStateManager : MonoBehaviour, IPunObservable
         //return;
         if (canTeleport() && shouldTeleport()) // && !beganTeleport)
         {
-            beganTeleport = true;
             var node = sc.agent.CurrentNode;
             Vector3 fxSpawnPos = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
             Vector3 pointOfIntersection = Vector3.zero;
@@ -196,7 +196,7 @@ public class HealerStateManager : MonoBehaviour, IPunObservable
         return currentState == lootState;
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    /*public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
         {
@@ -206,5 +206,5 @@ public class HealerStateManager : MonoBehaviour, IPunObservable
         {
             shouldShowMagicCircle = (bool) stream.ReceiveNext();
         }
-    }
+    }*/
 }

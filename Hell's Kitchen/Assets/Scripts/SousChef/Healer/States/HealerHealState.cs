@@ -19,7 +19,7 @@ public class HealerHealState : HealerBaseState
     //call this if enemy damages souschef while casting, onDamaged event maybe? Xd
     public void InterruptSpellCast(HealerStateManager healer) {
         healer.sc.agent.standStill = false;
-        healer.healCircle.gameObject.SetActive(false);
+        healer.spells.HealMagicCircleVisuals(false);
         healer.SwitchState(healer.moveToTarget);
     }
 
@@ -51,12 +51,12 @@ public class HealerHealState : HealerBaseState
             healer.sc.facePlayer();
             healer.animator.SetTrigger("CastSpell");
             healer.sc.agent.standStill = true;
-            healer.healCircle.gameObject.SetActive(true);
+            healer.spells.HealMagicCircleVisuals(true);
             _healCastTime += Time.deltaTime;
             if (_healCastTime >= healCastTime)
             {
                 healer.animator.SetTrigger("CastSpell");
-                healer.healCircle.gameObject.SetActive(false);
+                healer.spells.HealMagicCircleVisuals(false);
                 healer.spells.HealerSpell_Heal(healer.sc.hitPoints > healer.sc.GetPlayerHP() ? healer.sc.player.transform.position : healer.transform.position);
                 _healCastTime = 0f;
                 _delayBetweenCast = 0f;
@@ -66,7 +66,7 @@ public class HealerHealState : HealerBaseState
         }
 
         if (!healer.sc.isLowHP() && !healer.sc.IsPlayerLowHP() && !isAttackAnimationPlaying && !isCasting) {
-            healer.healCircle.gameObject.SetActive(false);
+            healer.spells.HealMagicCircleVisuals(false);
             healer.sc.agent.standStill = false;
             healer.SwitchState(healer.followState);
         }
