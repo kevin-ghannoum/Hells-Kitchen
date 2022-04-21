@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HealerLootState : HealerBaseState
@@ -37,8 +35,8 @@ public class HealerLootState : HealerBaseState
                 if (pickUp)
                 {
                     // play animation once
-                    Debug.Log("@PickUp picking up xD");
-                    if(!isAnimPlaying){
+                    if(!isAnimPlaying)
+                    {
                         healer.animator.SetTrigger("PickUp");
                         isAnimPlaying = true;
                     }
@@ -58,7 +56,5 @@ public class HealerLootState : HealerBaseState
             healer.sc.agent.standStill = false;
             healer.SwitchState(healer.followState);
         }
-
-        // throw new System.NotImplementedException();
     }
 }

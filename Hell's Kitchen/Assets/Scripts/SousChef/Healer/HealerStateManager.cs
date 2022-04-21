@@ -13,13 +13,9 @@ public class HealerStateManager : MonoBehaviour
     public HealerHealState healState = new HealerHealState();
 
     public Animator animator;
-    public Transform magicCircle;
-    public Transform healCircle;
     public GameObject startTeleportPrefab;
     public GameObject endTeleportPrefab;
-
-    //public bool shouldShowMagicCircle = false;
-
+    
     public SousChef sc { get; set; }
     public SpellManager spells { get; set; }
 
@@ -43,7 +39,6 @@ public class HealerStateManager : MonoBehaviour
     bool canTeleport() => _delayBetweenTeleports >= delayBetweenTeleports;
     bool shouldTeleport() => !sc.agent.standStill && sc.agent.IsMoving && sc.agent.Target != null &&
                              (Vector3.Distance(transform.position, sc.agent.Target) > 15);
-    //bool shouldTeleport() => !sc.agent.standStill && sc.agent.Target != null && (Vector3.Distance(transform.position, sc.agent.Target) > 15);
 
     //implemented from https://web.archive.org/web/20060909012810/http://local.wasp.uwa.edu.au/~pbourke/geometry/sphereline/
     public bool lineSphereIntesection(Vector3 p0, Vector3 p1, Vector3 center, float radius, out Vector3[] intersectionPoints)
@@ -69,6 +64,7 @@ public class HealerStateManager : MonoBehaviour
             intersectionPoints = new Vector3[] {Vector3.zero, Vector3.zero};
             return false;
         }
+        
         float u0 = (-y + Mathf.Sqrt(quadraticSqrtPart)) / (2 * x);
         float u1 = (-y - Mathf.Sqrt(quadraticSqrtPart)) / (2 * x);
         intersectionPoints = new Vector3[2];
@@ -77,11 +73,8 @@ public class HealerStateManager : MonoBehaviour
         return true;
     }
 
-
     private void Update()
     {
-        //magicCircle.gameObject.SetActive(shouldShowMagicCircle);
-
         var lowhpPlayer = sc.FindLowHealthPlayer();
         if (lowhpPlayer != null)
             sc.player = lowhpPlayer;
@@ -99,8 +92,8 @@ public class HealerStateManager : MonoBehaviour
 
         _delayBetweenTeleports += Time.deltaTime;
         Pathfinding.PathNode currentNode = null;
-        //return;
-        if (canTeleport() && shouldTeleport()) // && !beganTeleport)
+        
+        if (canTeleport() && shouldTeleport())
         {
             var node = sc.agent.CurrentNode;
             Vector3 fxSpawnPos = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
@@ -153,7 +146,7 @@ public class HealerStateManager : MonoBehaviour
                 
                 pointOfIntersection = transform.position + (node.Position - transform.position).normalized * maxTeleportDistance;
             }
-            float teleportDist = Mathf.Min(maxTeleportDistance, Vector3.Distance(pointOfIntersection, transform.position));
+
             Debug.DrawLine(transform.position, pointOfIntersection, Color.magenta, 3f);
             NavMeshHit endPos;
             if (!NavMesh.SamplePosition(pointOfIntersection, out endPos, 1, NavMesh.AllAreas))
@@ -161,7 +154,6 @@ public class HealerStateManager : MonoBehaviour
                 Debug.DrawRay(transform.position, Vector3.up * 100f, Color.blue, 20f);
                 Debug.DrawRay(pointOfIntersection, Vector3.up * 100f, Color.red, 20f);
                 Debug.DrawLine(transform.position, pointOfIntersection, Color.cyan, 20f);
-                Debug.Log("oob, cancel tp xd");
                 return;
             }
 
@@ -173,8 +165,6 @@ public class HealerStateManager : MonoBehaviour
             _delayBetweenTeleports = 0f;
 
             photonView.RPC(nameof(SpawnTeleportMagic), RpcTarget.All, fxEndPos);
-
-            //transform.position += teleportDir * teleportDist;
 
             _delayBetweenTeleports = 0f;
         }

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TeleportSpellEffects : MonoBehaviour
@@ -49,20 +48,19 @@ public class TeleportSpellEffects : MonoBehaviour
     {
         _lifetime += Time.deltaTime;
         if (_lifetime <= timePerLifeCycle * 1)
-        { //beginning
-            //flare1.get
+        { // beginning
             rateOfChange = 5f / timePerLifeCycle;
             flare1.brightness += rateOfChange * Time.deltaTime;
             flare2.brightness += rateOfChange * Time.deltaTime;
         }
         else if (_lifetime >= timePerLifeCycle * 1 && _lifetime <= timePerLifeCycle * 2)
-        { //midlife
+        { // midlife
             rateOfChange = 7 / timePerLifeCycle;
             flare1.brightness -= rateOfChange * Time.deltaTime;
             flare2.brightness -= rateOfChange * Time.deltaTime;
         }
         else if (_lifetime >= timePerLifeCycle * 2 && _lifetime < timePerLifeCycle * 3)
-        {//endoflife
+        {// end of life
             rateOfChange = 7 / timePerLifeCycle;
             flare1.brightness -= rateOfChange * Time.deltaTime;
             flare2.brightness -= rateOfChange * Time.deltaTime;
@@ -70,10 +68,7 @@ public class TeleportSpellEffects : MonoBehaviour
             StartCoroutine(ScaleOverTime(timePerLifeCycle * 3f, sphere2));
         }
         else 
-        {//ded 
-            /*flare1.brightness = startLightSize;
-            flare2.brightness = startLightSize;
-            _lifetime = 0f;*/
+        {// death
             Destroy(gameObject,3);
         }
     }

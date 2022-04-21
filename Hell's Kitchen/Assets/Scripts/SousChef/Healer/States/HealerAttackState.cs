@@ -1,7 +1,3 @@
-using Common;
-using Common.Interfaces;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HealerAttackState : HealerBaseState
@@ -28,31 +24,34 @@ public class HealerAttackState : HealerBaseState
         healer.sc.faceTargetEnemy();
         healer.sc.agent.standStill = true;
 
-
-        if ((!isAttackAnimationPlaying && !isCasting) &&
-        (healer.sc.targetEnemy == null || (healer.sc.isLowHP() || healer.sc.IsPlayerLowHP())))
+        if ((!isAttackAnimationPlaying && !isCasting) && (healer.sc.targetEnemy == null || (healer.sc.isLowHP() || healer.sc.IsPlayerLowHP())))
         {
             resetVars(healer);
             return;
         }
 
-        if (isCasting && healer.sc.targetEnemy == null) {
+        if (isCasting && healer.sc.targetEnemy == null)
+        {
             bool enemyFound = healer.sc.FindEnemy();
-            if (!enemyFound) {
+            if (!enemyFound)
+            {
                 resetVars(healer);
                 return;
             }
         }
 
-        if (isAttackAnimationPlaying) {
+        if (isAttackAnimationPlaying)
+        {
             _attackAnimationTime += Time.deltaTime;
-            if (_attackAnimationTime > attackAnimationTime) {
+            if (_attackAnimationTime > attackAnimationTime)
+            {
                 resetVars(healer);
                 return;
             }
         }
 
-        if (healer.canAttack() && !isAttackAnimationPlaying) {
+        if (healer.canAttack() && !isAttackAnimationPlaying)
+        {
             //spell casting animation
             healer.animator.SetTrigger("CastSpell");
             healer.spells.AttackMagicCircleVisuals(true);
@@ -72,7 +71,8 @@ public class HealerAttackState : HealerBaseState
         }
     }
 
-    private void resetVars(HealerStateManager healer) {
+    private void resetVars(HealerStateManager healer)
+    {
         healer.resetAttackCD();
         healer.sc.agent.standStill = false;
         healer.spells.AttackMagicCircleVisuals(false);
