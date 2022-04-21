@@ -596,7 +596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: -875698226314182790}
   animator: {fileID: -6431665584713940296}
-  deathSound: {fileID: 8300000, guid: ed76cc98b65e23a49b65d02e5b3cc4e7, type: 3}
+  deathSound: {fileID: 8300000, guid: 9b2051dfcf37a474c9e76e282c7247b0, type: 3}
   hitPoints: 20
   deathDelay: 1
   dropObject: {fileID: 7868689882263519358, guid: bc2e15e3cc92b1d4aa3c387c0c311381, type: 3}
@@ -712,7 +712,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
+  m_SynchronizeParameters:
+  - Type: 9
+    SynchronizeType: 0
+    Name: Die
+  - Type: 9
+    SynchronizeType: 0
+    Name: Attack
+  - Type: 9
+    SynchronizeType: 0
+    Name: TakeHit
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -728,7 +737,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8458227aa56eaa243a7cc1be6baf2434, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
   Mute: 0
