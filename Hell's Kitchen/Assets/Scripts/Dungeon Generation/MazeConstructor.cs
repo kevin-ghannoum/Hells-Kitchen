@@ -1,6 +1,7 @@
 // Developed using : https://www.raywenderlich.com/82-procedural-generation-of-mazes-with-unity
 
 using System.Linq;
+using Common;
 using Common.Enums;
 using Photon.Pun;
 using Server;
@@ -59,6 +60,7 @@ namespace Dungeon_Generation
         private void Awake()
         {
             _dataGenerator = new MazeDataGenerator(placementThreshold);
+            enemySpawnRate += 0.025f * GameStateData.hiddenLevel;
 
             // default to walls surrounding a single empty cell
             Data = new[,] {
