@@ -41,7 +41,7 @@ namespace Enemies
 
             if (col.gameObject.CompareTag(Tags.Player))
             {
-                col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.All, attackDamage);
+                col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.AllBufferedViaServer, attackDamage);
             }
             
             PhotonNetwork.Destroy(gameObject);

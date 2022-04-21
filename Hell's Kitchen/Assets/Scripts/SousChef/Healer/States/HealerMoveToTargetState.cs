@@ -23,7 +23,7 @@ public class HealerMoveToTargetState : HealerBaseState
     {
         healer.sc.FindEnemy();
         healer.sc.FindLoot();
-        if (healer.sc.isLowHP() || GameStateManager.Instance.IsLowHP())
+        if (healer.sc.isLowHP() || healer.sc.IsPlayerLowHP())
         {
             healer.SwitchState(healer.healState);
             return;

@@ -51,7 +51,7 @@ namespace Enemies
                     {
                         if (audioController == 0)
                         {
-                            photonView.RPC(nameof(PlayAttackSoundRPC), RpcTarget.All);
+                            photonView.RPC(nameof(PlayAttackSoundRPC), RpcTarget.AllBufferedViaServer);
                             audioController++;
                         }
 

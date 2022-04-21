@@ -57,7 +57,7 @@ public class HealerHealState : HealerBaseState
             {
                 healer.animator.SetTrigger("CastSpell");
                 healer.healCircle.gameObject.SetActive(false);
-                healer.spells.HealerSpell_Heal(healer.sc.hitPoints > GameStateData.playerCurrentHitPoints ? healer.sc.player.transform.position : healer.transform.position);
+                healer.spells.HealerSpell_Heal(healer.sc.hitPoints > healer.sc.GetPlayerHP() ? healer.sc.player.transform.position : healer.transform.position);
                 _healCastTime = 0f;
                 _delayBetweenCast = 0f;
                 isAttackAnimationPlaying = true;
@@ -65,7 +65,7 @@ public class HealerHealState : HealerBaseState
             }
         }
 
-        if (!healer.sc.isLowHP() && !GameStateManager.Instance.IsLowHP() && !isAttackAnimationPlaying && !isCasting) {
+        if (!healer.sc.isLowHP() && !healer.sc.IsPlayerLowHP() && !isAttackAnimationPlaying && !isCasting) {
             healer.healCircle.gameObject.SetActive(false);
             healer.sc.agent.standStill = false;
             healer.SwitchState(healer.followState);

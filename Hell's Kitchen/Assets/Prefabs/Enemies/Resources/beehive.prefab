@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 5461091978947929281}
   - component: {fileID: -7930805517244048082}
   m_Layer: 0
-  m_Name: Beehive
+  m_Name: beehive
   m_TagString: Hive
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,6 +149,7 @@ MonoBehaviour:
   agent: {fileID: 1368198132102035673}
   animator: {fileID: -5467536929955882981}
   deathSound: {fileID: 0}
+  smokeParticle: {fileID: 0}
   hitPoints: 10
   deathDelay: 1
   dropObject: {fileID: 7868689882263519358, guid: bc2e15e3cc92b1d4aa3c387c0c311381, type: 3}

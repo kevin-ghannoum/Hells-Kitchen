@@ -553,6 +553,7 @@ MonoBehaviour:
   lowHealthSound: {fileID: 8300000, guid: 3f551c312493b4647ab1bd4892e8831a, type: 3}
   deathSound: {fileID: 8300000, guid: 236fe2b344d071242bfdd14fbb3ca818, type: 3}
   transitionToRestaurantTime: 4
+  internalHealth: 100
 --- !u!114 &9011982537699302653
 MonoBehaviour:
   m_ObjectHideFlags: 0

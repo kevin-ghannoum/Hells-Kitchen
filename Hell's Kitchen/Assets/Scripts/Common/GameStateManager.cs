@@ -34,6 +34,7 @@ namespace Common
         {
             GameStateData.playerMaxHitPoints = 100f;
             GameStateData.playerCurrentHitPoints = GameStateData.playerMaxHitPoints;
+            GameStateData.player.GetComponent<Player.PlayerHealth>().internalHealth = GameStateData.playerMaxHitPoints;
             GameStateData.playerMaxStamina = 5f;
             GameStateData.playerCurrentStamina = GameStateData.playerMaxStamina;
             GameStateData.cashMoney = 0f;
@@ -157,11 +158,6 @@ namespace Common
         public static void AddPurchasedWeapon(string weaponName)
         {
             Instance.photonView.RPC(nameof(AddPurchasedWeaponRPC), RpcTarget.All, weaponName);
-        }
-
-        public bool IsLowHP()
-        {
-            return ((GameStateData.playerCurrentHitPoints / GameStateData.playerMaxHitPoints) * 100) < 60;
         }
 
         public static void SetSousChef(SousChefType type)

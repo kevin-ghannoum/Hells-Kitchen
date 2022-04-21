@@ -17,17 +17,19 @@ namespace Player
         [SerializeField] private AudioClip lowHealthSound;
         [SerializeField] private AudioClip deathSound;
         [SerializeField] private float transitionToRestaurantTime = 4f;
-
         private float _invulnerabilityTime = 1;
         private float _invulnerabilityTimer = 1;
         private UnityEvent _killed;
 
+        public float internalHealth = GameStateData.playerMaxHitPoints; //need this local variable, HitPoints can't be used becos it's a scene obj Xd
         public UnityEvent Killed => _killed ??= new UnityEvent();
 
         public float HitPoints
         {
-            get => GameStateData.playerCurrentHitPoints;
-            set => GameStateData.playerCurrentHitPoints = Mathf.Clamp(value, 0, GameStateData.playerMaxHitPoints);
+            //get => GameStateData.playerCurrentHitPoints;
+            //set => GameStateData.playerCurrentHitPoints = Mathf.Clamp(value, 0, GameStateData.playerMaxHitPoints);
+            get => internalHealth;
+            set => internalHealth = Mathf.Clamp(value, 0, GameStateData.playerMaxHitPoints);
         }
 
         public PhotonView PhotonView => photonView;
@@ -35,10 +37,14 @@ namespace Player
         void Start()
         {
             photonView = GetComponent<PhotonView>();
+            //if (PhotonView.IsMine)
+            //    internalHealth = GameStateData.playerCurrentHitPoints;
         }
 
         void Update()
         {
+            //if (PhotonView.IsMine)
+            //    internalHealth = GameStateData.playerCurrentHitPoints;
             if (_invulnerabilityTimer < _invulnerabilityTime)
             {
                 _invulnerabilityTimer += Time.deltaTime;
@@ -59,11 +65,13 @@ namespace Player
 
             _invulnerabilityTimer = 0;
 
+            //we want to subtract internal health on all clients, for the player that got hit xDD
             // HP calculation and animation
-            if (photonView.IsMine)
+            //if (photonView.IsMine)
             {
                 animator.SetTrigger(PlayerAnimator.TakeHit);
                 HitPoints -= damage;
+                
 
                 // If the player's hp is at 0 or lower, they die
                 if (HitPoints <= 0)
@@ -85,6 +93,20 @@ namespace Player
 
             // Damage numbers
             AdrenalinePointsUI.SpawnDamageNumbers(transform.position + 2.0f * Vector3.up, -damage);
+        }
+
+        [PunRPC]
+        public void IncreaseMyHP(float amount)
+        {
+            //we wanna increase hp on all players, for the player that got heal'd xd
+            //internalHealth = Mathf.Clamp(internalHealth + amount, 0, GameStateData.playerMaxHitPoints);
+            //if (photonView.IsMine)
+            {
+                HitPoints = Mathf.Clamp(HitPoints + amount, 0, GameStateData.playerMaxHitPoints);
+            }
+
+            // Damage numbers
+            AdrenalinePointsUI.SpawnDamageNumbers(transform.position + 2.0f * Vector3.up, +amount);
         }
 
         [PunRPC]

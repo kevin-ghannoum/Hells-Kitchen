@@ -30,7 +30,7 @@ public class HealerAttackState : HealerBaseState
 
 
         if ((!isAttackAnimationPlaying && !isCasting) &&
-        (healer.sc.targetEnemy == null || (healer.sc.isLowHP() || Common.GameStateManager.Instance.IsLowHP())))
+        (healer.sc.targetEnemy == null || (healer.sc.isLowHP() || healer.sc.IsPlayerLowHP())))
         {
             resetVars(healer);
             return;

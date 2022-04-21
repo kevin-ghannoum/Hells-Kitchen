@@ -80,7 +80,13 @@ public class HealerStateManager : MonoBehaviour, IPunObservable
     private void Update()
     {
         magicCircle.gameObject.SetActive(shouldShowMagicCircle);
-        
+
+        var lowhpPlayer = sc.FindLowHealthPlayer();
+        if (lowhpPlayer != null)
+            sc.player = lowhpPlayer;
+        else
+            sc.player = sc.FindClosestPlayer();
+
         var photonView = GetComponent<PhotonView>();
         if (!photonView.IsMine)
             return;

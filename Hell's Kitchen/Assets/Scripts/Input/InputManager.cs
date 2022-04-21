@@ -52,7 +52,7 @@ namespace Input
 
         private void Start()
         {
-            Cursor.lockState = CursorLockMode.Confined;
+            //Cursor.lockState = CursorLockMode.Confined;
         }
 
         public void OnMove(InputAction.CallbackContext context)

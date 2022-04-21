@@ -16,7 +16,7 @@ public class SpellManager : MonoBehaviour
 
     public void HealerSpell_Photon(GameObject target)
     {
-        _photonView.RPC(nameof(HealerSpell_Photon_RPC), RpcTarget.All, target.GetComponent<PhotonView>().ViewID);
+        _photonView.RPC(nameof(HealerSpell_Photon_RPC), RpcTarget.AllBufferedViaServer, target.GetComponent<PhotonView>().ViewID);
     }
     
     [PunRPC]
@@ -24,6 +24,8 @@ public class SpellManager : MonoBehaviour
     {
         GameObject target = PhotonView.Find(viewId).gameObject;
         if (!target)
+            return;
+        if (!_photonView.IsMine)
             return;
         
         var obj = PhotonNetwork.Instantiate(photonSpellPrefab.name, target.transform.position, Quaternion.identity);
@@ -38,12 +40,14 @@ public class SpellManager : MonoBehaviour
     [PunRPC]
     internal void HealerSpell_Heal_RPC(Vector3 position)
     {
+        if (!_photonView.IsMine)
+            return;
         PhotonNetwork.Instantiate(healSpellPrefab.name, position, Quaternion.identity);
     }
 
     public void KnightSkill()
     {
-        _photonView.RPC(nameof(KnightSkill_RPC), RpcTarget.All);
+        _photonView.RPC(nameof(KnightSkill_RPC), RpcTarget.AllViaServer);
     }
     
     [PunRPC]

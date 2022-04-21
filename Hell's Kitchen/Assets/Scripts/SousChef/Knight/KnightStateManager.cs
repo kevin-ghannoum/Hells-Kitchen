@@ -29,6 +29,7 @@ public class KnightStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        sc.player = sc.FindClosestPlayer();
         if (!GetComponent<PhotonView>().IsMine)
             return;
             

@@ -61,7 +61,7 @@ namespace Enemies
             foreach (var col in colliders)
             {
                 if (!col.CompareTag(Tags.Enemy))
-                    col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.All, attackDamage);
+                    col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.AllBufferedViaServer, attackDamage);
             }
         }
 

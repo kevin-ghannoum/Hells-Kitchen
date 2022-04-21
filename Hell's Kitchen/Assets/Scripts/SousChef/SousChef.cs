@@ -46,7 +46,7 @@ public class SousChef : MonoBehaviour, IKillable
     float _takeDamageDelay = 0f;
     void Update()
     {
-        player = FindClosestPlayer();
+        //player = FindClosestPlayer();
         bool enemyFound = false;
 
         // find new enemy target if none or out of range
@@ -59,7 +59,7 @@ public class SousChef : MonoBehaviour, IKillable
         // makes sure to deal with enemies nearby first
         if (!enemyFound)
         {
-            print("looking for loot...");
+            //print("looking for loot...");
             if (targetLoot == null || (targetLoot != null && Vector3.Distance(targetLoot.transform.position, transform.position) > searchRange))
             {
                 FindLoot();
@@ -235,5 +235,22 @@ public class SousChef : MonoBehaviour, IKillable
             }
         }
         return closestPlayer;
+    }
+
+    public float GetPlayerHP() {
+        return player.GetComponent<Player.PlayerHealth>().internalHealth;
+    }
+    public bool IsPlayerLowHP()
+    {
+        return ((GetPlayerHP() / Common.GameStateData.playerMaxHitPoints) * 100) < 60;
+    }
+
+    public GameObject FindLowHealthPlayer() {
+        GameObject[] players = GameObject.FindGameObjectsWithTag(Tags.Player);
+        players = players.OrderBy(p => p.GetComponent<Player.PlayerHealth>().internalHealth).ToArray();
+        Debug.Log("lowesthp:" + players[0].GetComponent<Player.PlayerHealth>().internalHealth + ", other: " + players[1].GetComponent<Player.PlayerHealth>().internalHealth);
+        if ((players[0].GetComponent<Player.PlayerHealth>().internalHealth / Common.GameStateData.playerMaxHitPoints *100) >= 60)
+            return null;
+        return players[0];
     }
 }

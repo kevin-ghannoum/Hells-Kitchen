@@ -22,16 +22,14 @@ public class HealerFollowState : HealerBaseState
         }
         
         //Debug.Log("@followState_UpdateState");
-        if (healer.sc.isLowHP() || GameStateManager.Instance.IsLowHP())
+        if (healer.sc.isLowHP() || healer.sc.IsPlayerLowHP())
         {
-            Debug.Log("@followState_1");
             // heal
             healer.SwitchState(healer.healState);
             return;
         }
         else if (healer.sc.targetEnemy == null && healer.sc.targetLoot == null)
         {
-            Debug.Log("@followState_2");
             // follow
             if (healer.sc.agent.Target != healer.sc.player.transform.position)
             {
@@ -44,38 +42,15 @@ public class HealerFollowState : HealerBaseState
         }
         else if (healer.sc.targetEnemy != null)
         {
-            Debug.Log("@followState_3");
             // enter move to target
             healer.SwitchState(healer.moveToTarget);
             return;
         }
         else if (healer.sc.targetLoot != null)
         {
-            Debug.Log("@followState_4");
             // enter loot state
             healer.SwitchState(healer.lootState);
             return;
         }
-
-        // if (healer.sc.targetEnemy != null)
-        // {
-        //     healer.SwitchState(healer.moveToTarget);
-        //     return;
-        // }
-        // else
-        // {
-        //     healer.SwitchState(healer.moveToTarget);
-        //     return;
-        // }
-
-        // if (healer.sc.targetLoot == null)
-        // {
-        //     healer.sc.FindLoot();
-        // }
-        // else
-        // {
-        //     healer.SwitchState(healer.moveToTarget);
-        //     return;
-        // }
     }
 }

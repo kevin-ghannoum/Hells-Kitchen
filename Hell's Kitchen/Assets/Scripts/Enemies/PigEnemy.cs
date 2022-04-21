@@ -122,7 +122,7 @@ namespace Enemies
         {
             if (photonView.IsMine && !col.CompareTag(Tags.Enemy) && _currentChargeTime >= 0)
             {
-                col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.All, attackDamage);
+                col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.AllBufferedViaServer, attackDamage);
             }
         }
 
@@ -130,7 +130,7 @@ namespace Enemies
         {
             if (photonView.IsMine && !col.CompareTag(Tags.Enemy) && _currentChargeTime < 0)
             {
-                col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.All, chargeDamage);
+                col.gameObject.GetComponent<IKillable>()?.PhotonView.RPC(nameof(IKillable.TakeDamage), RpcTarget.AllBufferedViaServer, chargeDamage);
             }
         }
     }
