@@ -15,6 +15,7 @@ namespace Enemies
         [SerializeField] protected PathfindingAgent agent;
         [SerializeField] protected Animator animator;
         [SerializeField] private AudioClip deathSound;
+        [SerializeField] private GameObject smokeParticle;
 
         [Header("Parameters")]
         [SerializeField] protected float hitPoints;
@@ -94,6 +95,7 @@ namespace Enemies
         [PunRPC]
         protected void PlayDeathSoundRPC()
         {
+            Instantiate(smokeParticle, transform.position, Quaternion.identity);
             AudioSource.PlayClipAtPoint(deathSound, transform.position);
         }
 
