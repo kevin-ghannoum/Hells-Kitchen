@@ -2,7 +2,8 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class HealerStateManager : MonoBehaviour
+[RequireComponent(typeof(Transform))]
+public class HealerStateManager : MonoBehaviour, IPunObservable
 {
     HealerBaseState currentState;
     public HealerAttackState attackState = new HealerAttackState();
@@ -16,6 +17,8 @@ public class HealerStateManager : MonoBehaviour
     public Transform healCircle;
     public GameObject startTeleportPrefab;
     public GameObject endTeleportPrefab;
+
+    public bool shouldShowMagicCircle = false;
 
     public SousChef sc { get; set; }
     public SpellManager spells { get; set; }
@@ -76,6 +79,8 @@ public class HealerStateManager : MonoBehaviour
     }
     private void Update()
     {
+        magicCircle.gameObject.SetActive(shouldShowMagicCircle);
+        
         var photonView = GetComponent<PhotonView>();
         if (!photonView.IsMine)
             return;
@@ -132,22 +137,15 @@ public class HealerStateManager : MonoBehaviour
                     }
                 }
                 Debug.DrawRay(pointOfIntersection, Vector3.up * 100f, Color.magenta, 0.25f);
-                /*Debug.Log("le point of intersect:" + pointOfIntersection);
-                Debug.Log("transform.position:" + transform.position);*/
-                //return;
             }
             else
             {
                 if (node == null)
                 {
-                    Debug.Log("1xD");
                     return;
                 }
-                else
-                {
-                    Debug.Log("2xD");
-                    pointOfIntersection = transform.position + (node.Position - transform.position).normalized * maxTeleportDistance;
-                }
+                
+                pointOfIntersection = transform.position + (node.Position - transform.position).normalized * maxTeleportDistance;
             }
             float teleportDist = Mathf.Min(maxTeleportDistance, Vector3.Distance(pointOfIntersection, transform.position));
             Debug.DrawLine(transform.position, pointOfIntersection, Color.magenta, 3f);
@@ -159,10 +157,6 @@ public class HealerStateManager : MonoBehaviour
                 Debug.DrawLine(transform.position, pointOfIntersection, Color.cyan, 20f);
                 Debug.Log("oob, cancel tp xd");
                 return;
-            }
-            if (currentNode != null)
-            {
-                ///xddddd
             }
 
             Vector3 fxEndPos = endPos.position; //transform.position + (teleportDir * teleportDist);
@@ -186,17 +180,21 @@ public class HealerStateManager : MonoBehaviour
         state.EnterState(this);
     }
 
-    private void OnDrawGizmos()
-    {
-        /* Gizmos.color = Color.white;
-         Gizmos.DrawWireSphere(transform.position, maxTeleportDistance);
-         Gizmos.color = Color.magenta;
-         Gizmos.DrawWireSphere(transform.position, sc.searchRange);*/
-    }
-
     [PunRPC]
     public void SpawnTeleportMagic(Vector3 position)
     {
         Instantiate(endTeleportPrefab, position, Quaternion.identity);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(shouldShowMagicCircle);
+        }
+        else if (stream.IsReading)
+        {
+            shouldShowMagicCircle = (bool) stream.ReceiveNext();
+        }
     }
 }

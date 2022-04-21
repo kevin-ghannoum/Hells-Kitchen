@@ -55,7 +55,7 @@ public class HealerAttackState : HealerBaseState
         if (healer.canAttack() && !isAttackAnimationPlaying) {
             //spell casting animation
             healer.animator.SetTrigger("CastSpell");
-            healer.magicCircle.gameObject.SetActive(true);
+            healer.shouldShowMagicCircle = true;
             _photonCastTime += Time.deltaTime;
             isCasting = true;
             if (_photonCastTime >= photonCastTime)
@@ -63,7 +63,7 @@ public class HealerAttackState : HealerBaseState
                 isAttackAnimationPlaying = true;
                 Debug.Log("@Attack attacking xD");
                 healer.spells.HealerSpell_Photon(healer.sc.targetEnemy);
-                healer.magicCircle.gameObject.SetActive(false);
+                healer.shouldShowMagicCircle = false;
                 _photonCastTime = 0f;
                 healer.sc.targetEnemy = null;
                 healer.resetAttackCD();
@@ -75,7 +75,7 @@ public class HealerAttackState : HealerBaseState
     private void resetVars(HealerStateManager healer) {
         healer.resetAttackCD();
         healer.sc.agent.standStill = false;
-        healer.magicCircle.gameObject.SetActive(false);
+        healer.shouldShowMagicCircle = false;
         healer.SwitchState(healer.moveToTarget);
     }
 }
