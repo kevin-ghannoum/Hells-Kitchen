@@ -75,7 +75,7 @@ namespace UI
 
         public static void SpawnHealNumbers(Vector3 worldPosition, float value)
         {
-            SpawnAdrenalineNumbers(worldPosition, value, 70, new Color(0.0941176470f, 0.3803921568f, 0.0941176470f));
+            SpawnAdrenalineNumbers(worldPosition, value, 70, Color.white);
         }
 
         private static void SpawnAdrenalineNumbers(Vector3 worldPosition, float value, float offsetY, Color color)
