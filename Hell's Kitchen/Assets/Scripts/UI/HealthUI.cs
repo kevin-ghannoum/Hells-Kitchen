@@ -18,10 +18,12 @@ namespace UI
 
         private void Update()
         {
-            var playerHealth = GameStateData.player.GetComponent<Player.PlayerHealth>();
-            if (!playerHealth)
+            var player = GameStateData.player;
+            if (!player)
                 return;
             
+            var playerHealth = player.GetComponent<Player.PlayerHealth>();
+
             healthValue.text = $"{playerHealth.internalHealth} / {GameStateData.playerMaxHitPoints}";
             healthSlider.value = playerHealth.internalHealth;
         }

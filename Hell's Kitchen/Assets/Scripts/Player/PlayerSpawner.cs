@@ -38,7 +38,6 @@ namespace Player
             }
             else
             {
-                //GameStateData.playerCurrentHitPoints = GameStateData.playerMaxHitPoints;
                 player.GetComponent<Player.PlayerHealth>().internalHealth = GameStateData.playerMaxHitPoints;
             }
         }

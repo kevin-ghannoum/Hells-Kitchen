@@ -21,13 +21,11 @@ namespace Player
         private float _invulnerabilityTimer = 1;
         private UnityEvent _killed;
 
-        public float internalHealth = GameStateData.playerMaxHitPoints; //need this local variable, HitPoints can't be used becos it's a scene obj Xd
+        public float internalHealth = GameStateData.playerMaxHitPoints; //need this local variable, HitPoints can't be used becos it's a scene obj
         public UnityEvent Killed => _killed ??= new UnityEvent();
 
         public float HitPoints
         {
-            //get => GameStateData.playerCurrentHitPoints;
-            //set => GameStateData.playerCurrentHitPoints = Mathf.Clamp(value, 0, GameStateData.playerMaxHitPoints);
             get => internalHealth;
             set => internalHealth = Mathf.Clamp(value, 0, GameStateData.playerMaxHitPoints);
         }
@@ -37,14 +35,10 @@ namespace Player
         void Start()
         {
             photonView = GetComponent<PhotonView>();
-            //if (PhotonView.IsMine)
-            //    internalHealth = GameStateData.playerCurrentHitPoints;
         }
 
         void Update()
         {
-            //if (PhotonView.IsMine)
-            //    internalHealth = GameStateData.playerCurrentHitPoints;
             if (_invulnerabilityTimer < _invulnerabilityTime)
             {
                 _invulnerabilityTimer += Time.deltaTime;
