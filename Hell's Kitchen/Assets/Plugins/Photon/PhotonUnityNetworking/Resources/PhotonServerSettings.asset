@@ -37,6 +37,7 @@ MonoBehaviour:
   - AddItemToInventoryRPC
   - AddPurchasedWeaponRPC
   - ClickRpc
+  - deleteBullet
   - DestroyPlayerRPC
   - DestroyRpc
   - DisableRigidbody
@@ -51,6 +52,7 @@ MonoBehaviour:
   - LootChestRPC
   - PickUp
   - PickUpRPC
+  - playAttackSound
   - PlayAttackSoundRPC
   - PlayCookingSoundRPC
   - PlayDeathSoundRPC
@@ -64,7 +66,6 @@ MonoBehaviour:
   - RemoveItemFromInventoryRPC
   - RemoveObjectParentRPC
   - ReparentObjectToPlayerHandRPC
-  - ReturnToRestaurantRPC
   - SelectSousChef
   - ServeOrdersRPC
   - SetCashMoneyRPC
@@ -72,12 +73,6 @@ MonoBehaviour:
   - SpawnLocalPlayer
   - SpawnTeleportMagic
   - TakeDamage
-  - SpawnTeleportMagic
-  - playAttackSound
-  - PlayCookingSoundRPC
-  - setLinePosition
-  - deleteBullet
-  - instantiateElectric
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -30,6 +30,7 @@ namespace Player
             player.GetComponentInChildren<Camera>().gameObject.tag = Tags.MainCamera;
             player.transform.Find("VirtualCamera").gameObject.SetActive(true);
             GameStateData.player = player;
+            GameStateManager.Instance.inventoryUI.UpdateInventory(GameStateData.inventory.GetInventoryItems());
             
             if (SceneManager.GetActiveScene().name.Equals(Scenes.Dungeon))
             {

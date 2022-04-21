@@ -295,7 +295,7 @@ MonoBehaviour:
   ArrivalRadius: 1.5
   MidPointArrivalRadius: 0.5
   TimeToTarget: 0.5
-  MaxVelocity: 5
+  MaxVelocity: 6
   rigidbody: {fileID: 3440339455808783361}
   standStill: 0
 --- !u!114 &5153250386385897533
