@@ -41,6 +41,8 @@ namespace Player
 
         private float _speed = 0f;
         private IPickup _currentPickup;
+        
+        bool _rollStartup = true;
 
         public Vector3 AimPoint { get; set; }
 
@@ -50,7 +52,7 @@ namespace Player
             _animator = GetComponentInChildren<Animator>();
             _characterController = GetComponent<CharacterController>();
         }
-        bool rollStartup = true;
+        
         private void Update()
         {
             if (!_photonView.IsMine) return;
@@ -58,17 +60,17 @@ namespace Player
             var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             if (animatorStateInfo.IsName(PlayerAnimator.Move))
             {
-                rollStartup = true;
+                _rollStartup = true;
                 MovePlayer();
                 RotatePlayer();
             }
             else if (animatorStateInfo.IsName(PlayerAnimator.Roll))
             {
                 //this line allows to roll backwards or sideways instantly without having to turn first, good for kiting
-                if (rollStartup)   
+                if (_rollStartup)   
                     transform.rotation = Quaternion.LookRotation(new Vector3(_input.move.x, 0, _input.move.y));
            
-                rollStartup = false;
+                _rollStartup = false;
                 float rollSpeed = rollSpeedCurve.Evaluate(animatorStateInfo.normalizedTime) * (runSpeed - walkSpeed) + walkSpeed;
                 Vector3 movement = Vector3.forward * rollSpeed * Time.deltaTime;
                 _characterController.Move(transform.TransformDirection(movement));
