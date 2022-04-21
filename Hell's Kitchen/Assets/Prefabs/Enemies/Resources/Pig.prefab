@@ -375,6 +375,7 @@ MonoBehaviour:
   agent: {fileID: -741644595512488671}
   animator: {fileID: 3995912497361030879}
   deathSound: {fileID: 8300000, guid: 74a52dda078a67c4c866161c367ef857, type: 3}
+  smokeParticle: {fileID: 4736385885712022117, guid: 0d3b47f0fe249d34583b9438c5799bee, type: 3}
   hitPoints: 150
   deathDelay: 1
   dropObject: {fileID: 5575247230749135019, guid: 00853119909c0ee498d31c19ec69d00d, type: 3}
