@@ -19,7 +19,7 @@ namespace PlayerInventory
         [SerializeField]
         private PhotonView photonView;
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerStay(Collider other)
         {
             // items can be picked up by both the chef (player) and sous-chef
             if (other.CompareTag(Tags.Player))
