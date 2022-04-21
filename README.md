@@ -8,7 +8,7 @@
 | Kevin Ghannoum | ID |
 | Émilie Martin | 40095423 |
 | Cristian Milatinov | 40098297 |
-| Sheridan Perez Antigua | ID |
+| Sheridan Perez Antigua | 26767753 |
 | Daniela Venuta | 40099441|
 | Yunwei Yang | ID |
 
