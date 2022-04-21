@@ -245,7 +245,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!136 &3440339455808783366
 CapsuleCollider:
@@ -295,7 +295,7 @@ MonoBehaviour:
   ArrivalRadius: 1.5
   MidPointArrivalRadius: 0.5
   TimeToTarget: 0.5
-  MaxVelocity: 6
+  MaxVelocity: 14
   rigidbody: {fileID: 3440339455808783361}
   standStill: 0
 --- !u!114 &5153250386385897533
@@ -316,7 +316,7 @@ MonoBehaviour:
   targetLoot: {fileID: 0}
   followDistance: 2
   attackRange: 2
-  searchRange: 10
+  searchRange: 15
   deathSound: {fileID: 8300000, guid: b5d3dbae8b145da43919908236e9f922, type: 3}
   player: {fileID: 0}
   hitPoints: 0
@@ -335,7 +335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 3440339455808783363}
-  weapon: {fileID: 0}
+  weapon: {fileID: 6999170429113135299}
 --- !u!114 &8046514949207215185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1401,7 +1401,8 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0.002800964, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 7667902560300477049}
   m_Father: {fileID: 4278370028795723887}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1530,3 +1531,74 @@ Transform:
   m_Father: {fileID: 6274111564522176041}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2222588143232911570
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1207661948340906347}
+    m_Modifications:
+    - target: {fileID: -5153257334211800644, guid: a5a0b012f8d21064bb933be63767dc91, type: 3}
+      propertyPath: knight
+      value: 
+      objectReference: {fileID: 2558013046334156685}
+    - target: {fileID: 8408753644503048875, guid: a5a0b012f8d21064bb933be63767dc91, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408753644503048875, guid: a5a0b012f8d21064bb933be63767dc91, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408753644503048875, guid: a5a0b012f8d21064bb933be63767dc91, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408753644503048875, guid: a5a0b012f8d21064bb933be63767dc91, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408753644503048875, guid: a5a0b012f8d21064bb933be63767dc91, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408753644503048875, guid: a5a0b012f8d21064bb933be63767dc91, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408753644503048875, guid: a5a0b012f8d21064bb933be63767dc91, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408753644503048875, guid: a5a0b012f8d21064bb933be63767dc91, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408753644503048875, guid: a5a0b012f8d21064bb933be63767dc91, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408753644503048875, guid: a5a0b012f8d21064bb933be63767dc91, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408753644503048875, guid: a5a0b012f8d21064bb933be63767dc91, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9221740705109538833, guid: a5a0b012f8d21064bb933be63767dc91, type: 3}
+      propertyPath: m_Name
+      value: KnightSword
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a5a0b012f8d21064bb933be63767dc91, type: 3}
+--- !u!1 &6999170429113135299 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9221740705109538833, guid: a5a0b012f8d21064bb933be63767dc91, type: 3}
+  m_PrefabInstance: {fileID: 2222588143232911570}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7667902560300477049 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8408753644503048875, guid: a5a0b012f8d21064bb933be63767dc91, type: 3}
+  m_PrefabInstance: {fileID: 2222588143232911570}
+  m_PrefabAsset: {fileID: 0}

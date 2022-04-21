@@ -26,14 +26,8 @@ public class HealerLootState : HealerBaseState
             {
                 // move to loot position
                 healer.sc.agent.standStill = false;
-                if (healer.sc.agent.Target != healer.sc.targetLoot.transform.position)
-                {
-                    healer.sc.agent.Target = healer.sc.targetLoot.transform.position;
-                }
-                if (healer.sc.agent.ArrivalRadius != 0.5f)
-                {
-                    healer.sc.agent.ArrivalRadius = 0.5f;
-                }
+                healer.sc.agent.ArrivalRadius = 0.1f;
+                healer.sc.agent.Target = healer.sc.targetLoot.transform.position;
             }
             else
             {

@@ -86,7 +86,7 @@ public class SousChef : MonoBehaviour, IKillable
 
     public void FindLoot()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, searchRange, 1 << 9);    //collectibles layer mask
+        Collider[] colliders = Physics.OverlapSphere(transform.position, searchRange, 1 << 13);    //items layer mask
         colliders = colliders.OrderBy(c => (transform.position - c.transform.position).sqrMagnitude).ToArray();
         bool found = false;
         foreach (Collider collider in colliders)

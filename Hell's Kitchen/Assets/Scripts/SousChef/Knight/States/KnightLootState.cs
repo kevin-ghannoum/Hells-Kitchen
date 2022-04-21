@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class KnightLootState : KnightBaseState
 {
-    float pickUpTime = 1f;
+    float pickUpTime = 1.5f;
     float _pickUpTime = 0f;
     bool pickUp = true;
     bool isAnimPlaying = false;
@@ -22,18 +22,14 @@ public class KnightLootState : KnightBaseState
         if (knight.sc.targetLoot != null)
         {
             // pathfinding with loot as target and arrival radius as 0.5f
-            knight.sc.agent.standStill = false;
             if (Vector3.Distance(knight.transform.position, knight.sc.targetLoot.transform.position) > 0.6f)
             {
                 // move to loot position
-                if (knight.sc.agent.Target != knight.sc.targetLoot.transform.position)
-                {
-                    knight.sc.agent.Target = knight.sc.targetLoot.transform.position;
-                }
-                if (knight.sc.agent.ArrivalRadius != 0.5f)
-                {
-                    knight.sc.agent.ArrivalRadius = 0.5f;
-                }
+                // Debug.Log("@PickUp moving to loot");
+                // Debug.Log("@PickUp distance to loot: " + Vector3.Distance(knight.transform.position, knight.sc.targetLoot.transform.position));
+                knight.sc.agent.standStill = false;
+                knight.sc.agent.ArrivalRadius = 0.1f;
+                knight.sc.agent.Target = knight.sc.targetLoot.transform.position;
             }
             else
             {

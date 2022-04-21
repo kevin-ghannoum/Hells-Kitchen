@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class KnightStateManager : MonoBehaviour
 {
-    KnightBaseState currentState;
+    public KnightBaseState currentState;
     public KnightAttackState attackState = new KnightAttackState();
     public KnightMoveToTargetState moveToTarget = new KnightMoveToTargetState();
     public KnightFollowState followState = new KnightFollowState();
@@ -40,5 +40,9 @@ public class KnightStateManager : MonoBehaviour
      public void SwitchState(KnightBaseState state) {
         currentState = state;
         state.EnterState(this);
+    }
+
+    public bool IsInLootState(){
+        return currentState == lootState;
     }
 }

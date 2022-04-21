@@ -15,7 +15,7 @@ namespace Weapons
 
         private void OnCollisionEnter(Collision collision)
         {
-            var obj = collision.gameObject; // TODO Disable friendly fire with sous-chef
+            var obj = collision.gameObject;
             if (!obj.CompareTag(Tags.Player) && !obj.CompareTag(Tags.SousChef))
             {
                 var hitFx = Instantiate(bulletHit, collision.contacts[0].point, Quaternion.identity);

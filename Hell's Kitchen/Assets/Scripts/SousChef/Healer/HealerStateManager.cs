@@ -5,7 +5,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Transform))]
 public class HealerStateManager : MonoBehaviour, IPunObservable
 {
-    HealerBaseState currentState;
+    public HealerBaseState currentState;
     public HealerAttackState attackState = new HealerAttackState();
     public HealerMoveToTargetState moveToTarget = new HealerMoveToTargetState();
     public HealerFollowState followState = new HealerFollowState();
@@ -184,6 +184,10 @@ public class HealerStateManager : MonoBehaviour, IPunObservable
     public void SpawnTeleportMagic(Vector3 position)
     {
         Instantiate(endTeleportPrefab, position, Quaternion.identity);
+    }
+
+    public bool IsInLootState(){
+        return currentState == lootState;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
