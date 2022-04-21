@@ -29,6 +29,11 @@ namespace UI
 
             for (int i = 0; i < smallestLength; i++)
             {
+                var quantity = inventoryList[inventoryList.ElementAt(i).Key];
+
+                if (quantity == 0)
+                    continue;
+
                 RectTransform itemSlotRectTrans = Instantiate(inventoryItemSlot, inventoryContainer).GetComponent<RectTransform>();
                 itemSlotRectTrans.gameObject.SetActive(true);
 
