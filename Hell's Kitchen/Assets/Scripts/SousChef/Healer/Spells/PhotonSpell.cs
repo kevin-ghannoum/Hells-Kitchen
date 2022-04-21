@@ -42,8 +42,9 @@ public class PhotonSpell : MonoBehaviour
     bool stopFollowing = false;
     float aoeDmgDelayAfterExplosion = 0.25f;
     bool playedExplosionSound = false;
-    float stopMiniSfx = 0.25f;
+    float stopMiniSfx = 1f;
     bool playedBlazeSound = false;
+    List<AudioSource> audioPlaying = new List<AudioSource>();
     private void Update()
     {
         if (target != null && !stopFollowing)
@@ -81,7 +82,9 @@ public class PhotonSpell : MonoBehaviour
         _miniExplosionSfxDelay += Time.deltaTime;
         if (_miniExplosionSfxDelay >= miniExplosionSfxDelay && bigExplosionDelay < 0 && stopMiniSfx >= 0)
         {
-            audios[UnityEngine.Random.Range(1, audios.Count-1)].Play();
+            int randomindex = UnityEngine.Random.Range(1, audios.Count - 1);
+            audioPlaying.Add(audios[randomindex]);
+            audios[randomindex].Play();
             _miniExplosionSfxDelay = 0f;
             stopMiniSfx -= Time.deltaTime;
         }
@@ -106,8 +109,11 @@ public class PhotonSpell : MonoBehaviour
         }
 
         selfDestructTimer -= Time.deltaTime;
-        if (selfDestructTimer <= 0)
+        if (selfDestructTimer <= 0.5f)
         {
+            foreach (var a in audioPlaying) {
+                a.volume = a.volume / 1.05f;
+            }
             AoE.gameObject.SetActive(false);
             lights.gameObject.SetActive(false);
             gameObject.GetComponent<SphereCollider>().enabled = false;
