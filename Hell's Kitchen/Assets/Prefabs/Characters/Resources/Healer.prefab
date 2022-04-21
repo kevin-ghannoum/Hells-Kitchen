@@ -20058,7 +20058,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 8080431647944246264}
-  maxHealth: 100
+  maxHealth: 250
   targetEnemy: {fileID: 0}
   targetLoot: {fileID: 0}
   followDistance: 2

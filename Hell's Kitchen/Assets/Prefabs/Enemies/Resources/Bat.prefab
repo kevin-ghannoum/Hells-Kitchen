@@ -114,7 +114,6 @@ MonoBehaviour:
   attackDamageRadius: 2
   attackPosition: {fileID: 4142023367602500924}
   attackSound: {fileID: 8300000, guid: 65f3a77819f40924fb9c51d841bd82cf, type: 3}
-  deathSound: {fileID: 8300000, guid: 389b03001cc85664ea35ea57e7e35ee6, type: 3}
 --- !u!114 &105471592295607375
 MonoBehaviour:
   m_ObjectHideFlags: 0
