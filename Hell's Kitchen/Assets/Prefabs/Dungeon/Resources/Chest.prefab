@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 88246834570480271}
   - component: {fileID: 4341634476200083993}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 2595005528241391676}
   - component: {fileID: 3378403652273922706}
   - component: {fileID: 6118420831474923928}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Chest
   m_TagString: SharedDecoration
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
@@ -234,9 +234,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3635400100867855621}
     m_Modifications:
+    - target: {fileID: 260618767341121579, guid: 4af99d61a2d88504d8a0c8fdc40be93b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1238773674722116615, guid: 4af99d61a2d88504d8a0c8fdc40be93b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1459010154219631023, guid: 4af99d61a2d88504d8a0c8fdc40be93b, type: 3}
       propertyPath: m_Name
       value: InteractUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1459010154219631023, guid: 4af99d61a2d88504d8a0c8fdc40be93b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469822349925031863, guid: 4af99d61a2d88504d8a0c8fdc40be93b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5233045330565951229, guid: 4af99d61a2d88504d8a0c8fdc40be93b, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8141816036893834965, guid: 4af99d61a2d88504d8a0c8fdc40be93b, type: 3}
       propertyPath: m_RootOrder
@@ -398,9 +418,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 89.977
       objectReference: {fileID: 0}
+    - target: {fileID: -721370402306840000, guid: a515518a832c0ea4c86012fbff601cca, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a515518a832c0ea4c86012fbff601cca, type: 3}
       propertyPath: m_Name
       value: Chest_gold
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a515518a832c0ea4c86012fbff601cca, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6117875958812821638, guid: a515518a832c0ea4c86012fbff601cca, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a515518a832c0ea4c86012fbff601cca, type: 3}

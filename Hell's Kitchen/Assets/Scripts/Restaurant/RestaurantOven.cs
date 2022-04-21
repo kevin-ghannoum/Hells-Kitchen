@@ -50,10 +50,19 @@ namespace Restaurant
 
             foreach (var item in neededItems)
             {
-                if (item.Value > 0 && Cooking.CookRecipe(Cooking.GetItemRecipe(item.Key), item.Value))
+                var amountCooked = 0;
+                for (var i = 0; i < item.Value; i++)
                 {
-                    AdrenalinePointsUI.SpawnIngredientString(player.transform.position, $"+{item.Value} {Items.GetItem(item.Key).Name}");
-                    neededItemsCopy[item.Key] = 0;
+                    if (Cooking.CookRecipe(Cooking.GetItemRecipe(item.Key)))
+                    {
+                        amountCooked++;
+                        neededItemsCopy[item.Key]--;
+                    }
+                }
+
+                if (amountCooked > 0)
+                {
+                    AdrenalinePointsUI.SpawnIngredientString(player.transform.position, $"+{amountCooked} {Items.GetItem(item.Key).Name}");
                 }
             }
 
