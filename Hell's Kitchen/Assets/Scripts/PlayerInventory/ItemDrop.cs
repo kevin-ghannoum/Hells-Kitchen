@@ -21,9 +21,6 @@ namespace PlayerInventory
 
         private void OnTriggerStay(Collider other)
         {
-            if (!photonView.IsMine)
-                return;
-            
             // items can be picked up by both the chef (player) and sous-chef
             if (other.CompareTag(Tags.Player))
             {

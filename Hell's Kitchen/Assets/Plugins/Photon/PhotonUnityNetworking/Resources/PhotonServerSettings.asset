@@ -49,7 +49,6 @@ MonoBehaviour:
   - LoadGameOverRPC
   - LoadRestaurantRPC
   - LootChestRPC
-  - PickUp
   - PickUpRPC
   - PlayAttackSoundRPC
   - PlayCookingSoundRPC
