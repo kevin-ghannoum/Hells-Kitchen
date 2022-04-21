@@ -21,6 +21,7 @@ public class PhotonSpell : MonoBehaviour
     float centerSpeed = 12f;
     float arriveRadius = 0.75f;
 
+    List<AudioSource> audios;
     [SerializeField] float AoE_delayBetweenTicks;
 
     [SerializeField] GameObject bulletExplosion;
@@ -28,13 +29,21 @@ public class PhotonSpell : MonoBehaviour
     [SerializeField] public float singleTargetDamage;
 
     public GameObject target;
+
+    float explosionSoundDelay = 0.5f;
+    float _miniExplosionSfxDelay = 0f;
+    float miniExplosionSfxDelay = 0.10f;
     private void Start()
     {
+        audios = new List<AudioSource>(gameObject.GetComponents<AudioSource>());
         transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
     }
 
     bool stopFollowing = false;
     float aoeDmgDelayAfterExplosion = 0.25f;
+    bool playedExplosionSound = false;
+    float stopMiniSfx = 0.25f;
+    bool playedBlazeSound = false;
     private void Update()
     {
         if (target != null && !stopFollowing)
@@ -44,6 +53,11 @@ public class PhotonSpell : MonoBehaviour
         
         if (spinStartDelay < 0 && spinners != null)
         {
+            if (!playedBlazeSound)
+            {
+                playedBlazeSound = true;
+                audios[audios.Count - 1].Play();
+            }
             spinners.gameObject.SetActive(true);
             foreach (Transform chile in spinners)
                 if ((transform.position - chile.position).magnitude > arriveRadius)
@@ -53,13 +67,27 @@ public class PhotonSpell : MonoBehaviour
         explosionDelay -= Time.deltaTime;
         if (explosionDelay < 0)
         {
+            explosionSoundDelay -= Time.deltaTime;
+            if (explosionSoundDelay <= 0 && !playedExplosionSound) {
+                audios[0].Play();
+                playedExplosionSound = true;
+            }
             explosions.gameObject.SetActive(true);
             spinners.gameObject.SetActive(false);
         }
 
         bigExplosionDelay -= Time.deltaTime;
+
+        _miniExplosionSfxDelay += Time.deltaTime;
+        if (_miniExplosionSfxDelay >= miniExplosionSfxDelay && bigExplosionDelay < 0 && stopMiniSfx >= 0)
+        {
+            audios[UnityEngine.Random.Range(1, audios.Count-1)].Play();
+            _miniExplosionSfxDelay = 0f;
+            stopMiniSfx -= Time.deltaTime;
+        }
         if (bigExplosionDelay < 0 && !stopFollowing)
         {
+
             AoE.gameObject.SetActive(true);
             lights.gameObject.SetActive(false);
             aoeDmgDelayAfterExplosion -= Time.deltaTime;
@@ -79,7 +107,15 @@ public class PhotonSpell : MonoBehaviour
 
         selfDestructTimer -= Time.deltaTime;
         if (selfDestructTimer <= 0)
-            Destroy(gameObject);
+        {
+            AoE.gameObject.SetActive(false);
+            lights.gameObject.SetActive(false);
+            gameObject.GetComponent<SphereCollider>().enabled = false;
+            magicCircle.gameObject.SetActive(false);
+            explosions.gameObject.SetActive(false);
+            spinners.gameObject.SetActive(false);
+            Destroy(gameObject,3);
+        }
 
         transform.Rotate(new Vector3(0, 5, 0));
     }
