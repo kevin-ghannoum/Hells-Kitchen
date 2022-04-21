@@ -32,13 +32,14 @@ namespace PlayerInventory
             }
             else if(other.CompareTag(Tags.SousChef)){
                 // check if the sous chef is in loot state and makes sure sous chef is picking up this item
+                Debug.Log("souschef");
                 if(other.TryGetComponent<HealerStateManager>(out HealerStateManager healerStateManager)){
-                    if(healerStateManager.IsInLootState() && other.GetComponent<SousChef>().agent.Target == transform.position){
+                    if(healerStateManager.IsInLootState() && GameObject.ReferenceEquals(other.GetComponent<SousChef>().targetLoot.gameObject, gameObject)){
                         StartCoroutine(PickUpBySousChef(other));
                     }
                 }
                 else if(other.TryGetComponent<KnightStateManager>(out KnightStateManager knightStateManager)){
-                    if(knightStateManager.IsInLootState() && other.GetComponent<SousChef>().agent.Target == transform.position){
+                    if(knightStateManager.IsInLootState() && GameObject.ReferenceEquals(other.GetComponent<SousChef>().targetLoot.gameObject, gameObject)){
                         StartCoroutine(PickUpBySousChef(other));
                     }
                 }

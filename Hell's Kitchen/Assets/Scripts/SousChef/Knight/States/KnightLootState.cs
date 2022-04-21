@@ -19,7 +19,6 @@ public class KnightLootState : KnightBaseState
 
     public override void UpdateState(KnightStateManager knight)
     {
-        Debug.Log("@Loot state");
         if (knight.sc.targetLoot != null)
         {
             // pathfinding with loot as target and arrival radius as 0.5f
@@ -29,14 +28,8 @@ public class KnightLootState : KnightBaseState
                 Debug.Log("@PickUp moving to loot");
                 Debug.Log("@PickUp distance to loot: " + Vector3.Distance(knight.transform.position, knight.sc.targetLoot.transform.position));
                 knight.sc.agent.standStill = false;
-                if (knight.sc.agent.Target != knight.sc.targetLoot.transform.position)
-                {
-                    knight.sc.agent.Target = knight.sc.targetLoot.transform.position;
-                }
-                if (knight.sc.agent.ArrivalRadius != 0.5f)
-                {
-                    knight.sc.agent.ArrivalRadius = 0.5f;
-                }
+                knight.sc.agent.ArrivalRadius = 0.1f;
+                knight.sc.agent.Target = knight.sc.targetLoot.transform.position;
             }
             else
             {
